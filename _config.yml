@@ -1,1 +1,3 @@
 theme: minima
+disqus:
+  shortname: bangseongbeom.disqus.com
