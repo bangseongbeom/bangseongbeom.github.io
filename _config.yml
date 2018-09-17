@@ -1,3 +1,20 @@
-theme: minima
+title: 방성범
+author: 방성범
+email: bangseongbeom@hotmail.com
+description: >
+  방성범입니다.
+
 disqus:
-  shortname: bangseongbeom.disqus.com
+  shortname: bangseongbeom
+
+github_username: bangseongbeom
+rss: rss
+
+google_analytics: UA-125900715-1
+
+show_excerpts: true
+
+minima:
+  date_format: "%F"
+
+theme: minima
