@@ -89,13 +89,7 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 ## pytest 장점: assert 문 재작성으로 인한 편리함
 
-테스팅 프레임워크가 다양한 assert 방식을 제공하는 이유는 assert 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문을 통해서는 정확한 실패 메시지를 얻기 어렵습니다. unittest 역시 다양한 종류의 assert 메서드를 제공하고 있습니다:
-
-```python
-assertEqual()
-assertGreaterEqual()
-assertIsInstance()
-```
+테스팅 프레임워크가 다양한 assert 메서드를 제공하는 이유는 assert 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. `assert 100 == 200`처럼 assert 문을 사용해서는 정확한 실패 메시지를 얻기 어렵습니다.
 
 pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 그저 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
 
