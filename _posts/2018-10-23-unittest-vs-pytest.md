@@ -1,0 +1,204 @@
+---
+published: false
+category: python
+---
+
+# unittest vs pytest
+
+파이썬에서 가장 많이 사용되는 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와 [pytest(파이테스트)][pytest]를 비교합니다.
+
+또다른 테스팅 프레임워크인 [nose(노즈)][nose]의 경우, 업데이트가 활발히 이루어지지 않기도 하고 위의 두 프레임워크의 인기에 못미치므로 비교에서 제외합니다.
+
+[doctest(독테스트)][doctest]라는 것도 있습니다만, 이는 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 합니다.
+
+## 유명한 사용 사례
+
+- unittest: 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]
+- pytest: [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]
+
+두 프레임워크 모두 널리 쓰입니다.
+
+## unittest 단점: 장황한 클래스 기반 테스트
+
+unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향[^strong-influence]을 받았습니다. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
+
+파이썬 개발자들은 클래스가 꼭 필요한 게 아니라면 함수 위주로 개발하는 것을 선호합니다. 파이썬 내장 기능 또한, 클래스보다는 함수가 주된 기능을 하는 경우가 많습니다. 개발자들은 클래스 선언을 강제하는 unittest의 방식이 파이썬스럽지 못하다고 느낄 수 있습니다.
+
+다음은 똑같은 테스트를 unittest와 pytest로 작성한 것입니다:
+
+unittest:
+
+```python
+from unittest import TestCase
+
+
+class UpperTestCase(TestCase):
+    def test_upper(self):
+        self.assertEqual("foo".upper(), "FOO")
+```
+
+pytest:
+
+```python
+def test_upper():
+    assert "foo".upper() == "FOO"
+```
+
+## unittest 단점: 카멜 케이스
+
+unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이스를 사용한다는 것입니다.
+
+PEP 8이라고도 불리는 파이썬 스타일 가이드에서는, 메서드의 이름을 지을 때 언더스코어로 단어를 구분하기를 권장하고 있습니다[^use-underscore]. `assert_equal()`, `setup()`처럼 말이죠. unittest는 파이썬 스타일 가이드가 명확한 가이드라인을 제시하기 전부터 시작된 프로젝트[^pyunit-history]이기 때문에 이 규칙을 따르지 않는 메서드가 있습니다. `assertEqual()`, `setUp()`이 대표적인 예입니다. 어쩔 수 없다고는 하더라도, 언더스코어와 카멜 케이스를 혼용하는 것은 껄끄러운 일입니다.
+
+## pytest 장점: 독특한 픽스처 문법
+
+pytest는 상당히 독특한 방식으로 픽스처를 제공합니다. 일단 픽스처를 반환하는 함수를 하나 만듭니다. 여기에 `@pytest.fixture` 를 붙여줍니다. 이제 이 픽스처 함수의 이름과 똑같은 이름을 가지는 인자를 테스트 함수에 추가합니다. 그러면 그 인자로 픽스처 함수가 반환한 결과가 들어옵니다. 다음은 pytest 문서에서 제공하는 픽스처 예시[^fixture-example]입니다:
+
+```python
+# content of ./test_smtpsimple.py
+import pytest
+
+@pytest.fixture
+def smtp_connection():
+    import smtplib
+    return smtplib.SMTP("smtp.gmail.com", 587, timeout=5)
+
+def test_ehlo(smtp_connection):
+    response, msg = smtp_connection.ehlo()
+    assert response == 250
+    assert 0 # for demo purposes
+```
+
+pytest는 이러한 픽스처 사용 방식이 다음과 같은 장점을 가져다 준다고 주장합니다:
+
+<https://docs.pytest.org/en/latest/fixture.html>
+
+> pytest 픽스처는 고전적인 xUnit 스타일의 setUp/tearDown과 같은 함수를 극적으로 개선하였습니다:
+>
+> - 픽스처는 명시적인 이름을 가지며 테스트 함수에서의 선언을 통해 이를 활성화시킬 수 있습니다.
+> - 픽스처는 모듈화된 방식으로 구현되어 있습니다. 각 픽스처 이름은 트리거 함수를 호출하고, 또 그 픽스처 역시 다른 픽스처를 사용할 수 있습니다. 
+> - 픽스처 관리를 통해 단순한 유닛 테스트부터 복잡한 기능 테스트에 이르기까지 테스트 규모를 확장할 수 있습니다. 환경 설정이나 컴포넌트 설정에 따라 매개변수화된 픽스처를 정의하는 것도 가능합니다. 픽스처를 함수, 모듈, 또는 전체 테스트 세션 영역에 걸쳐 재사용할 수 있도록 돕기도 합니다.
+
+
+## pytest 단점: 픽스처 문법으로 인한 문제
+
+pytest의 픽스처는 파이썬에서 쓰이는 일반적인 코드의 흐름과 완전히 다릅니다. 이런 독특한 문법으로 인해, 초보 파이썬 개발자는 물론 pytest를 접해보지 못한 숙련된 파이썬 개발자에게 있어서도 당혹감을 안겨줍니다.
+
+기계가 픽스처를 이해해야 한다면 문제는 더욱 복잡해집니다. [Pylint(파이린트)][pylint]를 예로 들어봅시다. Pylint는 파이썬 코드를 분석해 문제가 될만한 부분을 찾아 경고하는 도구입니다. 일반적으로, 바깥 영역에 선언된 이름과 동일한 이름으로 무언가를 선언하는 것은 위험할 수 있습니다. 이런 경우 Pylint는 [redefined-outer-name (W0621)][w0621]이라는 경고 메시지를 출력합니다.
+
+pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동일한 이름으로 테스트 함수의 매개 변수를 선언합니다. pytest 입장에서는 문제될 게 없습니다. 하지만 Pylint는 pytest의 픽스처 문법을 이해하지 못하므로 경고 메시지를 출력할 것입니다.
+
+## pytest 장점: assert 문 재작성으로 인한 편리함
+
+테스팅 프레임워크가 다양한 assert 방식을 제공하는 이유는 assert 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문을 통해서는 정확한 실패 메시지를 얻기 어렵습니다. unittest 역시 다양한 종류의 assert 메서드를 제공하고 있습니다:
+
+```python
+assertEqual()
+assertGreaterEqual()
+assertIsInstance()
+```
+
+pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 그저 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
+
+## pytest 장점: assert 문 재작성이 만능은 아니다
+
+assert 문 재작성은 편리하지만, 분명 한계가 있습니다. unittest의 [`assertRegex()`][assertregex]같은 복잡한 assert 메서드를 대신할 수는 없습니다.
+
+다음은 unittest의 `assertRegex()`와 pytest의 `assert re.search()`를 이용해 정규 표현식으로 문자열을 검색하는 테스트와 그 결과입니다. `assertRegex()`를 사용한 쪽의 실패 메시지가 더 명확하다는 것을 확인할 수 있습니다:
+
+```
+    def test_regex_unittest(self):
+>       self.assertRegex("foobar", "var")
+E       AssertionError: Regex didn't match: 'var' not found in 'foobar'
+```
+
+```
+    def test_regex_pytest():
+>       assert search("var", "foobar")
+E       AssertionError: assert None
+E        +  where None = search('var', 'foobar')
+```
+
+이 assert 재작성 기능은 pytest가 발견할 수 있는 범위 내에서만 동작한다는 것에 주의해야 합니다. pytest 바깥 범위의 파이썬 코드에서 assert 문을 사용할 경우 재작성이 이루어지지 않습니다. 이런 경우 [`register_assert_rewrite()`][register-assert-rewrite]를 호출하여 재작성이 필요한 파일을 등록해야 합니다.
+
+## pytest 장점: 고급 기능
+
+- 매개변수화된 픽스처: 매개 변수를 다르게 해 동일한 픽스처나 테스트를 여러 번 수행하도록 만듭니다. [Parametrizing fixtures and test functions][parametrize]를 참고하세요.
+- 병렬 테스트: 약간의 수정만으로 테스트를 병렬적으로 수행할 수 있도록 합니다. 하나의 테스트가 끝나지 않아도 다른 테스트를 수행할 수 있어 테스트 시간이 단축됩니다. [pytest-xdist]를 참고하세요.
+
+## 결론
+
+이럴 때 unittest를 사용하세요:
+
+- pytest의 독특한 테스트 방식이 정말 좋은 것인지 잘 모르겠다. 다른 언어의 테스팅 프레임워크와 비슷한 정도만으로도 충분하다.
+- 예기치 못한 동작으로 인해 고생을 하느니 차라리 타이핑을 더 하고 말겠다.
+
+이럴 때 pytest를 사용하세요:
+
+- 간결하고 아름다운 코드가 무엇보다 중요하다. 테스트 코드를 작성하기 위해 클래스를 사용하는 건 파이썬스럽지 못하다.
+- 매개변수화된 픽스처나 병렬 테스트와 같은 고급 기능이 필요하다. (다만 pytest의 기능을 사용하면서 unittest 방식으로 테스트를 작성할 수도 있습니다[^pytest-unittest].)
+
+## 참고
+
+<https://cournape.github.io/why-i-am-not-a-fan-of-pytest.html>
+
+[unittest]: https://docs.python.org/3/library/unittest.html
+
+[pytest]: https://docs.pytest.org/en/latest/
+
+[nose]: https://nose.readthedocs.io/en/latest/
+
+[doctest]: https://docs.python.org/3/library/doctest.html
+
+[^python-internal-test]:
+    <https://docs.python.org/3/library/test.html>
+
+    > The test package contains all regression tests for Python ...
+
+    > All new tests should be written using the unittest or doctest module.
+
+[django]: https://www.djangoproject.com/
+
+[flask]: http://flask.pocoo.org/
+
+[requests]: http://docs.python-requests.org/en/master/
+
+[pip]: https://pip.pypa.io/en/stable/
+
+[junit]: https://junit.org/junit5/
+
+[^strong-influence]:
+    <https://docs.python.org/3/library/unittest.html>
+
+    > The unittest unit testing framework was originally inspired by JUnit ...
+
+[^use-underscore]:
+    <https://www.python.org/dev/peps/pep-0008/#method-names-and-instance-variables>
+
+    > Method Names and Instance Variables
+    >
+    > ... lowercase with words separated by underscores as necessary to improve readability.
+
+[^pyunit-history]:
+    <http://pyunit.sourceforge.net/>
+
+    > In production use on many sites since the first release in late 1999
+
+[^fixture-example]:
+    <https://docs.pytest.org/en/latest/fixture.html>
+
+[pylint]: https://www.pylint.org/
+
+[w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
+
+[assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
+
+[assertregex]: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRegex
+
+[register-assert-rewrite]: https://docs.pytest.org/en/latest/assert.html#advanced-assertion-introspection
+
+[parametrize]: https://docs.pytest.org/en/latest/parametrize.html
+
+[pytest-xdist]: https://github.com/pytest-dev/pytest-xdist
+
+[^pytest-unittest]: <http://doc.pytest.org/en/latest/unittest.html>
