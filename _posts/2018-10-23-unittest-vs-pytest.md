@@ -1,6 +1,6 @@
 ---
 published: false
-category: python
+categories: python
 ---
 
 # unittest vs pytest
