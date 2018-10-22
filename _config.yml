@@ -11,8 +11,6 @@ defaults:
 title: 방성범
 author: 방성범 (Bang Seongbeom)
 email: bangseongbeom@hotmail.com
-description: >
-  방성범의 블로그입니다.
 
 disqus:
   shortname: bangseongbeom
