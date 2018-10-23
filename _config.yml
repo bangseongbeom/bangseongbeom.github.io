@@ -1,13 +1,5 @@
 permalink: /:title:output_ext
 
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-
 title: 방성범
 author: 방성범 (Bang Seongbeom)
 email: bangseongbeom@hotmail.com
