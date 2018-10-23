@@ -129,7 +129,7 @@ E        +  where None = search('var', 'foobar')
 
 ## 참고
 
-<https://cournape.github.io/why-i-am-not-a-fan-of-pytest.html>
+- <https://cournape.github.io/why-i-am-not-a-fan-of-pytest.html>
 
 [unittest]: https://docs.python.org/3/library/unittest.html
 
