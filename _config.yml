@@ -19,3 +19,6 @@ minima:
   date_format: "%F"
 
 theme: minima
+
+titles_from_headings:
+  strip_title: true
