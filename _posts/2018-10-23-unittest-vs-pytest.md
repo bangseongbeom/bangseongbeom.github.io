@@ -5,9 +5,9 @@ categories: python
 # unittest vs pytest
 
 - [unittest(유닛테스트)][unittest]: 파이썬에 내장된 테스팅 프레임워크입니다. 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
-- [pytest(파이테스트)][pytest]: 파이썬에서 가장 인기 있는 프레임워크입니다. [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
+- [pytest(파이테스트)][pytest]: 파이썬에서 가장 인기 있는 테스팅 프레임워크입니다. [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
 
-그 밖에 다음과 같은 프레임워크가 있습니다:
+그 밖에 비교 대상에서 제외된 프레임워크는 다음과 같습니다:
 
 - [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못미치므로 비교에서 제외합니다.
 - [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다.
@@ -15,8 +15,6 @@ categories: python
 ## unittest 단점: 장황한 클래스 기반 테스트
 
 unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향[^strong-influence]을 받았습니다. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
-
-몇몇 파이썬 개발자들은 클래스보다는 함수 위주로 개발하는 것을 선호합니다. 파이썬 표준 라이브러리 역시 클래스 방식과 함수 방식을 둘 다 지원하는 경우가 많습니다. [`json.JSONEncoder`][json-jsonencoder]와 [`json.dumps()`][json-dumps]처럼 말입니다. unittest가 클래스 위주의 테스트만 지원하는 것은 합리적이지 못하다고 느껴질 수 있습니다.
 
 다음은 똑같은 테스트를 unittest와 pytest로 작성한 것입니다:
 
@@ -37,6 +35,8 @@ pytest:
 def test_upper():
     assert "foo".upper() == "FOO"
 ```
+
+몇몇 파이썬 개발자들은 클래스보다는 함수 위주로 개발하는 것을 선호합니다. 파이썬 표준 라이브러리 역시 클래스 방식과 함수 방식을 둘 다 지원하는 경우가 많습니다. [`json.JSONEncoder`][json-jsonencoder]와 [`json.dumps()`][json-dumps]처럼 말입니다. unittest가 클래스 위주의 테스트만 지원하는 것은 합리적이지 못하다고 느껴질 수 있습니다.
 
 ## unittest 단점: 카멜 케이스
 
@@ -85,7 +85,7 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 ## pytest 장점: assert 문 재작성으로 인한 편리함
 
-테스팅 프레임워크가 `assertEqual()`, `assertCountEqual()`과 같이 다양한 assert 메서드를 제공하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. `assert 100 == 200`처럼 assert 문을 사용해서는 그냥 테스트에 실패했다는 정보밖에 알 수 없습니다.
+언어에서 기본적으로 제공되는 assert 문(`assert 1 == 2`)을 그대로 사용하지 않고 테스팅 프레임워크가 추가적으로 지원하는 assert 메서드(`assertEqual()`, `assertCountEqual()`)를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문은 assert 다음에 나오는 표현식(`1 == 2`)이 평가된 이후의 테스트의 성공/실패 여부만 확인할 수 있습니다. 두 값 간의 대소를 비교하는 것이었는지, 두 값이 적당한 오차로 비슷한 값이었는지는 assert 문으로 확인할 수 없습니다. 표현식의 의도를 assert 실패 메시지와 함께 보이기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
 
 pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 그저 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
 
