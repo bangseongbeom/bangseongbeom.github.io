@@ -85,7 +85,7 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 ## pytest 장점: assert 문 재작성으로 인한 편리함
 
-언어에서 기본적으로 제공되는 assert 문(`assert 1 == 2`)을 그대로 사용하지 않고 테스팅 프레임워크가 추가적으로 지원하는 assert 메서드(`assertEqual()`, `assertCountEqual()`)를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문은 assert 다음에 나오는 표현식(`1 == 2`)이 평가된 이후의 테스트의 성공/실패 여부만 확인할 수 있습니다. 두 값 간의 대소를 비교하는 것이었는지, 두 값이 적당한 오차로 비슷한 값이었는지는 assert 문으로 확인할 수 없습니다. 표현식의 의도를 assert 실패 메시지와 함께 보이기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
+언어에서 기본적으로 제공되는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하지 않고 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertGreater()`, `assertAlmostEqual()`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문은 assert 다음에 나오는 표현식(`1 == 2`)이 평가된 이후의 테스트의 성공/실패 여부만 확인할 수 있습니다. 두 값 간의 대소를 비교하는 것이었는지, 두 값이 적당한 오차로 비슷한 값이었는지는 assert 문으로 확인할 수 없습니다. 표현식의 의도를 assert 실패 메시지와 함께 보이기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
 
 pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 그저 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
 
@@ -183,6 +183,10 @@ E        +  where None = search('var', 'foobar')
 [pylint]: https://www.pylint.org/
 
 [w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
+
+[assert-statement]: https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
+
+[assert-method]: https://docs.python.org/3/library/unittest.html#assert-methods
 
 [assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
 
