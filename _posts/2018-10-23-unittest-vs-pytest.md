@@ -7,10 +7,10 @@ categories: python
 - [unittest(유닛테스트)][unittest]: 파이썬에 내장된 테스팅 프레임워크입니다. 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
 - [pytest(파이테스트)][pytest]: 파이썬에서 가장 인기 있는 테스팅 프레임워크입니다. [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
 
-그 밖에 비교 대상에서 제외된 프레임워크는 다음과 같습니다:
+비교 대상에서 제외한 프레임워크는 다음과 같습니다:
 
 - [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못미치므로 비교에서 제외합니다.
-- [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다.
+- [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외하였습니다.
 
 ## unittest 단점: 장황한 클래스 기반 테스트
 
@@ -85,15 +85,15 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 ## pytest 장점: assert 문 재작성으로 인한 편리함
 
-언어에서 기본적으로 제공되는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하지 않고 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertGreater()`, `assertAlmostEqual()`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다. assert 문은 assert 다음에 나오는 표현식(`1 == 2`)이 평가된 이후의 테스트의 성공/실패 여부만 확인할 수 있습니다. 두 값 간의 대소를 비교하는 것이었는지, 두 값이 적당한 오차로 비슷한 값이었는지는 assert 문으로 확인할 수 없습니다. 표현식의 의도를 assert 실패 메시지와 함께 보이기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
+언어에서 기본적으로 제공하는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하는 것 대신 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertEqual(1, 2)`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다.
 
-pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 그저 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
+assert 문은 `assert` 다음에 나오는 표현식의 성공/실패 여부만 확인할 수 있습니다. 우리는 `1 == 2`가 같음을 비교하는 것이고 `1 > 2`가 대소를 비교하는 것이라는 걸 알지만 assert 문은 알지 못합니다. assert 실패 메시지에 표현식의 의도를 담기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
+
+pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
 
 ## pytest 단점: assert 문 재작성의 한계
 
-assert 문 재작성은 편리한 기능이지만, unittest의 [`assertRegex()`][assertregex]같은 복잡한 assert 메서드를 대신할 수는 없습니다.
-
-다음은 unittest의 `assertRegex()`와 pytest의 `assert re.search()`를 이용해 정규 표현식으로 문자열을 검색하는 테스트와 그 결과입니다. `assertRegex()`를 사용한 쪽의 실패 메시지가 더 명확하다는 것을 확인할 수 있습니다:
+assert 문 재작성은 편리한 기능이지만, unittest의 [`assertRegex()`][assertregex]같은 복잡한 assert 메서드를 대신할 수는 없습니다. 다음은 unittest의 `assertRegex()`와 pytest의 `assert re.search()`를 이용해 정규 표현식으로 문자열을 검색하는 테스트와 그 결과입니다. `assertRegex()`를 사용한 쪽의 실패 메시지가 더 명확하다는 것을 확인할 수 있습니다:
 
 ```
     def test_regex_unittest(self):
@@ -108,7 +108,7 @@ E       AssertionError: assert None
 E        +  where None = search('var', 'foobar')
 ```
 
-또, 이 assert 재작성 기능은 pytest가 발견할 수 있는 범위 내에서만 자동으로 이루어집니다. 외부 파이썬 코드에서 assert 문을 사용할 경우 [`register_assert_rewrite()`][register-assert-rewrite]를 호출하여 파일을 등록해야 재작성이 이루어집니다.
+또다른 문제점은 pytest가 발견할 수 있는 범위 내에서만 assert 재작성 기능이 이루어진다는 것입니다. 외부 파이썬 코드에서 assert 문을 사용할 경우 [`register_assert_rewrite()`][register-assert-rewrite]를 호출하여 파일을 등록해야 재작성이 이루어집니다.
 
 ## pytest 장점: 고급 기능
 
