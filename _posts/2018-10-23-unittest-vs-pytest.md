@@ -40,9 +40,13 @@ def test_upper():
 
 ## unittest 단점: 카멜 케이스
 
-unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이스를 사용한다는 점입니다.
+unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이스를 사용한다는 점입니다. `assertEqual()`, `setUp()`처럼 말입니다. [PEP 8이라고도 불리는 파이썬 스타일 가이드][pep-8]에서는, 메서드의 이름을 지을 때 `assert_equal()`, `set_up()`처럼 언더스코어로 단어를 구분하도록 권장합니다[^use-underscore].
 
-PEP 8이라고도 불리는 파이썬 스타일 가이드에서는, 메서드의 이름을 지을 때 언더스코어로 단어를 구분하기를 권장하고 있습니다[^use-underscore]. `assert_equal()`, `setup()`처럼 말이죠. unittest는 파이썬 스타일 가이드가 명확한 가이드라인을 제시하기 전부터 시작된 프로젝트[^pyunit-history]이기 때문에 이 규칙을 따르지 않는 메서드가 있습니다. `assertEqual()`, `setUp()`이 대표적인 예입니다. 어쩔 수 없다고는 하더라도, 언더스코어와 카멜 케이스를 혼용하는 것은 껄끄러운 일입니다.
+그러나 이것보다 더 중요한 것은 일관성을 유지하는 것이라고 말합니다[^consistency]. unittest가 처음부터 카멜 케이스로 개발되었다면 이를 바꾸기 보다는 계속 유지하는 게 좋겠죠.
+
+왜 unittest가 처음부터 언더스코어를 사용하지 않았는가에 대해서도 잘못되었다라고 말하기 어렵습니다. unittest는 PyUnit(파이유닛)이라는 이름으로 1999년 시작된 프로젝트인 반면[^pyunit-history], 파이썬 스타일 가이드는 2001년 처음 만들어졌으니까요.
+
+그렇다고 하더라도, 언더스코어를 사용하는 파이썬의 다른 모듈과 카멜 케이스를 사용하는 unittest를 혼용하는 것은 여간 껄끄러운 일이 아닐 수 없습니다.
 
 ## pytest 장점: 독특하지만 강력한 픽스처 문법
 
@@ -165,12 +169,19 @@ E        +  where None = search('var', 'foobar')
 
 [json-dumps]: https://docs.python.org/3/library/json.html#json.dumps
 
+[pep-8]: https://www.python.org/dev/peps/pep-0008/
+
 [^use-underscore]:
     <https://www.python.org/dev/peps/pep-0008/#method-names-and-instance-variables>
 
     > Method Names and Instance Variables
     >
     > ... lowercase with words separated by underscores as necessary to improve readability.
+
+[^consistency]:
+    <https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>
+    
+    > ... Consistency with this style guide is important. Consistency within a project is more important. ...
 
 [^pyunit-history]:
     <http://pyunit.sourceforge.net/>
