@@ -37,7 +37,7 @@ categories: python
 
 ## unittest 단점: 장황한 클래스 기반 테스트
 
-unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향[^strong-influence]을 받았습니다. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
+unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향을 받았습니다[^strong-influence]. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
 
 다음은 똑같은 테스트를 unittest와 pytest로 작성한 것입니다:
 
