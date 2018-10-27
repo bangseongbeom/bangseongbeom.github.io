@@ -12,6 +12,29 @@ categories: python
 - [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못미치므로 비교에서 제외합니다.
 - [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외하였습니다.
 
+[unittest]: https://docs.python.org/3/library/unittest.html
+
+[^python-internal-test]:
+    <https://docs.python.org/3/library/test.html>
+
+    > The test package contains all regression tests for Python ...
+
+    > All new tests should be written using the unittest or doctest module.
+
+[django]: https://www.djangoproject.com/
+
+[pytest]: https://docs.pytest.org/en/latest/
+
+[flask]: http://flask.pocoo.org/
+
+[requests]: http://docs.python-requests.org/en/master/
+
+[pip]: https://pip.pypa.io/en/stable/
+
+[nose]: https://nose.readthedocs.io/en/latest/
+
+[doctest]: https://docs.python.org/3/library/doctest.html
+
 ## unittest 단점: 장황한 클래스 기반 테스트
 
 unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향[^strong-influence]을 받았습니다. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
@@ -38,6 +61,17 @@ def test_upper():
 
 몇몇 파이썬 개발자들은 클래스보다는 함수 위주로 개발하는 것을 선호합니다. 파이썬 표준 라이브러리 역시 클래스 방식과 함수 방식을 둘 다 지원하는 경우가 많습니다. [`json.JSONEncoder`][json-jsonencoder]와 [`json.dumps()`][json-dumps]처럼 말입니다. unittest가 클래스 위주의 테스트만 지원하는 것은 합리적이지 못하다고 느껴질 수 있습니다.
 
+[junit]: https://junit.org/junit5/
+
+[^strong-influence]:
+    <https://docs.python.org/3/library/unittest.html>
+
+    > The unittest unit testing framework was originally inspired by JUnit ...
+
+[json-jsonencoder]: https://docs.python.org/3/library/json.html#json.JSONEncoder
+
+[json-dumps]: https://docs.python.org/3/library/json.html#json.dumps
+
 ## unittest 단점: 카멜 케이스
 
 unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이스를 사용한다는 점입니다. `assertEqual()`, `setUp()`처럼 말입니다. [PEP 8이라고도 불리는 파이썬 스타일 가이드][pep-8]에서는, 메서드의 이름을 지을 때 `assert_equal()`, `set_up()`처럼 언더스코어로 단어를 구분하도록 권장합니다[^use-underscore].
@@ -47,6 +81,25 @@ unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이�
 왜 unittest가 처음부터 언더스코어를 사용하지 않았는가에 대해서도 잘못되었다라고 말하기 어렵습니다. unittest는 PyUnit(파이유닛)이라는 이름으로 1999년 시작된 프로젝트인 반면[^pyunit-history], 파이썬 스타일 가이드는 2001년 처음 만들어졌으니까요.
 
 그렇다고 하더라도, 언더스코어를 사용하는 파이썬의 다른 모듈과 카멜 케이스를 사용하는 unittest를 혼용하는 것은 여간 껄끄러운 일이 아닐 수 없습니다.
+
+[pep-8]: https://www.python.org/dev/peps/pep-0008/
+
+[^use-underscore]:
+    <https://www.python.org/dev/peps/pep-0008/#method-names-and-instance-variables>
+
+    > Method Names and Instance Variables
+    >
+    > ... lowercase with words separated by underscores as necessary to improve readability.
+
+[^consistency]:
+    <https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>
+    
+    > ... Consistency with this style guide is important. Consistency within a project is more important. ...
+
+[^pyunit-history]:
+    <http://pyunit.sourceforge.net/>
+
+    > In production use on many sites since the first release in late 1999
 
 ## pytest 장점: 독특하지만 강력한 픽스처 문법
 
@@ -79,6 +132,13 @@ pytest 공식 문서에서는 이러한 픽스처 사용 방식이 다음과 같
 > - 픽스처는 모듈화된 방식으로 구현되어 있습니다. 각 픽스처 이름은 트리거 함수를 호출하고, 또 그 픽스처 역시 다른 픽스처를 사용할 수 있습니다. 
 > - 픽스처 관리를 통해 단순한 유닛 테스트부터 복잡한 기능 테스트에 이르기까지 테스트 규모를 확장할 수 있습니다. 환경 설정이나 컴포넌트 설정에 따라 매개변수화된 픽스처를 정의하는 것도 가능합니다. 픽스처를 함수, 모듈, 또는 전체 테스트 세션 영역에 걸쳐 재사용할 수 있도록 돕기도 합니다.
 
+[^fixture-example]:
+    <https://docs.pytest.org/en/latest/fixture.html>
+
+[pylint]: https://www.pylint.org/
+
+[w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
+
 ## pytest 단점: 기존 파이썬 흐름과 다른 픽스처
 
 pytest의 픽스처는 파이썬에서 쓰이는 일반적인 코드의 흐름과 완전히 다릅니다. 이런 독특한 문법으로 인해, 초보 파이썬 개발자는 물론 pytest를 접해보지 못한 숙련된 파이썬 개발자에게 있어서도 당혹감을 안겨줍니다.
@@ -94,6 +154,12 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 assert 문은 `assert` 다음에 나오는 표현식의 성공/실패 여부만 확인할 수 있습니다. 우리는 `1 == 2`가 같음을 비교하는 것이고 `1 > 2`가 대소를 비교하는 것이라는 걸 알지만 assert 문은 알지 못합니다. assert 실패 메시지에 표현식의 의도를 담기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
 
 pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
+
+[assert-statement]: https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
+
+[assert-method]: https://docs.python.org/3/library/unittest.html#assert-methods
+
+[assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
 
 ## pytest 단점: assert 문 재작성의 한계
 
@@ -114,10 +180,18 @@ E        +  where None = search('var', 'foobar')
 
 또다른 문제점은 pytest가 발견할 수 있는 범위 내에서만 assert 재작성 기능이 이루어진다는 것입니다. 외부 파이썬 코드에서 assert 문을 사용할 경우 [`register_assert_rewrite()`][register-assert-rewrite]를 호출하여 파일을 등록해야 재작성이 이루어집니다.
 
+[assertregex]: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRegex
+
+[register-assert-rewrite]: https://docs.pytest.org/en/latest/assert.html#advanced-assertion-introspection
+
 ## pytest 장점: 고급 기능
 
 - 매개변수화된 픽스처: 매개 변수를 다르게 해 동일한 픽스처나 테스트를 여러 번 수행하도록 만듭니다. [Parametrizing fixtures and test functions][parametrize]를 참고하세요.
 - 병렬 테스트: 테스트를 병렬적으로 수행할 수 있도록 합니다. 하나의 테스트가 끝나지 않아도 다른 테스트를 수행할 수 있어 테스트 시간이 단축됩니다. [pytest-xdist]를 참고하세요.
+
+[parametrize]: https://docs.pytest.org/en/latest/parametrize.html
+
+[pytest-xdist]: https://github.com/pytest-dev/pytest-xdist
 
 ## 결론
 
@@ -133,82 +207,8 @@ E        +  where None = search('var', 'foobar')
 
 unittest 기반으로 테스트를 작성하되, assert 문 재작성이나 병렬 테스트, 테스트 실패 디버깅과 같은 pytest의 기능이 필요한 경우도 있습니다. 이럴 때 unittest를 쓸지 pytest를 쓸지 고민하지 않아도 됩니다. pytest는 unittest로 작성한 테스트 코드를 돌릴 수 있는 기능을 제공하고 있습니다[^pytest-unittest].
 
+[^pytest-unittest]: <http://doc.pytest.org/en/latest/unittest.html>
+
 ## 참고
 
 - <https://cournape.github.io/why-i-am-not-a-fan-of-pytest.html>
-
-[unittest]: https://docs.python.org/3/library/unittest.html
-
-[^python-internal-test]:
-    <https://docs.python.org/3/library/test.html>
-
-    > The test package contains all regression tests for Python ...
-
-    > All new tests should be written using the unittest or doctest module.
-
-[django]: https://www.djangoproject.com/
-
-[pytest]: https://docs.pytest.org/en/latest/
-
-[flask]: http://flask.pocoo.org/
-
-[requests]: http://docs.python-requests.org/en/master/
-
-[pip]: https://pip.pypa.io/en/stable/
-
-[nose]: https://nose.readthedocs.io/en/latest/
-
-[doctest]: https://docs.python.org/3/library/doctest.html
-
-[junit]: https://junit.org/junit5/
-
-[^strong-influence]:
-    <https://docs.python.org/3/library/unittest.html>
-
-    > The unittest unit testing framework was originally inspired by JUnit ...
-
-[json-jsonencoder]: https://docs.python.org/3/library/json.html#json.JSONEncoder
-
-[json-dumps]: https://docs.python.org/3/library/json.html#json.dumps
-
-[pep-8]: https://www.python.org/dev/peps/pep-0008/
-
-[^use-underscore]:
-    <https://www.python.org/dev/peps/pep-0008/#method-names-and-instance-variables>
-
-    > Method Names and Instance Variables
-    >
-    > ... lowercase with words separated by underscores as necessary to improve readability.
-
-[^consistency]:
-    <https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>
-    
-    > ... Consistency with this style guide is important. Consistency within a project is more important. ...
-
-[^pyunit-history]:
-    <http://pyunit.sourceforge.net/>
-
-    > In production use on many sites since the first release in late 1999
-
-[^fixture-example]:
-    <https://docs.pytest.org/en/latest/fixture.html>
-
-[pylint]: https://www.pylint.org/
-
-[w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
-
-[assert-statement]: https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
-
-[assert-method]: https://docs.python.org/3/library/unittest.html#assert-methods
-
-[assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
-
-[assertregex]: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRegex
-
-[register-assert-rewrite]: https://docs.pytest.org/en/latest/assert.html#advanced-assertion-introspection
-
-[parametrize]: https://docs.pytest.org/en/latest/parametrize.html
-
-[pytest-xdist]: https://github.com/pytest-dev/pytest-xdist
-
-[^pytest-unittest]: <http://doc.pytest.org/en/latest/unittest.html>
