@@ -1,6 +1,3 @@
-plugins:
-  - jekyll-titles-from-headings
-
 permalink: /:title:output_ext
 
 title: 방성범
