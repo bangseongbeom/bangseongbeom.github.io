@@ -4,6 +4,11 @@
 
 @import "minima";
 
+.site-header {
+  border-top: none;
+  border-bottom: none;
+}
+
 .footer-col-2 {
   width: -webkit-calc(25% - (#{$spacing-unit} / 2));
   width:         calc(25% - (#{$spacing-unit} / 2));
