@@ -9,6 +9,18 @@
   border-bottom: none;
 }
 
+.site-header {
+  text-align: center;
+}
+
+.site-title {
+  float: none;
+}
+
+.site-nav {
+  float: none;
+}
+
 .footer-col-2 {
   width: -webkit-calc(25% - (#{$spacing-unit} / 2));
   width:         calc(25% - (#{$spacing-unit} / 2));
