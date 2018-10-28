@@ -21,6 +21,10 @@
   float: none;
 }
 
+.post-header {
+  text-align: center;
+}
+
 .footer-col-2 {
   width: -webkit-calc(25% - (#{$spacing-unit} / 2));
   width:         calc(25% - (#{$spacing-unit} / 2));
