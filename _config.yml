@@ -2,6 +2,13 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
+defaults:
+  -
+    scope:
+      type: posts
+    values:
+      author: 방성범 (Bang Seongbeom)
+
 permalink: /:title:output_ext
 
 title: 방성범
