@@ -1,3 +1,7 @@
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
 permalink: /:title:output_ext
 
 title: 방성범
