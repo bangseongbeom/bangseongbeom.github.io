@@ -1,6 +1,3 @@
-plugins:
-  - jekyll-feed
-
 permalink: /:title:output_ext
 
 title: 방성범
