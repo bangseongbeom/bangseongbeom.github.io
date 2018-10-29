@@ -27,18 +27,18 @@ categories: android
 
 ## 프레임워크가 언어를 지원해야 한다
 
-프레임워크의 지원 또한 중요합니다. 프레임워크가 언어를 제대로 지원하지 못할 경우 언어의 장점을 최대한으로 살릴 수 없기 때문입니다. 즉, 안드로이드라는 프레임워크가 코틀린을 지원할 것인지라는 마지막 걸림돌이 남아 있습니다.
+프레임워크의 지원 또한 중요합니다. 프레임워크가 언어를 제대로 지원하지 못할 경우 언어의 장점을 최대한으로 살릴 수 없기 때문입니다.
 
-저는 2016년 처음 코틀린을 접했습니다. 그때는 과연 안드로이드가 코틀린을 지원할 것인지 의심스러웠습니다. 하지만 2018년 현재, 안드로이드는 거의 완벽하게 코틀린을 지원합니다! 2017년, [구글은 코틀린을 공식적으로 지원하기로 발표했습니다][kotlin-official]. 그리고 2018년, 마침내 안드로이드 SDK에서 코틀린 API 문서를 제공하기 시작했습니다[^kotlin-friendly-sdk]. 심지어 코틀린을 위한 [KTX][ktx]라는 개발 지원 도구도 만들었습니다.
+코틀린의 장점 중 하나는 `NullPointerException`에 대한 안정성을 특유의 물음표(`?`) 문법으로 손쉽게 확보할 수 있다는 것입니다. 모든 타입이 `null`을 가질 수 있는 자바와는 달리, 코틀린은 타입 뒤에 물음표를 붙여야만 `null`을 가질 수 있게 했죠. 하지만 안드로이드 프레임워크는 자바로 짜여져 있기 때문에, 논리 상으로는 `null`이 나올 수 없는데도 불구하고 언제나 `null` 처리 코드를 추가해야 했습니다.
+
+물론 자바에서 `@NotNull` 애너테이션을 붙여 `null`이 나오지 않음을 보장할 수도 있습니다. 그러나 여태까지의 안드로이드는 일부 메서드에만 `@NotNull`을 붙인 상태여서 불만이 많았습니다. 다행히도 안드로이드 파이(9.0)부터는 대부분의 메서드에 애너테이션을 추가했습니다[^android-pie-sdk-is-now-more-kotlin]. 심지어 코틀린만을 위한 [KTX][ktx]라는 개발 지원 도구도 만들었죠.
 
 이제 코틀린의 시대가 왔습니다.
 
-[kotlin-official]: https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/
+[^android-pie-sdk-is-now-more-kotlin]:
+    <https://android-developers.googleblog.com/2018/08/android-pie-sdk-is-now-more-kotlin.html>
 
-[^kotlin-friendly-sdk]:
-    <https://developer.android.com/kotlin/>
-
-    > Starting with Android 9 (API level 28), the Android SDK contains nullability annotations to help avoid NullPointerExceptions. API reference documentation is also available in Kotlin.
+    > As part of yesterday's Android 9 announcement, we have also released a new Android SDK that contains nullability annotations for some of the most frequently used APIs. This will preserve the null-safety guarantee when your Kotlin code is calling into any annotated APIs in the SDK. Even if you are using the Java programming language, you can still benefit from these annotations by using Android Studio to catch nullability contract violations.
 
 [ktx]: https://developer.android.com/kotlin/ktx
 
