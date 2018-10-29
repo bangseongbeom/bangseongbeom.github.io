@@ -46,5 +46,3 @@ categories: android
 
 - <https://dzone.com/articles/why-kotlin-is-the-future-of-android-app-developmen>
 - <https://medium.com/@Pinterest_Engineering/the-case-against-kotlin-2c574cb87953>
-
-
