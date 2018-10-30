@@ -11,7 +11,7 @@ category: python
 
 ## 비교 대상에서 제외한 프레임워크
 
-한때 유명했던 테스팅 프레임워크로 [nose(노즈)][nose]라는 것이 있습니다만, 유지 보수할 사람을 구하지 못해 최근 몇 년동안 업데이트가 이루어지지 않고 있습니다. nose는 대신 pytest나 unittest를 사용하라고 말합니다[^maintenance-mode].
+한때 유명했던 테스팅 프레임워크로 [nose(노즈)][nose]라는 것이 있습니다만, 유지 보수할 사람을 구하지 못해 최근 몇 년동안 업데이트가 이루어지지 않고 있습니다. nose 문서에서조차 nose 대신 pytest나 unittest를 사용하라고 말합니다[^maintenance-mode].
 
 [doctest(독테스트)][doctest]는 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외합니다.
 
@@ -157,7 +157,7 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 [w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
 
-## pytest 장점: assert 문 재작성으로 인한 편리함
+## pytest의 장점: assert 문 재작성으로 인한 편리함
 
 언어에서 기본적으로 제공하는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하는 것 대신 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertEqual(1, 2)`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다.
 
