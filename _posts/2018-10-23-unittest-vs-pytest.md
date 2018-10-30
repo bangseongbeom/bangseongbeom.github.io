@@ -5,10 +5,10 @@ category: python
 
 파이썬에 내장된 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와, 파이썬에서 가장 인기 있는 테스팅 프레임워크인 [pytest(파이테스트)][pytest]의 장단점을 비교합니다.
 
+두 프레임워크 모두 권위 있는 프로젝트에서 쓰입니다. 다만 pytest가 더 널리 쓰이는 것으로 보입니다:
+
 - unittest: 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
 - pytest: [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
-
-두 프레임워크 모두 권위 있는 프로젝트에서 쓰입니다. 다만 pytest가 더 널리 쓰이는 것으로 보입니다.
 
 한때 유명했던 [nose(노즈)][nose]라는 테스팅 프레임워크도 있습니다만, 유지 보수할 사람을 구하지 못해 최근 몇 년동안 업데이트가 이루어지지 않고 있습니다. nose 문서에서조차 nose 대신 pytest나 unittest를 사용하라고 말합니다[^maintenance-mode].
 
