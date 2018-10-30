@@ -1,6 +1,6 @@
 ---
 title: unittest vs pytest
-categories: python
+category: python
 ---
 
 - [unittest(유닛테스트)][unittest]: 파이썬에 내장된 테스팅 프레임워크입니다. 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
