@@ -3,7 +3,7 @@ title: unittest vs pytest
 category: python
 ---
 
-파이썬에 내장된 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와, 파이썬에서 가장 인기 있는 프레임워크인 [pytest(파이테스트)][pytest]의 장단점을 비교합니다.
+파이썬에 내장된 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와, 파이썬에서 가장 인기 있는 테스팅 프레임워크인 [pytest(파이테스트)][pytest]의 장단점을 비교합니다.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
 
