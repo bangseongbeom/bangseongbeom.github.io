@@ -30,10 +30,6 @@
   text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-top: $spacing-unit;
-}
-
 .footer-col-2 {
   width: -webkit-calc(25% - (#{$spacing-unit} / 2));
   width:         calc(25% - (#{$spacing-unit} / 2));
@@ -42,6 +38,10 @@ h1, h2, h3, h4, h5, h6 {
 .footer-col-3 {
   width: -webkit-calc(40% - (#{$spacing-unit} / 2));
   width:         calc(40% - (#{$spacing-unit} / 2));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: $spacing-unit;
 }
 
 pre,
