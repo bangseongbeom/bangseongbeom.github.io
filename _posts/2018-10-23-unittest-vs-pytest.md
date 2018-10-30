@@ -3,15 +3,33 @@ title: unittest vs pytest
 category: python
 ---
 
-- [unittest(유닛테스트)][unittest]: 파이썬에 내장된 테스팅 프레임워크입니다. 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
-- [pytest(파이테스트)][pytest]: 파이썬에서 가장 인기 있는 테스팅 프레임워크입니다. [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
-
-비교 대상에서 제외한 프레임워크는 다음과 같습니다:
-
-- [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못 미치므로 비교에서 제외합니다.
-- [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외하였습니다.
+파이썬에 내장된 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와, 파이썬에서 가장 인기 있는 프레임워크인 [pytest(파이테스트)][pytest]의 장단점을 비교합니다.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
+
+[pytest]: https://docs.pytest.org/en/latest/
+
+## 비교 대상에서 제외한 프레임워크
+
+한때 유명했던 테스팅 프레임워크로 [nose(노즈)][nose]라는 것이 있습니다만, 유지 보수할 사람을 구하지 못해 최근 몇 년동안 업데이트가 이루어지지 않고 있습니다. nose는 대신 pytest나 unittest를 사용하라고 말합니다[^maintenance-mode].
+
+[doctest(독테스트)][doctest]는 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외합니다.
+
+[^maintenance-mode]:
+    <https://nose.readthedocs.io/en/latest/#note-to-users>
+    
+    > Nose has been in maintenance mode for the past several years and will likely cease without a new person/team to take over maintainership. New projects should consider using Nose2, py.test, or just plain unittest/unittest2.
+
+[nose]: https://nose.readthedocs.io/en/latest/
+
+[doctest]: https://docs.python.org/3/library/doctest.html
+
+## 사례
+
+- [unittest(유닛테스트)][unittest]: 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.
+- [pytest(파이테스트)][pytest]: [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.
+
+두 프레임워크 모두 권위 있는 프로젝트에서 쓰입니다. 다만 pytest가 더 널리 쓰이는 것으로 보입니다.
 
 [^python-internal-test]:
     <https://docs.python.org/3/library/test.html>
@@ -22,17 +40,11 @@ category: python
 
 [django]: https://www.djangoproject.com/
 
-[pytest]: https://docs.pytest.org/en/latest/
-
 [flask]: http://flask.pocoo.org/
 
 [requests]: http://docs.python-requests.org/en/master/
 
 [pip]: https://pip.pypa.io/en/stable/
-
-[nose]: https://nose.readthedocs.io/en/latest/
-
-[doctest]: https://docs.python.org/3/library/doctest.html
 
 ## unittest의 단점: 장황한 클래스 기반 테스트
 
