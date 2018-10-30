@@ -8,7 +8,7 @@ category: python
 
 비교 대상에서 제외한 프레임워크는 다음과 같습니다:
 
-- [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못미치므로 비교에서 제외합니다.
+- [nose(노즈)][nose]: 업데이트가 활발히 이루어지지 않기도 하고, 위의 두 프레임워크의 인기에 못 미치므로 비교에서 제외합니다.
 - [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하기 때문에 제외하였습니다.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
@@ -34,7 +34,7 @@ category: python
 
 [doctest]: https://docs.python.org/3/library/doctest.html
 
-## unittest 단점: 장황한 클래스 기반 테스트
+## unittest의 단점: 장황한 클래스 기반 테스트
 
 unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향을 받았습니다[^strong-influence]. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다. unittest 역시 테스트 함수를 작성하기 위해 반드시 클래스를 선언해야 합니다.
 
@@ -71,7 +71,7 @@ def test_upper():
 
 [json-dumps]: https://docs.python.org/3/library/json.html#json.dumps
 
-## unittest 단점: 카멜 케이스
+## unittest의 단점: 카멜 케이스
 
 unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이스를 사용한다는 점입니다. `assertEqual()`, `setUp()`처럼 말입니다. [PEP 8이라고도 불리는 파이썬 스타일 가이드][pep-8]에서는, 메서드의 이름을 지을 때 `assert_equal()`, `set_up()`처럼 언더스코어로 단어를 구분하도록 권장합니다[^use-underscore].
 
@@ -100,7 +100,7 @@ unittest를 꺼리는 또 다른 이유 중 하나는 unittest가 카멜 케이�
 
     > In production use on many sites since the first release in late 1999
 
-## pytest 장점: 독특하지만 강력한 픽스처 문법
+## pytest의 장점: 독특하지만 강력한 픽스처 문법
 
 pytest는 기존의 여러 테스팅 프레임워크와는 다른 방식으로 픽스처를 제공합니다. 일단 픽스처를 반환하는 함수를 하나 만듭니다. 여기에 `@pytest.fixture` 를 붙여줍니다. 이제 이 픽스처 함수의 이름과 똑같은 이름을 가지는 인자를 테스트 함수에 추가합니다. 이제 테스트 함수가 실행되면 인자와 같은 이름을 가지는 픽스처 함수가 실행되고,  그 반환 결과가 인자에 주입됩니다. 다음은 pytest 문서에서 제공하는 픽스처 예시입니다:
 
@@ -133,7 +133,7 @@ pytest 공식 문서에서는 이러한 픽스처 사용 방식이 다음과 같
 > - 픽스처는 모듈화된 방식으로 구현되어 있습니다. 각 픽스처 이름은 트리거 함수를 호출하고, 또 그 픽스처 역시 다른 픽스처를 사용할 수 있습니다. 
 > - 픽스처 관리를 통해 단순한 유닛 테스트부터 복잡한 기능 테스트에 이르기까지 테스트 규모를 확장할 수 있습니다. 환경 설정이나 컴포넌트 설정에 따라 매개변수화된 픽스처를 정의하는 것도 가능합니다. 픽스처를 함수, 모듈, 또는 전체 테스트 세션 영역에 걸쳐 재사용할 수 있도록 돕기도 합니다.
 
-## pytest 단점: 기존 파이썬 흐름과 다른 픽스처
+## pytest의 단점: 기존 파이썬 흐름과 다른 픽스처
 
 pytest의 픽스처는 파이썬에서 쓰이는 일반적인 코드의 흐름과 완전히 다릅니다. 이런 독특한 문법으로 인해, 초보 파이썬 개발자는 물론 pytest를 접해보지 못한 숙련된 파이썬 개발자에게 있어서도 당혹감을 안겨줍니다.
 
@@ -159,7 +159,7 @@ pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈
 
 [assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
 
-## pytest 단점: assert 문 재작성의 한계
+## pytest의 단점: assert 문 재작성의 한계
 
 assert 문 재작성은 편리한 기능이지만, unittest의 [`assertRegex()`][assertregex]같은 복잡한 assert 메서드를 대신할 수는 없습니다. 다음은 unittest의 `assertRegex()`와 pytest의 `assert re.search()`를 이용해 정규 표현식으로 문자열을 검색하는 테스트와 그 결과입니다. `assertRegex()`를 사용한 쪽의 실패 메시지가 더 명확하다는 것을 확인할 수 있습니다:
 
@@ -182,7 +182,7 @@ E        +  where None = search('var', 'foobar')
 
 [register-assert-rewrite]: https://docs.pytest.org/en/latest/assert.html#advanced-assertion-introspection
 
-## pytest 장점: 고급 기능
+## pytest의 장점: 고급 기능
 
 - 매개변수화된 픽스처: 매개 변수를 다르게 해 동일한 픽스처나 테스트를 여러 번 수행하도록 만듭니다. [Parametrizing fixtures and test functions][parametrize]를 참고하세요.
 - 병렬 테스트: 테스트를 병렬적으로 수행할 수 있도록 합니다. 하나의 테스트가 끝나지 않아도 다른 테스트를 수행할 수 있어 테스트 시간이 단축됩니다. [pytest-xdist]를 참고하세요.
