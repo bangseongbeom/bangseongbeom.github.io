@@ -11,10 +11,6 @@ category: android
 
 **코틀린은 짧고 간결합니다.** 자바처럼 장황하지 않습니다. 자바에서는 `null` 안전성을 위해 [`Optional.map()`][optional-map], [`Optional.orElse()`][optional-orelse]처럼 메서드를 호출해야 하지만, 코틀린에서는 [`?.`][safe-call], [`?:`][elvis]같이 기호로 구현합니다[^nullable-vs-optional].
 
-## 문법이 좋다는 이유만으로는 코틀린을 선택할 수 없다
-
-**문법도 중요하지만, 언어와 관련된 프레임워크와 도구들이 언어를 효과적으로 지원해야 합니다.** 문법 강조도 제대로 되지 않고 기존 프레임워크도 마음대로 쓸 수 없다면 아무리 문법이 좋아봤자 쓰기 힘들 것입니다. 이처럼 우리는 언어를 선택함으로써 얻는 이익뿐만 아니라 잠재적인 문제점까지 함께 고려하는 것이 필요합니다.
-
 [^data-class]:
     <http://cr.openjdk.java.net/~briangoetz/amber/datum.html>
 
@@ -28,6 +24,10 @@ category: android
 
 [^nullable-vs-optional]:
     <https://medium.com/@fatihcoskun/kotlin-nullable-types-vs-java-optional-988c50853692>
+
+## 문법이 좋다는 이유만으로는 코틀린을 선택할 수 없다
+
+**문법도 중요하지만, 언어와 관련된 프레임워크와 도구들이 언어를 효과적으로 지원해야 합니다.** 문법 강조도 제대로 되지 않고 기존 프레임워크도 마음대로 쓸 수 없다면 아무리 문법이 좋아봤자 쓰기 힘들 것입니다. 이처럼 우리는 언어를 선택함으로써 얻는 이익뿐만 아니라 잠재적인 문제점까지 함께 고려하는 것이 필요합니다.
 
 ## 안드로이드 스튜디오가 코틀린을 지원해야 한다
 
