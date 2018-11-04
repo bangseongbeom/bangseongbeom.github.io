@@ -228,7 +228,7 @@ E        +  where None = search('var', 'foobar')
 
 [pytest-xdist]: https://github.com/pytest-dev/pytest-xdist
 
-## 이럴 때 사용하세요
+## 결론: 이럴 때 사용하세요
 
 **unittest: 이럴 때 사용하세요:**
 
