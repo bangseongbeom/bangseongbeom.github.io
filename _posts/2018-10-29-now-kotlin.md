@@ -7,7 +7,7 @@ category: android
 
 ## 좋은 문법만으로는 코틀린을 선택할 수 없습니다
 
- **코틀린이 정말로 끝내주게 좋은 지는 모르겠지만, 적어도 자바 개발자들이 불편하게 여겨왔던 부분을 빠르게 해결해준 고마운 언어입니다.** 자바 8에 추가된 람다와 `Optional`, 자바 10에 추가된 `var`는 자바에 도입되기 전부터 코틀린에서 지원하는 기능입니다. 심지어 자바에서는 아직 도입 논의 중인 데이터 클래스[^data-class] 역시 기본적으로 지원합니다.
+ **코틀린이 정말로 끝내주게 좋은 지는 모르겠지만, 적어도 자바 개발자들이 불편하게 여겨왔던 부분을 빠르게 해결해준 고마운 언어입니다.** 자바 8에 추가된 람다와 `Optional`, 자바 10에 추가된 `var`는 자바에 도입되기 전부터 코틀린에서 지원하는 기능입니다. 심지어 자바에서는 아직 도입 논의 중이라[^data-class] [롬복(Lombok)][lombok]과 같은 외부 도구를 써야 했던 데이터 클래스 역시 코틀린에서는 기본적으로 지원합니다.
 
 **코틀린의 짧고 간결한 문법이야말로 자바와 대비되는 매력 포인트입니다.** 자바처럼 장황하지 않습니다. 자바에서는 `null` 안전성을 위해 [`Optional.map()`][optional-map], [`Optional.orElse()`][optional-orelse]처럼 메서드를 호출해야 하지만, 코틀린에서는 [`?.`][safe-call], [`?:`][elvis]같이 기호로 구현합니다[^nullable-vs-optional].
 
@@ -15,6 +15,8 @@ category: android
 
 [^data-class]:
     <http://cr.openjdk.java.net/~briangoetz/amber/datum.html>
+
+[lombok]: https://projectlombok.org/
 
 [optional-map]: https://download.java.net/java/early_access/jdk11/docs/api/java.base/java/util/Optional.html#map(java.util.function.Function)
 
