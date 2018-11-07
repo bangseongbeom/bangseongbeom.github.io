@@ -1,5 +1,5 @@
 ---
-title: 웹 사이트의 너비: 980px
+title: "웹 사이트의 너비: 980px"
 category: css
 ---
 
