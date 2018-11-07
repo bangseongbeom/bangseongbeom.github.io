@@ -30,14 +30,38 @@
   text-align: center;
 }
 
+.footer-col {
+  width: auto;
+  padding-left: 0;
+}
+
+.footer-col-1,
 .footer-col-2 {
-  width: -webkit-calc(25% - (#{$spacing-unit} / 2));
-  width:         calc(25% - (#{$spacing-unit} / 2));
+  width: auto;
 }
 
 .footer-col-3 {
-  width: -webkit-calc(40% - (#{$spacing-unit} / 2));
-  width:         calc(40% - (#{$spacing-unit} / 2));
+  width: auto;
+}
+
+@media screen and (min-width: $on-large) {
+  .footer-col-1 {
+    width: auto;
+  }
+
+  .footer-col-2 {
+    width: auto;
+  }
+
+  .footer-col-3 {
+    width: auto;
+  }
+}
+
+@media screen and (min-width: $on-medium) {
+  .footer-col {
+    float: none;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
