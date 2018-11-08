@@ -11,9 +11,9 @@ category: css
 
 모바일 브라우저는 모바일 페이지가 없는 데스크톱 전용 웹 페이지를 렌더링할 때, 일부만 보이는 것을 막기 위해 화면이 약 980px인 것처럼 속인 다음 렌더링한다고 합니다[^set-the-viewport]. 그래야만 한 화면에 페이지를 모두 담을 수 있기 때문입니다.
 
-이 기준을 넘어간다면 렌더링 후에도 페이지를 좌우로 스크롤해야 하는 불편함이 생깁니다. **결국 이 수치는 모바일 페이지를 지원하지 않음에도 모바일에서 제대로 보이기 위한 최대한의 너비입니다.**
+웹 사이트가 이 수치를 초과한다면 렌더링 후에도 페이지를 좌우로 스크롤해야 하는 불편함이 생깁니다. **결국 이 수치는 모바일 페이지를 지원하지 않음에도 모바일에서 제대로 보이기 위한 최대한의 너비입니다.**
 
-최근에는 대부분 모바일 페이지를 지원하므로 큰 의미가 있는 수치는 아닙니다. 그래도 웹 사이트의 너비를 결정 짓는 기준점으로 삼기에는 괜찮아 보입니다. 따라서 이를 기준으로 조사합니다.
+최근에는 대부분 모바일 페이지를 지원하므로 이 수치 자체에 큰 의미가 있는 것은 아닙니다. 그래도 웹 사이트의 너비를 결정 짓는 기준점으로 삼기에는 괜찮아 보입니다. 따라서 이를 기준으로 조사합니다.
 
 [^set-the-viewport]:
     <https://developers.google.com/web/fundamentals/design-and-ux/responsive/#set-the-viewport>
@@ -26,7 +26,7 @@ category: css
 
 > The default width is 980 pixels.
 
-## 안드로이드: 980px
+## 안드로이드: 약 980px
 
 <https://developer.android.com/guide/webapps/targeting#Viewport>
 
@@ -34,7 +34,7 @@ category: css
 
 ## 기타 문서: 980-1024px
 
-구글 Developers 문서에서 예시로 든 너비: **980px:**
+구글 Developers 문서에서 예시로 든 너비: **약 980px:**
 
 <https://developers.google.com/web/fundamentals/design-and-ux/responsive/#set-the-viewport>
 > ... a desktop screen width (usually about 980px, though this varies across devices), ...
