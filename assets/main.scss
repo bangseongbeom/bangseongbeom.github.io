@@ -40,6 +40,14 @@ $on-large:         $on-laptop !default;
   float: none;
 }
 
+label[for="nav-trigger"] {
+  display: none;
+}
+
+.menu-icon {
+  display: none;
+}
+
 .post-header {
   text-align: center;
 }
