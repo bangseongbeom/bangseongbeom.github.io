@@ -91,15 +91,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2.post-list-heading {
-  margin-top: 0;
+  margin-top: $spacing-unit / 2;
 }
 
 .post-list .post-meta + h3 {
-  margin-top: 0;
+  margin-top: $spacing-unit / 2;
 }
 
 h2.footer-heading {
-  margin-top: 0;
+  margin-top: $spacing-unit / 2;
 }
 
 a {
