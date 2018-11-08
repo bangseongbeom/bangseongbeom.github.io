@@ -1,5 +1,5 @@
 ---
-title: python 카테고리
+title: python
 ---
 
 Python category
