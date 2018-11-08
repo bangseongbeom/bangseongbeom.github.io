@@ -49,7 +49,9 @@ category: android
 
 안드로이드 SDK는 자바로 짜여져 있습니다. 코틀린과 달리, 자바는 `null` 안정성을 보장하지 못합니다. **그렇기에 논리 상 또는 문서 상으로는 `null`이 나올 수 없는데도 불구하고, 코틀린에서 안드로이드 SDK를 사용하기 위해서는 불필요한 `null` 처리 코드를 작성해야 했습니다.** 이 때문에 코틀린의 장점을 최대한으로 활용할 수 없었습니다.
 
-코틀린은 자바와의 상호 운용성을 위해 자바 메서드에 `@NotNull` 애너테이션이 붙어 있다면 `null`이 나오지 않음을 보장하는 것이라 취급합니다[^nullability-annotations]. **안드로이드 파이(9.0)부터는 자주 쓰이는 대부분의 SDK 메서드에 `@NotNull` 애너테이션을 붙이게 되어, 이제 더 이상 불필요한 `null` 처리 코드를 작성하지 않아도 됩니다[^android-pie-sdk-is-now-more-kotlin].** 더불어 코틀린만이 가진 고급 문법을 지원하기 위해 [KTX][ktx]라는 확장 기능도 만들었습니다. 2017년 코틀린을 안드로이드의 공식 언어로 채택했을 때에 비하면[^official-kotlin], 이제는 정말로 안드로이드가 코틀린을 지원한다고 볼 수 있게 되었습니다.
+코틀린은 자바와의 상호 운용성을 위해 자바 메서드에 `@NotNull` 애너테이션이 붙어 있다면 `null`이 나오지 않음을 보장하는 것이라 취급합니다[^nullability-annotations]. **안드로이드 파이(9.0)부터는 자주 쓰이는 대부분의 SDK 메서드에 `@NotNull` 애너테이션을 붙이게 되어, 이제 더 이상 불필요한 `null` 처리 코드를 작성하지 않아도 됩니다[^android-pie-sdk-is-now-more-kotlin].** 더불어 코틀린만이 가진 고급 문법을 지원하기 위해 [KTX][ktx]라는 확장 기능도 만들었습니다.
+
+2017년 코틀린을 안드로이드의 공식 언어로 채택했을 때에 비하면[^official-kotlin], 이제는 정말로 안드로이드가 코틀린을 지원한다고 볼 수 있게 되었습니다.
 
 [^nullability-annotations]: <https://kotlinlang.org/docs/reference/java-interop.html#nullability-annotations>
 
