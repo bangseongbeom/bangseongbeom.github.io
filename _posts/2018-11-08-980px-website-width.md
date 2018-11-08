@@ -1,5 +1,5 @@
 ---
-title: "참고 용 웹 사이트 너비: 980px"
+title: "980px: 참고 용 웹 사이트 너비"
 category: css
 ---
 
