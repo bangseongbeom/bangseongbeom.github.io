@@ -1,3 +1,3 @@
 {%- for category in site.categories -%}
-<span>{{ category }}</span>
+<span>{{ category | first }}</span>
 {%- endfor -%}
