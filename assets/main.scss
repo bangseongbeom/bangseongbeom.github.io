@@ -86,16 +86,20 @@ $on-large:         $on-laptop !default;
   }
 }
 
-.site-footer {
-  padding: $spacing-unit / 2 0;
-}
-
-.page-content {
-  padding: $spacing-unit / 2 0;
-}
-
 h1, h2, h3, h4, h5, h6 {
   margin-top: $spacing-unit * 1.5;
+}
+
+h2.post-list-heading {
+  margin-top: 0;
+}
+
+.post-meta + h3 {
+  margin-top: 0;
+}
+
+h2.footer-heading {
+  margin-top: 0;
 }
 
 a {
