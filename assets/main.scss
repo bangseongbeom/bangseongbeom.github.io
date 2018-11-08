@@ -2,11 +2,10 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-$base-font-size: 20px;
+$content-width: 720px;
 
-$content-width: 980px;
-
-$on-laptop: 980px;
+$on-palm: 480px;
+$on-laptop: 720px;
 
 @import "minima";
 
