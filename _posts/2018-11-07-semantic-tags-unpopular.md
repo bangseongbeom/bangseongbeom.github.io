@@ -9,8 +9,8 @@ category: html
 
 시맨틱 태그는 HTML 문서에 의미를 부여하는 태그입니다. '의미 있는'이라는 뜻의 영어 단어인 '시맨틱(semantic)'을 붙여 시맨틱 태그라고 부릅니다. 대표적으로 다음과 같은 태그가 있습니다:
 
-- [`<main>`][main-element]: 이 문서의 '주된 내용'라는 의미를 가집니다. '주된'이라는 뜻의 'main'에서 따왔습니다.
-- [`<nav>`][nav-element]: '메뉴'라는 의미를 가집니다. 웹 페이지의 메뉴를 일컫는 말인 'navigation menu'에서 따왔습니다.
+- [`<main>`][main-element]: 이 문서의 '주된 내용'라는 의미를 부여합니다. '주된'이라는 뜻의 'main'에서 따왔습니다.
+- [`<nav>`][nav-element]: '메뉴'라는 의미를 부여합니다. 웹 페이지의 메뉴를 일컫는 말인 'navigation menu'에서 따왔습니다.
 
 [main-element]: https://developer.mozilla.org/docs/Web/HTML/Element/main
 
