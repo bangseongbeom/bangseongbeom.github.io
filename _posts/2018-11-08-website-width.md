@@ -1,5 +1,5 @@
 ---
-title: 웹 사이트의 너비 정하기
+title: 권장 웹 사이트 너비
 category: css
 ---
 
