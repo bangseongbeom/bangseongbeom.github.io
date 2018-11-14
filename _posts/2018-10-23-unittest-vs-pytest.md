@@ -51,7 +51,7 @@ category: python
 
 **unittest: 불편합니다.** 테스트를 작성하기 위해 반드시 클래스를 정의해야 하므로 불편합니다.
 
-**pytest: 편리합니다.** 테스트를 작성하는 데 있어 함수만 정의하면 되므로 편리합니다.
+pytest: 편리합니다. 테스트를 작성하는 데 있어 함수만 정의하면 되므로 편리합니다.
 
 unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크로부터 강력한 영향을 받았습니다[^strong-influence]. 자바는 클래스 중심적인 언어로, 클래스를 만들지 않으면 함수를 작성할 수 없습니다.
 
@@ -92,7 +92,7 @@ def test_upper():
 
 **unittest: 어쩔 수 없는 이유가 있긴 하지만, 권장되지 않는 방식인 카멜 케이스로 단어를 구분합니다.** `assertEqual()`, `setUp()`처럼 말입니다.
 
-**pytest: 권장되는 방식인 언더스코어로 단어를 구분합니다.** `assert_equal()`, `set_up()`처럼 말입니다.
+pytest: 권장되는 방식인 언더스코어로 단어를 구분합니다. `assert_equal()`, `set_up()`처럼 말입니다.
 
 [PEP 8이라고도 불리는 파이썬 스타일 가이드][pep-8]에서는, 메서드의 이름을 지을 때 pytest처럼 언더스코어로 단어를 구분하는 것을 권장합니다[^use-underscore].
 
@@ -125,25 +125,6 @@ def test_upper():
 
 **pytest: 기존의 여러 테스팅 프레임워크와는 다른 독특한 방식으로 픽스처를 제공합니다.** 어떤 테스트가 어떤 픽스처를 사용하는지 쉽게 파악할 수 있습니다. 각 테스트마다 꼭 필요한 픽스처만 명시하기 때문에, 사용하지 않는 픽스처를 만드는데 걸리는 시간을 아낄 수도 있습니다.
 
-pytest 방식으로 픽스처를 만들어보겠습니다. 일단 픽스처를 반환하는 함수를 하나 만듭니다. 여기에 `@pytest.fixture` 를 붙여줍니다. 이제 이 픽스처 함수의 이름과 똑같은 이름을 가지는 인자를 테스트 함수에 추가합니다. 이제 테스트 함수가 실행되면 인자와 같은 이름을 가지는 픽스처 함수가 실행되고,  그 반환 결과가 인자에 주입됩니다. 다음은 pytest 문서에서 제공하는 픽스처 예시입니다:
-
-<https://docs.pytest.org/en/latest/fixture.html>
-
-```python
-# content of ./test_smtpsimple.py
-import pytest
-
-@pytest.fixture
-def smtp_connection():
-    import smtplib
-    return smtplib.SMTP("smtp.gmail.com", 587, timeout=5)
-
-def test_ehlo(smtp_connection):
-    response, msg = smtp_connection.ehlo()
-    assert response == 250
-    assert 0 # for demo purposes
-```
-
 pytest 공식 문서에서는 이러한 픽스처 사용 방식이 다음과 같은 장점을 가져다 준다고 말합니다:
 
 <https://docs.pytest.org/en/latest/fixture.html>
@@ -156,7 +137,7 @@ pytest 공식 문서에서는 이러한 픽스처 사용 방식이 다음과 같
 
 ## pytest의 단점: 기존 파이썬 흐름과 다른 픽스처
 
-**unittest: 쉽게 적응할 수 있습니다.** 픽스처를 정의하는 방법이 다른 테스팅 프레임워크와 똑같습니다.
+unittest: 픽스처를 정의하는 방법이 다른 테스팅 프레임워크와 똑같습니다.
 
 **pytest: pytest만의 고유한 방식을 익혀야 합니다.** 이 방식은 일반적인 파이썬의 코드 흐름이 아니기 때문에 코드 분석 도구가 오류를 일으킬 수 있습니다.
 
@@ -172,9 +153,9 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 ## pytest의 장점: assert 문 재작성으로 인한 편리함
 
-**unittest: 불편합니다.** `assertEqual()`, `assertGreater()`같은 assert 메서드를 적재적소에 사용해야 한다는 불편함이 있습니다.
+unittest: 불편합니다. `assertEqual()`, `assertGreater()`같은 assert 메서드를 적재적소에 사용해야 한다는 불편함이 있습니다.
 
-**pytest: 편리합니다.** `assert` 다음에 나오는 검증식이 어떤 의미를 가지는지 자동으로 분석해주기 때문에 편리합니다.
+pytest: 편리합니다. `assert` 다음에 나오는 검증식이 어떤 의미를 가지는지 자동으로 분석해주기 때문에 편리합니다.
 
 언어에서 기본적으로 제공하는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하는 것 대신 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertEqual(1, 2)`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다.
 
@@ -184,15 +165,15 @@ pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동�
 
 assert 문은 `assert` 다음에 나오는 표현식의 성공/실패 여부만 확인할 수 있습니다. 우리는 `1 == 2`가 같음을 비교하는 것이고 `1 > 2`가 대소를 비교하는 것이라는 걸 알지만 assert 문은 알지 못합니다. assert 실패 메시지에 표현식의 의도를 담기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
 
-pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다. assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
+**pytest를 사용한다면 더 이상 여러 종류의 assert 메서드를 번갈아 사용할 필요가 없습니다.** assert 문 하나로 모든 것을 해결할 수 있습니다. pytest는 사용자가 작성한 파이썬 코드에서 assert 문을 분석한 뒤, 상세한 실패 메시지를 띄우도록 내부적으로 코드를 재작성합니다. 이를 통해 assert 문만을 사용하고도 풍부한 실패 메시지를 출력할 수 있습니다. 자세한 내용은 [Behind the scenes of pytest’s new assertion rewriting][assertion-rewriting]을 참고하세요.
 
 [assertion-rewriting]: http://pybites.blogspot.com/2011/07/behind-scenes-of-pytests-new-assertion.html
 
 ## pytest의 단점: assert 문 재작성의 한계
 
-**unittest: 특별한 게 없습니다.**
+unittest: 특별한 게 없습니다.
 
-**pytest: 문제가 될만한 경우를 인지하고 있어야 합니다.** 복잡한 검증식을 자동으로 검증해주지는 않습니다. 외부 파일의 assert 문을 가져올 때 발생하는 문제에 대해 알아야 합니다. 
+**pytest: 재작성으로 인해 문제가 될만한 경우를 인지하고 있어야 합니다.**
 
 assert 문 재작성은 편리한 기능이지만, unittest의 [`assertRegex()`][assertregex]같은 복잡한 assert 메서드를 대신할 수는 없습니다. 다음은 unittest의 `assertRegex()`와 pytest의 `assert re.search()`를 이용해 정규 표현식으로 문자열을 검색하는 테스트와 그 결과입니다. `assertRegex()`를 사용한 쪽의 실패 메시지가 더 명확하다는 것을 확인할 수 있습니다:
 
@@ -217,9 +198,9 @@ E        +  where None = search('var', 'foobar')
 
 ## pytest의 장점: 고급 기능
 
-**unittest: 상대적으로 적은 기능을 가집니다.**
+unittest: 꼭 필요한 기능만을 가집니다.
 
-**pytest: 강력한 고급 기능을 가집니다:**
+pytest: 다양한 고급 기능을 가집니다:
 
 - 매개변수화된 픽스처: 매개 변수를 다르게 해 동일한 픽스처나 테스트를 여러 번 수행하도록 만듭니다. [Parametrizing fixtures and test functions][parametrize]를 참고하세요.
 - 병렬 테스트: 테스트를 병렬적으로 수행할 수 있도록 합니다. 하나의 테스트가 끝나지 않아도 다른 테스트를 수행할 수 있어 테스트 시간이 단축됩니다. [pytest-xdist]를 참고하세요.
@@ -230,15 +211,15 @@ E        +  where None = search('var', 'foobar')
 
 ## 결론: 이럴 때 사용하세요
 
-**unittest: 이럴 때 사용하세요:**
+unittest: 이럴 때 사용하세요:
 
-- pytest의 독특한 테스트 방식이 정말 생산성을 향상시킬 수 있는지 의심스럽다. 다른 언어의 테스팅 프레임워크와 비슷한 정도만으로도 충분하다.
-- 픽스처 주입이나 assert 문 재작성으로 인한 잠재적인 문제를 떠안고 싶지 않다. 예기치 못한 동작으로 인해 고생을 하느니 차라리 코드 몇 줄 더 치는 게 현명한 선택이다.
+- **pytest의 독특한 테스트 방식이 정말 생산성을 향상시킬 수 있는지 의심스럽다.** 다른 언어의 테스팅 프레임워크와 비슷한 정도만으로도 충분하다.
+- **픽스처 주입이나 assert 문 재작성으로 인한 잠재적인 문제를 떠안고 싶지 않다.** 예기치 못한 동작으로 인해 고생을 하느니 차라리 코드 몇 줄 더 치는 게 현명한 선택이라 생각한다.
 
-**pytest: 이럴 때 사용하세요:**
+pytest: 이럴 때 사용하세요:
 
-- 간결하고 아름다운 코드가 무엇보다 중요하다. 테스트 코드를 작성하기 위해 클래스를 사용하는 건 파이썬스럽지 못하다.
-- 매개변수화된 픽스처나 병렬 테스트와 같은 고급 기능이 필요하다.
+- **간결하고 아름다운 코드가 무엇보다 중요하다.** 테스트 코드를 작성하기 위해 클래스를 사용하는 건 파이썬스럽지 못하다.
+- **매개변수화된 픽스처나 병렬 테스트와 같은 고급 기능이 필요하다.**
 
 unittest 기반으로 테스트를 작성하되, assert 문 재작성이나 병렬 테스트, 테스트 실패 디버깅과 같은 pytest의 기능이 필요한 경우도 있습니다. 이럴 때 unittest를 쓸지 pytest를 쓸지 고민하지 않아도 됩니다. pytest는 unittest로 작성한 테스트 코드를 돌릴 수 있는 기능을 제공하고 있습니다[^pytest-unittest].
 
