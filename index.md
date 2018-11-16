@@ -1,3 +1,3 @@
 ---
-list_title: 글 목록
+list_title: 최신 글 목록
 ---
