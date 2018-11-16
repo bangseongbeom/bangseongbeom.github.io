@@ -9,7 +9,7 @@ category: java
 
 [dropwizard]: https://www.dropwizard.io/
 
-## 단점: 선택적으로 도입할 수 없는 복잡한 기술
+## 단점: 선택적으로 도입할 수 없는 제어의 역전
 
 스프링은 거대한 소프트웨어의 개발을 편리하게 하기 위해 특별한 기술을 기반으로 움직입니다. 의존성 주입(DI; Dependency Injection)이라고도 불리는 제어의 역전(IoC; Inversion of Control)과, 관점 지향 프로그래밍(AOP: Aspect Oriented Programming)이 그것입니다.
 
