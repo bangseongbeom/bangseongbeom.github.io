@@ -28,8 +28,6 @@ google_analytics: UA-125900715-1
 
 show_excerpts: true
 
-list_title: 글 목록
-
 minima:
   date_format: "%F"
 
