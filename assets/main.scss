@@ -39,17 +39,17 @@ $on-large:         $on-laptop !default;
   float: none;
 }
 
-.site-nav .page-link {
+.site-nav label[for="nav-trigger"] {
+  display: none;
+}
+
+.site-nav .menu-icon {
+  display: none;
+}
+
+.site-nav a.page-link {
   border: thick solid;
   padding: 0.25em;
-}
-
-label[for="nav-trigger"] {
-  display: none;
-}
-
-.menu-icon {
-  display: none;
 }
 
 .post-header {
