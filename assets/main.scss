@@ -47,11 +47,11 @@ $on-large:         $on-laptop !default;
   display: none;
 }
 
-input ~ .trigger {
+.site-nav input ~ .trigger {
   display: block;
 }
 
-.site-nav a.page-link {
+.site-nav .page-link {
   border: thick solid;
   padding: 0.25em 0.375em;
 }
