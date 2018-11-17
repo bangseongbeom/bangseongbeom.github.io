@@ -39,6 +39,11 @@ $on-large:         $on-laptop !default;
   float: none;
 }
 
+.site-nav .page-link {
+  border: thick solid;
+  padding: 0.25em;
+}
+
 label[for="nav-trigger"] {
   display: none;
 }
