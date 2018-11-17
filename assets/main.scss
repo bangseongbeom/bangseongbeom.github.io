@@ -42,6 +42,10 @@ $on-large:         $on-laptop !default;
   background-color: inherit;
 }
 
+.site-nav {
+  text-align: center;
+}
+
 .site-nav label[for="nav-trigger"] {
   display: none;
 }
