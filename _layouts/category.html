@@ -5,8 +5,8 @@ layout: default
 <div class="category">
   {{ content }}
 
-  {{ page.name | split: "." | first }}
-  {- assign basename = page.name | split: "." | first -}
+  {%- assign basename = page.name | split: "." | first -%}
+  {{ basename }}
   {%- assign category = site.categories[basename] -%}
   {%- if category.size > 0 -%}
     <h2 class="post-list-heading">{{ page.title | default: "Posts" }} 글 목록</h2>
