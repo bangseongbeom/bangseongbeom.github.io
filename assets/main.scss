@@ -36,7 +36,10 @@ $on-large:         $on-laptop !default;
 }
 
 .site-nav {
+  position: static;
   float: none;
+  border: none;
+  background-color: inherit;
 }
 
 .site-nav label[for="nav-trigger"] {
