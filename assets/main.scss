@@ -61,15 +61,8 @@ $on-large:         $on-laptop !default;
 .site-nav .page-link {
   display: inline-block;
   padding: 0;
-  margin-left: auto;
-}
-
-.site-nav .page-link:not(:last-child) {
-  margin-right: 20px;
-}
-
-.site-nav .page-link {
-  
+  margin-left: 10px;
+  margin-right: 10px;
   border: medium solid;
   padding: 0.25em 0.375em;
 }
