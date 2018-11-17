@@ -20,9 +20,7 @@ $on-large:         $on-laptop !default;
 
 .site-header {
   border-top: none;
-}
-
-.site-header {
+  border-bottom: none;
   text-align: center;
 }
 
@@ -40,9 +38,6 @@ $on-large:         $on-laptop !default;
   float: none;
   border: none;
   background-color: inherit;
-}
-
-.site-nav {
   text-align: center;
 }
 
@@ -76,6 +71,7 @@ $on-large:         $on-laptop !default;
 }
 
 .site-footer {
+  border-top: none;
   text-align: center;
 }
 
