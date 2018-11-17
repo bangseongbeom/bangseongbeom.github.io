@@ -67,6 +67,10 @@ $on-large:         $on-laptop !default;
   padding: 0.25em 0.375em;
 }
 
+.site-nav .page-link:not(:last-child) {
+  margin-right: 10px;
+}
+
 .post-header {
   text-align: center;
 }
