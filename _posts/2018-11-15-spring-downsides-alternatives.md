@@ -75,4 +75,4 @@ category: java
 
 ## 참고
 
-- http://samatkinson.com/why-i-hate-spring/
+- <http://samatkinson.com/why-i-hate-spring/>
