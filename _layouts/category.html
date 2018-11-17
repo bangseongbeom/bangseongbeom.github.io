@@ -5,7 +5,7 @@ layout: default
 <div class="category">
   {{ content }}
 
-  {{ File.basename(pathpage.name, ".*") }}
+  {{ pathpage.name | split: ".*" | first }}
 
   {%- assign category = site.categories[page.target_category] -%}
   {%- if category.size > 0 -%}
