@@ -1,5 +1,5 @@
 ---
-title: 파이썬
 layout: category
+title: 파이썬
 target_category: python
 ---
