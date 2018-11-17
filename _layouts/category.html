@@ -5,9 +5,7 @@ layout: default
 <div class="category">
   {{ content }}
 
-  {{ pathpage.name | split: "." | first }}
-
-  {%- assign category = site.categories[page.target_category] -%}
+  {%- assign category = site.categories[pathpage.name | split: "." | first] -%}
   {%- if category.size > 0 -%}
     <h2 class="post-list-heading">{{ page.title | default: "Posts" }} 글 목록</h2>
     <ul class="post-list">
