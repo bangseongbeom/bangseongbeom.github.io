@@ -55,6 +55,16 @@ $on-large:         $on-laptop !default;
 }
 
 .site-nav .page-link {
+  display: inline;
+  padding: 0;
+  margin-left: auto;
+}
+
+.site-nav .page-link:not(:last-child) {
+  margin-right: 20px;
+}
+
+.site-nav .page-link {
   border: thick solid;
   padding: 0.25em 0.375em;
 }
