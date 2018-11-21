@@ -69,7 +69,7 @@ $on-large:         $on-laptop !default;
   text-align: center;
 }
 
-.post-content p:has(img) {
+.post-content p:has(> img) {
   text-align: center;
 }
 
