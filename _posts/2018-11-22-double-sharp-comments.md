@@ -1,7 +1,6 @@
 ---
-title: 파이썬의 더블 샤프(`##`) 주석
+title: 파이썬의 더블 샤프(##) 주석
 category: python
-unpublished: true
 ---
 
 파이썬 내장 IDE인 [IDLE(아이들)][idle]에서는 'Comment Out Region'이라는 메뉴 항목이 있습니다. 그런데 이 항목은 샤프를 하나만 붙이는 게 아니라 두 개를 붙입니다. 샤프 두 개에 뭔가 특별한 의미라도 있는 걸까요?
