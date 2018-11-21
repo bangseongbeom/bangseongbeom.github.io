@@ -69,8 +69,9 @@ $on-large:         $on-laptop !default;
   text-align: center;
 }
 
-.post-content p:has(> img) {
-  text-align: center;
+.post-content img {
+  display: block;
+  margin: 0 auto;
 }
 
 .site-footer {
