@@ -124,8 +124,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .post-list li {
-  border: thick solid whitesmoke;
-  padding: 0 $spacing-unit / 2;
+  background: whitesmoke;
+  padding: $spacing-unit / 2 $spacing-unit * 1.5;
 }
 
 .post-list h3 {
