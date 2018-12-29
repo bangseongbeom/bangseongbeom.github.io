@@ -36,7 +36,8 @@ $on-large:         $on-laptop !default;
 .site-nav {
   position: static;
   float: none;
-  border: medium solid black;
+  border: thick solid $text-color;
+  border-radius: 0;
   background-color: inherit;
   text-align: center;
   line-height: normal;
