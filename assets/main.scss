@@ -36,10 +36,9 @@ $on-large:         $on-laptop !default;
 .site-nav {
   position: static;
   float: none;
-  border-radius: 0;
+  border: none;
   background-color: inherit;
   text-align: center;
-  line-height: normal;
 }
 
 .site-nav label[for="nav-trigger"] {
@@ -56,15 +55,17 @@ $on-large:         $on-laptop !default;
 
 .site-nav .page-link {
   display: inline-block;
-  margin-left: 0;
-  margin-right: 0;
-  font-weight: bold;
-  padding: 0.75em 1.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  color: white;
   border: medium solid;
+  font-weight: bold;
+  padding: 0.5em 0.75em;
 }
 
 .site-nav .page-link:not(:last-child) {
-  margin-right: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .post-header {
