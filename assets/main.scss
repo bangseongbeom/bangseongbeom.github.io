@@ -36,7 +36,6 @@ $on-large:         $on-laptop !default;
 .site-nav {
   position: static;
   float: none;
-  border: thick solid $text-color;
   border-radius: 0;
   background-color: inherit;
   text-align: center;
@@ -49,6 +48,7 @@ $on-large:         $on-laptop !default;
 
 .site-nav .menu-icon {
   display: none;
+  border: medium solid;
 }
 
 .site-nav input ~ .trigger {
