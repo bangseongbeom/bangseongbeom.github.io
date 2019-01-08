@@ -55,17 +55,17 @@ $on-large:         $on-laptop !default;
 
 .site-nav .page-link {
   display: inline-block;
-  margin-left: 0.125em;
-  margin-right: 0.125em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
   color: black;
   border: thick solid;
   font-weight: bold;
-  padding: 0.5em 1em;
+  padding: 0.5em 1.25em;
 }
 
 .site-nav .page-link:not(:last-child) {
-  margin-left: 0.125em;
-  margin-right: 0.125em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
 }
 
 .post-header {
