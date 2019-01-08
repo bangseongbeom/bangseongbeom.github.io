@@ -48,7 +48,6 @@ $on-large:         $on-laptop !default;
 
 .site-nav .menu-icon {
   display: none;
-  border: medium solid;
 }
 
 .site-nav input ~ .trigger {
@@ -61,6 +60,7 @@ $on-large:         $on-laptop !default;
   margin-right: 0;
   font-weight: bold;
   padding: 0.75em 1.5em;
+  border: medium solid;
 }
 
 .site-nav .page-link:not(:last-child) {
