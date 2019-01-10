@@ -58,7 +58,7 @@ $on-large:         $on-laptop !default;
   margin-left: 0.25em;
   margin-right: 0.25em;
   color: black;
-  border: medium solid;
+  border: medium solid lightgray;
   font-weight: bold;
   padding: 0.5em 1.25em;
 }
@@ -126,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .post-list {
   padding: 0 1em;
-  border: medium solid;
+  border: medium solid lightgray;
 }
 
 .post-list h3 {
