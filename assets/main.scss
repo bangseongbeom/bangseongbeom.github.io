@@ -76,7 +76,6 @@ $on-large:         $on-laptop !default;
 
 .page-content a {
   border-bottom: medium solid currentcolor;
-  padding-bottom: 0.125em;
 }
 
 .page-content img {
@@ -162,7 +161,8 @@ pre,
 code {
   border-width: 2px;
   border-radius: 0;
-  background-color: #fcfaf8;
+  padding: 0 5px;
+  border: none;
 }
 
 .highlight {
