@@ -79,6 +79,7 @@ $on-large:         $on-laptop !default;
 }
 
 .page-content a:hover {
+  text-decoration: none;
   border-bottom-width: thick;
 }
 
