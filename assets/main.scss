@@ -2,7 +2,7 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-$brand-color: dodgerblue;
+$brand-color: #111;
 
 $content-width: 720px;
 
@@ -77,6 +77,10 @@ $on-large:         $on-laptop !default;
 .page-content img {
   display: block;
   margin: 0 auto;
+}
+
+.page-content a {
+  text-decoration: underline;
 }
 
 .post-header {
