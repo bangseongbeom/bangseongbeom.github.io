@@ -78,6 +78,10 @@ $on-large:         $on-laptop !default;
   border-bottom: medium solid currentcolor;
 }
 
+.page-content a:hover {
+  border-bottom-width: thick;
+}
+
 .page-content img {
   display: block;
   margin: 0 auto;
