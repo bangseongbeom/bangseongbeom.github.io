@@ -75,12 +75,7 @@ $on-large:         $on-laptop !default;
 }
 
 .page-content a {
-  border-bottom: medium solid currentcolor;
-}
-
-.page-content a:hover {
-  text-decoration: none;
-  border-bottom-width: thick;
+  text-decoration: underline;
 }
 
 .page-content img {
