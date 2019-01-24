@@ -2,14 +2,14 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-$brand-color: #2979ff;
+@import "minima";
 
 $content-width: 720px;
 
 $on-palm: 480px;
 $on-laptop: 720px;
 
-@import "minima";
+$brand-color: $text-color;
 
 // Width of the content area
 $content-width:    800px !default;
