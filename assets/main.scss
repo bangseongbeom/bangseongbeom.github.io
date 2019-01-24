@@ -2,14 +2,14 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-@import "minima";
-
 $content-width: 720px;
 
 $on-palm: 480px;
 $on-laptop: 720px;
 
 $brand-color: $text-color;
+
+@import "minima";
 
 // Width of the content area
 $content-width:    800px !default;
@@ -19,6 +19,10 @@ $on-laptop:        800px !default;
 
 $on-medium:        $on-palm !default;
 $on-large:         $on-laptop !default;
+
+a {
+  font-size: 1.125em;
+}
 
 .site-header {
   border-top: none;
