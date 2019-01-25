@@ -20,6 +20,14 @@ $on-laptop:        800px !default;
 $on-medium:        $on-palm !default;
 $on-large:         $on-laptop !default;
 
+p a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  text-decoration: underline;
+}
+
+p a:hover, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  color: gray;
+}
+
 .site-header {
   border-top: none;
   border-bottom: none;
@@ -77,10 +85,6 @@ $on-large:         $on-laptop !default;
 .page-content img {
   display: block;
   margin: 0 auto;
-}
-
-.page-content a {
-  text-decoration: underline;
 }
 
 .post-header {
