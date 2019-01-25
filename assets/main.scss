@@ -2,6 +2,7 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+$text-color: #555;
 $brand-color: #111;
 
 $content-width: 720px;
@@ -40,8 +41,8 @@ main a {
 }
 
 .site-title img {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
 }
 
 .site-nav {
@@ -72,6 +73,7 @@ main a {
   font-weight: bold;
   font-size: 18px;
   padding: 0.5em 1.25em;
+  background: lightgray;
 }
 
 .site-nav .page-link:not(:last-child) {
