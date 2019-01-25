@@ -25,15 +25,15 @@ a {
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-decoration: underline;
+  outline: white;
 }
 
 a {
-  transition: background-color 0.25s, outline-color 0.25s; 
+  transition: background 0.25s; 
 }
 
 a:hover {
   background: gainsboro;
-  outline: solid gainsboro;
 }
 
 header a {
