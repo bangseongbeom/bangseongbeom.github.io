@@ -32,14 +32,18 @@ a {
   text-decoration: underline;
 }
 
-header a {
-  text-decoration: none;
+a:hover {
+  background: gainsboro;
 }
 
 .site-header {
   border-top: none;
   border-bottom: none;
   text-align: center;
+}
+
+.site-header a {
+  text-decoration: none;
 }
 
 .site-title {
@@ -83,7 +87,7 @@ header a {
 }
 
 .site-nav .page-link:hover {
-  background-color: gainsboro;
+  background: gainsboro;
   text-decoration: none;
 }
 
