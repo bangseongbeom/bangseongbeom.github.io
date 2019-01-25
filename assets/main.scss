@@ -40,7 +40,7 @@ a code {
 }
 
 a:hover code {
-  background: darken(#fcfaf8, 25%);
+  background: darken(#fcfaf8, 12.5%);
 }
 
 header a {
@@ -69,6 +69,10 @@ header a {
   background-color: inherit;
   text-align: center;
   line-height: 52px;
+}
+
+.site-nav a:hover {
+  text-decoration: none;
 }
 
 .site-nav label[for="nav-trigger"] {
