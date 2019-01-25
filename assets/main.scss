@@ -30,15 +30,6 @@ a {
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-decoration: underline;
-  outline: white;
-}
-
-a {
-  transition: background 0.25s; 
-}
-
-a:hover {
-  background: gainsboro;
 }
 
 header a {
@@ -69,10 +60,6 @@ header a {
   line-height: 52px;
 }
 
-.site-nav a:hover {
-  text-decoration: none;
-}
-
 .site-nav label[for="nav-trigger"] {
   display: none;
 }
@@ -93,6 +80,11 @@ header a {
   font-weight: bold;
   padding: 0.5em 1.25em;
   border: solid gainsboro;
+}
+
+.site-nav .page-link {
+  background-color: gainsboro;
+  text-decoration: none;
 }
 
 .site-nav .page-link:not(:last-child) {
