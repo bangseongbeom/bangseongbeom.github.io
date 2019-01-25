@@ -62,7 +62,7 @@ a:hover {
   border: none;
   background-color: inherit;
   text-align: center;
-  line-height: 52px;
+  line-height: 1.5;
 }
 
 .site-nav label[for="nav-trigger"] {
@@ -79,8 +79,7 @@ a:hover {
 
 .site-nav .page-link {
   display: inline-block;
-  margin-left: 0.25em;
-  margin-right: 0.25em;
+  margin: 0.25em;
   color: $brand-color;
   font-weight: bold;
   padding: 0.5em 1.25em;
