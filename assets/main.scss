@@ -50,6 +50,12 @@ a:hover {
   float: none;
 }
 
+.site-title::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .site-title img {
   width: 128px;
   height: 128px;
