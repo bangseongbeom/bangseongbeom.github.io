@@ -20,6 +20,11 @@ $on-laptop:        800px !default;
 $on-medium:        $on-palm !default;
 $on-large:         $on-laptop !default;
 
+a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 p a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   text-decoration: underline;
 }
@@ -149,11 +154,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h2.footer-heading {
   margin-top: $spacing-unit / 2;
-}
-
-a {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 pre,
