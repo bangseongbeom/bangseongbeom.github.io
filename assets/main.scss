@@ -22,8 +22,8 @@ $on-medium:        $on-palm !default;
 $on-large:         $on-laptop !default;
 
 ::selection {
-  background: $text-color;
   color: white;
+  background-color: $text-color;
 }
 
 a {
