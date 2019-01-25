@@ -33,14 +33,7 @@ a {
 
 a:hover {
   background: gainsboro;
-}
-
-a code {
-  transition: background 0.25s;
-}
-
-a:hover code {
-  background: darken(#fcfaf8, 12.5%);
+  outline: solid gainsboro;
 }
 
 header a {
