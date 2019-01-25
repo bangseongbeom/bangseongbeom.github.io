@@ -72,9 +72,8 @@ header a {
   margin-right: 0.25em;
   color: black;
   font-weight: bold;
-  font-size: 18px;
   padding: 0.5em 1.25em;
-  background: gainsboro;
+  border: solid gainsboro;
 }
 
 .site-nav .page-link:not(:last-child) {
