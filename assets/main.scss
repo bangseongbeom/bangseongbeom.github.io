@@ -170,6 +170,10 @@ h2.footer-heading {
   margin-top: $spacing-unit / 2;
 }
 
+.social-media-list a:hover {
+  text-decoration: underline;
+}
+
 pre,
 code {
   font-family: D2Coding, Consolas, monospace;
