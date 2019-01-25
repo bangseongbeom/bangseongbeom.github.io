@@ -27,6 +27,22 @@ a {
   text-decoration: underline;
 }
 
+a {
+  transition: background 0.25s; 
+}
+
+a:hover {
+  background: gainsboro;
+}
+
+a code {
+  transition: background 0.25s;
+}
+
+a:hover code {
+  background: darken(#fcfaf8, 25%);
+}
+
 header a {
   text-decoration: none;
 }
