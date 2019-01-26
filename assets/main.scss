@@ -45,6 +45,11 @@ a:hover {
 .site-title {
   display: block;
   float: none;
+  text-decoration: none;
+}
+
+.site-title:hover {
+  text-decoration: none;
 }
 
 .site-title img {
@@ -78,8 +83,7 @@ a:hover {
   margin: 0.25em;
   color: $brand-color;
   font-weight: bold;
-  padding: 0.5em 1.25em;
-  border: solid $brand-color;
+  padding: 0.75em 1.5em;
   text-decoration: none;
 }
 
