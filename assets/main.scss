@@ -49,7 +49,7 @@ a:hover {
   font-size: 24px;
   font-weight: bold;
   color: $brand-color;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
 }
 
 .site-title:hover {
@@ -86,11 +86,11 @@ a:hover {
   display: inline-block;
   margin: 0.25em;
   color: $brand-color;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
-  padding: 0.25em 0.75em;
+  padding: 0.75em 1.5em;
+  border: solid;
   text-decoration: none;
-  letter-spacing: -0.05em;
 }
 
 .site-nav .page-link:hover {
