@@ -51,7 +51,8 @@ a:hover {
   color: $brand-color;
   letter-spacing: 0;
   margin: 0.125em;
-  padding: 0.125em;
+  padding: 0 1em;
+  border: solid;
 }
 
 .site-title:hover {
