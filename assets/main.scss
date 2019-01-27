@@ -29,11 +29,13 @@ $on-large:         $on-laptop !default;
 a {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  text-decoration: underline;
+  border-bottom: thick solid #e6e6e6;
+  text-decoration: none;
 }
 
 a:hover {
-  background: darken(white, 10%);
+  background: #e6e6e6;
+  text-decoration: none;
 }
 
 .site-header {
@@ -46,6 +48,7 @@ a:hover {
   display: inline-block;
   margin: 4px;
   padding: 0.25em 1em;
+  border-bottom: none;
   float: none;
   font-size: 24px;
   font-weight: bold;
@@ -70,6 +73,7 @@ a:hover {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
+  border-bottom: none;
 }
 
 .site-nav label[for="nav-trigger"] {
