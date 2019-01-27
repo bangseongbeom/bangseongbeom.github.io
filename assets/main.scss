@@ -43,7 +43,9 @@ a:hover {
 }
 
 .site-title, .site-title:visited {
-  display: block;
+  display: inline-block;
+  margin: 4px;
+  padding: 0.25em;
   float: none;
   text-decoration: none;
   font-size: 24px;
@@ -84,7 +86,7 @@ a:hover {
 
 .site-nav .page-link {
   display: inline-block;
-  margin: 0.25em;
+  margin: 4px;
   color: $brand-color;
   font-size: 24px;
   font-weight: bold;
