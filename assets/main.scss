@@ -43,16 +43,13 @@ a:hover {
 }
 
 .site-title, .site-title:visited {
-  display: inline-block;
+  display: block;
   float: none;
   text-decoration: none;
   font-size: 24px;
   font-weight: bold;
   color: $brand-color;
-  letter-spacing: 0;
-  margin: 4px;
-  padding: 0 1em;
-  border: solid;
+  letter-spacing: -0.05em;
 }
 
 .site-title:hover {
@@ -87,13 +84,13 @@ a:hover {
 
 .site-nav .page-link {
   display: inline-block;
-  margin: 4px;
+  margin: 0.25em;
   color: $brand-color;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
-  padding: 0.75em 1.5em;
-  border: solid;
+  padding: 0.25em 0.75em;
   text-decoration: none;
+  letter-spacing: -0.05em;
 }
 
 .site-nav .page-link:hover {
