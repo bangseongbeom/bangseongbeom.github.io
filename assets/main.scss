@@ -73,7 +73,6 @@ a:hover {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
-  border-bottom: none;
 }
 
 .site-nav label[for="nav-trigger"] {
@@ -96,6 +95,7 @@ a:hover {
   font-weight: bold;
   text-decoration: none;
   padding: 0.5em 1em;
+  border-bottom: none;
   letter-spacing: -0.05em;
 }
 
