@@ -43,13 +43,15 @@ a:hover {
 }
 
 .site-title, .site-title:visited {
-  display: block;
+  display: inline-block;
   float: none;
   text-decoration: none;
   font-size: 24px;
   font-weight: bold;
   color: $brand-color;
   letter-spacing: 0;
+  margin: 0.125em;
+  padding: 0.125em;
 }
 
 .site-title:hover {
