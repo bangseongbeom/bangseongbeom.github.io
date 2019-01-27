@@ -29,12 +29,12 @@ $on-large:         $on-laptop !default;
 a {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  border-bottom: thick solid #e6e6e6;
+  border-bottom: thick solid gainsboro;
   text-decoration: none;
 }
 
 a:hover {
-  background: #e6e6e6;
+  background: gainsboro;
   text-decoration: none;
 }
 
