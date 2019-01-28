@@ -13,9 +13,9 @@ category: web
 
 ## 글쎄: 스키마 정의 언어
 
-얻어온 데이터가 어떤 스키마(구조)를 가지는지 쉽게 파악할 수 있게 하는 것은 중요합니다.
+얻어와야 할 데이터가 어떤 구조를 가지는지 쉽게 파악할 수 있게 하는 것은 중요합니다. 그래야만 구조를 빨리 이해할 수 있고, 구조가 변경되었을 때 더 잘 파악하는 것이 가능합니다. **그래프QL이 기존 REST API에 비해 더 나은 점은, 데이터의 구조인 스키마를 정의할 수 있다는 것입니다.**
 
-**그래프QL은 스키마를 정의할 수 있습니다. 그러나 이는 REST API 역시 마찬가지입니다.** [오픈API(OpenAPI)](https://swagger.io/docs/specification/about/)라고도 불리는 [스웨거(Swagger)](https://swagger.io/) 역시 REST API에 대한 스키마를 정의할 수 있는 기능을 가집니다. 그래프QL 진영에서의 [GraphiQL](https://github.com/graphql/graphiql)같은 개발 도구 또한 스웨거는 [스웨거 에디터(Swagger Editor)](https://swagger.io/tools/swagger-editor/)라는 이름으로 제공하고 있습니다.
+**그러나 이는 REST API도 마찬가지입니다.** [오픈API(OpenAPI)](https://swagger.io/docs/specification/about/)라고도 불리는 [스웨거(Swagger)](https://swagger.io/) 역시 REST API에 대한 스키마를 정의할 수 있는 기능을 가집니다.
 
 ## 단점: 높은 학습 및 구현 비용
 
