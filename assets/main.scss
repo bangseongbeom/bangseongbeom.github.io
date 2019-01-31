@@ -2,7 +2,7 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-$base-font-size: 20px;
+$base-line-height: 1.75;
 
 $spacing-unit: 32px;
 
@@ -97,7 +97,7 @@ a:hover {
   display: inline-block;
   margin: 4px;
   color: $brand-color;
-  font-size: $base-font-size;
+  font-size: 20px;
   font-weight: bold;
   text-decoration: none;
   background: none;
@@ -175,12 +175,12 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-top: $spacing-unit * 2;
+  margin-top: $spacing-unit * 1.5;
   line-height: 1.25;
 }
 
 .post-list > li {
-  margin-bottom: $spacing-unit * 2;
+  margin-bottom: $spacing-unit * 1.5;
 }
 
 .post-list h3 {
