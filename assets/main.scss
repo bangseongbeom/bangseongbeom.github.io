@@ -99,7 +99,7 @@ a:hover {
   font-weight: bold;
   text-decoration: none;
   background: none;
-  padding: 0.25em 1em;
+  padding: 0.5em 1em;
   letter-spacing: -0.05em;
 }
 
@@ -174,7 +174,6 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: $spacing-unit * 1.5;
-  line-height: 1.25;
 }
 
 .post-list > li {
