@@ -3,25 +3,17 @@ title: GraphQL의 단점
 category: web
 ---
 
-[GraphQL(그래프QL)](https://graphql.org/)은 서버 수정 없이 클라이언트를 마음 대로 구현할 수 있다는 장점이 있지만, 그만큼 구현에 필요한 문제 해결 능력을 갖추고 있어야 합니다.
+[GraphQL(그래프QL)](https://graphql.org/)은 서버 수정 없이 클라이언트가 원하는 쿼리를 날릴 수 있다는 장점이 있지만, 여러 문제에 대한 해결 능력을 갖추고 있어야 합니다.
 
-## 장점: 서버 수정 없이도 클라이언트 구현 가능
+## 캐싱
 
-GraphQL에서는 어떤 데이터를 어떤 구조로 받아올지 클라이언트가 정합니다. 때문에 클라이언트의 레이아웃이 변경되어 **데이터를 받아오는 방식에 변형을 가할 필요가 있더라도 서버 쪽의 코드를 수정할 필요가 없습니다.**
+트래픽을 줄이기 위한 인간의 노력은 끝이 없습니다. 세월이 흐르는 동안 HTTP도 [여러 가지 캐싱 방법](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)을 가지게 되었습니다. 우리는 서버에서 캐시할지 아니면 클라이언트에서 캐시할지, 얼마나 시간이 흐른 뒤에 캐시를 무효화할지와 같은 다양한 정책을 적용할 수 있습니다.
 
-안드로이드 앱, iOS 앱, 웹 사이트와 같이 다양한 클라이언트가 필요한 경우, 비슷하면서도 저마다 조금씩 다른 내용을 보여주어야 합니다. GraphQL이 없다면, 서버는 클라이언트들을 위해 각 클라이언트 별로 REST API를 만들든가 아니면 데이터를 비효율적으로 많이 가져오는 통일된 API를 만들어두어야 할 것입니다. **GraphQL을 통한다면 아주 쉽습니다. 클라이언트마다 서로 다른 쿼리를 날리기만 하면 됩니다.**
+HTTP의 캐싱 전략은 각각의 URL에 정책을 설정하는 형식으로 이루어집니다. 반면 GraphQL은 (주로) `/graphql` 이라는 하나의 URL을 두고 여기에 쿼리를 전송, 응답을 받는 형식입니다. 그렇기에 **각각의 URL이 아닌 하나의 URL**을 사용하는 GraphQL은 HTTP의 캐싱 전략을 사용할 수 없습니다. 캐싱을 위해서는 [영속 쿼리](https://blog.apollographql.com/persisted-graphql-queries-with-apollo-client-119fd7e6bba5)와 같은 GraphQL만의 방법을 찾아야 합니다.
 
-## 글쎄: 스키마 정의 언어
+## 파일 업로드
 
-얻어와야 할 데이터가 어떤 구조를 가지는지 쉽게 파악할 수 있게 하는 것은 중요합니다. 그래야만 구조를 빨리 이해할 수 있고, 구조가 변경되었을 때 더 잘 파악하는 것이 가능합니다. **GraphQL이 기존 REST API에 비해 더 나은 점은, 데이터의 구조인 스키마를 정의할 수 있다는 것입니다.**
-
-**그러나 이는 REST API도 마찬가지입니다.** [오픈API(OpenAPI)](https://swagger.io/docs/specification/about/)라고도 불리는 [스웨거(Swagger)](https://swagger.io/) 역시 REST API에 대한 스키마를 정의할 수 있는 기능을 가집니다.
-
-## 단점: 높은 학습 및 구현 비용
-
-GraphQL을 쓰기 위해서는 먼저 GraphQL에서 말하는 다양한 개념과 쿼리를 작성하는 방법에 대해 알고 있어야 합니다. 그것도 클라이언트와 서버 개발자 모두 말이죠.
-
-그뿐만이 아닙니다. 파일 업로드같이 `<form>` 태그를 쓰면 되는 간단한 일조차도, GraphQL을 적용하기 시작하면 문제가 됩니다:
+파일 업로드같이 간단한 일조차도, GraphQL을 적용하기 시작하면 문제가 됩니다:
 
 <https://blog.logrocket.com/5-reasons-you-shouldnt-be-using-graphql-61c7846e7ed3>
 > 파일 업로드는 GraphQL 명세에 언급된 기능이 아니기 때문에 어떻게 구현할지는 우리 스스로 결정해야 합니다. 몇 가지 방법이 있습니다:
@@ -29,7 +21,3 @@ GraphQL을 쓰기 위해서는 먼저 GraphQL에서 말하는 다양한 개념�
 > - 베이스64 인코딩을 사용합니다. 다만 업로드 요청 메시지의 크기를 거대하게 만들거나 인코딩/디코딩 과정이 까다로워질 수 있습니다.
 > - 업로드를 위한 분리된 API를 마련합니다.
 > - [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server)같이 [GraphQL multipart 요청 명세](https://github.com/jaydenseric/graphql-multipart-request-spec)를 구현하는 라이브러리를 사용합니다.
-
-## 결론: 규모가 페이스북 정도는 되어야 쓸만한 기술이 아닐까
-
-GraphQL의 장점을 극대화하고 단점을 최소화하기 위해서는 프로젝트의 규모가 거대해야 합니다. 그렇지 않으면 소프트웨어의 복잡도만 높이는 기술이 될 수도 있습니다.
