@@ -33,4 +33,4 @@ GraphQL은 클라이언트 스스로 필요한 데이터를 요청합니다. 이
 
 <https://apihandyman.io/and-graphql-for-all-a-few-things-to-think-about-before-blindly-dumping-rest-for-graphql/#graphql-may-have-unexpected-side-effects-and-data-volumes-and-server-usage>
 
-> 몇몇 주의력 없는 클라이언트 개발자들은 필요한 양보다 더 많은 양의 데이터를 요청하기도 합니다. 그런 거대하고 복잡한 데이터 요청은 여러분의 시스템에 문제를 일으킬 것입니다. 클라이언트 개발자에게 전적인 권한을 제공했기 때문입니다. 여러분은 GraphQL 스키마, 그리고 스키마 뒤에서 무슨 일이 일어나고 있는지에 대해 파악하고 있어야 합니다.
+> 몇몇 주의력 없는 클라이언트 개발자들은 필요한 양보다 더 많은 양의 데이터를 요청하기도 합니다. 그런 거대하고 복잡한 데이터 요청은 여러분의 시스템에 문제를 일으킬 것입니다. 이러한 문제가 발생하는 이유는 우리가 클라이언트 개발자에게 데이터 요청에 대한 전적인 권한을 제공했기 때문입니다. 여러분은 GraphQL 스키마, 그리고 스키마 뒤에서 무슨 일이 일어나고 있는지에 대해 항상 주시해야만 합니다.
