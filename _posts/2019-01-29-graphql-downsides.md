@@ -19,7 +19,7 @@ GraphQL은 성장하고 있는 언어이자 생태계입니다. 페이스북이 
 
 GraphQL에서는 파일 업로드에 대한 구체적인 구현 방법을 정의내리지 않았습니다. 다만 몇 가지 해결책이 있기는 합니다:
 
-<https://blog.logrocket.com/5-reasons-you-shouldnt-be-using-graphql-61c7846e7ed3>
+<https://blog.logrocket.com/5-reasons-you-shouldnt-be-using-graphql-61c7846e7ed3#a0a4>
 
 > 파일 업로드는 GraphQL 명세에 언급된 기능이 아니기 때문에 어떻게 구현할지는 우리 스스로 결정해야 합니다. 몇 가지 방법이 있습니다:
 >
@@ -66,3 +66,9 @@ paths:
 ```
 
 물론 위에서 소개한 기술들은 GraphQL과 같이 포괄적인 기능을 지원하지는 않습니다. **광범위한 기능을 하나의 통일된 방식으로 사용하기 위해서는 GraphQL를 사용하는 것이 옳습니다.** 다만 GraphQL의 모든 기능이 필요하지 않은 경우라면 REST API와 함께 [JSON:API](https://jsonapi.org/)나 [OpenAPI(Swagger)](https://swagger.io/)를 사용하는 것도 나쁘지 않은 선택이라 할 수 있습니다.
+
+## 참고
+
+- <https://blog.logrocket.com/5-reasons-you-shouldnt-be-using-graphql-61c7846e7ed3>
+- <https://apihandyman.io/and-graphql-for-all-a-few-things-to-think-about-before-blindly-dumping-rest-for-graphql/>
+- <https://blog.runscope.com/posts/you-might-not-need-graphql>
