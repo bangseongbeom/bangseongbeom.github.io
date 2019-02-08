@@ -37,16 +37,16 @@ GraphQL에서는 파일 업로드에 대한 구체적인 구현 방법을 정의
 
 ## REST API에서도 쓸 수 있는 여러 대안
 
-여러 단점에도 불구하고 GraphQL의 쿼리를 통한 통신량 감소와 스키마를 통한 문서화는 여전히 유용합니다. **그러나 기존의 REST API 체제에서도 간단한 쿼리를 날리거나 스키마를 정의할 수 있도록 하는 명세가 있습니다.** [JSON:API](https://jsonapi.org/)는 필드 명시 및 정렬, [OpenAPI(Swagger)](https://swagger.io/)는 스키마 정의 기능을 제공하는 명세입니다:
+여러 단점에도 불구하고 GraphQL의 쿼리를 통한 통신량 감소와 스키마를 통한 문서화는 여전히 유용합니다. **그러나 기존의 REST API 체제에서도 간단한 쿼리를 날리거나 스키마를 정의할 수 있도록 하는 명세가 있습니다.** [JSON:API](https://jsonapi.org/)는 필드 명시 및 정렬, [OpenAPI(Swagger)](https://swagger.io/)는 스키마 정의 기능을 제공하는 명세입니다.
 
-<https://jsonapi.org/format/#fetching-includes>
+JSON:API의 [필드 명시](https://jsonapi.org/format/#fetching-includes) 및 [정렬](https://jsonapi.org/format/#fetching-sorting):
 
 ```http
 GET /articles/1?include=comments.author HTTP/1.1
 Accept: application/vnd.api+json
 ```
 
-<https://swagger.io/docs/specification/basic-structure/>
+OpenAPI의 [스키마 정의](https://swagger.io/docs/specification/basic-structure/):
 
 ```yaml
 paths:
