@@ -5,7 +5,7 @@ category: web
 
 [GraphQL(그래프QL)](https://graphql.org/)은 서버 수정 없이 클라이언트가 원하는 쿼리를 날릴 수 있어 API를 설계하거나 변경하는 비용을 획기적으로 낮출 수 있습니다. 그러나 HTTP에서 제공하는 기존 인프라를 그대로 사용하지 못하고 GraphQL 스타일로 다시 재구현해야만 하는 부담이 있습니다.
 
-## HTTP 캐싱 불가능
+## HTTP 캐싱 사용 불가능
 
 통신량을 줄이기 위한 인간의 노력은 끝이 없습니다. 세월이 흐르는 동안 HTTP도 [여러 가지 캐싱 방법](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching)을 가지게 되었습니다. HTTP에는 서버에서 캐시할지 아니면 클라이언트에서 캐시할지, 얼마나 시간이 흐른 뒤에 캐시를 무효화할지와 같은 다양한 정책이 준비되어 있습니다. HTTP에서 제공하는 캐싱 정책은 단순히 HTTP 헤더에 명시하는 것만으로 손쉽게 적용할 수 있습니다.
 
@@ -13,7 +13,7 @@ HTTP의 캐싱 전략은 각각의 URL에 저마다의 정책을 설정하는 �
 
 GraphQL에서는 GraphQL만의 캐싱 방식을 찾아야 합니다. [영속 쿼리(persisted query)](https://blog.apollographql.com/persisted-graphql-queries-with-apollo-client-119fd7e6bba5), [아폴로 엔진(Apollo Engine)](https://blog.apollographql.com/caching-graphql-results-in-your-cdn-54299832b8e2) 등이 있습니다.
 
-## 직접 구현하는 파일 업로드
+## 직접 구현해야 하는 파일 업로드
 
 GraphQL은 성장하고 있는 언어이자 생태계입니다. 페이스북이 공개한 GraphQL 명세에서는 아직 모든 상황에 대한 규칙을 만들어두지 않았습니다. GraphQL 명세에서 언급하지 않는 내용은, 명세 바깥에서 개발자 스스로 해결해야만 합니다.
 
