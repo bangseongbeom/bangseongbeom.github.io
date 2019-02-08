@@ -53,23 +53,15 @@ GET /people?sort=age,name HTTP/1.1
 Accept: application/vnd.api+json
 ```
 
-OpenAPI에서의 [스키마 정의](https://swagger.io/docs/specification/basic-structure/):
+OpenAPI에서의 [스키마 정의](https://swagger.io/docs/specification/data-models/data-types/#object):
 
 ```yaml
-paths:
-  /users:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
 ```
 
 물론 위에서 소개한 기술들은 GraphQL과 같이 포괄적인 기능을 지원하지는 않습니다. **광범위한 기능을 하나의 통일된 방식으로 사용하기 위해서는 GraphQL를 사용하는 것이 옳습니다.** 다만 GraphQL의 모든 기능이 필요하지 않은 경우라면 REST API와 함께 [JSON:API](https://jsonapi.org/)나 [OpenAPI(Swagger)](https://swagger.io/)를 사용하는 것도 나쁘지 않은 선택이라 할 수 있습니다.
