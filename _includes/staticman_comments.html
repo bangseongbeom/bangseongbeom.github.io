@@ -9,13 +9,7 @@
     <p><label>이메일: <input name="fields[email]" type="email"></label></p>
     <p><label>메시지: <textarea name="fields[message]"></textarea></label></p>
     <p><button type="submit">글쓰기</button></p>
-    <p>page.id: {{ page.id }}</p>
-    <p>page.name: {{ page.name }}</p>
-    <p>page.filename: {{ page.filename }}</p>
-    <p>page.path: {{ page.path }}</p>
-    <p>page.slug: {{ page.slug }}</p>
-    <p>post.file: {{ post.file }}</p>
-    <p>post.title: {{ post.title }}</p>
+    <p>page.date with slug: {{ page.date | date: "%F" }}-{{ page.slug }}</p>
   </form>
 
 {%- endif -%}
