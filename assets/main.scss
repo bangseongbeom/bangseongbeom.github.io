@@ -32,7 +32,7 @@ $on-large:         $on-laptop !default;
 a {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  text-decoration: underline;
+  text-decoration: underline gray;
 //   background: linear-gradient(#ffffff00 65%, gainsboro 35%);
 //   padding: 0.125em 0;
 }
@@ -54,14 +54,12 @@ a:hover {
   float: none;
   font-size: 24px;
   font-weight: bold;
-  text-decoration: none;
   background: none;
   color: $brand-color;
   letter-spacing: -0.05em;
 }
 
 .site-title:hover {
-  text-decoration: none;
   background: gainsboro;
 }
 
@@ -97,14 +95,12 @@ a:hover {
   color: $brand-color;
   font-size: 20px;
   font-weight: bold;
-  text-decoration: none;
   background: none;
   padding: 0.5em 1em;
   letter-spacing: -0.05em;
 }
 
 .site-nav .page-link:hover {
-  text-decoration: none;
   background: gainsboro;
 }
 
