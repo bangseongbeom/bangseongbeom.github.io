@@ -120,6 +120,10 @@ a:hover {
   display: inline;
 }
 
+.post-meta {
+  color: $text-color;
+}
+
 .site-footer {
   border-top: none;
   text-align: center;
@@ -127,6 +131,7 @@ a:hover {
 
 .footer-col-wrapper {
   margin-left: 0;
+  color: $text-color;
 }
 
 .footer-col {
