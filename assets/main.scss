@@ -89,7 +89,7 @@ a:hover {
   display: block;
 }
 
-.site-nav .page-link {
+.site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   margin: 4px 0;
   color: $brand-color;
@@ -101,10 +101,6 @@ a:hover {
 
 .site-nav .page-link:hover {
   background: gainsboro;
-}
-
-.site-nav .page-link:not(:last-child) {
-  margin: 4px 0;
 }
 
 .page-content {
