@@ -38,6 +38,11 @@ a {
 //   padding: 0.125em 0;
 }
 
+nav a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
 a:hover {
   background: gainsboro;
 }
