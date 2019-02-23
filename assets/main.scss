@@ -29,22 +29,34 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
-a {
+a, button {
+  display: inline;
   word-wrap: break-word;
   overflow-wrap: break-word;
   color: inherit;
   text-decoration: underline;
-//   background: linear-gradient(#ffffff00 65%, gainsboro 35%);
-//   padding: 0.125em 0;
+  background: none;
+  padding: 0;
 }
 
-nav a {
+a:hover, button:hover {
+  background: gainsboro;
+}
+
+nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
+  display: inline-block;
   font-weight: bold;
   text-decoration: none;
+  font-size: 20px;
+  background: none;
+  padding: 0.5em 1em;
+  letter-spacing: -0.05em;
 }
 
-a:hover {
-  background: gainsboro;
+input[type="text"], input[type="search"], textarea {
+  border: medium solid;
+  font-size: inherit;
+  background: inherit;
 }
 
 .site-header {
@@ -55,7 +67,6 @@ a:hover {
 
 .site-title, .site-title:visited {
   display: inline-block;
-  margin: 2px;
   padding: 0.25em 1.5em;
   float: none;
   font-size: 24px;
@@ -97,7 +108,6 @@ a:hover {
 
 .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
-  margin: 2px;
   color: $brand-color;
   font-size: 20px;
   background: none;
