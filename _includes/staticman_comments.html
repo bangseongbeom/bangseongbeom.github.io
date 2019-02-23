@@ -6,8 +6,9 @@
   {{ site.data.comments }} / {{ site.data.comments[filename] }}
   {%- for comment in site.data.comments[filename] -%}
     <article>
-      <p>이름: {{ comment["name"] }}</p>
-      <p>메시지: {{ comment["message"] }}</p>
+      {{ comment }}
+      <p>이름: {{ comment.name }}</p>
+      <p>메시지: {{ comment.message }}</p>
     </article>
   {%- endfor -%}
   <h2 id="write-comment">댓글 남기기</h2>
