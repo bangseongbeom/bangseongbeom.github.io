@@ -70,14 +70,14 @@ p label input, p label textarea {
 input, textarea {
   height: auto;
   padding: 0.25em;
-  border: medium solid;
+  border: medium solid silver;
   font-size: inherit;
   color: $text-color;
   background: $background-color;
 }
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
-  border-color: silver;
+  border-color: $text-color;
 }
 
 input, textarea, a, button {
