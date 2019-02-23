@@ -71,13 +71,15 @@ input, textarea {
   background: inherit;
 }
 
-input, a, button {
-  outline: $text-color solid 0;
+input, textarea, a, button {
+  outline: none;
+  outline-offset: 0;
   transition: outline-width 0.05s;
 }
 
-input:focus, a:focus, button:focus {
-  outline-width: thick;
+input:focus, textarea:focus, a:focus, button:focus {
+  outline: $text-color solid thick;
+  outline-offset: 0;
 }
 
 .site-header {
