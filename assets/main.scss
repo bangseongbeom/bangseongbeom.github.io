@@ -84,6 +84,7 @@ input, textarea, a, button {
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
   border-color: $text-color;
+  outline: $text-color solid thin;
 }
 
 input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus, a:focus, button:focus {
