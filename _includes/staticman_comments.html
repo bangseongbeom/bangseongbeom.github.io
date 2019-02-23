@@ -1,7 +1,8 @@
 {%- if page.comments != false and jekyll.environment == "production" -%}
 
-  <h1 id="comments">댓글</h1>
   {%- assign filename = page.path | split: "/" | last -%}
+
+  <h1 id="comments">댓글</h1>
   {%- for comment in site.data.comments[filename] -%}
     <article>
       <p>{{ comment.name }}</p>
@@ -13,7 +14,7 @@
   <form method="post" action="https://dev.staticman.net/v3/entry/github/{{ site.github.owner_name }}/{{ site.github.repository_name }}/{{ site.github.source.branch }}/comments">
     <p><input name="options[redirect]" type="hidden" value="{{ site.url }}{{ page.url }}#comments"></p>
     <!-- e.g. "2016-01-02-this-is-a-post" -->
-    <p><input name="options[name]" type="hidden" value="{{ page.name }}"></p>
+    <p><input name="options[filename]" type="hidden" value="{{ filename }}"></p>
     <p><label>이름 (필수 아님): <input name="fields[name]" type="text"></label></p>
     <p><label>이메일 (필수 아님): <input name="fields[email]" type="email"></label></p>
     <p><label>메시지: <textarea name="fields[message]" required></textarea></label></p>
