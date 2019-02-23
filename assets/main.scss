@@ -37,10 +37,17 @@ a, button {
   text-decoration: underline;
   background: none;
   padding: 0;
+  outline-width: 0;
+  transition: outline-width 0.1s;
+}
+
+a:focus, button:focus {
+  outline-width: medium;
 }
 
 a:hover, button:hover {
   background: gainsboro;
+  text-decoration: underline;
 }
 
 nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
