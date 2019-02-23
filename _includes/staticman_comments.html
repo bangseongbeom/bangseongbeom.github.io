@@ -3,6 +3,7 @@
   {%- assign filename = page.path | split: "/" | last -%}
 
   <h1 id="comments">댓글</h1>
+  {{ site.data.comments }}
   {%- for comment in site.data.comments[filename] -%}
     <article>
       <p>{{ comment.name }}</p>
