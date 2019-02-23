@@ -2,7 +2,7 @@
 
   <h1 id="comments">댓글</h1>
   {%- assign segments = page.path | split: "/" -%}
-  {%- assign item = site.data -%}
+  {%- assign item = site.data.comments -%}
   {%- for segment in segments -%}
     {%- assign item = item[segment] -%}
   {%- endfor -%}
