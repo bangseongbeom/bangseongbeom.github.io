@@ -61,8 +61,13 @@ nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, for
   text-decoration: none;
 }
 
+form {
+  text-align: right;
+}
+
 p label {
   display: block;
+  text-align: left;
 }
 
 p label input, p label textarea {
