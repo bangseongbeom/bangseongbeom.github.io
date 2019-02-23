@@ -3,11 +3,11 @@
   {%- assign filename = page.path | split: "/" | last | split: "." | first -%}
 
   <h1 id="comments">댓글</h1>
-  {{ site.data.comments }}
+  {{ site.data.comments }} / {{ site.data.comments[filename] }}
   {%- for comment in site.data.comments[filename] -%}
     <article>
-      <p>{{ comment.name }}</p>
-      <p>{{ comment.message }}</p>
+      <p>이름: {{ comment.name }}</p>
+      <p>메시지: {{ comment.message }}</p>
     </article>
   {%- endfor -%}
   <h2 id="write-comment">댓글 남기기</h2>
