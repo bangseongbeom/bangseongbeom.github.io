@@ -54,8 +54,9 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   letter-spacing: -0.05em;
 }
 
-input[type="text"], input[type="search"], textarea {
+input, textarea {
   display: block;
+  width: auto;
   border: medium solid;
   font-size: inherit;
   background: inherit;
