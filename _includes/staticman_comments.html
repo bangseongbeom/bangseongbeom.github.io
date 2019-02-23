@@ -4,7 +4,7 @@
   {%- assign segments = page.path | split: "/" -%}
   {%- assign item = site.data.comments -%}
   {%- for segment in segments -%}
-    {%- item = item[segment] -%}
+    {%- assign item = item[segment] -%}
   {%- endfor -%}
   {%- assign comment = item -%}
   <p>{{ segments }}</p>
