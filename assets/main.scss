@@ -37,12 +37,6 @@ a, button {
   text-decoration: underline;
   background: none;
   padding: 0;
-  outline-width: 0;
-  transition: outline-width 0.1s;
-}
-
-a:focus, button:focus {
-  outline-width: medium;
 }
 
 a:hover, button:hover {
@@ -72,6 +66,15 @@ input, textarea {
   border: medium solid;
   font-size: inherit;
   background: inherit;
+}
+
+input, a, button {
+  outline-width: 0;
+  transition: outline-width 0.1s;
+}
+
+input, a:focus, button:focus {
+  outline-width: medium;
 }
 
 .site-header {
