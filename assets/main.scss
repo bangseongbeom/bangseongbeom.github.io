@@ -41,6 +41,7 @@ a, button, input[type="button"] {
 
 a:hover, button:hover, input[type="button"]:hover {
   outline: $text-color solid medium;
+  background: gainsboro;
 }
 
 nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
