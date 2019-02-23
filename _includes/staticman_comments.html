@@ -5,6 +5,7 @@
   {%- assign item = site.data.comments -%}
   {%- for segment in segments -%}
     {%- assign item = item[segment] -%}
+    <span style="color: green">{{ item }}</span>
   {%- endfor -%}
   {%- assign comment = item -%}
   <p>{{ segments }}</p>
