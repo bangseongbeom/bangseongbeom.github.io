@@ -57,10 +57,17 @@ nav a, nav button, nav input[type="button"], nav label, form a, form button, for
   letter-spacing: -0.05em;
 }
 
-input, textarea {
+p label {
+  display: block;
+}
+
+p label input, p label textarea {
   display: block;
   width: 100%;
   box-sizing: border-box;
+}
+
+input, textarea {
   height: auto;
   padding: 0.25em;
   border: medium solid;
