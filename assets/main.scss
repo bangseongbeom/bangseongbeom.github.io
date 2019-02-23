@@ -72,7 +72,8 @@ input, textarea {
   padding: 0.25em;
   border: medium solid;
   font-size: inherit;
-  background: inherit;
+  color: $text-color;
+  background: $background-color;
 }
 
 input, textarea, a, button {
