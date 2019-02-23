@@ -5,10 +5,12 @@
   <h1 id="comments">댓글</h1>
   {%- for comment_hash in site.data.comments[filename] | reverse -%}
   {%- assign comment = comment_hash[1] -%}
-    <article>
-      <p>이름: {{ comment.name }}</p>
-      <p>메시지: {{ comment.message }}</p>
+    <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+      <p>이름: <span itemprop="author">{{ comment.name }}</span></p>
+      <p>메시지: <span itemprop="text">{{ comment.message }}</span></p>
     </article>
+  {%- else -%}
+    <p>댓글이 없습니다.</p>
   {%- endfor -%}
   <h2 id="write-comment">댓글 남기기</h2>
   <!-- Staticman v3: https://github.com/eduardoboucas/staticman/issues/243#issuecomment-453754860 -->
