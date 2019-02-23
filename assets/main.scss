@@ -72,7 +72,7 @@ input, textarea {
 }
 
 input, a, button {
-  outline-width: 0;
+  outline: invert solid 0;
   transition: outline-width 0.1s;
 }
 
