@@ -103,6 +103,10 @@ input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus
   outline-offset: 0;
 }
 
+a:focus, button:focus, input[type="button"]:focus {
+  background: gainsboro;
+}
+
 .site-header {
   border-top: none;
   border-bottom: none;
