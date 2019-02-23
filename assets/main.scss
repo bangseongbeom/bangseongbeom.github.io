@@ -29,7 +29,7 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
-a, button, input[type="button"], label {
+a, button, input[type="button"] {
   display: inline;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -39,11 +39,11 @@ a, button, input[type="button"], label {
   padding: 0;
 }
 
-a:hover, button:hover, input[type="button"]:hover, label:hover {
+a:hover, button:hover, input[type="button"]:hover {
   background: gainsboro;
 }
 
-nav a, nav button, nav input[type="button"], nav label, form a, form button, form input[type="button"], form label {
+nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
   display: inline-block;
   width: auto;
   height: auto;
