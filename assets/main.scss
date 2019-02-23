@@ -64,6 +64,7 @@ label {
 input, textarea {
   display: block;
   width: 100%;
+  box-sizing: border-box;
   height: auto;
   padding: 0.25em;
   border: medium solid;
