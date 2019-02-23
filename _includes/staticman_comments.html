@@ -7,7 +7,9 @@
     {%- assign item = item[segment] -%}
   {%- endfor -%}
   {%- assign comment = item -%}
-  {{ comment }}
+  <p>{{ segments }}</p>
+  <p>{{ item }}</p>
+  <p>{{ comment }}</p>
   <h2 id="write-comment">댓글 남기기</h2>
   <!-- Staticman v3: https://github.com/eduardoboucas/staticman/issues/243#issuecomment-453754860 -->
   <form method="post" action="https://dev.staticman.net/v3/entry/github/{{ site.github.owner_name }}/{{ site.github.repository_name }}/{{ site.github.source.branch }}/comments">
