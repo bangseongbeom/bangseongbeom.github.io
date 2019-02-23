@@ -1,6 +1,8 @@
 {%- if page.comments != false and jekyll.environment == "production" -%}
 
   <h1 id="comments">댓글</h1>
+  <div style="color: blue">{{ page.dir }}</div>
+  <div style="color: blue">{{ page.path | split: "/" | last }}</div>
   {%- assign segments = page.path | split: "/" -%}
   {%- assign item = site.data.comments -%}
   {%- for segment in segments -%}
