@@ -74,7 +74,7 @@ p label input, p label textarea {
 input, textarea {
   height: auto;
   padding: 0.25em;
-  border: medium solid gray;
+  border: medium solid;
   font-size: inherit;
   color: $text-color;
   background: $background-color;
@@ -86,8 +86,7 @@ input, textarea, a, button {
   transition: outline-width 0.05s;
 }
 
-input:hover, textarea:hover, label:hover input, label:hover textarea {
-  border-color: $text-color;
+input:hover, textarea:hover, label:hover input, label:hover textarea, a:hover, button:hover {
   outline: $text-color solid thin;
 }
 
@@ -95,7 +94,6 @@ input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus
   outline: $text-color solid thick;
   outline-offset: 0;
   background: $background-color;
-  border-color: $text-color;
 }
 
 .site-header {
