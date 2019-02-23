@@ -76,6 +76,10 @@ input, textarea {
   background: $background-color;
 }
 
+input:hover, textarea:hover, label:hover input, label:hover textarea {
+  background: gainsboro;
+}
+
 input, textarea, a, button {
   outline: none;
   outline-offset: 0;
@@ -85,6 +89,7 @@ input, textarea, a, button {
 input:focus, textarea:focus, a:focus, button:focus {
   outline: $text-color solid thick;
   outline-offset: 0;
+  background: $background-color;
 }
 
 .site-header {
