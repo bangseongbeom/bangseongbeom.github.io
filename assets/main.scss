@@ -93,10 +93,12 @@ input, textarea, a, button {
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
   border-color: $text-color;
+  background-color: gainsboro;
 }
 
 input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus, a:focus, button:focus {
   border-color: $text-color;
+  background-color: $background-color;
   outline: $text-color solid thick;
   outline-offset: 0;
 }
