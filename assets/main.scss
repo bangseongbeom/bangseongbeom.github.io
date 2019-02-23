@@ -116,7 +116,6 @@ input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus
   float: none;
   font-size: 24px;
   font-weight: bold;
-  background: none;
   color: $brand-color;
   letter-spacing: -0.05em;
 }
@@ -148,13 +147,7 @@ input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus
 }
 
 .site-nav .page-link, .site-nav .page-link:not(:last-child) {
-  display: inline-block;
-  color: $brand-color;
   font-size: 20px;
-  background: none;
-  padding: 0.5em;
-  margin: 0;
-  letter-spacing: -0.05em;
 }
 
 .site-nav .page-link:hover {
