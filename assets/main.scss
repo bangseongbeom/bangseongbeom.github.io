@@ -83,7 +83,7 @@ input, textarea {
 input, textarea, a, button {
   outline: none;
   outline-offset: 0;
-  transition: outline-width 0.05s, background 0.05s;
+  transition: outline-width 0.05s;
 }
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
