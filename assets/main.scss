@@ -45,6 +45,8 @@ a:hover, button:hover {
 
 nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
   display: inline-block;
+  width: auto;
+  height: auto;
   font-weight: bold;
   text-decoration: none;
   font-size: 20px;
@@ -58,6 +60,7 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
 input, textarea {
   display: block;
   width: 100%;
+  height: auto;
   padding: 0.25em;
   border: medium solid;
   font-size: inherit;
