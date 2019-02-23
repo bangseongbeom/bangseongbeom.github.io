@@ -54,6 +54,7 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
 }
 
 input[type="text"], input[type="search"], textarea {
+  display: block;
   border: medium solid;
   font-size: inherit;
   background: inherit;
