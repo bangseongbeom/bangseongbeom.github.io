@@ -1,9 +1,9 @@
 {%- if page.comments != false and jekyll.environment == "production" -%}
 
-  <!-- Staticman v3: https://github.com/eduardoboucas/staticman/issues/243#issuecomment-453754860 -->
-  <h2>댓글</h2>
+  <h1>댓글</h1>
   ...
-  <h3>댓글 남기기</h3>
+  <h2>댓글 남기기</h2>
+  <!-- Staticman v3: https://github.com/eduardoboucas/staticman/issues/243#issuecomment-453754860 -->
   <form method="post" action="https://dev.staticman.net/v3/entry/github/{{ site.github.owner_name }}/{{ site.github.repository_name }}/{{ site.github.source.branch }}/comments">
     <p><input name="options[redirect]" type="hidden" value="{{ site.github.url }}"></p>
     <!-- e.g. "2016-01-02-this-is-a-post" -->
