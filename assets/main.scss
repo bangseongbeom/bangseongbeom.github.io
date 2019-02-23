@@ -72,11 +72,11 @@ input, textarea {
 }
 
 input, a, button {
-  outline: invert solid 0;
+  outline: $text-color solid 0;
   transition: outline-width 0.1s;
 }
 
-input, a:focus, button:focus {
+input:focus, a:focus, button:focus {
   outline-width: medium;
 }
 
