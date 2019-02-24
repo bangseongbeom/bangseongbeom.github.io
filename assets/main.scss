@@ -85,6 +85,10 @@ input, textarea {
   background: $background-color;
 }
 
+textarea {
+  height: 8em;
+}
+
 input, textarea, a, button {
   outline: none;
   outline-offset: 0;
