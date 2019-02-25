@@ -33,7 +33,7 @@
     <p><input name="options[redirect]" type="hidden" value="{{ site.url }}{{ page.url }}#comments"></p>
     <!-- e.g. "2016-01-02-this-is-a-post" -->
     <p><input name="options[filename]" type="hidden" value="{{ filename }}"></p>
-    <p><label>이름 <small>(필수 아님)</small>: <input name="fields[name]" type="text"></label></p>
+    <p><label>이름 <small>(필수 아님, 비워 둘 경우 익명)</small>: <input name="fields[name]" type="text"></label></p>
     <p><label>이메일 <small>(필수 아님, 외부에 공개되지 않음)</small>: <input name="fields[email]" type="email"></label></p>
     <p><label>메시지: <textarea name="fields[message]" required></textarea></label></p>
     <p><button type="submit">쓰기</button></p>
