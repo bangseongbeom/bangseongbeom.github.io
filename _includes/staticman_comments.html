@@ -7,9 +7,8 @@
     {%- assign comment = comment_hash[1] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
-      <p>작성 시간: <span itemprop="dateCreated">{{ comment.date | date: "%F" }}</span></p>
+      <p>작성 시간: <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></p>
       <p>메시지: <span itemprop="text">{{ comment.message | xml_escape }}</span></p>
-      <p>메시지: <span itemprop="text">{{ comment.message | escape }}</span></p>
     </article>
   {%- else -%}
     <p>댓글이 없습니다.</p>
