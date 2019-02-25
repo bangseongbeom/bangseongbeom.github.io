@@ -2,11 +2,15 @@
 
   {%- assign filename = page.path | split: "/" | last | split: "." | first -%}
 
-  <code>{{ site.data.comments[filename] }}</code>
-  <code>{{ site.data.comments[filename] | sort: 0 }}</code>
-  <h1 id="comments">댓글</h1>
+  {%- usecapture comment_keys_string -%}
   {%- for comment_hash in site.data.comments[filename] -%}
-    {%- assign comment = comment_hash[1] -%}
+    {{ comment_hash }},
+  {%- endcapture -%}
+  {%- assign sorted_comment_keys = comment_keys_string | split: "," | sort -%}
+
+  <h1 id="comments">댓글</h1>
+  {%- for sorted_comment_key in sorted_comment_keys -%}
+    {%- assign comment = site.data.comments[filename][sorted_comment_key] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
       <p>작성 시간: <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></p>
