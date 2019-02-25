@@ -6,7 +6,7 @@
     {{ comment_hash[0] }},
   {%- endfor -%}
   {%- endcapture -%}
-  {{ keys }}
+  {{ keys | split: "," | sort }}
   <h1 id="comments">댓글</h1>
   {%- for comment_hash in site.data.comments[filename] -%}
     {%- assign comment = comment_hash[1] -%}
