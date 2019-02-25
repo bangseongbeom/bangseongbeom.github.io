@@ -37,6 +37,9 @@ a, button, input[type="button"] {
   text-decoration: underline;
   background: none;
   padding: 0;
+  outline: gray solid 0;
+  outline-offset: 0;
+  transition: outline 0.05s;
 }
 
 a:hover, button:hover, input[type="button"]:hover {
@@ -60,6 +63,11 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
 
 nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, form button:hover, form input[type="button"]:hover {
   text-decoration: none;
+}
+
+a:focus, button:focus, input[type="button"]:focus {
+  background: gainsboro;
+  outline: black solid thick;
 }
 
 form {
@@ -91,24 +99,19 @@ textarea {
   resize: vertical;
 }
 
-input, textarea, a, button {
-  outline: none;
+input, textarea {
+  outline: gray solid 0;
   outline-offset: 0;
-  transition: outline-width 0.05s;
+  transition: outline 0.05s;
 }
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
   outline: gray solid medium;
 }
 
-input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus, a:focus, button:focus {
+input:focus, textarea:focus {
   border-color: $text-color;
-  background-color: $background-color;
-  outline: $text-color solid thick;
-}
-
-a:focus, button:focus, input[type="button"]:focus {
-  background: gainsboro;
+  outline: black solid thick;
 }
 
 blockquote {
