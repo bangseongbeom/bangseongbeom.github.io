@@ -109,7 +109,7 @@ input:hover, textarea:hover, label:hover input, label:hover textarea {
   outline: gray solid medium;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus {
   border-color: $text-color;
   outline: black solid thick;
 }
