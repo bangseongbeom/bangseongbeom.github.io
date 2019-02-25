@@ -1,15 +1,16 @@
 {%- if page.comments != false and jekyll.environment == "production" -%}
 
   {%- assign filename = page.path | split: "/" | last | split: "." | first -%}
-  {%- capture keys -%}
+  {%- capture captured_keys -%}
   {%- for comment_hash in site.data.comments[filename] -%}
     {{ comment_hash[0] }},
   {%- endfor -%}
   {%- endcapture -%}
-  {{ keys | split: "," | sort }}
+  <code>{{ captured_keys | split: "," | sort }}</code>
+  {{ assign sorted_keys = captured_keys | split: "," | sort }}
   <h1 id="comments">댓글</h1>
-  {%- for comment_hash in site.data.comments[filename] -%}
-    {%- assign comment = comment_hash[1] -%}
+  {%- for key in sorted_keys -%}
+    {%- assign comment = site.data.comments[key] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
       <p>작성 시간: <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></p>
