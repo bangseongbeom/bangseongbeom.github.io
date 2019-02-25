@@ -7,7 +7,7 @@
   {%- endfor -%}
   {%- endcapture -%}
   <code>{{ captured_keys | split: "," | sort }}</code>
-  {% assign sorted_keys = captured_keys | split: "," | sort %}
+  {%- assign sorted_keys = captured_keys | split: "," | sort -%}
   <h1 id="comments">댓글</h1>
   {%- for key in sorted_keys -%}
     {%- assign comment_hash = site.data.comments[filename][key] -%}
