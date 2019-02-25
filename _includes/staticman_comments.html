@@ -4,7 +4,7 @@
 
   {%- usecapture comment_keys_string -%}
   {%- for comment_hash in site.data.comments[filename] -%}
-    {{ comment_hash }},
+    {{ comment_hash[0] }},
   {%- endcapture -%}
   {%- assign sorted_comment_keys = comment_keys_string | split: "," | sort -%}
 
