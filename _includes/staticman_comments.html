@@ -6,8 +6,8 @@
   {%- for comment_hash in site.data.comments[filename] | reverse -%}
   {%- assign comment = comment_hash[1] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
-      <p>이름: <span itemprop="author">{{ comment.name }}</span></p>
-      <p>메시지: <span itemprop="text">{{ comment.message }}</span></p>
+      <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
+      <p>메시지: <span itemprop="text">{{ comment.message | xml_escape }}</span></p>
     </article>
   {%- else -%}
     <p>댓글이 없습니다.</p>
