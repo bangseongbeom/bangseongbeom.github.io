@@ -41,6 +41,7 @@ a, button, input[type="button"] {
 
 a:hover, button:hover, input[type="button"]:hover {
   background: gainsboro;
+  outline: gainsboro solid medium;
 }
 
 nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
@@ -97,14 +98,13 @@ input, textarea, a, button {
 }
 
 input:hover, textarea:hover, label:hover input, label:hover textarea {
-  border-color: $text-color;
+  outline: gray solid medium;
 }
 
 input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus, a:focus, button:focus {
   border-color: $text-color;
   background-color: $background-color;
   outline: $text-color solid thick;
-  outline-offset: 0;
 }
 
 a:focus, button:focus, input[type="button"]:focus {
