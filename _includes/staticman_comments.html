@@ -3,10 +3,11 @@
   {%- assign filename = page.path | split: "/" | last | split: "." | first -%}
 
   <h1 id="comments">댓글</h1>
-  {%- for comment_hash in site.data.comments[filename] | reverse -%}
+  {%- for comment_hash in site.data.comments[filename] | sort: "date" -%}
   {%- assign comment = comment_hash[1] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
+      <p>작성 시간: <span itemprop="dateCreated">{{ comment.date | xml_escape }}</span></p>
       <p>메시지: <span itemprop="text">{{ comment.message | xml_escape }}</span></p>
     </article>
   {%- else -%}
