@@ -10,6 +10,8 @@
   {%- assign sorted_keys = captured_keys | split: "," | sort -%}
   <h1 id="comments">댓글</h1>
   {%- for key in sorted_keys -%}
+    {{ key }} ...
+    {{ site.data.comments[filename][key] }} ...
     {%- assign comment_hash = site.data.comments[filename][key] -%}
     {%- assign comment = comment_hash[1] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
