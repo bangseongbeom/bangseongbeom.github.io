@@ -12,7 +12,7 @@
   <h1 id="comments">댓글</h1>
   {%- for key in sorted_keys -%}
     {%- assign comment = site.data.comments[filename][key] -%}
-    <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+    <article id="comment-{{ comment._id }}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <header><cite itemprop="author">{{ comment.name | xml_escape }}</cite> <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></header>
       <p itemprop="text">{{ comment.message | xml_escape }}</p>
     </article>
