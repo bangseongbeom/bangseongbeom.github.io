@@ -10,10 +10,7 @@
   {%- assign sorted_keys = captured_keys | split: "," | sort -%}
   <h1 id="comments">댓글</h1>
   {%- for key in sorted_keys -%}
-    {{ key }} ...
-    {{ site.data.comments[filename][key] }} ...
-    {%- assign comment_hash = site.data.comments[filename][key] -%}
-    {%- assign comment = comment_hash[1] -%}
+    {%- assign comment = site.data.comments[filename][key] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
       <p>작성 시간: <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></p>
