@@ -13,8 +13,8 @@
   {%- for key in sorted_keys -%}
     {%- assign comment = site.data.comments[filename][key] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
-      <cite itemprop="author">{{ comment.name | xml_escape }}</cite> <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time>
-      <p><span itemprop="text">{{ comment.message | xml_escape }}</span></p>
+      <header><cite itemprop="author">{{ comment.name | xml_escape }}</cite> <time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time></header>
+      <p itemprop="text">{{ comment.message | xml_escape }}</p>
     </article>
   {%- else -%}
     <p>댓글이 없습니다.</p>
