@@ -14,11 +14,11 @@
     {%- assign comment = site.data.comments[filename][key] -%}
     <article id="comment-{{ comment._id }}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <header>
-        {%- if comment.name != "" -%}
+        {% if comment.name != "" %}
           <cite itemprop="author">{{ comment.name | xml_escape }}</cite> 님의
-        {%- else -%}
+        {% else %}
           익명
-        {%- endif -%}
+        {% endif %}
         <a href="#comment-{{ comment._id }}">댓글</a>
         (<time itemprop="dateCreated">{{ comment.date | date: "%F" }}</time>):
       </header>
