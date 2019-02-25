@@ -1,8 +1,7 @@
 {%- if page.comments != false and jekyll.environment == "production" -%}
 
   {%- assign filename = page.path | split: "/" | last | split: "." | first -%}
-  {%- assign x = (site.data.comments[filename] | sort 0) -%}
-  {{ x }}
+  {{ site.data.comments[filename] | map: 0 }}
   <h1 id="comments">댓글</h1>
   {%- for comment_hash in site.data.comments[filename] -%}
     {%- assign comment = comment_hash[1] -%}
