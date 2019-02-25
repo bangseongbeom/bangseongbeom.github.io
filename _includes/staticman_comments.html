@@ -4,6 +4,7 @@
 
   <h1 id="comments">댓글</h1>
   {%- for comment_hash in site.data.comments[filename] | sort: 0 -%}
+    <code>{{ comment_hash }}</code>
     {%- assign comment = comment_hash[1] -%}
     <article itemprop="comment" itemscope itemtype="http://schema.org/Comment">
       <p>이름: <span itemprop="author">{{ comment.name | xml_escape }}</span></p>
