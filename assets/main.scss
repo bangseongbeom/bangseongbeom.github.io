@@ -111,6 +111,12 @@ a:focus, button:focus, input[type="button"]:focus {
   background: gainsboro;
 }
 
+blockquote {
+  font-size: inherit;
+  color: inherit;
+  border-left-color: gray;
+}
+
 .site-header {
   border-top: none;
   border-bottom: none;
