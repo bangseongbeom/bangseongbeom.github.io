@@ -30,7 +30,7 @@ $on-large:         $on-laptop !default;
 }
 
 article {
-  margin: 0 $spacing-unit / 2;
+  margin: $spacing-unit / 2 0;
 }
 
 a, button, input[type="button"] {
