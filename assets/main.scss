@@ -33,6 +33,10 @@ article {
   margin-bottom: $spacing-unit;
 }
 
+article header {
+  font-size: 1.25em;
+}
+
 a, button, input[type="button"] {
   display: inline;
   word-wrap: break-word;
@@ -118,10 +122,6 @@ blockquote {
   color: inherit;
   border-left-color: currentcolor;
   font-style: inherit;
-}
-
-article header {
-  font-size: 0.75em;
 }
 
 .site-header {
