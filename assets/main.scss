@@ -29,6 +29,10 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
+article {
+  margin: $spacing-unit / 2;
+}
+
 a, button, input[type="button"] {
   display: inline;
   word-wrap: break-word;
