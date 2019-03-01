@@ -75,6 +75,11 @@ nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, for
 
 a:focus, button:focus, input[type="button"]:focus {
   background: gainsboro;
+  outline: black solid medium;
+}
+
+a:active, button:active, input[type="button"]:active {
+  background: gainsboro;
   outline: black solid thick;
 }
 
