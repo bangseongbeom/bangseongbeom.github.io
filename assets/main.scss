@@ -47,7 +47,7 @@ a, button, input[type="button"] {
   padding: 0;
   outline: none;
   outline-offset: 0;
-  transition: outline 0.05s;
+  transition: outline 0.05s, border 0.05s;
 }
 
 a:hover, button:hover, input[type="button"]:hover {
@@ -110,7 +110,7 @@ textarea {
 input, textarea {
   outline: gray solid 0;
   outline-offset: 0;
-  transition: outline 0.05s;
+  transition: outline 0.05s, border 0.05s;
 }
 
 input:hover, textarea:hover {
@@ -123,7 +123,7 @@ input:focus, textarea:focus {
 }
 
 input:active, textarea:active {
-  border-color: black;
+  border-color: dimgray;
   outline: dimgray solid thick;
 }
 
