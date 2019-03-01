@@ -80,7 +80,7 @@ a:focus, button:focus, input[type="button"]:focus {
 
 a:active, button:active, input[type="button"]:active {
   background: gainsboro;
-  outline: dimgray solid thick;
+  outline: gray solid thick;
 }
 
 p label {
@@ -123,8 +123,8 @@ input:focus, textarea:focus {
 }
 
 input:active, textarea:active {
-  border-color: dimgray;
-  outline: dimgray solid thick;
+  border-color: gray;
+  outline: gray solid thick;
 }
 
 blockquote {
