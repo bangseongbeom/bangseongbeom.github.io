@@ -80,7 +80,7 @@ a:focus, button:focus, input[type="button"]:focus {
 
 a:active, button:active, input[type="button"]:active {
   background: gainsboro;
-  outline: black ridge thick;
+  outline: dimgray solid thick;
 }
 
 p label {
@@ -113,21 +113,16 @@ input, textarea {
   transition: outline 0.05s;
 }
 
-input:hover, textarea:hover, label:hover input, label:hover textarea {
+input:hover, textarea:hover {
   outline: gray solid medium;
 }
 
-input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus {
-  border-color: black;
-  outline: black dashed thick;
-}
-
-input:focus:hover, textarea:focus:hover, label:hover input:focus:hover, label:hover textarea:focus:hover {
+input:focus, textarea:focus {
   border-color: black;
   outline: black solid thick;
 }
 
-input:active, textarea:active, label:hover input:active, label:hover textarea:active {
+input:active, textarea:active {
   border-color: black;
   outline: dimgray solid thick;
 }
