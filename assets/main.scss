@@ -37,6 +37,15 @@ article header {
   font-size: small;
 }
 
+header nav ul {
+  display: block;
+  list-style: none;
+}
+
+header nav li {
+  display: inline-block;
+}
+
 a, button, input[type="button"] {
   display: inline;
   color: inherit;
