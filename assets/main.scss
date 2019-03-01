@@ -73,8 +73,7 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   font-size: 20px;
   background: none;
   border: none;
-  padding: 12px;
-  margin: 4px;
+  padding: 0.5em;
   letter-spacing: -0.05em;
 }
 
@@ -155,7 +154,6 @@ blockquote {
   font-size: 24px;
   font-weight: bold;
   color: $brand-color;
-  margin-bottom: 4px;
 }
 
 .site-title img {
@@ -186,8 +184,7 @@ blockquote {
 
 .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
-  padding: 12px;
-  margin: 4px;
+  padding: 0.5em;
   font-size: 20px;
 }
 
