@@ -119,7 +119,7 @@ input:hover, textarea:hover, label:hover input, label:hover textarea {
 
 input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus {
   border-color: black;
-  outline: black solid thick;
+  outline: black dashed thick;
 }
 
 input:focus:hover, textarea:focus:hover, label:hover input:focus:hover, label:hover textarea:focus:hover {
@@ -129,7 +129,7 @@ input:focus:hover, textarea:focus:hover, label:hover input:focus:hover, label:ho
 
 input:active, textarea:active, label:hover input:active, label:hover textarea:active {
   border-color: black;
-  outline: black ridge thick;
+  outline: dimgray solid thick;
 }
 
 blockquote {
