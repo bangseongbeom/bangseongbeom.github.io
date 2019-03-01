@@ -43,7 +43,7 @@ a, button, input[type="button"] {
   text-decoration: underline;
   background: none;
   padding: 0;
-  outline: none;
+  outline: gainsboro solid 0;
   outline-offset: 0;
   transition: outline 0.05s, border 0.05s;
 }
