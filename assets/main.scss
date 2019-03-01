@@ -75,12 +75,12 @@ nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, for
 
 a:focus, button:focus, input[type="button"]:focus {
   background: gainsboro;
-  outline: black solid medium;
+  outline: black solid thick;
 }
 
 a:active, button:active, input[type="button"]:active {
   background: gainsboro;
-  outline: black solid thick;
+  outline: black ridge thick;
 }
 
 p label {
@@ -119,17 +119,17 @@ input:hover, textarea:hover, label:hover input, label:hover textarea {
 
 input:focus, textarea:focus, label:hover input:focus, label:hover textarea:focus {
   border-color: black;
-  outline: black solid thin;
+  outline: black solid thick;
 }
 
 input:focus:hover, textarea:focus:hover, label:hover input:focus:hover, label:hover textarea:focus:hover {
   border-color: black;
-  outline: black solid medium;
+  outline: black solid thick;
 }
 
 input:active, textarea:active, label:hover input:active, label:hover textarea:active {
   border-color: black;
-  outline: black solid thick;
+  outline: black ridge thick;
 }
 
 blockquote {
