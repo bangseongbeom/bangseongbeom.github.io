@@ -185,6 +185,10 @@ blockquote {
   text-decoration: none;
 }
 
+.post-title {
+  line-height: 1.25;
+}
+
 .page-content {
   padding: 0;
 }
@@ -256,7 +260,7 @@ blockquote {
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: $spacing-unit * 1.5;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 
 .post-list > li {
