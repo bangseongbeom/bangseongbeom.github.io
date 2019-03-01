@@ -9,7 +9,7 @@ category: python
 
 <figure>
 
-![comment-out-region](/assets/2018-11-22-double-sharp-comments/comment-out-region.png)
+<img src="/assets/2018-11-22-double-sharp-comments/comment-out-region.png" alt="IDLE에서 'Format' > 'Comment Out Region'">
 
 <figcaption>IDLE이 제공하는 'Comment Out Region'은 샤프 두 개(`##`)를 붙입니다.</figcation>
 
