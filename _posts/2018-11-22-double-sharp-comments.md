@@ -8,11 +8,8 @@ category: python
 [idle]: https://docs.python.org/3/library/idle.html
 
 <figure>
-
 <img src="/assets/2018-11-22-double-sharp-comments/comment-out-region.png" alt="IDLE에서 'Format' > 'Comment Out Region'">
-
-<figcaption>IDLE이 제공하는 'Comment Out Region'은 샤프 두 개(`##`)를 붙입니다.</figcation>
-
+<figcaption>IDLE이 제공하는 'Comment Out Region'은 샤프 두 개(`##`)를 붙입니다.</figcaption>
 </figure>
 
 [PEP 20][pep-20]의 작성자이도 한 파이썬 기여자 [팀 피터스(Tim Peters)][tim-peters]는, `#`는 유용한 설명을, `##`는 코드 일부분을 주석화할 때 사용한다고 말합니다. 이맥스(Emacs) 파이썬 모드 초창기에 자신이 이러한 관습을 도입했다고 하네요[^single-vs-double].
