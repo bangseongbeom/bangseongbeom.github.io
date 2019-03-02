@@ -56,7 +56,7 @@ a, button, input[type="button"] {
   padding: 0;
   outline: gainsboro solid 0;
   outline-offset: 0;
-  transition: outline 0.05s, border 0.05s;
+  transition: outline 75ms, border 75ms;
 }
 
 a:hover, button:hover, input[type="button"]:hover {
@@ -119,7 +119,7 @@ textarea {
 input, textarea {
   outline: gray solid 0;
   outline-offset: 0;
-  transition: outline 0.05s, border 0.05s;
+  transition: outline 75ms, border 75ms;
 }
 
 input:hover, textarea:hover {
