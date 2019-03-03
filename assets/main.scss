@@ -71,6 +71,7 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   text-decoration: none;
   background: none;
   border: none;
+  font-size: 20px;
   padding: 12px;
   margin: 4px;
   letter-spacing: -0.05em;
@@ -91,6 +92,7 @@ a:active, button:active, input[type="button"]:active {
 }
 
 label {
+  font-size: 20px;
   padding: 0.5em;
 }
 
@@ -190,7 +192,7 @@ blockquote {
   display: inline-block;
   padding: 12px;
   margin: 4px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .site-nav .page-link:hover {
