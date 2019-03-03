@@ -73,7 +73,7 @@ a:active {
   text-decoration: underline;
 }
 
-nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
+nav a, button, input[type="button"] {
   display: inline-block;
   width: auto;
   height: auto;
@@ -84,9 +84,10 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   padding: 12px;
   margin: 4px;
   letter-spacing: -0.05em;
+  transition: outline 50ms, border 50ms;
 }
 
-nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, form button:hover, form input[type="button"]:hover {
+nav a:hover, button:hover, input[type="button"]:hover {
   background: gainsboro;
   outline: gainsboro solid medium;
 }
