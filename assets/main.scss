@@ -68,9 +68,7 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   display: inline-block;
   width: auto;
   height: auto;
-  font-weight: bold;
   text-decoration: none;
-  font-size: 20px;
   background: none;
   border: none;
   padding: 12px;
@@ -90,6 +88,10 @@ a:focus, button:focus, input[type="button"]:focus {
 a:active, button:active, input[type="button"]:active {
   background: gainsboro;
   outline: gray solid thick;
+}
+
+label {
+  padding: 0.5em;
 }
 
 p label {
