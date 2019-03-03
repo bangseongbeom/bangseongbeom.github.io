@@ -49,18 +49,23 @@ header nav li {
 a, button, input[type="button"] {
   display: inline;
   color: inherit;
-  text-decoration: underline;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  background: none;
   padding: 0;
   outline: gainsboro solid 0;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
 }
 
-a:hover, button:hover, input[type="button"]:hover {
+a {
+  text-decoration: underline;
+}
+
+button, input[type="button"] {
   background: gainsboro;
+}
+
+a:hover, button:hover, input[type="button"]:hover {
   outline: gainsboro solid medium;
 }
 
@@ -77,8 +82,12 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
   letter-spacing: -0.05em;
 }
 
-nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, form button:hover, form input[type="button"]:hover {
-  text-decoration: none;
+nav a:hover, form a:hover {
+  text-decoration: underline;
+}
+
+nav button:hover, nav input[type="button"]:hover, form button:hover, form input[type="button"]:hover {
+  background: gainsboro;
 }
 
 a:focus, button:focus, input[type="button"]:focus {
