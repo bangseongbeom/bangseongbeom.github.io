@@ -73,6 +73,10 @@ a:active {
   text-decoration: underline;
 }
 
+nav, form {
+  font-size: 12px;
+}
+
 nav a, button, input[type="button"] {
   display: inline-block;
   width: auto;
