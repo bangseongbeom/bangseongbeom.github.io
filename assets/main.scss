@@ -46,7 +46,7 @@ header nav li {
   display: inline-block;
 }
 
-a, button, input[type="button"] {
+a {
   display: inline;
   color: inherit;
   text-decoration: underline;
@@ -59,9 +59,18 @@ a, button, input[type="button"] {
   transition: outline 50ms, border 50ms;
 }
 
-a:hover, button:hover, input[type="button"]:hover {
+a:hover {
+  text-decoration: underline;
   background: gainsboro;
   outline: gainsboro solid medium;
+}
+
+a:focus {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }
 
 nav a, nav button, nav input[type="button"], form a, form button, form input[type="button"] {
@@ -78,7 +87,8 @@ nav a, nav button, nav input[type="button"], form a, form button, form input[typ
 }
 
 nav a:hover, nav button:hover, nav input[type="button"]:hover, form a:hover, form button:hover, form input[type="button"]:hover {
-  text-decoration: none;
+  background: gainsboro;
+  outline: gainsboro solid medium;
 }
 
 a:focus, button:focus, input[type="button"]:focus {
