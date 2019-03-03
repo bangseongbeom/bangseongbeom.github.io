@@ -92,12 +92,12 @@ nav a:hover, button:hover, input[type="button"]:hover {
   outline: gainsboro solid medium;
 }
 
-a:focus, button:focus, input[type="button"]:focus {
+a:focus, nav a:focus, button:focus, input[type="button"]:focus {
   background: gainsboro;
   outline: black solid thick;
 }
 
-a:active, button:active, input[type="button"]:active {
+a:active, nav a:active, button:active, input[type="button"]:active {
   background: gainsboro;
   outline: gray solid thick;
 }
