@@ -1,12 +1,12 @@
 <header class="site-header">
 
-  <div class="wrapper">
-    {%- assign default_paths = site.pages | map: "path" -%}
-    {%- assign page_paths = site.header_pages | default: default_paths -%}
-    {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
-    
-    {%- if titles_size > 0 -%}
-      <nav class="site-nav">
+  <nav class="site-nav">
+    <div class="wrapper">
+      {%- assign default_paths = site.pages | map: "path" -%}
+      {%- assign page_paths = site.header_pages | default: default_paths -%}
+      {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
+
+      {%- if titles_size > 0 -%}
         <a class="site-title" rel="author" href="{{ "/" | relative_url }}"><div><img src="{{ "/favicon-256.png" | relative_url }}" alt="방"></div><div>{{ site.title | escape }}</div></a>
 
         <ul>
@@ -17,7 +17,7 @@
             {%- endif -%}
           {% endfor %}
         </ul>
-      </nav>
-    {%- endif -%}
-  </div>
+      {%- endif -%}
+    </div>
+  </nav>
 </header>
