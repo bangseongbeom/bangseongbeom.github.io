@@ -80,7 +80,7 @@ nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:
   text-decoration: none;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   padding: 12px;
   letter-spacing: -0.05em;
@@ -89,7 +89,7 @@ nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:
   transition: outline 50ms, border 50ms;
 }
 
-nav a:hover, button:hover, input[type="button"]:hover {
+nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: gainsboro;
   outline: gainsboro solid medium;
 }
