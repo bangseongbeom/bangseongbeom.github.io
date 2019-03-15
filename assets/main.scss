@@ -165,10 +165,13 @@ blockquote {
 .site-header {
   border-top: none;
   border-bottom: none;
+  text-align: center;
+}
+
+.site-header nav {
   border: solid black medium;
   padding: 6px;
   margin: 6px;
-  text-align: center;
 }
 
 .site-title, .site-title:visited {
