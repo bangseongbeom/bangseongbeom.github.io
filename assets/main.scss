@@ -88,7 +88,7 @@ nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:
   transition: outline 50ms, border 50ms;
 }
 
-nav a, fieldset button {
+nav a, fieldset button, .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   border: none;
 }
 
