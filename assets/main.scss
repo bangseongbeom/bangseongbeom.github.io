@@ -79,13 +79,17 @@ nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:
   height: auto;
   text-decoration: none;
   background: none;
-  border: none;
+  border: solid;
   font-size: 16px;
   padding: 12px 18px;
   letter-spacing: -0.05em;
   outline: gainsboro solid 0;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
+}
+
+nav a, fieldset button {
+  border: none;
 }
 
 nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
