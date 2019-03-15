@@ -73,14 +73,14 @@ a:active {
   text-decoration: underline;
 }
 
-nav a, button, input[type="button"] {
+nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
   text-decoration: none;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   padding: 12px;
   letter-spacing: -0.05em;
@@ -198,13 +198,6 @@ blockquote {
 
 .site-nav input ~ .trigger {
   display: block;
-}
-
-.site-nav .page-link, .site-nav .page-link:not(:last-child) {
-  display: inline-block;
-  font-size: 16px;
-  padding: 12px;
-  margin: 4px;
 }
 
 .site-nav .page-link:hover {
