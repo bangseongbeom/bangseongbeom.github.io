@@ -6,18 +6,18 @@
       {%- assign page_paths = site.header_pages | default: default_paths -%}
       {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
 
-      {%- if titles_size > 0 -%}
+      {% if titles_size > 0 %}
         <a class="site-title" rel="author" href="{{ "/" | relative_url }}"><div><img src="{{ "/favicon-256.png" | relative_url }}" alt="방"></div><div>{{ site.title | escape }}</div></a>
 
         <ul>
           {% for path in page_paths %}
-            {%- assign my_page = site.pages | where: "path", path | first -%}
-            {%- if my_page.title -%}
+            {% assign my_page = site.pages | where: "path", path | first %}
+            {% if my_page.title %}
             <li><a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
-            {%- endif -%}
+            {% endif %}
           {% endfor %}
         </ul>
-      {%- endif -%}
+      {% endif %}
     </div>
   </nav>
 </header>
