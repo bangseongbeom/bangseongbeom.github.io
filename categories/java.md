@@ -1,4 +1,4 @@
 ---
 layout: category
-title: ☕ 자바
+title: 자바
 ---

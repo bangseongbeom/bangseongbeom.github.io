@@ -326,3 +326,31 @@ code {
     background: #fcfaf8;
   }
 }
+
+nav a.android::before {
+  content: "🤖";
+}
+
+nav a.css::before {
+  content: "🎨";
+}
+
+nav a.html::before {
+  content: "📄";
+}
+
+nav a.java::before {
+  content: "☕";
+}
+
+nav a.python::before {
+  content: "🐍";
+}
+
+nav a.web::before {
+  content: "🌐";
+}
+
+[type="submit"]::before {
+  content: "✏️";
+}

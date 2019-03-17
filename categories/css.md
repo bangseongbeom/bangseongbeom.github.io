@@ -1,4 +1,4 @@
 ---
 layout: category
-title: 🎨 CSS
+title: CSS
 ---
