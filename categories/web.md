@@ -1,4 +1,4 @@
 ---
 layout: category
-title: 웹
+title: 🌐 웹
 ---
