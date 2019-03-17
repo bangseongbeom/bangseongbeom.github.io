@@ -1,4 +1,4 @@
 ---
 layout: category
-title: 파이썬
+title: 🐍 파이썬
 ---
