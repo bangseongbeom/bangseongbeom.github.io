@@ -8,7 +8,7 @@ category: python
 [idle]: https://docs.python.org/3/library/idle.html
 
 <figure>
-<img src="/assets/2018-11-22-double-sharp-comments/comment-out-region.png" alt="IDLE에서 'Format' > 'Comment Out Region'">
+<img src="/assets/2018-11-22-python-double-sharp-comments/comment-out-region.png" alt="IDLE에서 'Format' > 'Comment Out Region'">
 <figcaption>IDLE의 'Comment Out Region' 메뉴 항목</figcaption>
 </figure>
 
