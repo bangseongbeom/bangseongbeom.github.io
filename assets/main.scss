@@ -328,26 +328,21 @@ code {
 }
 
 nav a.android::before {
-  content: "🤖";
-  padding: 0.5em;
+  content: "🤖 ";
 }
 
 nav a.java::before {
-  content: "☕";
-  padding: 0.5em;
+  content: "☕ ";
 }
 
 nav a.python::before {
-  content: "🐍";
-  padding: 0.5em;
+  content: "🐍 ";
 }
 
 nav a.web::before {
-  content: "🌐";
-  padding: 0.5em;
+  content: "🌐 ";
 }
 
 [type="submit"]::before {
-  content: "✏️";
-  padding: 0.5em;
+  content: "✏️ ";
 }
