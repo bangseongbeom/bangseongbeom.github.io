@@ -1,5 +1,5 @@
 ---
-title: GraphQL의 단점
+title: GraphQL의 단점과 대안
 category: web
 ---
 
