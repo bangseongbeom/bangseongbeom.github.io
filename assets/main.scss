@@ -346,3 +346,12 @@ nav a.web::before {
 [type="submit"]::before {
   content: "✏️ ";
 }
+
+.svg-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  fill: currentColor;
+  padding: 5px 3px 2px 5px;
+  vertical-align: text-bottom;
+}
