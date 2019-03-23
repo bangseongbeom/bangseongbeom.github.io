@@ -23,12 +23,3 @@
     &:hover .svg-icon { fill: currentColor; }
   }
 }
-
-
-/**
- * Grid helpers
- */
-.one-half {
-  width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-  width:         calc(50% - (#{$spacing-unit} / 2));
-}
