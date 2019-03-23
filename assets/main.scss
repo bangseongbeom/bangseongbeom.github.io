@@ -347,4 +347,11 @@ nav a.web::before {
   content: "✏️ ";
 }
 
-@import "next";
+.social-media-list {
+  li + li {
+    padding: 0;
+  }
+  li {
+    margin-bottom: $spacing-unit / 2;
+  }
+}
