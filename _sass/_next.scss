@@ -1,3 +1,9 @@
+.social-media-list {
+  li + li {
+    padding-top: 0;
+  }
+}
+
 .svg-icon {
   width: 16px;
   height: 16px;
