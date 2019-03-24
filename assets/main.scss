@@ -74,8 +74,7 @@ a:active {
 }
 
 menu {
-  border: solid;
-  padding: 6px;
+  padding: 0;
   margin: 0;
 }
 
@@ -104,6 +103,10 @@ menu button {
   border: none;
 }
 
+a::before, button::before {
+  content: attr(data-icon) " ";
+}
+
 nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: gainsboro;
   outline: gainsboro solid medium;
@@ -117,6 +120,26 @@ a:focus, nav a:focus, button:focus, input[type="button"]:focus {
 a:active, nav a:active, button:active, input[type="button"]:active {
   background: gainsboro;
   outline: gray solid thick;
+}
+
+nav a.android::before {
+  content: "🤖" " ";
+}
+
+nav a.java::before {
+  content: "☕" " ";
+}
+
+nav a.python::before {
+  content: "🐍" " ";
+}
+
+nav a.web::before {
+  content: "🌐" " ";
+}
+
+button[type="submit"]::before {
+  content: "✏️" " ";
 }
 
 label {
@@ -339,26 +362,6 @@ code {
   .highlighter-rouge & {
     background: #fcfaf8;
   }
-}
-
-nav a.android::before {
-  content: "🤖 ";
-}
-
-nav a.java::before {
-  content: "☕ ";
-}
-
-nav a.python::before {
-  content: "🐍 ";
-}
-
-nav a.web::before {
-  content: "🌐 ";
-}
-
-[type="submit"]::before {
-  content: "✏️ ";
 }
 
 .social-media-list {
