@@ -79,7 +79,7 @@ menu {
   margin: 0;
 }
 
-nav a, menu button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
+nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
@@ -98,6 +98,10 @@ nav a, menu button, input[type="button"], .site-nav .page-link, .site-nav .page-
 
 button {
   border: solid medium black;
+}
+
+menu button {
+  border: none;
 }
 
 nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
