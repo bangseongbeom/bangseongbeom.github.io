@@ -73,7 +73,11 @@ a:active {
   text-decoration: underline;
 }
 
-nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
+menu {
+  border: solid;
+}
+
+menu a, menu button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
@@ -88,6 +92,10 @@ nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:
   outline: gainsboro solid 0;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
+}
+
+button {
+  border: solid medium black;
 }
 
 nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
