@@ -103,10 +103,6 @@ menu button {
   border: none;
 }
 
-a::before, button::before {
-  content: attr(data-icon) " ";
-}
-
 nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: gainsboro;
   outline: gainsboro solid medium;
