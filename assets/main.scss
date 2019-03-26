@@ -230,6 +230,22 @@ blockquote {
   text-decoration: underline;
 }
 
+.site-nav menu a.android::before {
+  content: "🤖" " ";
+}
+
+.site-nav menu a.java::before {
+  content: "☕" " ";
+}
+
+.site-nav menu a.python::before {
+  content: "🐍" " ";
+}
+
+.site-nav menu a.web::before {
+  content: "🌐" " ";
+}
+
 .post-title {
   line-height: 1.25;
 }
