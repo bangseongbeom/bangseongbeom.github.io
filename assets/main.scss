@@ -215,7 +215,13 @@ blockquote {
 }
 
 .site-nav .wrapper {
-  padding-top: $spacing-unit / 2;
+  padding-top: $spacing-unit;
+}
+
+@media screen and (max-width: 720px) {
+  .site-nav .wrapper {
+    padding-top: $spacing-unit / 2;
+  }
 }
 
 .site-nav label[for="nav-trigger"] {
