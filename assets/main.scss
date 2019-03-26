@@ -238,19 +238,19 @@ blockquote {
   text-decoration: underline;
 }
 
-.site-nav menu a.android::before {
+a.android::before {
   content: "🤖" " ";
 }
 
-.site-nav menu a.java::before {
+a.java::before {
   content: "☕" " ";
 }
 
-.site-nav menu a.python::before {
+a.python::before {
   content: "🐍" " ";
 }
 
-.site-nav menu a.web::before {
+a.web::before {
   content: "🌐" " ";
 }
 
