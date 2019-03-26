@@ -18,9 +18,9 @@ author: 방성범 (Bang Seongbeom)
 email: bangseongbeom@hotmail.com
 description: 개발자 방성범의 기술 블로그
 
-disqus:
-  shortname: bangseongbeo
-staticman: false
+# disqus:
+#   shortname: bangseongbeo
+staticman: true
 
 github_username: bangseongbeom
 rss: rss
