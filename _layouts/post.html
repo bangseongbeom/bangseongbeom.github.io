@@ -19,7 +19,9 @@ layout: default
     {{ content }}
   </div>
 
-  {%- include staticman_comments.html -%}
+  {%- if site.staticman -%}
+    {%- include staticman_comments.html -%}
+  {%- endif -%}
 
   {%- if site.disqus.shortname -%}
     {%- include disqus_comments.html -%}
