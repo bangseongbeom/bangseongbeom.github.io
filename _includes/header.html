@@ -7,7 +7,7 @@
       {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
 
       {% if titles_size > 0 %}
-        <menu>
+        <ul role="menubar">
           <li class="site-title"><a rel="author" href="{{ "/" | relative_url }}"><div><img src="{{ "/favicon-256.png" | relative_url }}" alt=""></div><div>{{ site.title | escape }}</div></a></li>
           {% for path in page_paths %}
             {% assign my_page = site.pages | where: "path", path | first %}
@@ -15,7 +15,7 @@
               <li><a class="page-link {{ my_page.name | split: "." | first }}" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
             {% endif %}
           {% endfor %}
-        </menu>
+        </ul>
       {% endif %}
     </div>
   </nav>
