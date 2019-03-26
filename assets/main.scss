@@ -61,8 +61,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-  background: lightgray;
-  outline: lightgray solid medium;
 }
 
 a:focus {
@@ -73,14 +71,14 @@ a:active {
   text-decoration: underline;
 }
 
-nav {
+[role~="menubar"], [role~="toolbar"] {
   border: solid lightgray;
   font-size: smaller;
   padding: 0;
   margin: 0;
 }
 
-nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
+[role~="menubar"] a, [role~="toolbar"] a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
@@ -101,11 +99,11 @@ button {
   border: solid medium black;
 }
 
-nav button {
+[role~="menubar"] button, [role~="toolbar"] button {
   border: none;
 }
 
-nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: lightgray;
   outline: lightgray solid medium;
 }
