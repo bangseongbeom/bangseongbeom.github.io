@@ -76,7 +76,7 @@ a:active {
 menu {
   padding: 8px;
   margin: 8px;
-  border: solid;
+  border: solid lightgray;
   font-size: smaller;
 }
 
@@ -212,6 +212,10 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
+}
+
+.site-nav wrapper {
+  padding: 0;
 }
 
 .site-nav label[for="nav-trigger"] {
