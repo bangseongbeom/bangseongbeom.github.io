@@ -76,9 +76,10 @@ a:active {
 menu {
   padding: 0;
   margin: 0;
+  border: thin solid;
 }
 
-nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
+menu a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
@@ -103,7 +104,7 @@ menu button {
   border: none;
 }
 
-nav a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+menu a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: gainsboro;
   outline: gainsboro solid medium;
 }
@@ -116,22 +117,6 @@ a:focus, nav a:focus, button:focus, input[type="button"]:focus {
 a:active, nav a:active, button:active, input[type="button"]:active {
   background: gainsboro;
   outline: gray solid thick;
-}
-
-nav a.android::before {
-  content: "🤖" " ";
-}
-
-nav a.java::before {
-  content: "☕" " ";
-}
-
-nav a.python::before {
-  content: "🐍" " ";
-}
-
-nav a.web::before {
-  content: "🌐" " ";
 }
 
 label {
@@ -201,7 +186,11 @@ blockquote {
   border-radius: 0;
 }
 
-.site-title, .site-title:visited {
+.site-title {
+  display: block;
+}
+
+.site-title a, .site-title a:visited {
   display: inline-block;
   float: none;
   font-size: 32px;
