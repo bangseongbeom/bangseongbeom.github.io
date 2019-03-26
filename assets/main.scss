@@ -76,6 +76,8 @@ a:active {
 menu {
   border: solid lightgray;
   font-size: smaller;
+  padding: 0;
+  margin: 0;
 }
 
 menu a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
