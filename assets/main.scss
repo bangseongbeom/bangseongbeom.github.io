@@ -72,7 +72,6 @@ a:active {
 }
 
 [role~="menubar"], [role~="toolbar"] {
-  border: solid black;
   font-size: smaller;
   padding: 0;
   margin: 0;
@@ -95,12 +94,17 @@ a:active {
   transition: outline 50ms, border 50ms;
 }
 
+[role~="menubar"] a, [role~="toolbar"] a {
+  font-size: x-large;
+}
+
 button {
   border: solid medium black;
 }
 
 [role~="menubar"] button, [role~="toolbar"] button {
   border: none;
+  font-size: x-large;
 }
 
 a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
