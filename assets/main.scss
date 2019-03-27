@@ -96,10 +96,12 @@ a:active {
 }
 
 button {
+  padding: 8px 12px;
   border: solid medium black;
 }
 
 [role~="menubar"] button, [role~="toolbar"] button {
+  padding: 12px 16px;
   border: none;
 }
 
