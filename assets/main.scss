@@ -95,7 +95,6 @@ a:active {
 }
 
 [role~="menubar"] a, [role~="toolbar"] a, .site-nav .page-link, .site-nav .page-link:not(:last-child) {
-  font-size: x-large;
 }
 
 button {
@@ -104,7 +103,6 @@ button {
 
 [role~="menubar"] button, [role~="toolbar"] button {
   border: none;
-  font-size: x-large;
 }
 
 a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
@@ -205,6 +203,10 @@ blockquote {
   font-size: 32px;
   font-weight: bold;
   color: $brand-color;
+}
+
+.site-title a:hover {
+  text-decoration: underline;
 }
 
 .site-title img {
