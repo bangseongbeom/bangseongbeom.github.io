@@ -72,7 +72,7 @@ a:active {
 }
 
 [role~="menubar"], [role~="toolbar"] {
-  border: solid lightgray;
+  border: solid black;
   font-size: smaller;
   padding: 0;
   margin: 0;
@@ -173,6 +173,11 @@ blockquote {
   font-style: inherit;
 }
 
+.wrapper {
+    padding-left: $spacing-unit / 2;
+    padding-right: $spacing-unit / 2;
+}
+
 .site-header {
   border-top: none;
   border-bottom: none;
@@ -210,16 +215,6 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
-}
-
-.site-nav .wrapper {
-  padding-top: $spacing-unit;
-}
-
-@media screen and (max-width: 720px) {
-  .site-nav .wrapper {
-    padding-top: $spacing-unit / 2;
-  }
 }
 
 .site-nav label[for="nav-trigger"] {
