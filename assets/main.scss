@@ -94,7 +94,7 @@ a:active {
   transition: outline 50ms, border 50ms;
 }
 
-[role~="menubar"] a, [role~="toolbar"] a {
+[role~="menubar"] a, [role~="toolbar"] a, .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   font-size: x-large;
 }
 
