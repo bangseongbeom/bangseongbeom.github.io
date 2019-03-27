@@ -71,12 +71,14 @@ a:active {
   text-decoration: underline;
 }
 
-nav {
+[role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
+  padding: 4px 0;
+  margin: 8px 0;
   border-bottom: solid;
 }
 
-nav a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
+[role~="menubar"] a, [role~="toolbar"] a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   height: auto;
@@ -97,7 +99,7 @@ button {
   border: solid medium black;
 }
 
-nav button {
+[role~="menubar"] button, [role~="toolbar"] button {
   border: none;
 }
 
