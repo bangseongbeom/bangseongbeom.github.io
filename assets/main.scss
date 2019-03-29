@@ -111,12 +111,12 @@ a:hover, button:hover, input[type="button"]:hover, .site-nav .page-link:hover, .
   outline: lightgray solid medium;
 }
 
-a:focus, nav a:focus, button:focus, input[type="button"]:focus {
+a:focus, button:focus, input[type="button"]:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: lightgray;
   outline: black solid thick;
 }
 
-a:active, nav a:active, button:active, input[type="button"]:active {
+a:active, button:active, input[type="button"]:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: lightgray;
   outline: gray solid thick;
 }
