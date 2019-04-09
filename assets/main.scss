@@ -381,3 +381,7 @@ code {
     margin-bottom: $spacing-unit / 2;
   }
 }
+
+#comment-notes:target {
+  background: yellow;
+}
