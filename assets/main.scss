@@ -95,7 +95,6 @@ a:active {
 }
 
 button {
-  padding: 8px 12px;
   border: solid medium black;
   line-height: 1.5;
 }
@@ -137,6 +136,7 @@ p label input, p label textarea {
 input, textarea {
   height: auto;
   padding: 8px 12px;
+  margin: 6px 4px;
   border: medium solid gray;
   font-size: 16px;
   line-height: 1.5;
