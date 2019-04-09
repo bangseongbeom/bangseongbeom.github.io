@@ -29,6 +29,10 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
+body {
+  margin: 8px;
+}
+
 article {
   margin-bottom: $spacing-unit;
 }
@@ -73,9 +77,6 @@ a:active {
 
 [role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
-  padding: 6px;
-  border: solid;
-  margin: $spacing-unit / 2 0;
 }
 
 [role~="menubar"] a, [role~="toolbar"] a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
