@@ -74,7 +74,8 @@ a:active {
 [role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
   border: solid;
-  margin: $spacing-unit / 4 0;
+  margin: 8px 0;
+  padding: 2px;
 }
 
 [role~="menubar"] a, [role~="toolbar"] a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
