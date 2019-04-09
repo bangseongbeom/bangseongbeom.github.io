@@ -74,6 +74,7 @@ a:active {
 [role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
   padding: 6px;
+  border: thin solid;
   margin: $spacing-unit / 2 0;
 }
 
