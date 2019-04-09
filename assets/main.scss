@@ -73,6 +73,7 @@ a:active {
 
 [role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
+  border: solid;
 }
 
 [role~="menubar"] a, [role~="toolbar"] a, button, input[type="button"], .site-nav .page-link, .site-nav .page-link:not(:last-child) {
@@ -200,6 +201,7 @@ blockquote {
   display: inline-block;
   float: none;
   font-size: x-large;
+  line-height: normal;
   font-weight: bold;
   color: $brand-color;
 }
