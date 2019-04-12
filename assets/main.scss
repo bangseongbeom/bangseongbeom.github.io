@@ -98,11 +98,6 @@ a:active {
   transition: outline 50ms, border 50ms;
 }
 
-button {
-  border: solid medium black;
-  line-height: 1.5;
-}
-
 [role~="menubar"] button, [role~="toolbar"] button {
   padding: 12px 16px;
   border: none;
