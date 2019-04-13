@@ -156,13 +156,13 @@ form input, form textarea {
   background: $background-color;
 }
 
-input, textarea {
-  padding: 0;
-}
-
-textarea {
+form label:only-child textarea {
   height: 8em;
   resize: vertical;
+}
+
+input, textarea {
+  padding: 0;
 }
 
 input, textarea {
