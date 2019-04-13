@@ -74,7 +74,6 @@ a:active {
 [role~="menubar"], [role~="toolbar"] {
   font-size: smaller;
   margin: 8px 0;
-  border: solid;
   padding: 2px;
 }
 
@@ -87,7 +86,7 @@ a:active {
   box-sizing: content-box;
   min-width: 1em;
   background: none;
-  border: none;
+  border: solid;
   font-size: 16px;
   line-height: 1.5em;
   padding: 12px 16px;
