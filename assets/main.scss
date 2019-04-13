@@ -54,7 +54,6 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 a, button {
   display: inline;
   color: inherit;
-  text-decoration: underline;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
@@ -64,11 +63,15 @@ a, button {
   transition: outline 50ms, border 50ms;
 }
 
-a:hover {
+a {
   text-decoration: underline;
 }
 
-button:hover {
+button {
+  text-decoration: none;
+}
+
+a:hover {
   text-decoration: underline;
 }
 
@@ -76,15 +79,7 @@ a:focus {
   text-decoration: underline;
 }
 
-button:focus {
-  text-decoration: underline;
-}
-
 a:active {
-  text-decoration: underline;
-}
-
-button:active {
   text-decoration: underline;
 }
 
