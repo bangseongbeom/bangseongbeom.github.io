@@ -49,7 +49,8 @@ header nav li {
 a {
   display: inline;
   color: inherit;
-  text-decoration: underline;
+  text-decoration: none;
+  border: solid thin;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
@@ -60,15 +61,15 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:focus {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:active {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 [role~="menubar"], [role~="toolbar"] {
