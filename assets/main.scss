@@ -120,14 +120,26 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   outline: lightgray solid medium;
 }
 
+a:hover {
+  background: white;
+}
+
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: lightgray;
   outline: black solid thick;
 }
 
+a:focus {
+  background: white;
+}
+
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: lightgray;
   outline: gray solid thick;
+}
+
+a:active {
+  background: white;
 }
 
 label {
