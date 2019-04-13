@@ -116,30 +116,27 @@ form button,
 }
 
 :link:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
-  background: lightgray;
   outline: lightgray solid medium;
 }
 
-:link:hover {
-  background: white;
+:button:hover {
+  background: lightgray;
 }
 
 :link:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
-  background: lightgray;
   outline: black solid thick;
 }
 
-:link:focus {
-  background: white;
+:button:focus {
+  background: lightgray;
 }
 
 :link:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
-  background: lightgray;
   outline: gray solid thick;
 }
 
-:link:active {
-  background: white;
+:button:active {
+  background: lightgray;
 }
 
 label {
