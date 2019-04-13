@@ -90,7 +90,7 @@ button:active {
 
 [role~="menubar"], [role~="toolbar"], form {
   margin: 8px 0;
-  padding: 2px 18px;
+  padding: 2px 20px;
   border: solid thin;
   font-size: smaller;
 }
@@ -135,6 +135,12 @@ a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:las
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: lightgray;
   outline: gray solid thick;
+}
+
+button[type="submit"] {
+  background: black;
+  font-weight: bold;
+  color: white;
 }
 
 label {
