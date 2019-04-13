@@ -81,12 +81,12 @@ a:active {
   display: inline-block;
   width: auto;
   height: auto;
-  text-decoration: underline;
+  text-decoration: none;
   text-align: center;
   box-sizing: content-box;
   min-width: 1em;
   background: none;
-  border: none;
+  border: solid;
   font-size: 16px;
   line-height: 1.5em;
   padding: 12px 16px;
