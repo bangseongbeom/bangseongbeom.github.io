@@ -46,7 +46,8 @@ header nav li {
   display: inline;
 }
 
-:link, button {
+/* :link */
+a, button {
   display: inline;
   color: inherit;
   text-decoration: underline gray;
@@ -59,28 +60,28 @@ header nav li {
   transition: outline 50ms, border 50ms;
 }
 
-:link:hover {
+a:hover {
   text-decoration: underline currentcolor;
 }
 
 button:hover {
-  text-decoration: underline currentcolor;
+  text-decoration: none;
 }
 
-:link:focus {
+a:focus {
   text-decoration: underline currentcolor;
 }
 
 button:focus {
-  text-decoration: underline currentcolor;
+  text-decoration: none;
 }
 
-:link:active {
+a:active {
   text-decoration: underline currentcolor;
 }
 
 button:active {
-  text-decoration: underline currentcolor;
+  text-decoration: none;
 }
 
 
@@ -89,9 +90,9 @@ button:active {
   padding: 2px;
 }
 
-[role~="menubar"] :link,
-[role~="toolbar"] :link,
-form :link,
+[role~="menubar"] a,
+[role~="toolbar"] a,
+form a,
 [role~="menubar"] button,
 [role~="toolbar"] button,
 form button,
@@ -105,6 +106,7 @@ form button,
   min-width: 1em;
   background: none;
   border: none;
+  font-size: 16px;
   line-height: 1.5em;
   padding: 12px 16px;
   margin: 2px 0;
@@ -114,32 +116,19 @@ form button,
   transition: outline 50ms, border 50ms;
 }
 
-button {
-  font-size: 16px;
-}
-
-:link:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+  background: lightgray;
   outline: lightgray solid medium;
 }
 
-button:hover {
+a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: lightgray;
-}
-
-:link:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   outline: black solid thick;
 }
 
-button:focus {
+a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: lightgray;
-}
-
-:link:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   outline: gray solid thick;
-}
-
-button:active {
-  background: lightgray;
 }
 
 label {
