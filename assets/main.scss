@@ -49,7 +49,7 @@ header nav li {
 a, button {
   display: inline;
   color: inherit;
-  text-decoration: underline;
+  text-decoration: underline gray;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
@@ -59,17 +59,30 @@ a, button {
   transition: outline 50ms, border 50ms;
 }
 
-a:hover, button:hover {
-  text-decoration: underline;
+a:hover {
+  text-decoration: underline currentcolor;
 }
 
-a:focus, button:focus {
-  text-decoration: underline;
+button:hover {
+  text-decoration: none;
 }
 
-a:active, button:active {
-  text-decoration: underline;
+a:focus {
+  text-decoration: underline currentcolor;
 }
+
+button:focus {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: underline currentcolor;
+}
+
+button:active {
+  text-decoration: none;
+}
+
 
 [role~="menubar"], [role~="toolbar"], form {
   font-size: smaller;
