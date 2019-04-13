@@ -90,7 +90,9 @@ button:active {
 
 [role~="menubar"], [role~="toolbar"], form {
   margin: 8px 0;
-  padding: 2px 0;
+  padding: 2px 18px;
+  border: solid thin;
+  font-size: smaller;
 }
 
 [role~="menubar"] a,
@@ -105,7 +107,7 @@ form button,
   width: auto;
   height: auto;
   text-align: center;
-  text-decoration: underline;
+  text-decoration: none;
   box-sizing: content-box;
   min-width: 1em;
   background: none;
