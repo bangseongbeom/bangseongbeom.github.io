@@ -135,17 +135,17 @@ label {
   font-size: 16px;
 }
 
-p label {
+form label:only-child {
   display: block;
 }
 
-p label input, p label textarea {
+form label:only-child input, p label:only-child textarea {
   display: block;
   width: 100%;
   box-sizing: border-box;
 }
 
-input, textarea {
+form input, form textarea {
   height: auto;
   padding: 8px 12px;
   margin: 2px 0;
@@ -154,6 +154,10 @@ input, textarea {
   line-height: 1.5;
   color: $text-color;
   background: $background-color;
+}
+
+input, textarea {
+  padding: 0;
 }
 
 textarea {
