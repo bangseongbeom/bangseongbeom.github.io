@@ -55,7 +55,6 @@ a, button {
   display: inline;
   color: inherit;
   text-decoration: underline;
-  border: solid transparent;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
@@ -71,7 +70,6 @@ a:hover {
 
 button:hover {
   text-decoration: underline;
-  border-color: currentcolor;
 }
 
 a:focus {
@@ -80,7 +78,6 @@ a:focus {
 
 button:focus {
   text-decoration: underline;
-  border-color: currentcolor;
 }
 
 a:active {
@@ -89,7 +86,6 @@ a:active {
 
 button:active {
   text-decoration: underline;
-  border-color: currentcolor;
 }
 
 [role~="menubar"], [role~="toolbar"], form {
