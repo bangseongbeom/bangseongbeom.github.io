@@ -68,7 +68,9 @@ a {
 }
 
 a img {
-  padding-bottom: 2px;
+  padding-top: 0.0625em;
+  padding-bottom: 0.0625em;
+  border-top: solid transparent;
   border-bottom: solid;
 }
 
