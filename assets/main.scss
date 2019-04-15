@@ -69,8 +69,8 @@ a {
 
 a img, a svg {
   padding: 2px 0;
-  border-top-color: $brand-color;
-  border-bottom-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: $brand-color;
   border-style: solid;
   border-width: medium 0;
 }
