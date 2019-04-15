@@ -62,9 +62,14 @@ a, button {
   transition: outline 50ms, border 50ms;
 }
 
+a img, a svg {
+  border: thin solid;
+  padding: 0.25em;
+}
+
 button {
-  border: solid thin;
-  padding: 0.125em;
+  border: thin solid;
+  padding: 0.25em;
   text-decoration: none;
 }
 
@@ -94,12 +99,12 @@ button,
   width: auto;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   box-sizing: content-box;
   min-width: 1em;
   min-height: 1em;
   background: none;
-  border: thin solid;
+  border: thin solid transparent;
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
