@@ -88,6 +88,7 @@ a img, a svg {
   border: solid transparent;
   border-width: 2px 0;
   border-bottom-color: $brand-color;
+  margin: 0 4px;
 }
 
 [role~="menubar"], [role~="toolbar"], form {
