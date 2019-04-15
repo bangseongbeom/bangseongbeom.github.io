@@ -92,7 +92,8 @@ a:active {
 [role~="menubar"] a,
 [role~="toolbar"] a,
 form a,
-button,
+[role~="menubar"] button,
+[role~="toolbar"] button,
 .site-nav .page-link,
 .site-nav .page-link:not(:last-child) {
   display: inline-block;
