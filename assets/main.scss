@@ -57,7 +57,6 @@ a, button {
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
-  border: solid;
   outline: lightgray solid 0;
   text-decoration: underline !important;
   transition: outline 50ms, border 50ms;
@@ -101,7 +100,7 @@ button,
   min-height: 1em;
   background: none;
   border: none;
-  border: solid transparent;
+  border: solid;
 //   border-bottom: solid;
   font-size: 16px;
   line-height: 1.5;
