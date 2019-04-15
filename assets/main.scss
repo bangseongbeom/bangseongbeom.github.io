@@ -81,6 +81,11 @@ a:active {
   text-decoration: none;
 }
 
+a img, a svg {
+  border-top: solid transparent;
+  border-bottom: solid;
+  padding: 2px 0;
+
 [role~="menubar"], [role~="toolbar"], form {
   margin: $spacing-unit / 4 0;
 }
