@@ -62,7 +62,7 @@ a, button {
   transition: outline 50ms, border 50ms;
 }
 
-a img, a svg {
+a img, a svg, a .svg-icon {
   border: thin solid;
   padding: 0.25em;
 }
@@ -369,7 +369,6 @@ h2.footer-heading {
 }
 
 .svg-icon {
-  padding: 0;
   vertical-align: middle;
 }
 
