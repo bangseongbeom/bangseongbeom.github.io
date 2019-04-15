@@ -68,7 +68,11 @@ a {
 }
 
 a img, a svg {
-  outline: solid;
+  padding: 2px 0;
+  border-top-color: $brand-color;
+  border-bottom-color: transparent;
+  border-style: solid;
+  border-width: medium 0;
 }
 
 button {
