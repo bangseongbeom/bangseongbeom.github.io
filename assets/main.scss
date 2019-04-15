@@ -57,7 +57,7 @@ a, button {
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
-//   border-bottom: solid 0.0625em;
+  border: solid;
   outline: lightgray solid 0;
   text-decoration: underline !important;
   transition: outline 50ms, border 50ms;
@@ -79,18 +79,6 @@ a:focus {
 
 a:active {
   text-decoration: none;
-}
-
-a img, a svg {
-  border-top: solid transparent;
-  border-bottom: solid;
-  padding: 2px 0;
-}
-
-button img, button svg {
-  border-top: solid transparent;
-  border-bottom: solid transparent;
-  padding: 2px 0;
 }
 
 [role~="menubar"], [role~="toolbar"], form {
