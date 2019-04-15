@@ -83,6 +83,12 @@ a:active {
   text-decoration: underline;
 }
 
+a img, a svg {
+  padding: 2px;
+  border: solid transparent;
+  border-bottom-color: $brand-color;
+}
+
 [role~="menubar"], [role~="toolbar"], form {
   margin: $spacing-unit / 4 0;
 }
