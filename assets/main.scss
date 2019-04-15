@@ -234,10 +234,6 @@ blockquote {
   color: $brand-color;
 }
 
-.site-title a:hover {
-  text-decoration: underline;
-}
-
 .site-title img {
   width: 128px;
   height: 128px;
@@ -262,10 +258,6 @@ blockquote {
 
 .site-nav input ~ .trigger {
   display: block;
-}
-
-.site-nav .page-link:hover {
-  text-decoration: underline;
 }
 
 a.android::before {
