@@ -57,7 +57,7 @@ a, button {
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
-  padding: 0;
+  padding: 0 0 0.0625em;
   border-bottom: solid 0.0625em;
   outline: lightgray solid 0;
   text-decoration: none;
@@ -66,6 +66,7 @@ a, button {
 
 button {
   border: thin;
+  padding: 0.125em;
   text-decoration: none;
 }
 
@@ -119,16 +120,19 @@ button {
 a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   background: lightgray;
   outline: lightgray solid medium;
+  text-decoration: none;
 }
 
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: lightgray;
   outline: black solid thick;
+  text-decoration: none;
 }
 
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: lightgray;
   outline: gray solid thick;
+  text-decoration: none;
 }
 
 button[type="submit"] {
