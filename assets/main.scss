@@ -87,6 +87,12 @@ a img, a svg {
   padding: 2px 0;
 }
 
+button img, button svg {
+  border-top: solid transparent;
+  border-bottom: solid transparent;
+  padding: 2px 0;
+}
+
 [role~="menubar"], [role~="toolbar"], form {
   margin: $spacing-unit / 4 0;
 }
