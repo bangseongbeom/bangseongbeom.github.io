@@ -57,16 +57,16 @@ a, button {
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
-  border-bottom: solid 0.0625em;
+//   border-bottom: solid 0.0625em;
   outline: lightgray solid 0;
-  text-decoration: none;
+  text-decoration: underline !important;
   transition: outline 50ms, border 50ms;
 }
 
 button {
-  border: thin;
+  border: solid;
   padding: 0.125em;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 a:hover {
