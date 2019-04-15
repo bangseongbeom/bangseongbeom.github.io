@@ -63,7 +63,7 @@ a, button {
 }
 
 button {
-  border: solid;
+  border: solid thin;
   padding: 0.125em;
   text-decoration: none !important;
 }
@@ -99,19 +99,15 @@ button,
   min-width: 1em;
   min-height: 1em;
   background: none;
-  border: transparent solid;
+  border: thin solid transparent;
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
   margin: 0.125em 0;
   letter-spacing: -0.05em;
-  outline: lightgray solid 0;
+  outline: 0 solid lightgray;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
-}
-
-button {
-  border: solid;
 }
 
 a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
@@ -170,7 +166,7 @@ form label:only-child textarea {
 }
 
 input, textarea {
-  outline: gray solid 0;
+  outline: 0 solid gray;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
 }
@@ -181,12 +177,12 @@ input:hover, textarea:hover {
 
 input:focus, textarea:focus {
   border-color: black;
-  outline: black solid thick;
+  outline: thick solid black;
 }
 
 input:active, textarea:active {
   border-color: gray;
-  outline: gray solid thick;
+  outline: thick solid gray;
 }
 
 blockquote {
