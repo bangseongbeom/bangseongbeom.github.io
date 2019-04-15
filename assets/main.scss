@@ -165,7 +165,7 @@ form label:only-child textarea {
 }
 
 input, textarea {
-  border: thin solid;
+  border: thin solid gray;
   outline: 0 solid gray;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
