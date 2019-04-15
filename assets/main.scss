@@ -68,10 +68,8 @@ a {
 }
 
 a img {
-  padding-top: 0.0625em;
-  padding-bottom: 0.0625em;
-  border-top: solid transparent;
-  border-bottom: solid;
+  outline: solid;
+  outline-offset: 2px;
 }
 
 button {
