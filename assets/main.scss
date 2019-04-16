@@ -91,7 +91,6 @@ form button,
   letter-spacing: -0.05em;
   outline: 0 solid silver;
   outline-offset: 0;
-  transition: outline 50ms, border 50ms;
 }
 
 a img,
@@ -151,12 +150,13 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   background: silver;
   outline-width: medium;
   outline-color: silver;
+  transition: outline 50ms;
 }
 
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: silver;
   outline-width: thick;
-  outline-color: black;
+  outline-color: dimgray;
 }
 
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
@@ -209,19 +209,19 @@ input, textarea {
   border: thin solid silver;
   outline: 0 solid silver;
   outline-offset: 0;
-  transition: outline 50ms, border 50ms;
   font-size: 16px;
   line-height: 1.5;
 }
 
 input:hover, textarea:hover {
   outline-width: medium;
+  transition: outline 50ms;
 }
 
 input:focus, textarea:focus {
-  border-color: black;
+  border-color: dimgray;
   outline-width: thick;
-  outline-color: black;
+  outline-color: dimgray;
 }
 
 input:active, textarea:active {
