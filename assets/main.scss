@@ -103,6 +103,27 @@ button svg {
   vertical-align: middle;
 }
 
+a:hover img,
+a:hover svg,
+button:hover img,
+button:hover svg {
+  background: inherit;
+}
+
+a:focus img,
+a:focus svg,
+button:focus img,
+button:focus svg {
+  background: inherit;
+}
+
+a:active img,
+a:active svg,
+button:active img,
+button:active svg {
+  background: inherit;
+}
+
 em a img,
 em a svg,
 em button img,
