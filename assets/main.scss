@@ -66,14 +66,14 @@ a {
   text-decoration: underline;
 }
 
-//  a img, a svg, a .svg-icon {
-//    border-width: 0.125em;
-//    border-top-style: solid;
-//    border-top-color: transparent;
-//    border-bottom-style: solid;
-//    padding: 0.125em 0;
-//    vertical-align: bottom;
-// }
+ a img, a svg, a .svg-icon {
+   border-width: 0.125em;
+   border-top-style: solid;
+   border-top-color: transparent;
+   border-bottom-style: solid;
+   padding: 0.125em 0;
+   vertical-align: bottom;
+}
 
 button {
   border: thin solid;
@@ -116,6 +116,7 @@ form button,
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
+  border: thin solid transparent;
   margin: 0.125em 0;
   letter-spacing: -0.05em;
   outline: 0 solid lightgray;
