@@ -66,7 +66,15 @@ a {
   text-decoration: underline;
 }
 
-button, a img, a svg, a .svg-icon {
+ a img, a svg, a .svg-icon {
+   border-width: 0.125em;
+   border-top-style: solid;
+   border-top-color: transparent;
+   bordor-bottom-style: solid;
+   padding: 0.125em 0;
+}
+
+button {
   border: thin solid;
   padding: 0.25em;
 }
@@ -104,7 +112,6 @@ form button,
   min-width: 1em;
   min-height: 1em;
   background: none;
-  border: thin solid gray;
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
@@ -115,11 +122,11 @@ form button,
   transition: outline 50ms, border 50ms;
 }
 
-[role~="menubar"] a img,
-[role~="toolbar"] a img,
-form a img {
-  border: none;
-  padding: 0;
+[role~="menubar"] button,
+[role~="toolbar"] button,
+form button {
+  text-decoration: none;
+  border: thin solid;
 }
 
 a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
