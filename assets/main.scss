@@ -205,8 +205,8 @@ form label:only-child textarea {
 }
 
 input, textarea {
-  border: thin solid silver;
-  outline: 0 solid silver;
+  border: thin solid gray;
+  outline: 0 solid gray;
   outline-offset: 0;
   font-size: 16px;
   line-height: 1.5;
@@ -224,9 +224,9 @@ input:focus, textarea:focus {
 }
 
 input:active, textarea:active {
-  border-color: silver;
+  border-color: gray;
   outline-width: thick;
-  outline-color: silver;
+  outline-color: gray;
 }
 
 blockquote {
