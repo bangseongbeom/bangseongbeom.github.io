@@ -74,6 +74,10 @@ em button,
 [role~="menubar"] button,
 [role~="toolbar"] button,
 form button,
+:not(em):not([role~="menubar"]):not([role~="toolbar"]):not(form) a img,
+:not(em):not([role~="menubar"]):not([role~="toolbar"]):not(form) a svg,
+:not(em):not([role~="menubar"]):not([role~="toolbar"]):not(form) button img,
+:not(em):not([role~="menubar"]):not([role~="toolbar"]):not(form) button svg,
 .site-nav .page-link,
 .site-nav .page-link:not(:last-child) {
   display: inline-block;
