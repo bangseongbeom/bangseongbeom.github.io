@@ -202,7 +202,7 @@ form label:only-child textarea {
 
 input, textarea {
   border: solid darkgray;
-  outline: 0 solid;
+  outline: 0 solid darkgray;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
   font-size: 16px;
