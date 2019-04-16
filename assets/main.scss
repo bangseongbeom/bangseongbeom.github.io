@@ -102,6 +102,7 @@ button img,
 button svg {
   padding: 12px;
   border: thin solid;
+  vertical-align: middle;
 }
 
 em a img,
@@ -378,6 +379,7 @@ h2.footer-heading {
 
 .svg-icon {
   padding: 12px;
+  vertical-align: middle;
 }
 
 pre,
@@ -394,7 +396,7 @@ code {
 }
 
 code {
-  padding: 0 3px;
+  padding: 0 2px;
 }
 
 .highlight {
