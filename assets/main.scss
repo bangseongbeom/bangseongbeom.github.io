@@ -66,14 +66,14 @@ a {
   text-decoration: underline;
 }
 
- a img, a svg, a .svg-icon {
-   border-width: 0.125em;
-   border-top-style: solid;
-   border-top-color: transparent;
-   border-bottom-style: solid;
-   padding: 0.125em 0;
-   vertical-align: bottom;
-}
+//  a img, a svg, a .svg-icon {
+//    border-width: 0.125em;
+//    border-top-style: solid;
+//    border-top-color: transparent;
+//    border-bottom-style: solid;
+//    padding: 0.125em 0;
+//    vertical-align: bottom;
+// }
 
 button {
   border: thin solid;
@@ -380,6 +380,10 @@ h2.footer-heading {
 
 .social-media-list a:hover {
   text-decoration: underline;
+}
+
+.svg-icon {
+  padding: 0;
 }
 
 pre,
