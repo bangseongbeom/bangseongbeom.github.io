@@ -68,9 +68,10 @@ a {
 
  a img, a svg, a .svg-icon {
    border-width: 0.125em;
+   border-top-style: solid;
+   border-top-color: transparent;
    border-bottom-style: solid;
-   padding: 0;
-   padding-bottom: 0.125em;
+   padding: 0.125em 0;
 }
 
 button {
