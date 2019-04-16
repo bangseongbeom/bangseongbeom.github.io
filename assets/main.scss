@@ -119,7 +119,7 @@ form button,
 [role~="toolbar"] a img,
 form a img {
   border: none;
-  padding: none;
+  padding: 0;
 }
 
 a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
