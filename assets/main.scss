@@ -86,7 +86,7 @@ form button,
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
-  border: solid silver;
+  border: thin solid black;
   margin: 0.125em 0;
   letter-spacing: -0.05em;
   outline: 0 solid silver;
@@ -100,7 +100,7 @@ button img,
 button svg,
 .svg-icon {
   padding: 8px;
-  border: solid silver;
+  border: thin solid black;
   margin: 0.125em 0;
   vertical-align: middle;
 }
@@ -206,7 +206,7 @@ form label:only-child textarea {
 }
 
 input, textarea {
-  border: solid silver;
+  border: thin solid silver;
   outline: 0 solid silver;
   outline-offset: 0;
   transition: outline 50ms, border 50ms;
