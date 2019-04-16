@@ -82,8 +82,6 @@ form button,
   text-align: center;
   text-decoration: none;
   box-sizing: content-box;
-  min-width: 1em;
-  min-height: 1em;
   background: none;
   font-size: 16px;
   line-height: 1.5;
@@ -100,6 +98,8 @@ a img,
 a svg,
 button img,
 button svg {
+  width: 24px;
+  height: 24px;
   padding: 12px;
   border: thin solid;
   vertical-align: middle;
