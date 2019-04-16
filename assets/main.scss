@@ -97,7 +97,8 @@ form button,
 a img,
 a svg,
 button img,
-button svg {
+button svg,
+.svg-icon {
   padding: 6px;
   border: thin solid;
   vertical-align: middle;
@@ -394,11 +395,6 @@ h2.footer-heading {
 
 .social-media-list a:hover {
   text-decoration: underline;
-}
-
-.svg-icon {
-  padding: 12px;
-  vertical-align: middle;
 }
 
 pre,
