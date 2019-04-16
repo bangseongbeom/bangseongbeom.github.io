@@ -155,7 +155,7 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: silver;
   outline-width: thick;
-  outline-color: dimgray;
+  outline-color: black;
 }
 
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
@@ -218,9 +218,9 @@ input:hover, textarea:hover {
 }
 
 input:focus, textarea:focus {
-  border-color: dimgray;
+  border-color: black;
   outline-width: thick;
-  outline-color: dimgray;
+  outline-color: black;
 }
 
 input:active, textarea:active {
