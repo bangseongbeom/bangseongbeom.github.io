@@ -87,7 +87,7 @@ form button,
   line-height: 1.5;
   padding: 12px 16px;
   border: solid lightgray;
-  margin: 0.125em 0;
+  margin: 0.25em 0.125em;
   letter-spacing: -0.05em;
   outline: 0 solid lightgray;
   outline-offset: 0;
@@ -182,14 +182,16 @@ form label:only-child {
 form input, form textarea {
   height: auto;
   padding: 12px 16px;
-  margin: 0.125em 0;
+  margin: 0.25em 0.125em;
   color: $text-color;
   background: $background-color;
 }
 
-form label:only-child input, p label:only-child textarea {
+form label:only-child input, form label:only-child textarea {
   display: block;
   width: 100%;
+  margin-left: 0;
+  margin-right: 0;
   box-sizing: border-box;
 }
 
