@@ -79,15 +79,14 @@ form button,
   width: auto;
   height: auto;
   text-align: center;
-  text-decoration: underline;
+  text-decoration: none;
   box-sizing: content-box;
   background: none;
   font-size: 16px;
   line-height: 2;
-  padding: 8px 16px;
-  border: solid transparent;
-  margin: 0.125em 0;
-  letter-spacing: -0.05em;
+  padding: 0.5em 1em;
+  border: thin solid transparent;
+  margin: 0.5em;
   outline: 0 solid silver;
   outline-offset: 0;
 }
