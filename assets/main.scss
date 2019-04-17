@@ -61,10 +61,6 @@ a, button {
   text-decoration: underline;
 }
 
-[role~="menubar"], [role~="toolbar"], form {
-  margin: $spacing-unit / 4 0;
-}
-
 em a,
 em button,
 [role~="menubar"] a,
