@@ -103,6 +103,25 @@ button svg,
   vertical-align: middle;
 }
 
+em a img,
+em a svg,
+em button img,
+em button svg,
+[role~="menubar"] a img,
+[role~="menubar"] a svg,
+[role~="menubar"] button img,
+[role~="menubar"] button smg,
+[role~="toolbar"] a svg,
+[role~="toolbar"] a img,
+[role~="toolbar"] button svg,
+[role~="toolbar"] button img,
+form a img,
+form a svg,
+form button img,
+form button svg {
+  margin: 0;
+}
+
 a:hover img,
 a:hover svg,
 button:hover img,
