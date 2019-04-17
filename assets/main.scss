@@ -313,6 +313,7 @@ a.web::before {
 
 .page-content {
   padding: 0;
+  margin: $spacing-unit 0;
 }
 
 .page-content figure {
@@ -339,6 +340,7 @@ a.web::before {
 .site-footer {
   border-top: none;
   text-align: center;
+  padding: 0;
 }
 
 .footer-col-wrapper {
