@@ -79,13 +79,13 @@ form button,
   width: auto;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   box-sizing: content-box;
   background: none;
   font-size: 16px;
   line-height: 1.5;
   padding: 12px 16px;
-  border: thin solid black;
+  border: none;
   margin: 0.125em 0;
   letter-spacing: -0.05em;
   outline: 0 solid silver;
@@ -97,8 +97,8 @@ a svg,
 button img,
 button svg,
 .svg-icon {
-  padding: 8px;
-  border: thin solid black;
+  padding: 4px;
+  border: solid black;
   margin: 0.125em 0;
   vertical-align: middle;
 }
@@ -122,27 +122,6 @@ a:active svg,
 button:active img,
 button:active svg {
   background: inherit;
-}
-
-em a img,
-em a svg,
-em button img,
-em button svg,
-[role~="menubar"] a img,
-[role~="menubar"] a svg,
-[role~="menubar"] button img,
-[role~="menubar"] button smg,
-[role~="toolbar"] a svg,
-[role~="toolbar"] a img,
-[role~="toolbar"] button svg,
-[role~="toolbar"] button img,
-form a img,
-form a svg,
-form button img,
-form button svg {
-  padding: 0;
-  border: none;
-  margin: 0;
 }
 
 a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
