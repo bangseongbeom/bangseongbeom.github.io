@@ -84,7 +84,7 @@ form button,
   text-decoration: underline silver;
   background: none;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.5em;
   padding: 0.75em;
   border: solid transparent;
   margin: 0.25em;
@@ -184,7 +184,7 @@ input, textarea {
   outline: 0 solid gray;
   outline-offset: 0;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.5em;
 }
 
 input:hover, textarea:hover {
@@ -266,7 +266,7 @@ blockquote {
   display: inline-block;
   float: none;
   font-size: x-large;
-  line-height: 1.5;
+  line-height: 1.5em;
   font-weight: bold;
   color: $brand-color;
 }
@@ -282,7 +282,7 @@ blockquote {
   border: none;
   background-color: inherit;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.5em;
 }
 
 .site-nav label[for="nav-trigger"] {
@@ -314,7 +314,7 @@ a.web::before {
 }
 
 .post-title {
-  line-height: 1.25;
+  line-height: 1.25em;
 }
 
 .page-content {
@@ -391,7 +391,7 @@ a.web::before {
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: $spacing-unit * 1.5;
-  line-height: 1.25;
+  line-height: 1.25em;
 }
 
 .post-list > li {
