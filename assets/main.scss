@@ -77,14 +77,15 @@ form button,
 .site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
+  box-sizing: content-box;
+  min-width: 1em;
   height: auto;
   text-align: center;
   text-decoration: none;
-  box-sizing: content-box;
   background: none;
   font-size: 16px;
   line-height: 1.5;
-  padding: 0.5em 1em;
+  padding: 0.75em;
   border: thin solid;
   margin: 0.5em;
   outline: 0 solid silver;
