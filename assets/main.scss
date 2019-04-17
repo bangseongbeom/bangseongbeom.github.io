@@ -177,6 +177,7 @@ form em button,
 button[type="submit"] {
   padding: 0.625em;
   border: 0.125em solid;
+  text-decoration: none;
 }
 
 [role~="menubar"] em em a,
@@ -189,7 +190,7 @@ form em em button {
   padding: 0.75em;
   border: none;
   color: white;
-  text-decoration-color: dimgray;
+//   text-decoration-color: dimgray;
 }
 
 input, textarea {
