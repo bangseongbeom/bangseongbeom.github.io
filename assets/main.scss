@@ -168,13 +168,26 @@ a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:
   outline-color: silver;
 }
 
-em em a,
-em em button,
+[role~="menubar"] em a,
+[role~="menubar"] em button,
+[role~="toolbar"] em a,
+[role~="toolbar"] em button,
 form em a,
 form em button,
 button[type="submit"] {
+  padding: 0.625em;
+  border: 0.125em solid gray;
+}
+
+[role~="menubar"] em em a,
+[role~="menubar"] em em button,
+[role~="toolbar"] em em a,
+[role~="toolbar"] em em button,
+form em em a,
+form em em button {
   background: black;
-  border-color: black;
+  padding: 0.75em;
+  border: none;
   color: white;
   text-decoration-color: dimgray;
 }
