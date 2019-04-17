@@ -66,13 +66,17 @@ a, button {
 }
 
 em a,
+em button,
 [role~="menubar"] a,
 [role~="toolbar"] a,
-form a,
-em button,
 [role~="menubar"] button,
 [role~="toolbar"] button,
+form a,
 form button,
+header a,
+header button,
+nav a,
+nav button,
 .site-nav .page-link,
 .site-nav .page-link:not(:last-child) {
   display: inline-block;
