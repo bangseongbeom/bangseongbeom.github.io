@@ -81,13 +81,13 @@ form button,
   min-width: 1em;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline silver;
   background: none;
   font-size: 16px;
   line-height: 1.5;
   padding: 0.75em;
-  border: thin solid;
-  margin: 0.5em;
+  border: solid transparent;
+  margin: 0.25em;
   outline: 0 solid silver;
   outline-offset: 0;
 }
