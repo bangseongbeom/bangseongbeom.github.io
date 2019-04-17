@@ -92,6 +92,10 @@ form button,
   outline-offset: 0;
 }
 
+.svg-icon {
+  padding: 0;
+}
+
 a img,
 a svg,
 button img,
@@ -293,19 +297,19 @@ blockquote {
 }
 
 a.android::before {
-  content: "🤖" " ";
+  content: "🤖";
 }
 
 a.java::before {
-  content: "☕" " ";
+  content: "☕";
 }
 
 a.python::before {
-  content: "🐍" " ";
+  content: "🐍";
 }
 
 a.web::before {
-  content: "🌐" " ";
+  content: "🌐";
 }
 
 .post-title {
