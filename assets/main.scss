@@ -298,19 +298,19 @@ blockquote {
 }
 
 a.android::before {
-  content: "🤖";
+  content: "🤖" " ";
 }
 
 a.java::before {
-  content: "☕";
+  content: "☕" " ";
 }
 
 a.python::before {
-  content: "🐍";
+  content: "🐍" " ";
 }
 
 a.web::before {
-  content: "🌐";
+  content: "🌐" " ";
 }
 
 .post-title {
