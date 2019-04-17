@@ -313,7 +313,7 @@ a.web::before {
 
 .page-content {
   padding: 0;
-  margin: $spacing-unit 0;
+  margin: $spacing-unit * 1.5 0;
 }
 
 .page-content figure {
