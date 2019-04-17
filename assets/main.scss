@@ -179,37 +179,8 @@ button[type="submit"] {
   text-decoration-color: dimgray;
 }
 
-label {
-  font-size: 16px;
-}
-
-form label:only-child {
-  display: block;
-}
-
-form input, form textarea {
-  height: auto;
-  padding: 12px 16px;
-  margin: 0.125em 0;
-  color: $text-color;
-  background: $background-color;
-}
-
-form label:only-child input, form label:only-child textarea {
-  display: block;
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-  box-sizing: border-box;
-}
-
-form label:only-child textarea {
-  height: 8em;
-  resize: vertical;
-}
-
 input, textarea {
-  border: solid gray;
+  border: 0.125em solid gray;
   outline: 0 solid gray;
   outline-offset: 0;
   font-size: 16px;
@@ -231,6 +202,35 @@ input:active, textarea:active {
   border-color: gray;
   outline-width: thick;
   outline-color: gray;
+}
+
+label {
+  font-size: 16px;
+}
+
+form label:only-child {
+  display: block;
+}
+
+form input, form textarea {
+  height: auto;
+  padding: 0.625em;
+  margin: 0.125em 0;
+  color: $text-color;
+  background: $background-color;
+}
+
+form label:only-child input, form label:only-child textarea {
+  display: block;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+form label:only-child textarea {
+  height: 8em;
+  resize: vertical;
 }
 
 blockquote {
