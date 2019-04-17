@@ -162,16 +162,28 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   transition: outline 50ms;
 }
 
+a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+  text-decoration: underline;
+}
+
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
   background: silver;
   outline-width: thick;
   outline-color: black;
 }
 
+a:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
+  text-decoration: underline;
+}
+
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
   background: silver;
   outline-width: thick;
   outline-color: silver;
+}
+
+a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
+  text-decoration: underline;
 }
 
 [role~="menubar"] em a,
