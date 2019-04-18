@@ -105,7 +105,7 @@ nav button,
 .svg-icon {
   padding: 0;
   fill: currentcolor;
-  vertical-align: initial;
+  vertical-align: baseline;
 }
 
 a img,
@@ -113,6 +113,7 @@ a svg,
 button img,
 button svg,
 .svg-icon {
+  vertical-align: middle;
 }
 
 em a img,
@@ -131,7 +132,7 @@ form a img,
 form a svg,
 form button img,
 form button svg {
-  vertical-align: bottom;
+  margin: -0.5em 0;
 }
 
 a:hover img,
