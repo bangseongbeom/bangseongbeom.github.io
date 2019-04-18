@@ -112,9 +112,6 @@ a svg,
 button img,
 button svg,
 .svg-icon {
-//   padding: 4px;
-//   border: solid black;
-  vertical-align: middle;
 }
 
 em a img,
@@ -133,9 +130,7 @@ form a img,
 form a svg,
 form button img,
 form button svg {
-//   padding: 0;
-//   border: none;
-  margin: -0.25em 0;
+  vertical-align: bottom;
 }
 
 a:hover img,
