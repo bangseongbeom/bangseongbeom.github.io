@@ -190,6 +190,17 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
+// [role~="menubar"] em a,
+// [role~="menubar"] em button,
+// [role~="toolbar"] em a,
+// [role~="toolbar"] em button,
+// form em a,
+// form em button,
+// button[type="submit"] {
+//   border-color: black;
+//   text-decoration: none;
+// }
+
 [role~="menubar"] em a,
 [role~="menubar"] em button,
 [role~="toolbar"] em a,
@@ -197,21 +208,10 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
 form em a,
 form em button,
 button[type="submit"] {
-  border-color: black;
-  text-decoration: none;
-}
-
-[role~="menubar"] em em a,
-[role~="menubar"] em em button,
-[role~="toolbar"] em em a,
-[role~="toolbar"] em em button,
-form em em a,
-form em em button,
-em button[type="submit"] {
   background: black;
   border-color: black;
+  text-decoration: none;
   color: white;
-//   text-decoration-color: dimgray;
 }
 
 input, textarea {
