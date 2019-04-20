@@ -194,6 +194,15 @@ form button {
   font-weight: bold;
 }
 
+form small a,
+form small button {
+  border: none;
+  text-decoration: underline;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+}
+
 [role~="menubar"] em a,
 [role~="menubar"] em button,
 [role~="toolbar"] em a,
