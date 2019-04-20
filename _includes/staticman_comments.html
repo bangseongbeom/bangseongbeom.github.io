@@ -9,7 +9,7 @@
   {%- endcapture -%}
   {%- assign sorted_keys = captured_keys | split: "," | sort -%}
 
-  <h1 id="comments">댓글</h1>
+  <h2 id="comments">댓글</h2>
   {%- for key in sorted_keys -%}
     {%- assign comment = site.data.comments[filename][key] -%}
     <article id="comment-{{ comment._id }}" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
@@ -29,7 +29,7 @@
   {%- endfor -%}
   <!-- Staticman v3: https://github.com/eduardoboucas/staticman/issues/243#issuecomment-453754860 -->
   <form method="post" action="https://dev.staticman.net/v3/entry/github/{{ site.github.owner_name }}/{{ site.github.repository_name }}/{{ site.github.source.branch }}/comments">
-    <h2 id="write-comment">댓글 쓰기</h2>
+    <h3 id="write-comment">댓글 쓰기</h3>
     <p><input name="options[redirect]" type="hidden" value="{{ site.url }}{{ page.url }}#comment-notes"></p>
     <!-- e.g. "2016-01-02-this-is-a-post" -->
     <p><input name="options[filename]" type="hidden" value="{{ filename }}"></p>
