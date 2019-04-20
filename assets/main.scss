@@ -57,23 +57,26 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 /* :link */
 a,
 button,
-body article header a,
-body article header button,
-body aside header a,
-body aside header button,
-body main header a,
-body main header button,
-body nav header a,
-body nav header button,
-body section header a,
-body section header button,
+article header a,
+article header button,
+aside header a,
+aside header button,
+main header a,
+main header button,
+nav header a,
+nav header button,
+section header a,
+section header button,
 {
   display: inline;
+  padding: 0;
+  margin: 0;
   color: inherit;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
   outline: 0 solid silver;
+  font: inherit;
   text-decoration: underline;
 }
 
