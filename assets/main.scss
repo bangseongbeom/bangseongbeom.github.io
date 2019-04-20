@@ -192,7 +192,8 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
 [role~="toolbar"] em a,
 [role~="toolbar"] em button,
 form em a,
-form em button {
+form em button,
+button[type="submit"] {
   border-color: black;
   text-decoration: none;
   font-weight: bold;
