@@ -55,7 +55,19 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 }
 
 /* :link */
-a, button {
+a,
+button,
+body article header a,
+body article header button,
+body aside header a,
+body aside header button,
+body main header a,
+body main header button,
+body nav header a,
+body nav header button,
+body section header a,
+body section header button,
+{
   display: inline;
   color: inherit;
   word-wrap: break-word;
@@ -75,10 +87,10 @@ form a,
 form button,
 [role~="form"] a,
 [role~="form"] button,
-body > header a,
-body > header button,
-body > [role~="banner"] a,
-body > [role~="banner"] button,
+body header a,
+body header button,
+body [role~="banner"] a,
+body [role~="banner"] button,
 nav a,
 nav button,
 [role~="navigation"] a,
