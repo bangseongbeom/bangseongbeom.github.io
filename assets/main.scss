@@ -189,9 +189,9 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
 
 form a,
 form button {
-  border-color: black;
+  padding: 0.625em;
+  border: 0.125em solid black;
   text-decoration: none;
-  font-weight: bold;
 }
 
 form small a,
@@ -211,9 +211,10 @@ form em a,
 form em button,
 button[type="submit"] {
   background: black;
-  border-color: black;
+  border: none;
   text-decoration: none;
   color: white;
+  font-weight: bold;
 }
 
 input, textarea {
