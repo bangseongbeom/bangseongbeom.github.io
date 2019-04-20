@@ -202,12 +202,12 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-// form a,
-// form button {
-//   padding: 0.625em;
-//   border: 0.125em solid black;
-//   text-decoration: none;
-// }
+form a,
+form button {
+  padding: 0.625em;
+  border: 0.125em solid black;
+  text-decoration: none;
+}
 
 [role~="menubar"] em a,
 [role~="menubar"] em button,
