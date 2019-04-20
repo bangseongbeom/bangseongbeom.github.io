@@ -187,21 +187,12 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-form a,
-form button {
-  padding: 0.625em;
-  border: 0.125em solid black;
-  text-decoration: none;
-}
-
-form small a,
-form small button {
-  border: none;
-  text-decoration: underline;
-  font-weight: normal;
-  padding: 0;
-  margin: 0;
-}
+// form a,
+// form button {
+//   padding: 0.625em;
+//   border: 0.125em solid black;
+//   text-decoration: none;
+// }
 
 [role~="menubar"] em a,
 [role~="menubar"] em button,
