@@ -128,7 +128,7 @@ a svg,
 button img,
 button svg,
 .svg-icon {
-  vertical-align: bottom;
+  vertical-align: baseline;
 }
 
 em a img,
@@ -147,6 +147,7 @@ form a img,
 form a svg,
 form button img,
 form button svg {
+  vertical-align: bottom;
 //   margin: -0.5em 0;
 }
 
