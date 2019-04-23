@@ -55,11 +55,11 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 }
 
 figcaption:first-child::before {
-  content: "▽" " ";
+  content: "▼" " ";
 }
 
 figcaption:last-child::before {
-  content: "△" " ";
+  content: "▲" " ";
 }
 
 /* :link */
