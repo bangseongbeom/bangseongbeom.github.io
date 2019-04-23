@@ -54,11 +54,11 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
   margin-top: $spacing-unit / 2;
 }
 
-figcaption:first-child {
+figcaption:first-child::before {
   content: "▽" " ";
 }
 
-figcaption:last-child {
+figcaption:last-child::before {
   content: "△" " ";
 }
 
