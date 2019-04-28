@@ -346,10 +346,15 @@ blockquote {
 .site-nav {
   position: static;
   float: none;
-  border: none;
+  border: 1px solid black;
+  margin: $spacing-unit / 4 0;
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
+}
+
+.site-nav a {
+  text-decoration: none;
 }
 
 .site-nav label[for="nav-trigger"] {
