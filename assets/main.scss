@@ -66,11 +66,6 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
-nav, .site-nav {
-  margin: 0.125em 0;
-  border: 2px solid;
-}
-
 /* :link */
 a,
 button,
@@ -343,10 +338,10 @@ blockquote {
   height: 128px;
 }
 
-.site-nav {
+nav, .site-nav {
   position: static;
   float: none;
-  border: none;
+  margin: 0.125em 0;
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
