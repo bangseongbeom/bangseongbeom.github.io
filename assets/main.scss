@@ -123,6 +123,7 @@ nav button,
   text-decoration: underline;
   background: none;
   font-size: 16px;
+  font-weight: normal;
   line-height: 1.5;
   padding: 0.75em;
   border: none;
@@ -193,7 +194,7 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   transition: outline 50ms;
 }
 
-a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .site-nav .site-title a:hover {
   text-decoration: underline;
 }
 
