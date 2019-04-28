@@ -68,6 +68,10 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
+sup {
+  padding: 0.25em;
+}
+
 /* :link */
 a,
 button,
