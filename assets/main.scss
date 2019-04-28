@@ -187,7 +187,7 @@ button:active svg {
   background: inherit;
 }
 
-a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .site-nav .site-title a:hover {
   background: silver;
   outline-width: medium;
   outline-color: silver;
@@ -198,23 +198,23 @@ a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover
   text-decoration: underline;
 }
 
-a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
+a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus, .site-nav .site-title a:focus {
   background: silver;
   outline-width: thick;
   outline-color: black;
 }
 
-a:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
+a:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus, .site-nav .site-title a:focus {
   text-decoration: underline;
 }
 
-a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
+a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active, .site-nav .site-title a:active {
   background: silver;
   outline-width: thick;
   outline-color: silver;
 }
 
-a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active {
+a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active, .site-nav .site-title a:active {
   text-decoration: underline;
 }
 
@@ -352,8 +352,6 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
-  font-weight: bold;
-  font-size: smaller;
 }
 
 .site-nav a,
