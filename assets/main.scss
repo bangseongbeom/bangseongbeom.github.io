@@ -222,9 +222,7 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
 [role~="toolbar"] em button,
 form em a,
 form em button,
-button[type="submit"],
-.site-nav .page-link,
-.site-nav .page-link:not(:last-child) {
+button[type="submit"] {
   padding: 0.625em;
   border: 0.125em solid black;
   text-decoration: none;
