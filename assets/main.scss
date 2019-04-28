@@ -29,6 +29,10 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
+body {
+  display: block;
+}
+
 article {
   margin-bottom: $spacing-unit;
 }
