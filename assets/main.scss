@@ -62,16 +62,6 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
-[role~="menubar"],
-[role~="toolbar"] {
-  border: 0.125em solid black;
-}
-
-.site-nav .page-link,
-.site-nav .page-link:not(:last-child) {
-  text-decoration: none;
-}
-
 /* :link */
 a,
 button,
@@ -115,7 +105,9 @@ body [role~="banner"] button,
 nav a,
 nav button,
 [role~="navigation"] a,
-[role~="navigation"] button {
+[role~="navigation"] button,
+.site-nav .page-link,
+.site-nav .page-link:not(:last-child) {
   display: inline-block;
   width: auto;
   box-sizing: content-box;
