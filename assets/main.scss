@@ -64,7 +64,7 @@ figcaption:last-child::before {
 
 [role~="menubar"],
 [role~="toolbar"] {
-  border: 0.125em solid black;
+  border: 2px solid black;
 }
 
 .site-nav .page-link,
@@ -135,7 +135,7 @@ nav button,
   outline: 0 solid silver;
   outline-offset: 0;
   padding: 0.625em;
-  border: 0.125em solid black;
+  border: 2px solid black;
   text-decoration: none;
 }
 
@@ -233,7 +233,7 @@ form em a,
 form em button,
 button[type="submit"] {
   padding: 0.625em;
-  border: 0.125em solid black;
+  border: 2px solid black;
   text-decoration: none;
 }
 
