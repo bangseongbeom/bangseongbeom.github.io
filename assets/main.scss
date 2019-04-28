@@ -211,6 +211,16 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
+article header a,
+article header button,
+aside header a,
+aside header button,
+main header a,
+main header button,
+nav header a,
+nav header button,
+section header a,
+section header button,
 [role~="menubar"] a,
 [role~="menubar"] button,
 [role~="toolbar"] a,
@@ -222,7 +232,16 @@ button[type="submit"] {
   border: 0.125em solid black;
   text-decoration: none;
 }
-
+article header em a,
+article header em button,
+aside header em a,
+aside header em button,
+main header em a,
+main header em button,
+nav header em a,
+nav header em button,
+section header em a,
+section header em button,
 [role~="menubar"] em a,
 [role~="menubar"] em button,
 [role~="toolbar"] em a,
