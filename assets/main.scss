@@ -227,7 +227,9 @@ section header button,
 [role~="toolbar"] button,
 form a,
 form button,
-button[type="submit"] {
+button[type="submit"],
+.site-nav .page-link,
+.site-nav .page-link:not(:last-child) {
   padding: 0.625em;
   border: 0.125em solid black;
   text-decoration: none;
