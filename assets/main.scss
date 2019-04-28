@@ -62,11 +62,6 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
-[role~="toolbar"],
-[role~="menubar"] {
-  border: 0.125em solid;
-}
-
 /* :link */
 a,
 button,
@@ -119,7 +114,7 @@ nav button,
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   background: none;
   font-size: 16px;
   line-height: 1.5;
