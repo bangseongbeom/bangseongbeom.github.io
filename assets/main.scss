@@ -211,12 +211,12 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-[role~="menubar"] em a,
-[role~="menubar"] em button,
-[role~="toolbar"] em a,
-[role~="toolbar"] em button,
-form em a,
-form em button,
+[role~="menubar"] a,
+[role~="menubar"] button,
+[role~="toolbar"] a,
+[role~="toolbar"] button,
+form a,
+form button,
 button[type="submit"] {
   padding: 0.625em;
   border: 0.125em solid black;
