@@ -218,6 +218,8 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
+em a,
+em button,
 [role~="menubar"] em a,
 [role~="menubar"] em button,
 [role~="toolbar"] em a,
