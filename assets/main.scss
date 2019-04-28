@@ -216,12 +216,12 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-[role~="menubar"] a,
-[role~="menubar"] button,
-[role~="toolbar"] a,
-[role~="toolbar"] button,
-form a,
-form button,
+[role~="menubar"] em a,
+[role~="menubar"] em button,
+[role~="toolbar"] em a,
+[role~="toolbar"] em button,
+form em a,
+form em button,
 button[type="submit"],
 .site-nav .page-link,
 .site-nav .page-link:not(:last-child) {
@@ -229,22 +229,13 @@ button[type="submit"],
   border: 0.125em solid black;
   text-decoration: none;
 }
-article header em a,
-article header em button,
-aside header em a,
-aside header em button,
-main header em a,
-main header em button,
-nav header em a,
-nav header em button,
-section header em a,
-section header em button,
-[role~="menubar"] em a,
-[role~="menubar"] em button,
-[role~="toolbar"] em a,
-[role~="toolbar"] em button,
-form em a,
-form em button,
+
+[role~="menubar"] em em a,
+[role~="menubar"] em em button,
+[role~="toolbar"] em em a,
+[role~="toolbar"] em em button,
+form em em a,
+form em em button,
 button[type="submit"] {
   background: black;
   padding: 0.75em;
