@@ -66,6 +66,11 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
+nav {
+  margin: 0.125em 0;
+  border: 2px solid;
+}
+
 /* :link */
 a,
 button,
