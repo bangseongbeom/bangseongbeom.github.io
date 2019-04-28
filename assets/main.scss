@@ -29,10 +29,6 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
-body {
-  display: block;
-}
-
 article {
   margin-bottom: $spacing-unit;
 }
@@ -98,6 +94,10 @@ em button,
 [role~="toolbar"] a,
 [role~="menubar"] button,
 [role~="toolbar"] button,
+form a,
+form button,
+[role~="form"] a,
+[role~="form"] button,
 header a,
 header button,
 body [role~="banner"] a,
@@ -114,7 +114,7 @@ nav button,
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   background: none;
   font-size: 16px;
   line-height: 1.5;
@@ -187,7 +187,7 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   transition: outline 50ms;
 }
 
-a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .social-media-list a:hover {
+a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
   text-decoration: underline;
 }
 
@@ -211,19 +211,17 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-[role~="menubar"] em a,
-[role~="menubar"] em button,
-[role~="toolbar"] em a,
-[role~="toolbar"] em button,
-form a,
-form button,
-[role~="form"] a,
-[role~="form"] button,
-button[type="submit"] {
-  padding: 0.625em;
-  border: 0.125em solid black;
-  text-decoration: none;
-}
+// [role~="menubar"] em a,
+// [role~="menubar"] em button,
+// [role~="toolbar"] em a,
+// [role~="toolbar"] em button,
+// form em a,
+// form em button,
+// button[type="submit"] {
+//   padding: 0.625em;
+//   border: 0.125em solid black;
+//   text-decoration: none;
+// }
 
 [role~="menubar"] em a,
 [role~="menubar"] em button,
@@ -338,7 +336,7 @@ blockquote {
   height: 128px;
 }
 
-nav, .site-nav {
+.site-nav {
   position: static;
   float: none;
   border: none;
@@ -467,6 +465,10 @@ h1, h2, h3, h4, h5, h6 {
 
 h2.footer-heading {
   margin-top: $spacing-unit / 2;
+}
+
+.social-media-list a:hover {
+  text-decoration: underline;
 }
 
 pre,
