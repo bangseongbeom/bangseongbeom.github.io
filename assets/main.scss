@@ -223,12 +223,12 @@ button[type="submit"] {
   text-decoration: none;
 }
 
-[role~="menubar"] em em a,
-[role~="menubar"] em em button,
-[role~="toolbar"] em em a,
-[role~="toolbar"] em em button,
-form em em a,
-form em em button,
+[role~="menubar"] em a,
+[role~="menubar"] em button,
+[role~="toolbar"] em a,
+[role~="toolbar"] em button,
+form em a,
+form em button,
 button[type="submit"] {
   background: black;
   padding: 0.75em;
