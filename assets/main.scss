@@ -89,7 +89,7 @@ section header button,
   background: none;
   outline: 0 solid silver;
   font: inherit;
-  text-decoration: underline;
+  text-decoration: underline darkgray;
 }
 
 em a,
@@ -118,7 +118,7 @@ nav button,
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: underline;
+  text-decoration: underline darkgray;
   background: none;
   font-size: 16px;
   line-height: 1.5;
@@ -191,7 +191,7 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   transition: outline 50ms;
 }
 
-a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .social-media-list a:hover {
   text-decoration: underline;
 }
 
@@ -469,10 +469,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h2.footer-heading {
   margin-top: $spacing-unit / 2;
-}
-
-.social-media-list a:hover {
-  text-decoration: underline;
 }
 
 pre,
