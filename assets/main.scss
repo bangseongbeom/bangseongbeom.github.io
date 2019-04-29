@@ -250,7 +250,7 @@ button[type="submit"] {
 
 input, textarea {
   border: 0.125em solid black;
-  outline: 0 solid black;
+  outline: 0 solid gray;
   outline-offset: 0;
   font-size: 16px;
   font-family: inherit;
@@ -263,15 +263,15 @@ input:hover, textarea:hover {
 }
 
 input:focus, textarea:focus {
-  border-color: gray;
+  border-color: black;
   outline-width: thick;
-  outline-color: gray;
+  outline-color: black;
 }
 
 input:active, textarea:active {
   border-color: black;
   outline-width: thick;
-  outline-color: black;
+  outline-color: gray;
 }
 
 label {
