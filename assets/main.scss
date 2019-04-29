@@ -321,6 +321,11 @@ blockquote {
   text-align: center;
 }
 
+.site-header {
+  border-bottom: 2px solid black;
+  padding: 2px 4px;
+}
+
 .site-header nav {
   top: 0;
   right: 0;
@@ -353,9 +358,6 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
-  border: 1px solid black;
-  margin: $spacing-unit / 2 0;
-  padding: 2px 4px;
 }
 
 .site-nav a,
