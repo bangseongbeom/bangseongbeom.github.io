@@ -120,14 +120,13 @@ nav button,
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   background: none;
   font-size: 16px;
   font-weight: normal;
   line-height: 1.5;
   padding: 0.75em;
   border: none;
-  border-bottom: thin solid;
   margin: 0.125em 0;
   outline: 0 solid silver;
   outline-offset: 0;
@@ -323,8 +322,8 @@ blockquote {
 }
 
 .site-header {
-//   border-bottom: 2px solid black;
-//   padding: 2px 4px;
+  border-bottom: 2px solid black;
+  padding: 2px 4px;
 }
 
 .site-header nav {
@@ -359,6 +358,11 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
+}
+
+.site-nav a,
+.site-nav .page-link {
+  text-decoration: none;
 }
 
 .site-nav label[for="nav-trigger"] {
