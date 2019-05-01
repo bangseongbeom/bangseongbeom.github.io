@@ -132,6 +132,15 @@ nav button,
   outline-offset: 0;
 }
 
+[role~="menubar"] a::before,
+[role~="toolbar"] a::before,
+[role~="menubar"] button::before,
+[role~="toolbar"] button::before,
+.site-nav .page-link::before,
+.site-nav .page-link:not(:last-child)::before {
+  content: "▹" " ";
+}
+
 .svg-icon {
   padding: 0;
   fill: currentcolor;
@@ -377,19 +386,19 @@ blockquote {
   display: block;
 }
 
-a.android::before {
+.site-nav a.page-link.android::before {
   content: "🤖" " ";
 }
 
-a.java::before {
+.site-nav a.page-link.java::before {
   content: "☕" " ";
 }
 
-a.python::before {
+.site-nav a.page-link.python::before {
   content: "🐍" " ";
 }
 
-a.web::before {
+.site-nav a.page-link.web::before {
   content: "🌐" " ";
 }
 
