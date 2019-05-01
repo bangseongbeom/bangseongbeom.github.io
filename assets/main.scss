@@ -322,8 +322,8 @@ blockquote {
 }
 
 .site-header {
-  border-bottom: 2px solid black;
-  padding: 2px 4px;
+//   border-bottom: 2px solid black;
+//   padding: 2px 4px;
 }
 
 .site-header nav {
@@ -358,11 +358,6 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
-}
-
-.site-nav a,
-.site-nav .page-link {
-  text-decoration: none;
 }
 
 .site-nav label[for="nav-trigger"] {
