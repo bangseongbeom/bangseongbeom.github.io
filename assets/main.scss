@@ -68,6 +68,12 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
+[role~="menubar"],
+[role~="toolbar"] {
+  border: 2px solid;
+  padding: 2px 4px;
+}
+
 /* :link */
 a,
 button,
@@ -319,11 +325,6 @@ blockquote {
   border-top: none;
   border-bottom: none;
   text-align: center;
-}
-
-.site-header {
-  border-bottom: 1px solid black;
-  padding: 2px 4px;
 }
 
 .site-header nav {
