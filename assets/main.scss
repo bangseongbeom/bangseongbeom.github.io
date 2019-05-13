@@ -133,7 +133,7 @@ nav button,
   line-height: 1.5;
   padding: 0.75em;
   border: none;
-  margin: 0.125em 0;
+  margin: 0.25em 0;
   outline: 0 solid silver;
   outline-offset: 0;
 }
@@ -224,25 +224,10 @@ a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):act
   text-decoration: underline;
 }
 
-em a,
-em button,
 [role~="menubar"] em a,
 [role~="menubar"] em button,
 [role~="toolbar"] em a,
 [role~="toolbar"] em button,
-form a,
-form button,
-button[type="submit"] {
-  padding: 0.625em;
-  border: 0.125em solid black;
-  text-decoration: none;
-  font-style: normal;
-}
-
-[role~="menubar"] em em a,
-[role~="menubar"] em em button,
-[role~="toolbar"] em em a,
-[role~="toolbar"] em em button,
 form em a,
 form em button,
 button[type="submit"] {
