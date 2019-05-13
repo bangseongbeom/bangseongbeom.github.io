@@ -68,12 +68,6 @@ figcaption:last-child::before {
   content: "▲" " ";
 }
 
-[role~="menubar"],
-[role~="toolbar"] {
-  border: 2px solid;
-  padding: 2px 4px;
-}
-
 /* :link */
 a,
 button,
@@ -136,6 +130,12 @@ nav button,
   margin: 0.25em 0;
   outline: 0 solid silver;
   outline-offset: 0;
+}
+
+[role~="menubar"],
+[role~="toolbar"] {
+  border: 2px solid;
+  padding: 2px 4px;
 }
 
 [role~="menubar"] a,
