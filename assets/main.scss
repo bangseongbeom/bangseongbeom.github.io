@@ -209,8 +209,12 @@ a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:las
   transition: outline 50ms;
 }
 
-a:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .site-nav .site-title a:hover {
+a:hover, .site-nav .site-title a:hover {
   text-decoration: underline;
+}
+
+.site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover {
+  text-decoration: none;
 }
 
 a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus, .site-nav .site-title a:focus {
@@ -219,18 +223,18 @@ a:focus, button:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:las
   outline-color: black;
 }
 
-a:focus, .site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus, .site-nav .site-title a:focus {
+a:focus, .site-nav .site-title a:focus {
   text-decoration: underline;
+}
+
+.site-nav .page-link:focus, .site-nav .page-link:not(:last-child):focus {
+  text-decoration: none;
 }
 
 a:active, button:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active, .site-nav .site-title a:active {
   background: silver;
   outline-width: thick;
   outline-color: silver;
-}
-
-a:active, .site-nav .page-link:active, .site-nav .page-link:not(:last-child):active, .site-nav .site-title a:active {
-  text-decoration: underline;
 }
 
 [role~="menubar"] em a,
