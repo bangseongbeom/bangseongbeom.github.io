@@ -133,6 +133,7 @@ nav button,
 }
 
 nav,
+[role~="group"],
 [role~="menubar"],
 [role~="toolbar"] {
   border: 2px solid;
@@ -141,7 +142,10 @@ nav,
 
 nav nav,
 nav [role~="menubar"],
-nav [role~="toolbar"] {
+nav [role~="toolbar"],
+[role~="group"] nav,
+[role~="group"] [role~="menubar"],
+[role~="group"] [role~="toolbar"] {
   border: none;
   padding: 0;
 }
