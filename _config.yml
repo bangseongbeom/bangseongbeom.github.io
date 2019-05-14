@@ -10,7 +10,7 @@ defaults:
     values:
       author: 방성범 (Bang Seongbeom)
 
-permalink: /posts/:title:output_ext
+permalink: /:title:output_ext
 
 lang: ko
 title: 방성범 블로그
