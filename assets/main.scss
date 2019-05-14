@@ -137,6 +137,7 @@ nav.site-nav,
 [role~="group"],
 [role~="menubar"],
 [role~="toolbar"] {
+  margin: $spacing-unit / 4 0;
   border: 2px solid;
   padding: 2px 4px;
 }
@@ -147,6 +148,7 @@ nav [role~="toolbar"],
 [role~="group"] nav,
 [role~="group"] [role~="menubar"],
 [role~="group"] [role~="toolbar"] {
+  margin: 0;
   border: none;
   padding: 0;
 }
