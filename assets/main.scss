@@ -132,16 +132,25 @@ nav button,
   outline-offset: 0;
 }
 
+nav,
 [role~="menubar"],
 [role~="toolbar"] {
   border: 2px solid;
   padding: 2px 4px;
 }
 
+nav nav,
+nav [role~="menubar"],
+nav [role~="toolbar"] {
+  border: none;
+  padding: 0;
+}
+
 [role~="menubar"] a,
 [role~="toolbar"] a,
 [role~="menubar"] button,
 [role~="toolbar"] button,
+.site-nav .site-title,
 .site-nav .page-link,
 .site-nav .page-link:not(:last-child) {
   text-decoration: none;
