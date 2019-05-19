@@ -137,7 +137,7 @@ nav.site-nav,
 [role~="group"],
 [role~="menubar"],
 [role~="toolbar"] {
-  margin: $spacing-unit / 4 0;
+  margin: $spacing-unit / 2 0;
   border: 2px solid;
   padding: 2px 4px;
 }
@@ -342,8 +342,8 @@ blockquote {
 }
 
 .wrapper {
-    padding-left: $spacing-unit / 4;
-    padding-right: $spacing-unit / 4;
+    padding-left: $spacing-unit / 2;
+    padding-right: $spacing-unit / 2;
 }
 
 .site-header {
