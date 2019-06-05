@@ -1,6 +1,7 @@
 ---
 title: 파이썬 더블 샤프(##) 주석
 category: python
+redirect_from: /posts/graphql-downsides-alternatives.html
 ---
 
 파이썬 내장 IDE인 [IDLE(아이들)][idle]에서는 'Comment Out Region'이라는 메뉴 항목이 있습니다. 이 항목은 사용자가 선택한 영역을 주석 처리하는데, 특이하게도 하나가 아니라 두 개의 샤프를 붙입니다. 샤프 두 개에 뭔가 특별한 의미라도 있는 걸까요?
