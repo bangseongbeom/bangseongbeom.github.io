@@ -398,22 +398,6 @@ blockquote {
   display: block;
 }
 
-a.android::before {
-  content: "🤖" " ";
-}
-
-a.java::before {
-  content: "☕" " ";
-}
-
-a.python::before {
-  content: "🐍" " ";
-}
-
-a.web::before {
-  content: "🌐" " ";
-}
-
 .post-title {
   line-height: 1.25;
 }
