@@ -43,6 +43,18 @@ article header {
   font-size: small;
 }
 
+header, .site-header {
+  border-bottom: 2px solid;
+}
+
+article header,
+aside header,
+main header,
+nav header,
+section header {
+  border: initial;
+}
+
 header nav ul {
   list-style: none;
   margin: 0;
@@ -137,8 +149,6 @@ nav.site-nav,
 [role~="group"],
 [role~="menubar"],
 [role~="toolbar"] {
-  margin: $spacing-unit / 2 0;
-  border: 2px solid;
   padding: 2px 4px;
 }
 
@@ -348,7 +358,6 @@ blockquote {
 
 .site-header {
   border-top: none;
-  border-bottom: none;
   text-align: center;
 }
 
