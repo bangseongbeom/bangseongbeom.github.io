@@ -44,7 +44,7 @@ article header {
 }
 
 header {
-  border: 2px solid;
+  border-bottom: 2px solid;
 }
 
 article header,
@@ -52,7 +52,7 @@ aside header,
 main header,
 nav header,
 section header {
-  border: none;
+  border: initial;
 }
 
 header nav ul {
