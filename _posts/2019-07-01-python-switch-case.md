@@ -7,15 +7,15 @@ category: python
 
 ## 복잡한 논의점으로 인한 실패
 
-파이썬을 개발한 [귀도 반 로섬](https://ko.wikipedia.org/wiki/%EA%B7%80%EB%8F%84_%EB%B0%98_%EB%A1%9C%EC%84%AC) 역시 파이썬에 `switch`/`case` 가 없어 불편해하는 사람이 있다는 것을 알고 있었습니다. 이윽고 귀도는 `switch`/`case` 문을 어떻게 구현할지에 대해 [PEP 3103](https://www.python.org/dev/peps/pep-3103/)에서 논의하기 시작했습니다.
+파이썬을 개발한 [귀도 반 로섬](https://ko.wikipedia.org/wiki/%EA%B7%80%EB%8F%84_%EB%B0%98_%EB%A1%9C%EC%84%AC)은 [PEP 3103](https://www.python.org/dev/peps/pep-3103/)에서 `switch`/`case` 문을 어떻게 구현할지에 대해 논의했던 적이 있습니다.
 
-귀도는 다음과 같은 논의점을 지적했습니다:
+이때 `switch`/`case` 문의 형태나 구현하는 방법에 대한 여러 가지 방식을 제안했습니다:
 
 - [문법](https://www.python.org/dev/peps/pep-3103/#basic-syntax)
 - [`if`/`elif` 방식 vs `dict` 기반 방식](https://www.python.org/dev/peps/pep-3103/#if-elif-chain-vs-dict-based-dispatch)
 - [`dict` 기반 방식의 추가적인 문제점](https://www.python.org/dev/peps/pep-3103/#when-to-freeze-the-dispatch-dict)
 
-이러한 방식의 차이는 각자 장단점이 있기 때문에 결정하기가 쉽지 않습니다. 귀도는 [무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion). [파이콘(PyCon) 2007 에서 이 기능에 관한 설문 조사를 했지만 좋은 반응을 얻지 못했습니다. 이로서 switch/case 문과 관련된 논의는 폐기됩니다.](https://www.python.org/dev/peps/pep-3103/#rejection-notice)
+각각 장단점이 있기 때문에 어느 한 방식을 결정하기가 쉽지 않습니다. 귀도는 [무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion). [파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사를 했지만 좋은 반응을 얻지 못했습니다. 이로서 switch/case 문과 관련된 논의는 폐기됩니다.](https://www.python.org/dev/peps/pep-3103/#rejection-notice)
 
 ## 대안: if...elif 또는 dict
 
