@@ -34,7 +34,7 @@ category: python
 
 각각 장단점이 있기 때문에 어느 한 방식을 결정하기가 쉽지 않습니다. [귀도는 무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion).
 
-파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사도 했지만, 사람들은 이 기능에 큰 관심을 보이지도 않았습니다. [이로서 switch/case 문과 관련된 논의는 폐기됩니다.](https://www.python.org/dev/peps/pep-3103/#rejection-notice)
+파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사도 했지만, 사람들은 이 기능에 큰 관심을 보이지도 않았습니다. [이로서 switch/case 문과 관련된 논의는 폐기됩니다](https://www.python.org/dev/peps/pep-3103/#rejection-notice).
 
 ## 대안: if...elif 또는 dict
 
