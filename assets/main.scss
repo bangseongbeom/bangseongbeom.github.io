@@ -515,8 +515,8 @@ pre,
 code {
   border-width: medium;
   border-radius: 0;
-  border-color: #e4dcd0;
-  background: #f9f4eb;
+  border-color: none;
+  background: #eee;
 }
 
 code {
@@ -525,7 +525,7 @@ code {
 
 .highlight {
   .highlighter-rouge & {
-    background: #f9f4eb;
+    background: #eee;
   }
 }
 
