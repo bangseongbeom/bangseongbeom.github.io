@@ -13,21 +13,21 @@ category: python
 
 - [문법](https://www.python.org/dev/peps/pep-3103/#basic-syntax): `switch`와 `case`의 들여쓰기 방식
 
-    방식 1:
-    
-    ```py
-    switch EXPR:
-        case EXPR:
-            SUITE
-    ```
-    
-    방식 2 (`case`는 들여쓰기하지 않음):
-    
-    ```
-    switch EXPR:
-    case EXPR:
-        SUITE
-    ```
+방식 1:
+
+  ```py
+  switch EXPR:
+      case EXPR:
+          SUITE
+  ```
+
+  방식 2 (`case`는 들여쓰기하지 않음):
+
+  ```
+  switch EXPR:
+  case EXPR:
+      SUITE
+  ```
 
 - [`if`/`elif` 방식 vs `dict` 기반 방식](https://www.python.org/dev/peps/pep-3103/#if-elif-chain-vs-dict-based-dispatch): 내부적으로 `switch`를 `if`/`elif`처럼 다루기 vs 딕셔너리를 만들어 매핑하는 방식으로 처리하기
 - [`dict` 기반 방식의 추가적인 문제점](https://www.python.org/dev/peps/pep-3103/#when-to-freeze-the-dispatch-dict)
@@ -43,18 +43,18 @@ category: python
 - 일반적인 경우: `if...elif`
 - 많은 경우 중에서 하나를 택해야 하는 경우: 딕셔너리와 함수를 매핑
 
-    예시:
-    
-    ```py
-    def function_1(...):
-        ...
+  예시:
 
-    functions = {'a': function_1,
-                 'b': function_2,
-                 'c': self.method_1, ...}
+  ```py
+  def function_1(...):
+      ...
 
-    func = functions[value]
-    func()
-    ```
+  functions = {'a': function_1,
+               'b': function_2,
+               'c': self.method_1, ...}
+
+  func = functions[value]
+  func()
+  ```
     
     출처: <a href="https://docs.python.org/3/faq/design.html#why-isn-t-there-a-switch-or-case-statement-in-python">Design and History FAQ</a>
