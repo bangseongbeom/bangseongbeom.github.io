@@ -25,8 +25,6 @@ category: python
 - 많은 경우 중에서 하나를 택해야 하는 경우: 딕셔너리와 함수를 매핑
 
     예시:
-
-    <figure>
     
     ```py
     def function_1(...):
@@ -40,5 +38,4 @@ category: python
     func()
     ```
     
-    <figcaption>출처: <a href="https://docs.python.org/3/faq/design.html#why-isn-t-there-a-switch-or-case-statement-in-python">Design and History FAQ</a></figcaption>
-    <figure>
+    출처: <a href="https://docs.python.org/3/faq/design.html#why-isn-t-there-a-switch-or-case-statement-in-python">Design and History FAQ</a>
