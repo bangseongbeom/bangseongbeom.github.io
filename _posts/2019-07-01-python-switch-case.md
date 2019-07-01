@@ -32,9 +32,9 @@ category: python
 - [`if`/`elif` 방식 vs `dict` 기반 방식](https://www.python.org/dev/peps/pep-3103/#if-elif-chain-vs-dict-based-dispatch): 내부적으로 `switch`를 `if`/`elif`처럼 다루기 vs 딕셔너리를 만들어 매핑하는 방식으로 처리하기
 - [`dict` 기반 방식의 추가적인 문제점](https://www.python.org/dev/peps/pep-3103/#when-to-freeze-the-dispatch-dict)
 
-각각 장단점이 있기 때문에 어느 한 방식을 결정하기가 쉽지 않습니다. 귀도는 [무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion).
+각각 장단점이 있기 때문에 어느 한 방식을 결정하기가 쉽지 않습니다. [귀도는 무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion).
 
-[파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사도 했지만, 사람들은 이 기능에 큰 관심을 보이지도 않았습니다. 이로서 switch/case 문과 관련된 논의는 폐기됩니다.](https://www.python.org/dev/peps/pep-3103/#rejection-notice)
+파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사도 했지만, 사람들은 이 기능에 큰 관심을 보이지도 않았습니다. [이로서 switch/case 문과 관련된 논의는 폐기됩니다.](https://www.python.org/dev/peps/pep-3103/#rejection-notice)
 
 ## 대안: if...elif 또는 dict
 
