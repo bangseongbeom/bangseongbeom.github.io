@@ -1,5 +1,5 @@
 ---
-title: 파이썬에서 switch/case 문이 없는 이유
+title: 파이썬에 switch/case 문이 없는 이유
 category: python
 ---
 
