@@ -3,17 +3,17 @@ title: 파이썬에 switch/case 문이 없는 이유
 category: python
 ---
 
-`switch`/`case`(스위치/케이스) 문의 구현 방식에 대한 합의가 이루어지지 않아 구현되지 못했습니다. 그냥 `if...elif` 쓰세요.
+`switch`/`case` 문의 구현 방식에 대한 합의가 이루어지지 않아 구현되지 못했습니다. 그냥 `if...elif` 쓰세요.
 
 ## 이유: 구현 방식의 다양성으로 인한 결정의 어려움 + 저조한 인기
 
-파이썬을 개발한 [귀도 반 로섬](https://ko.wikipedia.org/wiki/%EA%B7%80%EB%8F%84_%EB%B0%98_%EB%A1%9C%EC%84%AC)은 [PEP 3103](https://www.python.org/dev/peps/pep-3103/)에서 `switch`/`case` 문을 어떻게 구현할지에 대해 논의했던 적이 있습니다.
+파이썬에는 `switch`/`case`(스위치/케이스) 문이 없습니다. 파이썬을 개발한 [귀도 반 로섬](https://ko.wikipedia.org/wiki/%EA%B7%80%EB%8F%84_%EB%B0%98_%EB%A1%9C%EC%84%AC) 역시 이러한 사실을 잘 알고 있었죠.
 
-이때 `switch`/`case` 문의 형태나 구현하는 방법에 대한 여러 가지 방식을 제안했습니다:
+이와 관련된 논의는 [PEP 3103](https://www.python.org/dev/peps/pep-3103/)에서 시작되었습니다. 여기서 귀도는 `switch` 문을 구현하는 방법에 대한 여러 가지 가능성을 제시했습니다:
 
 - [문법](https://www.python.org/dev/peps/pep-3103/#basic-syntax): `switch`와 `case`의 들여쓰기 방식
 
-방식 1:
+  방식 1:
 
   ```py
   switch EXPR:
@@ -32,9 +32,11 @@ category: python
 - [`if`/`elif` 방식 vs `dict` 기반 방식](https://www.python.org/dev/peps/pep-3103/#if-elif-chain-vs-dict-based-dispatch): 내부적으로 `switch`를 `if`/`elif`처럼 다루기 vs 딕셔너리를 만들어 매핑하는 방식으로 처리하기
 - [`dict` 기반 방식의 추가적인 문제점](https://www.python.org/dev/peps/pep-3103/#when-to-freeze-the-dispatch-dict)
 
-각각 장단점이 있기 때문에 어느 한 방식을 결정하기가 쉽지 않습니다. [귀도는 무언가 결정하기에 이미 늦었다고 말합니다](https://www.python.org/dev/peps/pep-3103/#conclusion).
+각각 장단점이 있기 때문에 어느 한 방식만을 선택하기가 쉽지 않습니다.
 
-파이콘(PyCon) 2007 에서 `switch`/`case`에 관한 설문 조사도 했지만, 사람들은 이 기능에 큰 관심을 보이지도 않았습니다. [이로서 switch/case 문과 관련된 논의는 폐기됩니다](https://www.python.org/dev/peps/pep-3103/#rejection-notice).
+[파이썬은 이미 `switch` 없이도 잘 작동하고 있습니다](https://www.python.org/dev/peps/pep-3103/#conclusion). 그런데도 굳이 `switch` 문을 추가해야 할까요?
+
+파이콘(PyCon) 2007 에서 `switch` 문에 관한 설문 조사를 진행했으나, 사람들은 이 기능에 큰 관심을 보이지 않았습니다. [이로서 switch/case 문과 관련된 논의는 폐기됩니다](https://www.python.org/dev/peps/pep-3103/#rejection-notice).
 
 ## 대안: if...elif 또는 dict
 
