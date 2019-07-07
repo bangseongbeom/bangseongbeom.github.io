@@ -29,7 +29,7 @@ layout: default
               var lastPage = this.getResponseHeader("Link")
                 .split(",")
                 .find(function (e) { return e.indexOf('rel="last"') != -1 })
-                .match(/<.*\?page=(.*)>/)[1];
+                .match(/\<.*\?page=(.*)\>/)[1];
               revision.textContent = lastPage;
               revision.hidden = false;
             }
