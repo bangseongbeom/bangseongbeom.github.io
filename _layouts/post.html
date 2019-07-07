@@ -34,7 +34,7 @@ layout: default
                 .find(function (e) { return e.indexOf('rel="last"') != -1 })
                 .match(/<.*&page=(\d+)>/)[1];
               if (lastPage > 1) {
-                dateModified.textContent = this.response[0].commit.author.date;
+                dateModified.textContent = new Date(this.response[0].commit.author.date).toISOString().split("T")[0];
                 revision.textContent = lastPage - 1;
                 modification.hidden = false;
               }
