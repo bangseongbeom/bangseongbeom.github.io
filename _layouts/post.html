@@ -14,11 +14,13 @@ layout: default
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span>
       {%- endif -%}
       <span id="revision" hidden>
+        • <span id="revision-number"></span>
         <script
             data-githubownername="{{ site.github.owner_name }}"
             data-githubrepositoryname="{{ site.github.repository_name }}"
             data-path="{{ page.path }}">
           var revision = document.querySelector("#revision");
+          var revisionNumber = document.querySelector("#revision #revision-number");
           var ownerName = document.querySelector("#revision script").dataset.githubownername;
           var repositoryName = document.querySelector("#revision script").dataset.githubrepositoryname;
           var path = document.querySelector("#revision script").dataset.path;
@@ -30,7 +32,7 @@ layout: default
                 .split(",")
                 .find(function (e) { return e.indexOf('rel="last"') != -1 })
                 .match(/<.*&page=(\d+)>/)[1];
-              revision.textContent = lastPage;
+              revisionNumber.textContent = lastPage;
               revision.hidden = false;
             }
           };
@@ -38,6 +40,7 @@ layout: default
           client.send();
         </script>
       </span>
+      
     </p>
   </header>
 
