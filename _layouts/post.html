@@ -34,7 +34,7 @@ layout: default
                 .filter(function (e) { return e.indexOf('rel="last"') != -1 })[0]
                 .match(/<.*&page=(\d+)>/)[1];
               if (lastPage > 1) {
-                let dateISOString = new Date(this.response[0].commit.author.date).toISOString();
+                let dateISOString = new Date(JSON.parse(this.response)[0].commit.author.date).toISOString();
                 dateModified.datetime = dateISOString;
                 dateModified.textContent = dateISOString.split("T")[0];
                 revision.textContent = lastPage - 1;
@@ -43,7 +43,6 @@ layout: default
             }
           };
           client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=" + encodeURIComponent(path) + "&per_page=1");
-          client.responseType = "json";
           client.send();
         </script>
       </span>
