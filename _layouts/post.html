@@ -41,6 +41,7 @@ layout: default
             }
           };
           client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=" + encodeURIComponent(path) + "&per_page=1");
+          client.responseType = "json";
           client.send();
         </script>
       </span>
