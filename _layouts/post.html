@@ -6,34 +6,38 @@ layout: default
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline"><a class="u-url" href="{{ page.url | relative_url }}">{{ page.title | escape }}</a></h1>
     <p class="post-meta">
+      {%- if page.author -%}
+        <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span><br>
+      {%- endif -%}
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
         {{ page.date | date: date_format }}
-      </time>
-      {%- if page.author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span>
-      {%- endif -%}
-      <span id="revision" hidden>
-        • <span id="revision-number"></span>
+      </time> 작성
+      <span id="modification" hidden>
+        • <time id="date-modified"></time> 수정 • <span id="revision"></span>차 수정
         <script
             data-githubownername="{{ site.github.owner_name }}"
             data-githubrepositoryname="{{ site.github.repository_name }}"
             data-path="{{ page.path }}">
-          var revision = document.querySelector("#revision");
-          var revisionNumber = document.querySelector("#revision #revision-number");
-          var ownerName = document.querySelector("#revision script").dataset.githubownername;
-          var repositoryName = document.querySelector("#revision script").dataset.githubrepositoryname;
-          var path = document.querySelector("#revision script").dataset.path;
+          var modification = document.querySelector("#modification");
+          var dateModified = document.querySelector("#modification #date-modified");
+          var revision = document.querySelector("#modification #revision");
+          var ownerName = document.querySelector("#modification script").dataset.githubownername;
+          var repositoryName = document.querySelector("#modification script").dataset.githubrepositoryname;
+          var path = document.querySelector("#modification script").dataset.path;
           
           var client = new XMLHttpRequest();
           client.onreadystatechange = function () {
-            if(this.readyState == this.HEADERS_RECEIVED) {
+            if(this.readyState == this.DONE) {
               var lastPage = this.getResponseHeader("Link")
                 .split(",")
                 .find(function (e) { return e.indexOf('rel="last"') != -1 })
                 .match(/<.*&page=(\d+)>/)[1];
-              revisionNumber.textContent = lastPage;
-              revision.hidden = false;
+              if (lastPage > 1) {
+                dateModified.textContent = this.response[0].author.date;
+                revision.textContent = lastPage - 1;
+                modification.hidden = false;
+              }
             }
           };
           client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=" + encodeURIComponent(path) + "&per_page=1");
