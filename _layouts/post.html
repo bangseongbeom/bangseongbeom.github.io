@@ -31,7 +31,7 @@ layout: default
             if(this.readyState == this.DONE) {
               var lastPage = this.getResponseHeader("Link")
                 .split(",")
-                .find(function (e) { return e.indexOf('rel="last"') != -1 })
+                .filter(function (e) { return e.indexOf('rel="last"') != -1 })[0]
                 .match(/<.*&page=(\d+)>/)[1];
               if (lastPage > 1) {
                 let dateISOString = new Date(this.response[0].commit.author.date).toISOString();
