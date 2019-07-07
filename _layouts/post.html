@@ -24,9 +24,13 @@ layout: default
           var path = document.querySelector("#revision script").dataset.path;
           
           var client = new XMLHttpRequest();
-          client.onload = function () {
-            if(this.status == 200) {
-              revision.textContent = this.response;
+          client.onreadystatechange = function () {
+            if(this.readyState == this.HEADERS_RECEIVED) {
+              var lastPage = this.getResponseHeader("Link")
+                .split(",")
+                .find(function (e) { return e.indexOf('rel="last"') != -1 })
+                .match(/<.*\?page=(.*)>/)[1];
+              revision.textContent = lastPage;
               revision.hidden = false;
             }
           };
