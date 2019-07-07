@@ -13,18 +13,18 @@ layout: default
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
         {{ page.date | date: date_format }}
       </time> 작성
-      <span id="modification" hidden>
+      <span id="modification-info" hidden>
         • <time id="date-modified"></time> 수정 • <span id="revision"></span>차 수정
         <script
             data-githubownername="{{ site.github.owner_name }}"
             data-githubrepositoryname="{{ site.github.repository_name }}"
             data-path="{{ page.path }}">
-          var modification = document.querySelector("#modification");
-          var dateModified = document.querySelector("#modification #date-modified");
-          var revision = document.querySelector("#modification #revision");
-          var ownerName = document.querySelector("#modification script").dataset.githubownername;
-          var repositoryName = document.querySelector("#modification script").dataset.githubrepositoryname;
-          var path = document.querySelector("#modification script").dataset.path;
+          var modificationInfo = document.querySelector("#modification-info");
+          var dateModified = document.querySelector("#modification-info #date-modified");
+          var revision = document.querySelector("#modification-info #revision");
+          var ownerName = document.querySelector("#modification-info script").dataset.githubownername;
+          var repositoryName = document.querySelector("#modification-info script").dataset.githubrepositoryname;
+          var path = document.querySelector("#modification-info script").dataset.path;
           
           var client = new XMLHttpRequest();
           client.onreadystatechange = function () {
@@ -38,7 +38,7 @@ layout: default
                 dateModified.datetime = dateISOString;
                 dateModified.textContent = dateISOString.split("T")[0];
                 revision.textContent = lastPage - 1;
-                modification.hidden = false;
+                modificationInfo.hidden = false;
               }
             }
           };
@@ -46,7 +46,10 @@ layout: default
           client.send();
         </script>
       </span>
-      
+      {%- assign repository_url = site.github.repository_url -%}
+      {%- assign source = site.github.source -%}
+      {%- assign path = page.path -%}
+      • <a href="{{ repository_url }}/commits/{{ source.branch }}/{{ path }}">수정 내역</a>
     </p>
   </header>
 
