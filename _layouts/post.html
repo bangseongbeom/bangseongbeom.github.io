@@ -12,7 +12,29 @@ layout: default
       </time>
       {%- if page.author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span>
-      {%- endif -%}</p>
+      {%- endif -%}
+      <span id="revision" hidden>
+        <script
+            data-githubownername="{{ site.github.owner_name }}"
+            data-githubrepositoryname="{{ site.github.repository_name }}"
+            data-path="{{ page.path }}">
+          var revision = document.querySelector("#revision");
+          var ownerName = document.querySelector("#revision script").dataset.githubownername;
+          var repositoryName = document.querySelector("#revision script").dataset.githubrepositoryname;
+          var path = document.querySelector("#revision script").dataset.path;
+          
+          var client = new XMLHttpRequest();
+          client.onload = function () {
+            if(this.status == 200) {
+              revision.textContent = this.response;
+              revision.hidden = false;
+            }
+          };
+          client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=index.md&per_page=1");
+          client.send();
+        </script>
+      </span>
+    </p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
