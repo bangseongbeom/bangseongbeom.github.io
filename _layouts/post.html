@@ -36,7 +36,7 @@ layout: default
               revision.hidden = false;
             }
           };
-          client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=index.md&per_page=1");
+          client.open("GET", "https://api.github.com/repos/" + ownerName + "/" + repositoryName + "/commits?path=" + encodeURIComponent(path) + "&per_page=1");
           client.send();
         </script>
       </span>
