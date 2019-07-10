@@ -488,6 +488,7 @@ blockquote {
 h1, h2, h3, h4, h5, h6 {
   margin-top: $spacing-unit * 1.5;
   line-height: 1.25;
+  clear: both;
 }
 
 .post-list > li {
@@ -545,8 +546,10 @@ code {
 
 #previous-posts {
   text-align: left;
+  float: left;
 }
 
 #next-posts {
   text-align: right;
+  float: right;
 }
