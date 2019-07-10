@@ -56,28 +56,26 @@ layout: default
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
   </div>
-  
-  <section id="other-posts">
-    <h2>다른 글 보기</h2>
-    <div id="previous-posts">
-      {% if page.previous %}
-        {% if page.previous.previous %}
-          <a class="previous-previous" href="{{ page.previous.previous.url }}">&laquo;&laquo; {{ page.previous.previous.title }}</a>
-        {% endif %}
 
-        <a class="previous" href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a>
+  <h2>다른 글 보기</h2>
+  <div id="previous-posts">
+    {% if page.previous %}
+      {% if page.previous.previous %}
+        <a class="previous-previous" href="{{ page.previous.previous.url }}">&laquo;&laquo; {{ page.previous.previous.title }}</a>
       {% endif %}
-    </div>
-    <div id="next-posts">
-      {% if page.next %}
-        <a class="next" href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a>
 
-        {% if page.next.next %}
-          <a class="next-next" href="{{ page.next.next.url }}">{{ page.next.next.title }} &raquo;&raquo;</a>
-        {% endif %}
+      <a class="previous" href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a>
+    {% endif %}
+  </div>
+  <div id="next-posts">
+    {% if page.next %}
+      <a class="next" href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a>
+
+      {% if page.next.next %}
+        <a class="next-next" href="{{ page.next.next.url }}">{{ page.next.next.title }} &raquo;&raquo;</a>
       {% endif %}
-    </div>
-  </section>
+    {% endif %}
+  </div>
 
   {%- if site.staticman -%}
     <h2 id="comments">댓글</h2>
