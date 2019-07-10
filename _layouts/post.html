@@ -61,18 +61,18 @@ layout: default
   <div id="previous-posts">
     {% if page.previous %}
       {% if page.previous.previous %}
-        <h3><a href="{{ page.previous.previous.url }}">&laquo;&laquo; {{ page.previous.previous.title }}</a></h3>
+        <p><a href="{{ page.previous.previous.url }}">&laquo;&laquo; {{ page.previous.previous.title }}</a></p>
       {% endif %}
 
-      <h3><a href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a></h3>
+      <p><a href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a></p>
     {% endif %}
   </div>
   <div id="next-posts">
     {% if page.next %}
-      <h3><a href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a></h3>
+      <p><a href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a></p>
 
       {% if page.next.next %}
-        <h3><a href="{{ page.next.next.url }}">{{ page.next.next.title }} &raquo;&raquo;</a></h3>
+        <p><a href="{{ page.next.next.url }}">{{ page.next.next.title }} &raquo;&raquo;</a></p>
       {% endif %}
     {% endif %}
   </div>
