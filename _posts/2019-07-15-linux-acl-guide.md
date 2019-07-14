@@ -18,7 +18,8 @@ ACL은 POSIX 표준이기에 리눅스가 아닌 환경에서도 동작합니다
 
 순수하게 ACL만을 이용해 권한을 설정하면 좋겠지만[^pure-acl], 리눅스 파일 퍼미션만을 지원하는 오래된 프로그램들에 대한 호환성을 유지하는 것도 필요합니다[^compat].
 
-[^pure-acl]: <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
+[^pure-acl]:
+  <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
   > Barring compatibility, the alternatives of ACLs replacing file permission bits (Pure ACLs and On Demand) would be the most elegant way of enhancing DAC for UNIX systems. By abandoning file permission bits, however, these schemes have been rendered incompatible with existing systems. Thus, they are not considered for a POSIX-compliant UNIX system DAC scheme.
   
 [^compat]: <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
