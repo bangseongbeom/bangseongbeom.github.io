@@ -555,8 +555,12 @@ code {
 
 .footnote::before {
   content: "[";
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .footnote::after {
   content: "]";
+  -webkit-user-select: text;
+  user-select: text;
 }
