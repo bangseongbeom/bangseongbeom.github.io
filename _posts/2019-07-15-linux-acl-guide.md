@@ -244,6 +244,6 @@ sudo setfacl --recursive --modify group:developers:rwX /opt/proj
 sudo setfacl --recursive --modify default:group:developers:rwX /opt/proj
 ```
 
-# 참고
+## 참고
 
 - <https://unix.stackexchange.com/questions/268090/example-of-situation-where-acl-unaware-tools-would-grant-unintended-permssions>
