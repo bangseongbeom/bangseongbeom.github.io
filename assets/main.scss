@@ -552,3 +552,11 @@ code {
 #next-posts {
   text-align: right;
 }
+
+.footnote::before {
+  content: "[";
+}
+
+.footnote::after {
+  content: "]";
+}
