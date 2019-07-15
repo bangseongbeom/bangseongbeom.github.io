@@ -46,11 +46,8 @@ layout: default
           client.send();
         </script>
       </span>
-      {%- assign repository_url = site.github.repository_url -%}
-      {%- assign source = site.github.source -%}
-      {%- assign path = page.path -%}
-      <br /> <a href="{{ repository_url }}/commits/{{ source.branch }}{{ source.path }}{{ path }}">📜 수정 내역 보기</a>
-      • <a href="{{ repository_url }}/edit/{{ source.branch }}{{ source.path }}{{ path }}">🖊️ 수정 (로그인 필요)</a>
+      <br /> <a href="{{ site.github.repository_url }}/commits/{{ site.github.source.branch }}{{ site.github.source.path }}{{ page.path }}">📜 수정 내역 보기</a>
+      • <a href="{{ site.github.repository_url }}/edit/{{ site.github.source.branch }}{{ site.github.source.path }}{{ page.path }}">🖊️ 수정 (로그인 필요)</a>
     </p>
   </header>
 
