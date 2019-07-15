@@ -486,13 +486,13 @@ blockquote {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-top: $spacing-unit * 1.5;
+  margin-top: $spacing-unit;
   line-height: 1.25;
   clear: both;
 }
 
 .post-list > li {
-  margin-bottom: $spacing-unit * 1.5;
+  margin-bottom: $spacing-unit;
 }
 
 .post-list h3 {
