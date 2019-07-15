@@ -158,7 +158,7 @@ ACL에서는 이 문제를 해결하기 위해, 파일 퍼미션의 소유 그�
 | `mask::<권한>` | | 소유 그룹의 권한 |
 | `other::<권한>` | 기타 사용자 | 기타 사용자의 권한 |
 
-다만 ACL에서 사용자 타입 항목이나 그룹 타입 항목을 전혀 추가하지 않은 경우, 다시 말해 파일 퍼미션과 별다른 게 없는 경우 마스크 타입은 만들어지지 않습니다[^extended-acls-contain-mask-entry]:
+**다만 ACL에서 사용자 타입 항목이나 그룹 타입 항목을 전혀 추가하지 않은 경우 (파일 퍼미션과 별다른 게 없는 경우) 마스크 타입은 만들어지지 않습니다[^extended-acls-contain-mask-entry]**:
 
 [^extended-acls-contain-mask-entry]: 
     <https://www.usenix.org/legacy/publications/library/proceedings/usenix03/tech/freenix03/full_papers/gruenbacher/gruenbacher_html/main.html>
