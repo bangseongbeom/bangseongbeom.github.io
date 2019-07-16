@@ -34,9 +34,9 @@ layout: default
                 .filter(function (e) { return e.indexOf('rel="last"') != -1 })[0]
                 .match(/<.*&page=(\d+)>/)[1];
               if (lastPage > 1) {
-                let dateISOString = new Date(JSON.parse(this.response)[0].commit.author.date).toISOString();
-                dateModified.datetime = dateISOString;
-                dateModified.textContent = dateISOString.split("T")[0];
+                let date = new Date(JSON.parse(this.response)[0].commit.author.date);
+                dateModified.datetime = date.toISOString();
+                dateModified.textContent = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000).toISOString().split("T")[0];
                 revision.textContent = lastPage - 1;
                 modificationInfo.hidden = false;
               }
