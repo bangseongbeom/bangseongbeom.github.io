@@ -25,7 +25,7 @@ PostCSS는 자바스크립트 기반입니다. 웹 개발자라면 어렵지 않
 
 PostCSS는 Sass의 [함수](https://sass-lang.com/documentation/at-rules/function)나 [for 문](https://sass-lang.com/documentation/at-rules/control/for)같이 강력한 문법을 제공하지 않습니다. 정확히 말하면 이러한 기능을 제공하는, 유명하면서도 유지 보수가 잘 되는 플러그인을 찾기 어렵습니다.
 
-물론, 스타일링을 위한 언어인 CSS에서 이런 문법을 사용할 일은 거의 없습니다. 그렇지만 CSS 위에서 코딩하는 것이 정말로 필요하다면 PostCSS는 좋은 선택이 아닙니다.
+물론, 스타일링을 위한 언어인 CSS에서 이런 문법을 사용할 일은 거의 없습니다. 그렇지만 CSS 위에서 복잡한 로직을 코딩하는 것이 정말로 필요할 때도 있습니다. 이런 경우 PostCSS는 좋은 선택이 아닙니다.
 
 ## 단점: Sass에 비해 덜 유명
 
