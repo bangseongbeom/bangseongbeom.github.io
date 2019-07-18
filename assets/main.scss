@@ -561,3 +561,8 @@ code {
   -webkit-user-select: text;
   user-select: text;
 }
+
+hr {
+  margin-top: $spacing-unit / 2;
+  margin-bottom: $spacing-unit / 2;
+}
