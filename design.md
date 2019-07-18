@@ -1,4 +1,4 @@
 ---
-layout: design
+layout: category
 title: 설계
 ---
