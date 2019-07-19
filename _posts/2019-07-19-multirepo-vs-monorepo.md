@@ -1,6 +1,6 @@
 ---
 title: 다중 저장소 vs 단일 저장소
-category: design
+category: git
 ---
 
 언제 다중 저장소(Multirepo)를 쓰고 언제 단일 저장소(Monorepo)를 써야 하는 지에 대해 설명합니다.
