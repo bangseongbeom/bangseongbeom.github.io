@@ -9,7 +9,9 @@ category: git
 
 [마이크로서비스](https://en.wikipedia.org/wiki/Microservices)의 유행과 다중 운영 체제 지원의 보편화로 인해, 소규모 서비스라 할지라도 여러 프로젝트를 만드는 것은 당연한 일이 되었습니다.
 
-우리는 소스 코드를 관리하기 위해 [깃(Git)](https://git-scm.com/)이나 [서브버전(Subversion; SVN)](https://subversion.apache.org/)과 같은 버전 관리 시스템을 사용합니다. 이때 각 프로젝트 별로 하나 하나 저장소(Repository)를 만들어야 할까요, 아니면 하나의 저장소에서 모든 프로젝트를 관리해야 할까요? 여러 저장소를 만드는 다중 저장소(Multirepo) 방식과 하나의 저장소로 해결하는 단일 저장소(Monorepo) 방식 중 하나를 택해야 합니다.
+우리는 소스 코드를 관리하기 위해 [깃(Git)](https://git-scm.com/)이나 [서브버전(Subversion; SVN)](https://subversion.apache.org/)과 같은 버전 관리 시스템을 사용합니다. 이때 각 프로젝트 별로 하나 하나 저장소(Repository)를 만들어야 할까요, 아니면 하나의 저장소에서 모든 프로젝트를 관리해야 할까요?
+
+여러 저장소를 만드는 다중 저장소(Multirepo) 방식과 하나의 저장소로 해결하는 단일 저장소(Monorepo) 방식 중 하나를 택해야 합니다.
 
 ## 결론: 버전 기록을 나누어야 한다면 저장소를 나누자
 
