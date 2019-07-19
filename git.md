@@ -1,4 +1,4 @@
 ---
 layout: category
-title: 설계
+title: 깃
 ---
