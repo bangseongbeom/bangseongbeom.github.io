@@ -1,5 +1,5 @@
 ---
-title: 리눅스 ACL 가이드
+title: 리눅스 ACL 강좌
 category: linux
 ---
 
