@@ -9,7 +9,7 @@ category: web
 
 Redux는 전역 자바스크립트 변수([스토어(Store)](https://redux.js.org/glossary#store))를 통해 상태를 한 곳에서 관리하는데, 이를 **중앙화**라 합니다. 중앙화로 인해 상태를 한 곳에서 편리하게 관리할 수 있습니다.
 
-**상태**는 웹 사이트에서 현재를 위해 필요한 정보를 뜻합니다. 현재 로그인한 사용자 정보라든가, 현재 사용자가 보고 있는 [탭](https://react-bootstrap.github.io/components/tabs/)이 어떤 것인지에 대한 정보가 이에 해당합니다. 상태는 그저 값에 불과하기 때문에 숫자, 문자열, 객체 등 어떠한 타입으로도 표현할 수 있습니다. 상태의 위치 또한 제한이 없습니다. 변수, HTML 엘리먼트의 [`data-*` 애트리뷰트](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes), (리액트를 쓴다면) 리액트의 [state](https://reactjs.org/docs/glossary.html#state) 등 어느 곳에서나 존재할 수 있습니다.
+**상태**는 웹 사이트에서 현재를 위해 필요한 정보를 뜻합니다. 현재 로그인한 사용자 정보라든가, 현재 사용자가 보고 있는 [탭](https://react-bootstrap.github.io/components/tabs/)이 어떤 것인지에 대한 정보가 이에 해당합니다. 상태는 그저 값에 불과하기 때문에 숫자, 문자열, 객체 등 어떠한 타입으로도 표현할 수 있습니다. 상태의 위치 또한 제한이 없습니다. 변수, HTML 엘리먼트의 [`data-*` 애트리뷰트](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes), (리액트(React)를 쓴다면) 리액트의 [state](https://reactjs.org/docs/glossary.html#state) 등 어느 곳에서나 존재할 수 있습니다.
 
 상태를 중앙화하는 것으로 인해 다음과 같은 이점을 얻을 수 있습니다:
 
@@ -42,7 +42,7 @@ Redux는 부수 효과가 일어나지 않음을 보장하므로 다음과 같�
 - 네트워크 상에서 두 상태를 동일한 상태로 맞추려 할 때, 전체 상태 정보를 넘기지 않고도 여태까지 동작했던 정보(액션)만 넘긴다면 동일한 상태를 만들어낼 수 있습니다. 
 - 부수 효과가 일어나지 않는 함수는 유닛 테스팅이 편해집니다[^side-effects].
 
-## 또다른 장점: 리액트(React)와의 유사성
+## 또다른 장점: 리액트와의 유사성
 
 리액트 내부에도 상태라는 개념이 존재하는데, 이 상태 또한 Redux와 마찬가지로 읽기 전용으로 취급하며 일정한 방법([setState()](https://reactjs.org/docs/react-component.html#setstate))을 통해서만 상태를 변경할 수 있도록 합니다. 이러한 성질로 인해 Redux는 리액트의 상태 관리 도구로 애용되고 있습니다.
 
