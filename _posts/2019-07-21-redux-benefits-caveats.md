@@ -58,9 +58,11 @@ Redux는 부수 효과가 일어나지 않음을 보장하므로 다음과 같�
     <https://frontarm.com/james-k-nelson/when-context-replaces-redux/>
 
     > Redux provides a whole toolkit for managing state:
+    >
     > - It comes with a time traveling debugger
     > - It provides a middleware API, giving you access to tools like redux-sagas
     > - Its React bindings prevent many unnecessary renders
+    >
     > As you can see, context is not a replacement for Redux. Context won’t give you time traveling debugging, configurable middleware, or anything more than a way to get data from one place to another. If you want a tool to help you manage your state, then Redux is a great choice.
     
 [^redux-not-dead-yet]:
