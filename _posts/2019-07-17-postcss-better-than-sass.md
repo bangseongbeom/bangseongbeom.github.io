@@ -5,9 +5,9 @@ category: web
 
 [Sass(사스)](https://sass-lang.com/)의 복잡한 문법이 필요 없다면, CSS의 표준 문법에 기반한 [PostCSS(포스트CSS)](https://postcss.org/)를 사용하는 것이 더 편리합니다.
 
-## PostCSS Preset Env
+## 여기서 말하는 PostCSS는 Preset Env
 
-이 글에서 말하는 PostCSS는, Sass처럼 CSS 문법을 제공하는 PostCSS의 여러 플러그인들을 의미합니다. 대표적으로 **[PostCSS Preset Env](https://preset-env.cssdb.org/)**가 있습니다. 자체적으로 많은 기능을 가지는 Sass와 달리, PostCSS의 경우 그 자체로는 아무런 기능이 없으며 플러그인 개발 도구만을 제공합니다. 때문에 PostCSS 자체를 Sass와 비교할 수는 없습니다.
+잠깐! 이 글에서 말하는 PostCSS는, Sass처럼 CSS 문법을 제공하는 PostCSS의 여러 플러그인들을 의미합니다. 대표적으로 [PostCSS Preset Env](https://preset-env.cssdb.org/)가 있습니다. 자체적으로 많은 기능을 가지는 Sass와 달리, PostCSS의 경우 그 자체로는 아무런 기능이 없으며 플러그인 개발 도구만을 제공합니다. 때문에 PostCSS 자체를 Sass와 비교할 수는 없습니다.
 
 ## 장점: CSS 표준 문법 사용
 
