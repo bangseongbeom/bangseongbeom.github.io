@@ -33,7 +33,7 @@ GitFlow는 브랜치의 이름에 단수형 단어를 사용합니다. `feature/
 
 ## 결론: GitFlow는 참고만 하자
 
-GitFlow는 분명 일반적인 소프트웨어의 릴리스 사이클을 표현할 수 있는 좋은 브랜칭 전략이기는 하지만, 모든 소프트웨어에 알맞는 방식은 아닙니다. GitFlow를 완전히 따라하기보다는, 여러분의 브랜칭 전략을 결정하는데 참고하는 용도로만 사용합시다. GitFlow 외에도 [GitHub Flow](https://guides.github.com/introduction/flow/)나 [마이크로소프트의 브랜칭 전략](https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft)이 있습시다.
+GitFlow는 분명 일반적인 소프트웨어의 릴리스 사이클을 표현할 수 있는 좋은 브랜칭 전략이기는 하지만, 모든 소프트웨어에 알맞는 방식은 아닙니다. GitFlow를 완전히 따라하기보다는, 여러분의 브랜칭 전략을 결정하는데 참고하는 용도로만 사용합시다. GitFlow 외에도 [GitHub flow](https://guides.github.com/introduction/flow/)나 [마이크로소프트의 브랜칭 전략](https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft)이 있습시다.
 
 ## 참고
 
