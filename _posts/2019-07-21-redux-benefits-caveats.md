@@ -30,7 +30,9 @@ Redux는 **상태를 읽기 전용으로 취급**하며, **[리듀서(Reducer)](
 
 Redux는 상태를 변경하는 과정([리듀서](https://redux.js.org/glossary#reducer))에서 **부수 효과(side effect)가 일어나지 않도록 코딩**하기를 요구하며, 이와 함께 상태를 어떻게 변경할지에 대한 정보([액션(Action)](https://redux.js.org/glossary#action)) 또한 언제든지 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제합니다.
 
-**부수 효과**란, 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다. 함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
+**부수 효과**란, 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다.
+
+함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
 
 [^side-effects]:
     <https://redux.js.org/recipes/structuring-reducers/prerequisite-concepts#note-on-immutability-side-effects-and-mutation>
