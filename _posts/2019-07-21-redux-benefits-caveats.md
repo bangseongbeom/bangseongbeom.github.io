@@ -9,7 +9,7 @@ category: web
 
 Redux는 전역 자바스크립트 변수([스토어(Store)](https://redux.js.org/glossary#store))를 통해 상태를 한 곳에서 관리하는데, 이를 **중앙화**라 합니다.
 
-**상태**는 웹 사이트에서 현재를 위해 필요한 정보를 뜻합니다. 현재 로그인한 사용자 정보라든가, 현재 사용자가 보고 있는 [탭](https://react-bootstrap.github.io/components/tabs/)이 어떤 것인지에 대한 정보가 이에 해당합니다. 상태는 그저 값에 불과하기 때문에 숫자, 문자열, 객체 등 어떠한 타입으로도 표현할 수 있습니다. 상태의 위치 또한 제한이 없습니다. 변수, HTML 엘리먼트의 [`data-*` 애트리뷰트](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes), (리액트(React)를 쓴다면) 리액트의 [state](https://reactjs.org/docs/glossary.html#state) 등 어느 곳에서나 존재할 수 있습니다.
+**상태**: 웹 사이트에서 현재를 위해 필요한 정보를 뜻합니다. 현재 로그인한 사용자 정보라든가, 현재 사용자가 보고 있는 [탭](https://react-bootstrap.github.io/components/tabs/)이 어떤 것인지에 대한 정보가 이에 해당합니다. 상태는 그저 값에 불과하기 때문에 숫자, 문자열, 객체 등 어떠한 타입으로도 표현할 수 있습니다. 상태의 위치 또한 제한이 없습니다. 변수, HTML 엘리먼트의 [`data-*` 애트리뷰트](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes), (리액트(React)를 쓴다면) 리액트의 [state](https://reactjs.org/docs/glossary.html#state) 등 어느 곳에서나 존재할 수 있습니다.
 
 상태의 중앙화로 인해 다음과 같은 이점을 얻을 수 있습니다:
 
@@ -32,7 +32,7 @@ Redux는 **상태를 읽기 전용으로 취급**합니다. 상태를 변경하�
 
 Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나지 않도록** 코딩하기를 요구하는데, 이렇게 부수 효과가 없는 상태 변경 함수를 [**리듀서(Reducer)**](https://redux.js.org/glossary#reducer)라 합니다. 이와 함께 리듀서를 호출하는 동작 자체를 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제하는데, 이를 [**액션(Action)**](https://redux.js.org/glossary#action)이라 합니다.
 
-**부수 효과**란, 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 반환값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다. 함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
+**부수 효과**: 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 반환값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다. 함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
 
 [^side-effects]:
     <https://redux.js.org/recipes/structuring-reducers/prerequisite-concepts#note-on-immutability-side-effects-and-mutation>
