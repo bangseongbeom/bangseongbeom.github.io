@@ -24,7 +24,7 @@ category: web
 
 `let`은 `let`의 위치로부터 가장 가까운 `function`, `if`, `for`, `while`, `switch` 안에서만 사용할 수 있습니다. 이를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. 주로 **중괄호(`{}`)가 스코프 형성의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
 
-**주의:** `for`의 괄호 부분(`for (…; …; …)`)에서 `let`으로 선언한 변수 역시 `for`의 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서 `let i`는 `for` 바깥에서 사용할 수 없습니다.
+**주의:** `for (let i = 0; i < 10 ; i++)`에서의 `let i`과 같이, `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for`의 스코프에 속합니다.
 
 `var`는 `var`의 위치로부터 가장 가까운 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
 
@@ -50,7 +50,7 @@ if (100 > 50) {
 console.log(varVariable); // 출력: 456
 ```
 
-`let`, `var` 둘 다 `function` 바깥에서 사용할 수 없습니다:
+`function` 내부에 선언된 `let`, `var`는 바깥에서 사용할 수 없습니다:
 
 ```js
 function func() {
@@ -67,7 +67,25 @@ console.log(varVariable); // 오류: ReferenceError
 
 `var`는 `var`가 출현하는 순간에 변수가 태어나는 게 아니라, **`var`가 속한 함수에 이미 그 변수가 태어나 있습니다.** `var`가 출현하기 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 이 동작이 마치 변수를 함수의 맨 위로 끌어올리는 것 같다고 하여, 영어로 **'끌어올리기'**라는 뜻을 가진 호이스팅(hoisting)이라 부릅니다.
 
-**주의:** `var`이 출현하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다.
+**주의:** `var`이 출현하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다. 
+
+### 호이스팅 예제
+
+`let`은 `let`이 출현하기 전에 사용할 수 없습니다:
+
+```js
+console.log(letVariable); // 오류: ReferenceError
+let letVariable = 123;
+console.log(letVariable); // 출력: 123
+```
+
+`var`는 `var`가 출현하기 전에도 사용할 수는 있지만, 초기화가 진행되지 않고 `undefined`만 출력됩니다:
+
+```js
+console.log(varVariable); // 출력: undefined
+var varVariable = 456;
+console.log(varVariable); // 출력: 123
+```
 
 ### 호이스팅이 존재하는 이유
 
@@ -98,25 +116,7 @@ function b() {}
     
     > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
 
-이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다. 
-
-### 호이스팅 예제
-
-`let`은 `let`이 출현하기 전에 사용할 수 없습니다:
-
-```js
-console.log(letVariable); // 오류: ReferenceError
-let letVariable = 123;
-console.log(letVariable); // 출력: 123
-```
-
-`var`는 `var`가 출현하기 전에도 사용할 수는 있지만, 초기화가 진행되지 않고 `undefined`만 출력됩니다:
-
-```js
-console.log(varVariable); // 출력: undefined
-var varVariable = 456;
-console.log(varVariable); // 출력: 123
-```
+이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다.
 
 ## IE 지원
 
