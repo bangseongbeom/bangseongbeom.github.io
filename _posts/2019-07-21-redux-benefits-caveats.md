@@ -19,11 +19,10 @@ Redux는 전역 자바스크립트 변수([스토어(Store)](https://redux.js.or
 
 ## 장점 2: 읽기 전용 상태
 
-Redux는 **상태를 읽기 전용으로 취급**하며, **[리듀서(Reducer)](https://redux.js.org/glossary#reducer)라는 함수를 통해서만 상태 변경을 허용**합니다.
+Redux는 **상태를 읽기 전용으로 취급**합니다.
 
 이로 인해 다음과 같은 이점을 얻을 수 있습니다:
 
-- 무조건 저 리듀서라는 함수를 통해서만 변경할 수 있으므로, 리듀서가 언제 호출되는지를 주시한다면 **상태가 변경되는 과정을 모두 추적**할 수 있게 됩니다. 상태가 변경되었을 때 로그를 출력한다거나 이전 상태를 저장해둘 수도 있습니다.
 - 상태가 읽기 전용이므로, 이전 상태로 돌아가기 위해서는 그저 이전 상태를 현재 상태에 덮어쓰기만 하면 됩니다. 이런 식으로 실행 취소 기능을 구현할 수 있습니다. 실제로 [Redux Undo](https://redux.js.org/recipes/implementing-undo-history#using-redux-undo)라는 라이브러리는 이런 식으로 실행 취소 기능을 제공합니다.
 
 반면 다음과 같은 단점도 있습니다:
@@ -32,11 +31,9 @@ Redux는 **상태를 읽기 전용으로 취급**하며, **[리듀서(Reducer)](
 
 ## 장점 3: 부수 효과 없는 리듀서
 
-Redux는 상태를 변경하는 함수인 **[리듀서](https://redux.js.org/glossary#reducer)**에서 **부수 효과(side effect)가 일어나지 않도록 코딩**하기를 요구하며, 이와 함께 리듀서를 호출하는 동작 자체를 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제하는데, 이를 **[액션(Action)](https://redux.js.org/glossary#action)**이라 합니다.
+Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나지 않도록** 코딩하기를 요구하는데, 이렇게 부수 효과가 없는 상태 변경 함수를 [**리듀서(Reducer)**](https://redux.js.org/glossary#reducer)라 합니다. 이와 함께 리듀서를 호출하는 동작 자체를 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제하는데, 이를 [**액션(Action)**](https://redux.js.org/glossary#action)이라 합니다.
 
-**부수 효과**란, 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다.
-
-함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
+**부수 효과**란, 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다. 함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
 
 [^side-effects]:
     <https://redux.js.org/recipes/structuring-reducers/prerequisite-concepts#note-on-immutability-side-effects-and-mutation>
