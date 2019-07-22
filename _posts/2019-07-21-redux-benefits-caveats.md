@@ -7,22 +7,22 @@ category: web
 
 ## 장점 1: 상태의 중앙화
 
-Redux는 전역 자바스크립트 변수([스토어(Store)](https://redux.js.org/glossary#store))를 통해 상태를 한 곳에서 관리하는데, 이를 **중앙화**라 합니다.
+Redux는 [스토어(Store)](https://redux.js.org/glossary#store)라는 이름의 전역 자바스크립트 변수를 통해 상태를 한 곳에서 관리하는데, 이를 **중앙화**라 합니다.
 
 **상태**: 웹 사이트에서 현재를 위해 필요한 정보를 뜻합니다. 현재 로그인한 사용자 정보라든가, 현재 사용자가 보고 있는 [탭](https://react-bootstrap.github.io/components/tabs/)이 어떤 것인지에 대한 정보가 이에 해당합니다. 상태는 그저 값에 불과하기 때문에 숫자, 문자열, 객체 등 어떠한 타입으로도 표현할 수 있습니다. 상태의 위치 또한 제한이 없습니다. 변수, HTML 엘리먼트의 [`data-*` 애트리뷰트](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes), (리액트(React)를 쓴다면) 리액트의 [state](https://reactjs.org/docs/glossary.html#state) 등 어느 곳에서나 존재할 수 있습니다.
 
 상태의 중앙화로 인해 다음과 같은 이점을 얻을 수 있습니다:
 
 - **더 이상 웹 사이트의 상태를 어디에 둘지 고민하지 않아도 됩니다.** 예를 들어, 로그인 사용자의 레벨을 상단 메뉴에도 출력하고 본문에도 출력해야 한다고 합시다. 이때 상태 정보를 어디에 두어야 할까요. 상단 메뉴 엘리먼트와 본문 엘리먼트에 각각 `data-*` 애트리뷰트로 레벨을 저장할까요? 아니면 전역 변수? 리액트를 쓴다면 문제는 더 복잡해지는데, 부모 컴포넌트로부터 [props](https://reactjs.org/docs/glossary.html#props)를 통해 단계 별로 물려받도록 구성해야 합니다.
-- 웹 사이트에 다시 접속했을 때를 대비해 **쉽게 상태를 저장하거나 불러올** 수 있습니다. 상태 정보가 여기저기 흩어져 있다면 각 상태마다 저장 기능을 구현해야 하는 불편함이 있습니다.
+- **웹 사이트에 다시 방문했을 때를 대비해 쉽게 상태를 저장하거나 불러올 수 있습니다.** 상태 정보가 여기저기 흩어져 있다면 각 상태마다 저장 기능을 구현해야 하는 불편함이 있습니다.
 
 ## 장점 2: 읽기 전용 상태
 
-Redux는 **상태를 읽기 전용으로 취급**합니다. 상태를 변경하기 위해서는 상태 일부를 바꾸는 게 아니라 상태 전체를 갈아치워야 합니다.
+Redux는 상태를 **읽기 전용**으로 취급합니다. 상태를 변경하기 위해서는 상태 일부를 바꾸는 게 아니라 상태 전체를 갈아치워야 합니다.
 
 이로 인해 다음과 같은 이점을 얻을 수 있습니다:
 
-- 상태가 읽기 전용이므로, 이전 상태로 돌아가기 위해서는 그저 이전 상태를 현재 상태에 덮어쓰기만 하면 됩니다. 이런 식으로 실행 취소 기능을 구현할 수 있습니다. 실제로 [Redux Undo](https://redux.js.org/recipes/implementing-undo-history#using-redux-undo)라는 라이브러리는 이런 식으로 실행 취소 기능을 제공합니다.
+- 상태가 읽기 전용이므로, **이전 상태로 돌아가기 위해서는 그저 이전 상태를 현재 상태에 덮어쓰기만 하면 됩니다.** 이런 식으로 실행 취소 기능을 구현할 수 있습니다. 실제로 [Redux Undo](https://redux.js.org/recipes/implementing-undo-history#using-redux-undo)라는 라이브러리는 이런 식으로 실행 취소 기능을 제공합니다.
 
 반면 다음과 같은 단점도 있습니다:
 
@@ -30,7 +30,7 @@ Redux는 **상태를 읽기 전용으로 취급**합니다. 상태를 변경하�
 
 ## 장점 3: 부수 효과 없는 리듀서
 
-Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나지 않도록** 코딩하기를 요구하는데, 이렇게 부수 효과가 없는 상태 변경 함수를 [**리듀서(Reducer)**](https://redux.js.org/glossary#reducer)라 합니다. 이와 함께 리듀서를 호출하는 동작 자체를 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제하는데, 이를 [**액션(Action)**](https://redux.js.org/glossary#action)이라 합니다.
+Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나지 않도록** 코딩하기를 요구하며, 이와 함께 상태를 변경하려는 시도 자체를 복제, 저장, 전송할 수 있도록 **JSON 형태로 구성**하기를 강제합니다. 이때 부수 효과 없이 상태를 변경하는 함수를 [**리듀서(Reducer)**](https://redux.js.org/glossary#reducer), 상태 변경을 어떻게 할 것인지에 대한 JSON을 [**액션(Action)**](https://redux.js.org/glossary#action)이라 합니다.
 
 **부수 효과**: 함수가 실행될 때 함수의 매개변수가 아닌 다른 값에 따라 반환값이 바뀔 수 있는 것을 의미합니다. 바꿔 말하면, 부수 효과가 없는 함수는 매개 변수가 바뀌지 않는 한 언제나 동일한 결과를 반환해야 합니다. 함수 내부에서 [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)를 사용할 경우 가져오는 데이터가 바뀌거나, 그 사이에 서버가 죽어 최종적으로 함수의 반환값이 바뀔 수 있으므로 부수 효과가 있다고 여깁니다. [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), [`Date.now()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)를 사용하는 것 역시 함수를 언제 호출하냐에 따라 다른 결과를 반환하기 때문에 부수 효과가 있습니다[^side-effects].
 
@@ -39,7 +39,7 @@ Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나
     
     > Other side effects like generating unique IDs or timestamps in a reducer also make the code unpredictable and harder to debug and test.
 
-Redux는 리듀서에서 부수 효과가 일어나지 않음을 보장하므로 다음과 같은 이점을 얻을 수 있습니다:
+리듀서와 액션의 성질로 인해 다음과 같은 이점을 얻게 됩니다:
 
 - **액션만 가지고 있어도 상태가 어떻게 변화할지 완벽히 예상할 수 있습니다.** 리듀서는 액션 말고 아무 것도 알 수 없으니, 액션이 무엇인지 알면 리듀서가 만들어내는 상태의 변화도 알 수 있기 때문입니다. 상태를 변경하는 도중 네트워크에 의해 영향을 받거나 예기치 않은 결과가 나오거나 하는 일이 없습니다.
 - **액션 일부를 제외하고 다시 실행하더라도 어떤 일이 벌어질지 예상하기 쉽습니다.** 리듀서는 액션에 따라서만 움직이므로 마치 수학 공식처럼 작동하기 때문입니다. [Redux DevTools Extension(리덕스 개발자 도구)](http://extension.remotedev.io/)의 skip 기능이 이러한 Redux의 성질을 효과적으로 이용합니다. 반면 리듀서 내부에서 `Math.random()` 따위를 호출해 부수 효과를 일으킬 경우, 리듀서에 동일한 액션을 전달해도 언제나 결과가 같음을 보장할 수 없습니다.
