@@ -63,7 +63,7 @@ console.log(varVariable); // 오류: ReferenceError
 
 ### `for`에서 `var`를 사용하면 안 되는 이유
 
-다음 코드는 `i`를 3번 출력합니다. `setTimeout()`으로 출력을 약간 지연시키고 있습니다:
+다음 코드는 `i`를 3번 출력합니다. (`setTimeout()`으로 출력을 약간 지연시키고 있습니다):
 
 ```js
 for (var i = 1; i <= 3; i++) { // var 사용
