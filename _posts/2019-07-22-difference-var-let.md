@@ -124,7 +124,7 @@ console.log(letVariable); // 출력: 123
 ```js
 console.log(varVariable); // 출력: undefined
 var varVariable = 456;
-console.log(varVariable); // 출력: 123
+console.log(varVariable); // 출력: 456
 ```
 
 ### 호이스팅이 존재하는 이유
