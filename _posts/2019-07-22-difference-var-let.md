@@ -9,7 +9,7 @@ category: web
 
 | 성질 | `var` | `let` |
 |---|---|---|
-| 스코프 | 가장 가까운 `function` 안에서 생존 | 가장 가까운 `function`, `if`, `for`, `while`, `switch` 안에서 생존 |
+| 스코프 | 가장 가까운 `function` 내부 | 가장 가까운 `function`, `if`, `for`, `while`, `switch` 내부 |
 | 호이스팅 | 호이스팅됨 (변수의 선언이 함수 맨 윗부분으로 올라감) | 호이스팅되지 않음 |
 | IE 지원 | 모든 버전 | [IE11](https://en.wikipedia.org/wiki/Internet_Explorer_11)에서 사용 가능하지만 `for` 문에서 치명적 버그 존재[^caniuse-let] |
 
