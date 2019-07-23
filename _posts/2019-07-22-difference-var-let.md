@@ -99,6 +99,8 @@ for (let i = 1; i <= 3; i++) { // let 사용
 }
 ```
 
+(`let`을 사용하는 것 말고도 [익명 함수를 선언한 뒤 곧바로 호출해 강제로 `var`를 위한 스코프를 만들어 해결하는 방법](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#Creating_closures_in_loops_A_common_mistake)도 있습니다.)
+
 ## 호이스팅
 
 `let`은 `let`이 등장하는 순간에 변수가 태어나 스코프의 끝에서 죽음을 맞이합니다. `let`이 나오기 전에는 스코프 안이라 할지라도 변수를 사용할 수 없습니다.
