@@ -32,7 +32,7 @@ category: web
 
 ### 스코프 예제
 
-`let`은 `if문 바깥에서 사용할 수 없습니다:
+`if` 내부에 선언된 `let`은 `if` 바깥에서 사용할 수 없습니다:
 
 ```js
 if (100 > 50) {
@@ -41,7 +41,7 @@ if (100 > 50) {
 console.log(letVariable); // 오류: ReferenceError
 ```
 
-`var`의 스코프는 `if` 문과 아무런 관계도 없으므로 `if` 바깥에서도 사용할 수 있습니다:
+`if` 내부에 선언된 `var`는 `if` 바깥에서도 사용할 수 있습니다 (여기서 `var`는 맨 바깥(전역)에 속합니다):
 
 ```js
 if (100 > 50) {
@@ -50,7 +50,7 @@ if (100 > 50) {
 console.log(varVariable); // 출력: 456
 ```
 
-`function` 내부에 선언된 `let`, `var`는 바깥에서 사용할 수 없습니다:
+`function` 내부에 선언된 `var`는 바깥에서 사용할 수 없습니다. `let`도 마찬가지입니다:
 
 ```js
 function func() {
