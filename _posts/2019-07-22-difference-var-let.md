@@ -20,11 +20,11 @@ category: web
 
 ## 스코프
 
-스코프(scope)란 변수를 사용할 수 있는 영역을 뜻합니다.
+스코프(scope)란 변수를 사용할 수 있는 영역을 뜻합니다. `function` 스코프라고 하면 함수 내부를 뜻합니다. 스코프 바깥으로 나가면 변수를 사용할 수 없습니다.
 
-**`let`:** 자신이 속한 `function`, `if`, `for`, `while`, `switch` 안에서만 사용할 수 있습니다. 이를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. 주로 **중괄호(`{}`)가 스코프 형성의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+**`let`:** 자신으로부터 가장 가까운 (자신을 가장 먼저 감싸는) `function`, `if`, `for`, `while`, `switch` 스코프 안에서만 사용할 수 있습니다. 주로 **중괄호(`{}`)가 스코프의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
   
-**주의:** `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for`의 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다.
+**`for` 스코프 주의:** `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for` 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다.
 
 **`var`:** 자신이 속한 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
 
@@ -103,11 +103,13 @@ for (let i = 1; i <= 3; i++) { // let 사용
 
 ## 호이스팅
 
-**`let`:** `let`이 등장하는 순간에 변수가 태어나 스코프의 끝에서 죽음을 맞이합니다. `let`이 나오기 전에는 스코프 안이라 할지라도 변수를 사용할 수 없습니다.
+변수 선언 이전에도 변수를 사용할 수 있는 현상을 호이스팅(hoisting)이라 합니다. 이 동작이 마치 변수를 스코프의 맨 위로 끌어올리는 것 같다고 하여, 영어로 '끌어올리기'라는 뜻을 가진 호이스팅(hoisting)이라는 이름이 붙었습니다.
 
-**`var`:** `var`가 등장하는 순간에 변수가 태어나는 게 아니라, **`var`가 속한 함수에 이미 그 변수가 태어나 있습니다.** `var`가 등장하기 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 이 동작이 마치 변수를 함수의 맨 위로 끌어올리는 것 같다고 하여, 영어로 **'끌어올리기'**라는 뜻을 가진 호이스팅(hoisting)이라 부릅니다.
+**`let`:** 호이스팅이 일어나지 않습니다. `let` 선언 이전에 `let`으로 선언된 변수를 사용하는 것은 불가능합니다.
 
-**주의:** `var`이 등장하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다. 
+**`var`:** 호이스팅이 일어납니다. `var` 선언 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 
+
+**`var` 초기화 주의:** `var`가 등장하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다. 
 
 ### 호이스팅 예제
 
@@ -129,7 +131,18 @@ console.log(varVariable); // 출력: 456
 
 ### 호이스팅이 존재하는 이유
 
-호이스팅이 존재하는 이유는 **함수 선언** 때문입니다. 호이스팅이 없다면 A 함수에서 B 함수를 호출할 때 B 함수가 코드 순서 상 반드시 먼저 나와야 합니다. 반대로 A함수가 먼저 나오게 되면 B함수를 찾을 수 없으므로 오류가 나오게 됩니다. 호이스팅으로 인해 모든 함수 선언이 코드의 첫부분에 존재하는 것처럼 여겨지므로 우리는 **코드 순서에 상관 없이 함수를 선언할 수 있습니다[^avoid-painful-order].**
+대체 왜 호이스팅이 일어날까요? 호이스팅이 있든 없든간에 어차피 변수를 사용하지 못하는 건 똑같은데 말이죠.
+
+사실 호이스팅이라는 현상은 함수 선언을 위해 존재하는 것입니다. 다만 초기 자바스크립트를 설계할 당시 이 부분에 대해 세련되게 처리하지 못했기 때문에 `var`도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다.
+
+[^implementation-artifact]:
+    <https://twitter.com/brendaneich/status/562313394431078400>
+    
+    자바스크립트의 제작자 Brendan Eich의 트윗
+    
+    > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
+
+**함수 호이스팅:** 함수 호이스팅이 없다면 A 함수에서 B 함수를 호출할 때 B 함수가 코드 순서 상 반드시 먼저 나와야 합니다. 반대로 A함수가 먼저 나오게 되면 B함수를 찾을 수 없으므로 오류가 나오게 됩니다. 호이스팅으로 인해 모든 함수 선언이 코드의 첫부분에 존재하는 것처럼 여겨지므로 우리는 **코드 순서에 상관 없이 함수를 선언할 수 있습니다[^avoid-painful-order].**
 
 [^avoid-painful-order]:
     <https://twitter.com/brendaneich/status/33403701100154880>
@@ -146,17 +159,6 @@ function a() {
 }
 function b() {}
 ```
-
-함수 호이스팅과 달리 `var` 호이스팅은 별다른 장점이 없습니다. 변수에 초기값이 들어가지도 않았는데 다짜고짜 사용할 수는 없겠죠. 그럼에도 `var`가 호이스팅되는 이유는 초기 자바스크립트가 이러한 점에 대해서 크게 신경쓰지 않고 개발되었기 때문입니다[^implementation-artifact].
-
-[^implementation-artifact]:
-    <https://twitter.com/brendaneich/status/562313394431078400>
-    
-    자바스크립트의 제작자 Brendan Eich의 트윗
-    
-    > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
-
-이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다.
 
 ## IE 지원
 
