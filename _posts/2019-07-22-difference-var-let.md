@@ -22,11 +22,11 @@ category: web
 
 스코프(scope)란 변수를 사용할 수 있는 영역을 뜻합니다.
 
-`let`은 `let`의 위치로부터 가장 가까운 `function`, `if`, `for`, `while`, `switch` 안에서만 사용할 수 있습니다. 이를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. 주로 **중괄호(`{}`)가 스코프 형성의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+**`let`:** 자신이 속한 `function`, `if`, `for`, `while`, `switch` 안에서만 사용할 수 있습니다. 이를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. 주로 **중괄호(`{}`)가 스코프 형성의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+  
+**주의:** `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for`의 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다.
 
-**주의:** `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for`의 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서의 `let i`은 `for`의 스코프에 속합니다.
-
-`var`는 `var`의 위치로부터 가장 가까운 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
+**`var`:** 자신이 속한 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
 
 `let`, `var` 둘 다 맨 바깥(전역)에 존재한다면 영원히 살아있습니다.
 
@@ -103,9 +103,9 @@ for (let i = 1; i <= 3; i++) { // let 사용
 
 ## 호이스팅
 
-`let`은 `let`이 등장하는 순간에 변수가 태어나 스코프의 끝에서 죽음을 맞이합니다. `let`이 나오기 전에는 스코프 안이라 할지라도 변수를 사용할 수 없습니다.
+**`let`:** `let`이 등장하는 순간에 변수가 태어나 스코프의 끝에서 죽음을 맞이합니다. `let`이 나오기 전에는 스코프 안이라 할지라도 변수를 사용할 수 없습니다.
 
-`var`는 `var`가 등장하는 순간에 변수가 태어나는 게 아니라, **`var`가 속한 함수에 이미 그 변수가 태어나 있습니다.** `var`가 등장하기 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 이 동작이 마치 변수를 함수의 맨 위로 끌어올리는 것 같다고 하여, 영어로 **'끌어올리기'**라는 뜻을 가진 호이스팅(hoisting)이라 부릅니다.
+**`var`:** `var`가 등장하는 순간에 변수가 태어나는 게 아니라, **`var`가 속한 함수에 이미 그 변수가 태어나 있습니다.** `var`가 등장하기 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 이 동작이 마치 변수를 함수의 맨 위로 끌어올리는 것 같다고 하여, 영어로 **'끌어올리기'**라는 뜻을 가진 호이스팅(hoisting)이라 부릅니다.
 
 **주의:** `var`이 등장하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다. 
 
@@ -160,7 +160,7 @@ function b() {}
 
 ## IE 지원
 
-인터넷 익스플로러 11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 문제[^caniuse-let]가 있습니다. 10 이하의 IE는 아예 `let`을 안 지원하고요.
+인터넷 익스플로러 10(IE10) 이하는 `let`을 지원하지 않습니다. IE11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 치명적인 문제[^caniuse-let]가 있습니다. 
 
 IE에서 `let`을 제대로 사용하기 위해서는 `let`을 `var`로 바꿔주는 변환기가 필요합니다. 유명한 변환기로 [바벨(Babel)](https://babeljs.io/)이 있습니다. [온라인에서 직접 변환해보세요.](https://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=GYewTgBAFANgpgFwgSwgXggBgNwogHggEYcUBqMgSggG8AoCCYAVwDsBjBZEViABzDJWCKNXqNG7HgGcQ8AHQwQAcyjJK2BhAC-dLQKEiNdXUA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.5.5&externalPlugins=)
 
