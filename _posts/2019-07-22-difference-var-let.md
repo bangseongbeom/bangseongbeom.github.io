@@ -23,23 +23,12 @@ category: web
 스코프(scope)란 변수를 사용할 수 있는 영역을 뜻합니다. `function` 스코프라고 하면 함수 내부를 뜻합니다. 스코프 바깥으로 나가면 변수를 사용할 수 없습니다.
 
 **`let`:** 자신으로부터 가장 가까운 (자신을 가장 먼저 감싸는) `function`, `if`, `for`, `while`, `switch` 스코프 안에서만 사용할 수 있습니다. 주로 **중괄호(`{}`)가 스코프의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
-  
-**`for` 스코프 주의:** `for`의 괄호 부분에서 `let`으로 선언한 변수 역시 `for` 스코프에 속합니다. `for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다.
 
 **`var`:** 자신이 속한 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
 
 `let`, `var` 둘 다 맨 바깥(전역)에 존재한다면 영원히 살아있습니다.
 
 ### 스코프 예제
-
-`if` 내부에 선언된 `let`은 `if` 바깥에서 사용할 수 없습니다:
-
-```js
-if (100 > 50) {
-  let letVariable = 123;
-}
-console.log(letVariable); // 오류: ReferenceError
-```
 
 `if` 내부에 선언된 `var`는 `if` 바깥에서도 사용할 수 있습니다 (여기서 `var`는 맨 바깥(전역)에 속합니다):
 
@@ -60,6 +49,12 @@ function func() {
 console.log(letVariable); // 오류: ReferenceError
 console.log(varVariable); // 오류: ReferenceError
 ```
+
+### 주의: `for`에서의 `let` 스코프
+
+`for`의 괄호 부분(초기식, 조건식, 증감식)에서 `let`으로 선언한 변수 역시 `for` 스코프에 속합니다.
+
+`for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다. `for` 바깥에서 사용할 수 없습니다.
 
 ### `for`에서 `var`를 사용하면 안 되는 이유
 
@@ -107,9 +102,7 @@ for (let i = 1; i <= 3; i++) { // let 사용
 
 **`let`:** 호이스팅이 일어나지 않습니다. `let` 선언 이전에 `let`으로 선언된 변수를 사용하는 것은 불가능합니다.
 
-**`var`:** 호이스팅이 일어납니다. `var` 선언 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다. 
-
-**`var` 초기화 주의:** `var`가 등장하기 전에 변수가 태어나는 것은 맞지만, 값까지 초기화가 이루어지는 건 아닙니다. `var varVariable = 456`이라고 할 경우 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남게 됩니다. 
+**`var`:** 호이스팅이 일어납니다. `var` 선언 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다.  
 
 ### 호이스팅 예제
 
@@ -117,11 +110,25 @@ for (let i = 1; i <= 3; i++) { // let 사용
 
 ```js
 console.log(letVariable); // 오류: ReferenceError
-let letVariable = 123;
+let letVariable;
+letVariable = 123;
 console.log(letVariable); // 출력: 123
 ```
 
-`var`는 `var`가 등장하기 전에도 사용할 수는 있지만, 초기화가 진행되지 않고 `undefined`만 출력됩니다:
+`var`는 `var`가 등장하기 전에도 사용할 수 있습니다:
+
+```js
+console.log(varVariable); // 출력: undefined
+var varVariable;
+varVariable = 456;
+console.log(varVariable); // 출력: 456
+```
+
+### 주의: 값 초기화
+
+호이스팅으로 인해 값까지 초기화가 이루어지는 건 아닙니다.
+
+`var varVariable = 456`이라고 할 경우, 내부적으로 `var varVariable` 부분만 함수의 맨 위로 끌어올려지고 `variable = 456`은 그 자리에 그대로 남는 식으로 동작합니다:
 
 ```js
 console.log(varVariable); // 출력: undefined
@@ -129,7 +136,7 @@ var varVariable = 456;
 console.log(varVariable); // 출력: 456
 ```
 
-### 호이스팅이 존재하는 이유
+### 호이스팅이 일어나는 이유
 
 대체 왜 호이스팅이 일어날까요? 호이스팅이 있든 없든간에 어차피 변수를 사용하지 못하는 건 똑같은데 말이죠.
 
