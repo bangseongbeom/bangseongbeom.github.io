@@ -52,7 +52,7 @@ Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나
 
 ## 또다른 장점: 리액트와의 유사성
 
-리액트 내부에도 [상태(state)](https://reactjs.org/docs/glossary.html#state)라는 개념이 존재하는데, 이 상태 또한 Redux와 마찬가지로 읽기 전용으로 취급하며 일정한 방법([setState()](https://reactjs.org/docs/react-component.html#setstate))을 통해서만 상태를 변경할 수 있도록 합니다. 이러한 성질로 인해 Redux는 리액트의 상태 관리 도구로 애용되고 있습니다.
+리액트에는 [상태(state)](https://reactjs.org/docs/glossary.html#state)라는 개념이 존재합니다. 리액트의 상태는 Redux와 마찬가지로 읽기 전용이며, 일정한 방법([setState()](https://reactjs.org/docs/react-component.html#setstate))을 통해서만 상태를 변경할 수 있도록 합니다. 이렇듯 서로 유사한 성질로 인해 Redux는 리액트의 상태 관리 도구로 애용되고 있습니다.
 
 또한 Redux의 핵심 개발자 중 일부는 실제 리액트의 개발에 참여하고 있기도 합니다.
 
