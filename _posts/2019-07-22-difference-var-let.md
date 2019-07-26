@@ -20,24 +20,19 @@ category: web
 
 ## 스코프
 
-스코프(scope)란 변수를 사용할 수 있는 영역을 뜻합니다. `function` 스코프라고 하면 함수 내부를 뜻합니다. 스코프 바깥으로 나가면 변수를 사용할 수 없습니다.
+스코프(scope)란 **괄호(`()`)나 중괄호(`{}`)로 둘러쌓인 코드의 영역**을 뜻합니다. (반드시 중괄호가 필요한 건 아닙니다. 중괄호를 쓰지 않고 `if` 문이나 `for` 문을 사용할 수도 있습니다.)
 
-**`let`:** 자신으로부터 가장 가까운 (자신을 가장 먼저 감싸는) `function`, `if`, `for`, `while`, `switch` 스코프 안에서만 사용할 수 있습니다. 주로 **중괄호(`{}`)가 스코프의 기준**이 됩니다. 별로 쓸 일은 없긴 한데, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+`function`의 경우, 괄호 안에 선언된 매개 변수들, 그리고 중괄호 내부의 코드는 모두 `function` 스코프에 속합니다. 
 
-**`var`:** 자신이 속한 `function` 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. **함수가 스코프 형성의 기준**이 됩니다.
+스코프 안에서 선언된 변수는 스코프 바깥에서 사용할 수 없습니다. 다만 `let`이냐 `var`냐에 따라 기준이 되는 스코프가 다릅니다.
+
+**`let`:** 자신으로부터 가장 가까운 (자신을 가장 먼저 감싸는) `function`, `if`, `for`, `while`, `switch` 스코프 안에서만 사용할 수 있습니다.  별로 쓸 일은 없긴 하지만, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+
+**`var`:** 자신이 속한 `function` 스코프 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다.
 
 `let`, `var` 둘 다 맨 바깥(전역)에 존재한다면 영원히 살아있습니다.
 
 ### 스코프 예제
-
-`if` 내부에 선언된 `var`는 `if` 바깥에서도 사용할 수 있습니다 (여기서 `var`는 맨 바깥(전역)에 속합니다):
-
-```js
-if (100 > 50) {
-  var varVariable = 456;
-}
-console.log(varVariable); // 출력: 456
-```
 
 `function` 내부에 선언된 `var`는 바깥에서 사용할 수 없습니다. `let`도 마찬가지입니다:
 
@@ -50,55 +45,106 @@ console.log(letVariable); // 오류: ReferenceError
 console.log(varVariable); // 오류: ReferenceError
 ```
 
-### 주의: `for`에서의 `let` 스코프
+`if` 내부에 선언된 `var`는 `if` 바깥에서도 사용할 수 있습니다 (여기서 `var`는 맨 바깥(전역)에 속합니다):
 
-`for`의 괄호 부분(초기식, 조건식, 증감식)에서 `let`으로 선언한 변수 역시 `for` 스코프에 속합니다.
+```js
+if (100 > 50) {
+  var varVariable = 456;
+}
+console.log(varVariable); // 출력: 456
+```
 
-`for (let i = 0; i < 10 ; i++)`에서 `let i`은 `for`의 스코프에 속합니다. `for` 바깥에서 사용할 수 없습니다.
+`for`의 괄호 부분(초기식)에서 `let`으로 선언한 변수는 `for` 스코프에 속합니다. `for` 바깥에서 사용할 수 없습니다:
+
+```js
+for (let i = 0; i < 3; i++) {
+  console.log(i); // 출력: 0 1 2
+}
+console.log(i); // 오류: ReferenceError
+```
+
+`for`의 괄호 부분(초기식)에서 `var`로 선언한 변수는 `for` 스코프가 아니라 맨 바깥(전역) 스코프에 속합니다. 그러므로 `for` 바깥에서도 사용할 수 있습니다:
+
+```js
+for (let i = 0; i < 3; i++) {
+  console.log(i); // 출력: 0 1 2
+}
+console.log(i); // 출력: 3
+```
 
 ### `for`에서 `var`를 사용하면 안 되는 이유
 
-다음 코드는 `i`를 3번 출력합니다(`setTimeout()`으로 출력을 약간 지연시키고 있습니다):
+다음 코드는 `i`를 출력하는 익명 함수를 3개 보관합니다:
 
 ```js
-for (var i = 1; i <= 3; i++) { // var 사용
-  setTimeout(function () {
-    console.log(i); // 출력: ???
-  }, 100);
+var functions = [];
+
+for (var i = 0; i < 3; i++) { // var 사용
+  functions.push(function () {
+    console.log(i);
+  });
 }
+
+functions[0](); // 출력: 3
+functions[1](); // 출력: 3
+functions[2](); // 출력: 3
 ```
 
-언뜻 보기에는 `1 2 3`이 출력될 것처럼 보입니다. 하지만 실제로 실행해보면 `4 4 4`가 출력됩니다.
+언뜻 보기에는 `0 1 2`가 출력될 것처럼 보입니다. 정말 그럴까요? 아닙니다. 실제로 실행해보면 `3 3 3`이 출력됩니다.
 
-이런 이상한 결과가 나타나는 이유는, 함수 안(여기서는 익명 함수 안)에서 외부에 있는 변수(`i`)를 가져올 때 독특한 절차를 거치기 때문입니다:
-
-- 우리의 상식과는 달리, 함수는 **함수가 실제로 실행될 때에만 변수의 존재를 검증**합니다. 함수가 실행되지 않고 그냥 선언만 되어있을 경우, 없는 변수를 사용해도 아무런 오류가 발생하지 않습니다.
-  
-  다음 코드는 `foo`라는 변수가 존재하지 않지만, `dontCallMe()` 함수를 실행하지 않기 때문에 오류가 일어나지 않습니다:
-  
-  ```js    
-  function dontCallMe() {
-    console.log(foo);
-  }
-  ```
-- 함수가 실행되는 도중 변수를 만나면 그 변수가 어디있는지 차근차근 살펴나갑니다. 먼저 자기 자신에서 변수가 선언되었는지 찾고, 그게 아니면 자기를 감싸는 스코프(중괄호)에서 변수가 선언되었는지 찾고, 이를 계속해서 맨 바깥(전역)까지 찾아본 다음 그래도 없으면 오류를 일으킵니다.
-- 앞의 예제에서, 익명 함수는 `i`를 찾을 수 없으니 `for`가 돌아가던 순간의 스코프에서 `i`를 찾아봅니다. 그래도 찾을 수 없습니다. **`i`는 `var`로 선언되었기 때문에 `for`에 존재하는 것이 아니라 맨 바깥(전역)에 존재하기 때문입니다.** 그래서 결국 전역에서 `i`를 발견합니다. 이때 `i`는 `4`인 상태입니다. (`3`이 아닌 이유는 `for`문을 탈출하기 직전 **`i++`에 의해 `4`가 되기 때문**입니다.)
-
-반면 `let`은 `for`가 돌아가던 순간의 스코프에 존재합니다. 다음 코드에서는 `var`를 `let`으로 바꿔 우리가 예상했던 결과인 `1 2 3`을 얻을 수 있습니다:
+반면 `var` 대신 `let`을 경우 예상했던대로 `0 1 2`가 출력됨을 확인할 수 있습니다:
 
 ```js
-for (let i = 1; i <= 3; i++) { // let 사용
-  setTimeout(function () {
-    console.log(i); // 출력: 1 2 3
-  }, 100);
+var functions = [];
+
+for (let i = 0; i < 3; i++) { // let 사용
+  functions.push(function () {
+    console.log(i);
+  });
 }
+
+functions[0](); // 출력: 0
+functions[1](); // 출력: 1
+functions[2](); // 출력: 2
 ```
 
-(`let`을 사용하는 것 말고도 [익명 함수를 선언한 뒤 곧바로 호출해 강제로 `var`를 위한 스코프를 만들어 해결하는 방법](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#Creating_closures_in_loops_A_common_mistake)도 있습니다.)
+이런 이상한 결과가 나타나는 이유는, 변수를 사용할 때 독특한 절차를 거치기 때문입니다.
+
+먼저, 함수는 함수가 정의될 때의 **변수 자체만 기억**하고 있을 뿐 실제 변수로부터 값을 꺼내오지는 않습니다.
+
+`var i`: `i`가 `var`로 선언되었으므로 `function` 스코프에 하나만 존재합니다. 모든 익명 함수는 `function` 스코프에 존재하는 하나의 `i`만을 가리킬 것입니다.
+
+`let i`: `i`가 `let`으로 선언되었으므로 `for` 스코프에 하나만 존재할 것이라 예상할 수 있습니다. 그러나 `for` 문의 초기식(`for`의 괄호 안 내용 중 주로 변수를 초기화하는 첫 번째 부분)에 존재하는 `let`의 경우 특수한 작용이 일어납니다. **이 작용은 `for` 루프가 돌 때마다 새로운 `i`를 만들고, 여기에 이전 `i`의 값을 대입합니다[^create-per-iteration-environment].** 이로 인해 각각의 익명 함수는 저마다 다른 `i`를 가리킬 것입니다.
+
+[^create-per-iteration-environment]:
+    <http://www.ecma-international.org/ecma-262/6.0/#sec-createperiterationenvironment>
+    
+    1.d. 새 루프 스코프(전문 용어로 Lexical Environment)를 생성하고, 1.e. `let` 또는 `const`로 선언된 변수들에 대하여, 1.e.iii. 이전 루프 스코프로부터 변수를 받아온 뒤, 1.e.v. 새 루프 스코프에 넣습니다.
+
+`let`의 이 특수한 작용은 오직 `for` 문의 초기식 안에서만 일어납니다. 다음 코드는 `i`가 하나만 존재하므로 `var`와 똑같이 `3 3 3`이 출력됩니다:
+
+```js
+var functions = [];
+
+let i = 0; // for 문 바깥에서 let 사용
+for (; i < 3; i++) { // 초기식을 비워 둠
+  functions.push(function () {
+    console.log(i);
+  });
+}
+
+functions[0](); // 출력: 3
+functions[1](); // 출력: 3
+functions[2](); // 출력: 3
+```
+
+(여기서는 `let`을 통해 동일한 이름의 변수를 여러 개 만드는 식으로 해결했습니다. `let`을 사용하는 것 말고도 [익명 함수를 사용해 강제로 `var`를 여러 개 만들어 해결하는 방법](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#Creating_closures_in_loops_A_common_mistake)도 있습니다.)
 
 ## 호이스팅
 
-변수 선언 이전에도 변수를 사용할 수 있는 현상을 호이스팅(hoisting)이라 합니다. 이 동작이 마치 변수를 스코프의 맨 위로 끌어올리는 것 같다고 하여, 영어로 '끌어올리기'라는 뜻을 가진 호이스팅(hoisting)이라는 이름이 붙었습니다.
+변수 선언 이전에도 변수를 사용할 수 있는 현상을 호이스팅(hoisting)이라 합니다.
+
+마치 변수를 스코프의 맨 위로 끌어올리는 것 같다고 하여, 영어로 '끌어올리기'라는 뜻을 가진 호이스팅(hoisting)이라는 이름이 붙었습니다.
 
 **`let`:** 호이스팅이 일어나지 않습니다. `let` 선언 이전에 `let`으로 선언된 변수를 사용하는 것은 불가능합니다.
 
@@ -138,7 +184,7 @@ console.log(varVariable); // 출력: 456
 
 ### 호이스팅이 일어나는 이유
 
-대체 왜 호이스팅이 일어날까요? 호이스팅이 있든 없든간에 어차피 변수를 사용하지 못하는 건 똑같은데 말이죠.
+왜 호이스팅이 일어날까요? 호이스팅이 있든 없든간에 어차피 변수를 사용하지 못하는 건 똑같은데 말이죠.
 
 사실 호이스팅이라는 현상은 함수 선언을 위해 존재하는 것입니다. 다만 초기 자바스크립트를 설계할 당시 이 부분에 대해 세련되게 처리하지 못했기 때문에 `var`도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다.
 
@@ -181,4 +227,6 @@ IE에서 `let`을 제대로 사용하기 위해서는 `let`을 `var`로 바꿔�
 
 ## 참고
 
-- <https://www.quora.com/Why-does-JavaScript-hoist-variables#wr0IyCg98>
+- 호이스팅: <https://www.quora.com/Why-does-JavaScript-hoist-variables#wr0IyCg98>
+- `for`에서의 `let`: <https://noraesae.net/2017/09/14/lexical-scope-in-js-for-loop/>
+- `for`에서의 `let`: <https://tailes.tistory.com/30>
