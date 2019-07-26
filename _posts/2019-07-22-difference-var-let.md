@@ -206,7 +206,7 @@ function a() {
 function b() {}
 ```
 
-**호이스팅은 변수가 아니라 함수를 위해 존재하는 기능입니다.** 다만 초기 자바스크립트를 설계할 당시 `var`로 변수를 만드나 `function`으로 함수를 선언하나 그냥 다 뭉뚱그려 처리했기에 `var`로도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인해 새로운 버전의 자바스크립트는 `let`을 도입합니다.
+**호이스팅은 변수가 아니라 함수를 위해 존재하는 기능입니다.** 다만 초기 자바스크립트를 설계할 당시 `var`로 변수를 만드나 `function`으로 함수를 선언하나 그냥 대충 뭉뚱그려 처리했기에, `var`를 통한 변수 선언도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인해 새로운 버전의 자바스크립트는 `let`을 도입합니다.
 
 [^implementation-artifact]:
     <https://twitter.com/brendaneich/status/562313394431078400>
