@@ -186,16 +186,9 @@ console.log(varVariable); // 출력: 456
 
 왜 호이스팅이 일어날까요? 호이스팅이 있든 없든간에 어차피 변수를 사용하지 못하는 건 똑같은데 말이죠.
 
-사실 호이스팅이라는 현상은 함수 선언을 위해 존재하는 것입니다. 다만 초기 자바스크립트를 설계할 당시 이 부분에 대해 세련되게 처리하지 못했기 때문에 `var`도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인하여 새로운 버전의 자바스크립트는 `let`을 도입하게 되었습니다.
+우선 알아두어야 하는 사실이 있습니다. `var`로 선언한 변수뿐만 아니라, **함수 역시 호이스팅됩니다.** 그리고 이 호이스팅이라는 기능은 함수를 순서에 상관 없이 선언할 수 있도록 해줍니다.
 
-[^implementation-artifact]:
-    <https://twitter.com/brendaneich/status/562313394431078400>
-    
-    자바스크립트의 제작자 Brendan Eich의 트윗
-    
-    > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
-
-**함수 호이스팅:** 함수 호이스팅이 없다면 A 함수에서 B 함수를 호출할 때 B 함수가 코드 순서 상 반드시 먼저 나와야 합니다. 반대로 A함수가 먼저 나오게 되면 B함수를 찾을 수 없으므로 오류가 나오게 됩니다. 호이스팅으로 인해 모든 함수 선언이 코드의 첫부분에 존재하는 것처럼 여겨지므로 우리는 **코드 순서에 상관 없이 함수를 선언할 수 있습니다[^avoid-painful-order].**
+함수 호이스팅이 없다면 A 함수에서 B 함수를 호출할 때 B 함수가 코드 순서 상 반드시 먼저 나와야 합니다. 반대로 A함수가 먼저 나오게 되면 B함수를 찾을 수 없으므로 오류가 나오게 됩니다. 호이스팅으로 인해 모든 함수 선언이 코드의 첫부분에 존재하는 것처럼 여겨지므로 우리는 **코드 순서에 상관 없이 함수를 선언할 수 있습니다[^avoid-painful-order].**
 
 [^avoid-painful-order]:
     <https://twitter.com/brendaneich/status/33403701100154880>
@@ -212,6 +205,15 @@ function a() {
 }
 function b() {}
 ```
+
+**호이스팅은 변수가 아니라 함수를 위해 존재하는 기능입니다.** 다만 초기 자바스크립트를 설계할 당시 `var`로 변수를 만드나 `function`으로 함수를 선언하나 그냥 다 뭉뚱그려 처리했기에 `var`로도 호이스팅이 일어나게 되었습니다[^implementation-artifact]. 이러한 `var`의 호이스팅 문제로 인해 새로운 버전의 자바스크립트는 `let`을 도입합니다.
+
+[^implementation-artifact]:
+    <https://twitter.com/brendaneich/status/562313394431078400>
+    
+    자바스크립트의 제작자 Brendan Eich의 트윗
+    
+    > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
 
 ## IE 지원
 
