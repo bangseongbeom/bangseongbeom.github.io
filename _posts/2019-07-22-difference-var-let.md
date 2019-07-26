@@ -114,7 +114,7 @@ functions[2](); // 출력: 2
 
 `var i`: `i`가 `var`로 선언되었으므로 `function` 스코프에 하나만 존재합니다. 모든 익명 함수는 `function` 스코프에 존재하는 하나의 `i`만을 가리킬 것입니다.
 
-`let i`: `i`가 `let`으로 선언되었으므로 `for` 스코프에 하나만 존재할 것이라 예상할 수 있습니다. 그러나 `for` 문의 초기식(`for`의 괄호 안 내용 중 주로 변수를 초기화하는 첫 번째 부분)에 존재하는 `let`의 경우 특수한 작용이 일어납니다. **이 작용은 `for` 루프가 돌 때마다 새로운 `i`를 만들고, 여기에 이전 `i`의 값을 대입합니다[^create-per-iteration-environment].** 이로 인해 각각의 익명 함수는 저마다 다른 `i`를 가리킬 것입니다.
+`let i`: `i`가 `let`으로 선언되었으므로 `for` 스코프에 하나만 존재할 것이라 예상할 수 있습니다. 그러나 `for` 문의 초기식(`for (a; b; c)` 중 a 부분)에 존재하는 `let`의 경우 특수한 작용이 일어납니다. **이 작용은 `for` 루프가 돌 때마다 새로운 `i`를 만들고, 여기에 이전 `i`의 값을 대입합니다[^create-per-iteration-environment].** 이로 인해 각각의 익명 함수는 저마다 다른 `i`를 가리킬 것입니다.
 
 [^create-per-iteration-environment]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-createperiterationenvironment>
