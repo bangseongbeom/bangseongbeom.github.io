@@ -221,12 +221,12 @@ IE에서 `let`을 제대로 사용하기 위해서는 `let`을 `var`로 바꿔�
 
 ## `let`과 `const`의 차이
 
-`let`과 `const`의 차이는 변수냐 상수냐의 차이를 제외하고는 완전히 같습니다. `let`은 값을 바꿀 수 있지만 `const`는 그럴 수 없습니다.
+`let`과 `const`는 변수냐 상수냐의 차이를 제외하고는 완전히 같습니다. `let`은 값을 바꿀 수 있지만 `const`는 그럴 수 없습니다.
 
 다만 객체나 배열같이 값 스스로가 변형될 수 있는 경우 `const`라 할지라도 값이 변형될 수 있습니다. `const foo = {}`라고 해도 `foo.abc = "Hi!"`는 허용됩니다. 완전히 값을 변경할 수 없게 하기 위해서는 [Immutable.js](https://immutable-js.github.io/immutable-js/)같은 라이브러리를 사용해야 합니다.
 
 ## 참고
 
-- 호이스팅: <https://www.quora.com/Why-does-JavaScript-hoist-variables#wr0IyCg98>
 - `for`에서의 `let`: <https://noraesae.net/2017/09/14/lexical-scope-in-js-for-loop/>
 - `for`에서의 `let`: <https://tailes.tistory.com/30>
+- 호이스팅: <https://www.quora.com/Why-does-JavaScript-hoist-variables#wr0IyCg98>
