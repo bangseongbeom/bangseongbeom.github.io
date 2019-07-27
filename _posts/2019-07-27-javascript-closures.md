@@ -24,8 +24,8 @@ console.log(foo.bar); // 출력: Hi!
 [^functioninitialize]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-functioninitialize>
     
-    > 6. Set the [[Environment]] internal slot of F to the value of Scope.
-    > 8. Set the [[ECMAScriptCode]] internal slot of F to Body.
+    > <p>6. Set the [[Environment]] internal slot of F to the value of Scope.</p>
+    > <p>8. Set the [[ECMAScriptCode]] internal slot of F to Body.</p>
 
 **스코프(scope)란 중괄호(`{}`)로 둘러쌓인 코드의 영역을 뜻합니다.** (몇몇 경우 중괄호가 필요하지 않습니다.) 함수 코드는 중괄호로 둘러쌓여 있으므로 스코프를 형성합니다.
 
