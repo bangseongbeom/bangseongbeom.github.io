@@ -215,7 +215,7 @@ function b() {}
 
 ## IE 지원
 
-인터넷 익스플로러 10(IE10) 이하는 `let`을 지원하지 않습니다. IE11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 치명적인 문제[^caniuse-let]가 있습니다. 
+IE10(인터넷 익스플로러 10) 이하는 `let`을 지원하지 않습니다. IE11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 치명적인 문제[^caniuse-let]가 있습니다. 
 
 IE에서 `let`을 제대로 사용하기 위해서는 `let`을 `var`로 바꿔주는 변환기가 필요합니다. 유명한 변환기로 [바벨(Babel)](https://babeljs.io/)이 있습니다. [온라인에서 직접 변환해보세요.](https://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=GYewTgBAFANgpgFwgSwgXggBgNwogHggEYcUBqMgSggG8AoCCYAVwDsBjBZEViABzDJWCKNXqNG7HgGcQ8AHQwQAcyjJK2BhAC-dLQKEiNdXUA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.5.5&externalPlugins=)
 
