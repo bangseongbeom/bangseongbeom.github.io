@@ -22,15 +22,17 @@ category: web
 
 스코프(scope)란 **괄호(`()`)나 중괄호(`{}`)로 둘러쌓인 코드의 영역**을 뜻합니다. (반드시 중괄호가 필요한 건 아닙니다. 중괄호를 쓰지 않고 `if` 문이나 `for` 문을 사용할 수도 있기 때문입니다.)
 
-`function`의 경우, 괄호 안에 선언된 매개 변수들, 그리고 중괄호 내부의 코드는 모두 `function` 스코프에 속합니다. 
+`function`의 경우, 괄호 안에 선언된 매개 변수들, 그리고 중괄호 내부의 코드는 모두 `function` 스코프에 속합니다.
+
+`for`의 경우, `for` 루프가 한 번 돌 때마다 새로운 스코프가 형성됩니다.
 
 스코프 안에서 선언된 변수는 스코프 바깥에서 사용할 수 없습니다. 다만 `let`이냐 `var`냐에 따라 기준이 되는 스코프가 다릅니다.
 
-**`let`:** 자신으로부터 가장 가까운 (자신을 가장 먼저 감싸는) `function`, `if`, `for`, `while`, `switch` 스코프 안에서만 사용할 수 있습니다.  별로 쓸 일은 없긴 하지만, [자바스크립트에서는 그냥 중괄호만 써도 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+**`let`:** 자신으로부터 가장 가까운 블록 스코프 안에서만 사용할 수 있습니다. 블록 스코프는 `function`, `if`, `for`, `while`, `switch` 등 모든 스코프를 의미합니다. 별로 쓸 일은 없긴 하지만, [자바스크립트에서는 그냥 중괄호만 써도 블록 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
 
-**`var`:** 자신이 속한 `function` 스코프 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다.
+**`var`:** 자신으로부터 가장 가까운 `function` 스코프 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. `var`는 `function` 스코프 이외의 스코프에는 영향을 받지 않기 때문에, 같은 `function`이기만 하면 `if`나 `for` 안에서 선언된 변수를 밖에서 사용하는 것도 가능합니다.
 
-`let`, `var` 둘 다 맨 바깥(전역)에 존재한다면 영원히 살아있습니다.
+`let`, `var` 둘 다 맨 바깥(전역)에 존재한다면 어디서든 사용할 수 있습니다.
 
 ### 스코프 예제
 
@@ -114,7 +116,7 @@ functions[2](); // 출력: 2
 
 `var i`: `i`가 `var`로 선언되었으므로 `function` 스코프에 하나만 존재합니다. 모든 익명 함수는 `function` 스코프에 존재하는 하나의 `i`만을 가리킬 것입니다.
 
-`let i`: `i`가 `let`으로 선언되었으므로 `for` 스코프에 하나만 존재할 것이라 예상할 수 있습니다. 그러나 `for` 문의 초기식(`for (a; b; c)` 중 a 부분)에 존재하는 `let`의 경우 특수한 작용이 일어납니다. **이 작용은 `for` 루프가 돌 때마다 새로운 `i`를 만들고, 여기에 이전 `i`의 값을 대입합니다[^create-per-iteration-environment].** 이로 인해 각각의 익명 함수는 저마다 다른 `i`를 가리킬 것입니다.
+`let i`: `for` 문의 초기식(`for (a; b; c)` 중 `a` 부분)에 존재하는 `let`의 경우 특수한 작용이 일어납니다. **이 작용은 `for` 루프가 돌 때마다 새로운 `i`를 만들고, 여기에 이전 `i`의 값을 대입합니다[^create-per-iteration-environment].** 이로 인해 각각의 익명 함수는 저마다 다른 `i`를 가리킬 것입니다.
 
 [^create-per-iteration-environment]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-createperiterationenvironment>
