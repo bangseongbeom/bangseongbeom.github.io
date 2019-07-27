@@ -28,7 +28,7 @@ category: web
 
 스코프 안에서 선언된 변수는 스코프 바깥에서 사용할 수 없습니다. 다만 `let`이냐 `var`냐에 따라 기준이 되는 스코프가 다릅니다.
 
-**`let`:** 자신으로부터 가장 가까운 블록 스코프 안에서만 사용할 수 있습니다. 블록 스코프는 `function`, `if`, `for`, `while`, `switch` 등 모든 스코프를 의미합니다. 별로 쓸 일은 없긴 하지만, [자바스크립트에서는 그냥 중괄호만 써도 블록 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+**`let`:** 자신으로부터 가장 가까운 블록 스코프 안에서만 사용할 수 있습니다. 블록 스코프는 `function`, `if`, `for`, `while`, `switch` 등 자바스크립트의 모든 스코프를 의미합니다. 별로 쓸 일은 없긴 하지만, [자바스크립트에서는 그냥 중괄호만 써도 블록 스코프를 형성할 수 있습니다.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
 
 **`var`:** 자신으로부터 가장 가까운 `function` 스코프 안에서만 사용할 수 있습니다. 함수의 중괄호를 벗어나면 더 이상 그 변수를 사용할 수 없습니다. `var`는 `function` 스코프 이외의 스코프에는 영향을 받지 않기 때문에, 같은 `function`이기만 하면 `if`나 `for` 안에서 선언된 변수를 밖에서 사용하는 것도 가능합니다.
 
