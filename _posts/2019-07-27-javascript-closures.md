@@ -19,7 +19,7 @@ foo.bar = "Hi!";
 console.log(foo.bar); // 출력: Hi!
 ```
 
-이 함수 객체 안에는 다양한 정보가 들어있습니다. 우선 함수가 호출되면 실행할 함수 코드를 가집니다. 특이하게도, 함수 객체 안에는 함수가 생성되었을 당시의 스코프 정보도 있습니다[^functioninitialize]. (함수 코드와 스코프 정보는 보안 상 코드에서 직접 읽거나 쓸 수 없습니다.)
+함수 객체 안에는 다양한 정보가 들어있습니다. 우선 함수가 호출되면 실행할 함수 코드를 가집니다. 특이하게도, 함수 객체 안에는 함수가 생성되었을 당시의 스코프 정보도 있습니다[^functioninitialize]. (함수 코드와 스코프 정보는 보안 상 코드에서 직접 읽거나 쓸 수 없습니다.)
 
 [^functioninitialize]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-functioninitialize>
