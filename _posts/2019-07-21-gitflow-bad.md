@@ -11,8 +11,6 @@ GitFlow는 너무 복잡합니다. 릴리스마다, 버그 수정마다 새로�
 
 **브랜치를 복잡하게 구성한다고 해서 버전 관리가 더 안정적으로 변하는 것은 아닙니다.** 깃에서 가장 중요한 건 코드의 기록을 담고 있는 커밋입니다. 변경 사항을 어떻게 잘 쪼개서 커밋할까, 커밋 메시지를 어떻게 맛깔나게 적을까를 고민하는 것이 더 중요합니다.
 
-브랜칭 전략은 팀원과 협의를 통해 꼭 필요한 내용만 정하는 것이 좋습니다. **브랜칭 전략을 잘못 정할지라도 다른 브랜칭 전략으로 바꾸는 건 어렵지 않습니다.** 이와 달리 커밋은 수정하기가 까다롭습니다.
-
 ## 단점 2: 비직관적인 브랜치 이름
 
 여러분이 GitFlow를 따른다면 가장 많이 하게 될 일은 `develop` 브랜치로부터 새로운 `feature` 브랜치를 만드는 것입니다. 편리하게 작업하기 위해서는 기본 브랜치를 `develop`으로 설정하는 게 좋습니다.
@@ -46,5 +44,5 @@ GitFlow는 분명 일반적인 소프트웨어의 릴리스 사이클을 표현�
 
 ## 참고
 
-<https://www.endoflineblog.com/gitflow-considered-harmful>
-<https://stackoverflow.com/questions/14858075/set-the-develop-branch-as-the-default-for-a-pull-request/14858295#14858295>
+- <https://www.endoflineblog.com/gitflow-considered-harmful>
+- <https://stackoverflow.com/questions/14858075/set-the-develop-branch-as-the-default-for-a-pull-request/14858295#14858295>
