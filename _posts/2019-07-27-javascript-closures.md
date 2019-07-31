@@ -54,4 +54,4 @@ hello(); // 참조할 수 없는 위치에 있는 message 변수 사용
 
 ## 참고
 
-- <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures>
+- MDN 클로저: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures>
