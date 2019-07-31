@@ -5,18 +5,70 @@ category: linux
 
 사용자 하나와 그룹 하나에게만 권한을 줄 수 있는 파일 퍼미션을 확장하여, 여러 명의 사용자와 그룹에게 접근 권한을 줄 수 있는 ACL(Access Control List)에 대해 알아봅니다.
 
-## ACL로 할 수 있는 일
+## ACL vs 파일 퍼미션
 
 - [`chmod`](https://linux.die.net/man/1/chmod)를 이용해 권한을 결정하는 기존 파일 퍼미션의 경우 **사용자 하나와 그룹 하나**만 읽기, 쓰기, 실행 권한을 가질 수 있습니다. ACL을 이용하면 추가적으로 **여러 명의 사용자와 그룹**도 읽기, 쓰기, 실행 권한을 가질 수 있습니다.
 - 기본값 ACL이라는 기능을 통해 마치 **`umask`를 폴더 별로 적용**하는 듯한 효과를 만들 수 있습니다.
 
-## 사용 환경
+## 설치
 
-ACL은 POSIX 표준이기에 리눅스가 아닌 환경에서도 동작합니다. 대부분의 리눅스 배포판에는 ACL이 포함되어 있습니다. 데비안 계열 배포판에서 ACL이 처음부터 설치되어 있지 않은 경우 `sudo apt install acl` 명령을 통해 ACL을 설치할 수 있습니다.
+대부분의 리눅스 배포판에는 ACL이 포함되어 있습니다. 데비안 계열 배포판에서 ACL이 처음부터 설치되어 있지 않은 경우 `sudo apt install acl` 명령을 통해 ACL을 설치할 수 있습니다.
 
-## ACL 과 파일 퍼미션과의 매핑 관계
+## `getfacl`
 
-순수하게 ACL만을 이용해 권한을 설정하면 좋겠지만[^pure-acl], 리눅스 파일 퍼미션만을 지원하는 오래된 프로그램들에 대한 호환성을 유지하는 것도 필요합니다[^compat].
+[`getfacl`](https://linux.die.net/man/1/getfacl)(**Get** **F**ile **A**ccess **C**ontrol **L**ists)은 해당 파일 또는 디렉터리의 ACL 정보를 확인하는 리눅스 명령어입니다. `getfacl <파일 이름>`처럼 사용합니다:
+
+- `getfacl my-test-file`: `my-test-file` 파일의 ACL 정보를 확인합니다.
+
+`getfacl`을 사용하면 다음과 같은 ACL 정보를 얻을 수 있습니다:
+
+```
+# file: test-file
+# owner: ubuntu
+# group: ubuntu
+user::rw-
+group::r--
+other::r--
+```
+
+`# file: test-file`는 파일 이름, `# owner: ubuntu`, `# group: ubuntu`는 리눅스 파일 퍼미션에서의 소유자와 소유 그룹을 뜻합니다(이들은 `chown`과 `chgrp` 명령어로 변경할 수 있습니다). 이것들은 ACL 정보를 알아보기 쉽게 하기 위해 같이 출력되는 일종의 주석입니다.
+
+진짜 ACL은 그 밑에 있는 `user::rw-`, `group::r--`, `other::r--`입니다.
+
+## ACL 항목
+
+ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**으로 관리합니다. 각 ACL 항목(entry)은 다음과 같은 텍스트로 구성됩니다:
+
+```
+<타입>:<사용자 및 그룹 이름>:<권한>
+```
+
+**타입**과 **이름**은 권한을 받을 대상을 결정합니다. 타입으로는 `user`, `group`, `mask`, `other`가 있습니다. ID에는 리눅스 사용자 이름, 또는 리눅스 그룹 이름이 들어가지만 타입에 따라 이름을 필요로 하지 않는 경우도 있습니다.
+
+**권한**은 리눅스의 파일 퍼미션에서 볼 수 있었던 권한 설정과 똑같이 읽기, 쓰기, 실행 권한을 결정합니다. `rwx`, `r-x`, `---` 같은 식으로 나타냅니다.
+
+### `user:<사용자 이름>:<권한>`
+
+`user` 타입과 함께 사용자의 이름을 명시하면 해당 **사용자**에게 권한을 부여합니다.
+
+- `user:ubuntu:r-x`: `ubuntu` 사용자에게 읽기(`r`), 실행(`w`) 권한을 부여합니다.
+
+### `group:<그룹 이름>:<권한>`
+
+`group` 타입과 함께 그룹 이름 명시하면 해당 **그룹**에게 권한을 부여합니다:
+
+- `group:www-data:---`: `www-data` 그룹에게 아무런 권한도 부여하지 않습니다.
+
+## `setfacl`
+
+[`setfacl`](https://linux.die.net/man/1/setfacl)(**Set** **F**ile **A**ccess **C**ontrol **L**ists)은 해당 파일 또는 디렉터리의 ACL 정보를 설정하는 명령어입니다. `setfacl --modify <ACL 항목> <파일>`로 해당 파일에 항목을 설정 또는 수정하거나, `setfacl --remove <ACL 타입>:<사용자 및 그룹 이름> <파일>`로 해당 파일로부터 항목을 제거할 수 있습니다:
+
+- `setfacl --modify user:ubuntu:rwx my-test-file`: `ubuntu` 사용자에게 읽기(`r`), 쓰기(`w`), 실행(`x`) 권한을 설정합니다. `ubuntu` 사용자에게 권한을 설정하는 ACL 항목이 이미 존재할 경우, 해당 항목을 수정합니다.
+- `setfacl --remove user:ubuntu my-test-file`: `ubuntu` 사용자를 위한 ACL 항목을 제거합니다.
+
+## 매핑 관계
+
+기존 파일 시스템을 완전히 무시하고 순수하게 ACL만을 이용해 권한을 설정하면 좋겠지만[^pure-acl], 리눅스 파일 퍼미션만을 지원하는 오래된 프로그램들에 대한 호환성을 유지하는 것도 필요합니다[^compat].
 
 [^pure-acl]:
     <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
@@ -35,68 +87,17 @@ ACL은 POSIX 표준이기에 리눅스가 아닌 환경에서도 동작합니다
     
     > When an application changes any of the owner, group, or other class permissions (e.g., via the chmod command), the corresponding ACL entry changes as well. Likewise, when an application changes the permissions of an ACL entry that maps to one of the user classes, the permissions of the class change.
 
-## ACL 항목
-
-ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**으로 관리합니다. 각 ACL 항목(entry)은 다음과 같은 텍스트로 구성됩니다:
-
-```
-<타입>:<사용자 및 그룹 이름>:<권한>
-```
-
-**타입**과 **이름**은 권한을 받을 대상을 결정합니다. 타입으로는 `user`, `group`, `mask`, `other`가 있습니다. ID에는 리눅스 사용자 이름, 또는 리눅스 그룹 이름이 들어가지만 타입에 따라 이름을 필요로 하지 않는 경우도 있습니다.
-
-**권한**은 리눅스의 파일 퍼미션에서 볼 수 있었던 권한 설정과 똑같이 읽기, 쓰기, 실행 권한을 결정합니다. `rwx`, `r-x`, `---` 같은 식으로 나타냅니다.
-
-### `getfacl`
-
-[`getfacl`](https://linux.die.net/man/1/getfacl)(**GET** **F**ile **A**ccess **C**ontrol **L**ists)은 해당 파일 또는 디렉터리의 ACL 정보를 확인하는 리눅스 명령어입니다. `getfacl <파일 이름>`처럼 사용합니다:
-
-- `getfacl my-test-file`: `my-test-file` 파일의 ACL 정보를 확인합니다.
-
-`getfacl`을 사용하면 다음과 같은 ACL 정보를 얻을 수 있습니다:
-
-```
-# file: test-file
-# owner: ubuntu
-# group: ubuntu
-user::rw-
-group::r--
-other::r--
-```
-
-`# file: test-file`는 파일 이름, `# owner: ubuntu`, `# group: ubuntu`는 리눅스 파일 퍼미션에서의 소유자와 소유 그룹을 뜻합니다(이들은 `chown`과 `chgrp` 명령어로 변경할 수 있습니다). 이것들은 ACL 정보를 알아보기 쉽게 하기 위해 같이 출력되는 일종의 주석입니다. 진짜 ACL 항목은 그 밑에 있는 `user::rw-`, `group::r--`, `other::r--`입니다.
-
-### `setfacl`
-
-[`setfacl`](https://linux.die.net/man/1/setfacl)(**SET** **F**ile **A**ccess **C**ontrol **L**ists)은 해당 파일 또는 디렉터리의 ACL 정보를 설정하는 명령어입니다. `setfacl --modify <ACL 항목> <파일>`로 해당 파일에 항목을 설정 또는 수정하거나, `setfacl --remove <ACL 타입>:<사용자 및 그룹 이름> <파일>`로 해당 파일로부터 항목을 제거할 수 있습니다:
-
-- `setfacl --modify user:ubuntu:rwx my-test-file`: `ubuntu` 사용자에게 읽기(`r`), 쓰기(`w`), 실행(`x`) 권한을 설정합니다. `ubuntu` 사용자에게 권한을 설정하는 ACL 항목이 이미 존재할 경우, 해당 항목을 수정합니다.
-- `setfacl --remove user:ubuntu my-test-file`: `ubuntu` 사용자를 위한 ACL 항목을 제거합니다.
-
 ### `user::<권한>`
 
 `user` 타입과 함께 사용자 이름을 비워두면 리눅스 파일 퍼미션에서의 **소유자**에게 권한을 부여합니다. 이 항목은 `chmod`에 의해 기존 파일 퍼미션이 바뀔 경우 따라 바뀝니다. 그 반대도 마찬가지입니다.
 
 - `user::rwx`: 소유자에게 읽기(`r`), 쓰기(`w`), 실행(`w`) 권한을 부여합니다.
 
-
-### `user:<사용자 이름>:<권한>`
-
-`user` 타입과 함께 사용자의 이름을 명시하면 해당 **사용자**에게 권한을 부여합니다.
-
-- `user:ubuntu:r-x`: `ubuntu` 사용자에게 읽기(`r`), 실행(`w`) 권한을 부여합니다.
-
 ### `group::<권한>`
 
 `group` 타입과 함께 그룹 이름을 비워두면 리눅스 파일 퍼미션에서의 **소유 그룹**에게 권한을 부여합니다. 이 항목 또한 `chmod`에 의해 기존 파일 퍼미션이 바뀔 경우 따라 바뀝니다. 그 반대도 마찬가지입니다.
 
 - `group::r-x`: 소유 그룹에게 읽기(`r`), 실행(`x`) 권한을 부여합니다.
-
-### `group:<그룹 이름>:<권한>`
-
-`group` 타입과 함께 그룹 이름 명시하면 해당 **그룹**에게 권한을 부여합니다:
-
-- `group:www-data:---`: `www-data` 그룹에게 아무런 권한도 부여하지 않습니다.
 
 ### `other::<권한>`
 
