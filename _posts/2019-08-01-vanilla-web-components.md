@@ -27,7 +27,7 @@ category: web
 
 직접 함수를 실행해 엘리먼트에 자바스크립트를 적용하는 방법입니다:
 
-<div class="codepen" data-prefill>
+<div markdown="1" class="codepen" data-prefill>
 
 ```html
 <span class="random">Click me!</span>
@@ -46,8 +46,6 @@ makeRandom(document.querySelectorAll(".random"));
 ```
 
 </div>
-
-{::options parse_block_html="true" /}
 
 간단하게 구현할 수 있어 편리합니다. 그저 `makeRandom()`같은 함수 하나 만들고, 매개변수로 들어온 엘리먼트에 대해 필요한 기능을 추가하면 됩니다. 부트스트랩(Bootstrap)이나 시맨틱 UI(Semantic UI)에서도 웹 컴포넌트를 초기화할 때 이러한 방식을 사용합니다[^bootstrap-popovers] [^semantic-ui-dropdown].
 
