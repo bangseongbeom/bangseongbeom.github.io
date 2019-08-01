@@ -63,7 +63,7 @@ makeRandom(document.querySelectorAll(".random"));
 
 직접 함수를 실행하는 것 대신, [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)로 [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class)나 [`data-*`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)같은 HTML 애트리뷰트의 변화를 감시합니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js">
+<div markdown="1" class="codepen" data-prefill data-height="900" data-theme-id="light" data-default-tab="js">
 
 ```html
 <span class="random">Click me!</span>
