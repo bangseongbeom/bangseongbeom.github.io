@@ -48,7 +48,7 @@ makeRandom(document.querySelectorAll(".random"));
 [^bootstrap-popovers]: https://getbootstrap.com/docs/4.3/components/popovers/#example-enable-popovers-everywhere
 [^semantic-ui-dropdown]: https://semantic-ui.com/modules/dropdown.html#/usage
 
-다만 함수 실행을 잊지 말아야 합니다. 정적인 웹 페이지라면 특정 HTML `class`를 가진 모든 엘리먼트에 대해 한 번만 호출하면 되므로 그다지 어렵지 않지만, 동적으로 자바스크립트에서 HTML 엘리먼트를 생성하는 경우 상당히 번거롭습니다.
+다만 함수를 실행하는 것을 잊지 말아야 합니다. 정적인 웹 페이지라면 특정 HTML `class`를 가진 모든 엘리먼트에 대해 한 번만 호출하면 되므로 그다지 어렵지 않지만, 동적으로 자바스크립트에서 HTML 엘리먼트를 생성하는 경우 상당히 번거롭습니다.
 
 그럼에도 이 방법은 호환성 문제 없이, 그리고 성능 저하 없이 간편하게 구현할 수 있으므로 웹 컴포넌트를 구현할 때 가장 널리 쓰이는 방법입니다.
 
