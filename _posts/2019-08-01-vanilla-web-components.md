@@ -27,7 +27,7 @@ category: web
 
 직접 함수를 실행해 엘리먼트에 자바스크립트를 적용하는 방법입니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js">
 
 ```html
 <span class="random">Click me!</span>
@@ -63,7 +63,7 @@ makeRandom(document.querySelectorAll(".random"));
 
 직접 함수를 실행하는 것 대신, [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)로 [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class)나 [`data-*`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)같은 HTML 애트리뷰트의 변화를 감시합니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js">
 
 ```html
 <span class="random">Click me!</span>
@@ -119,7 +119,7 @@ new MutationObserver(function(mutations) {
 
 [커스텀 엘리먼트](https://developers.google.com/web/fundamentals/web-components/customelements)를 만들어 웹 컴포넌트를 구현합니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js">
 
 ```html
 <x-random>Click me!</x-random>
