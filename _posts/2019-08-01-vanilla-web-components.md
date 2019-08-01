@@ -47,10 +47,12 @@ makeRandom(document.querySelectorAll(".random"));
 
 </div>
 
+{::options parse_block_html="true" /}
+
 간단하게 구현할 수 있어 편리합니다. 그저 `makeRandom()`같은 함수 하나 만들고, 매개변수로 들어온 엘리먼트에 대해 필요한 기능을 추가하면 됩니다. 부트스트랩(Bootstrap)이나 시맨틱 UI(Semantic UI)에서도 웹 컴포넌트를 초기화할 때 이러한 방식을 사용합니다[^bootstrap-popovers] [^semantic-ui-dropdown].
 
-[^bootstrap-popovers]: https://getbootstrap.com/docs/4.3/components/popovers/#example-enable-popovers-everywhere
-[^semantic-ui-dropdown]: https://semantic-ui.com/modules/dropdown.html#/usage
+[^bootstrap-popovers]: <https://getbootstrap.com/docs/4.3/components/popovers/#example-enable-popovers-everywhere>
+[^semantic-ui-dropdown]: <https://semantic-ui.com/modules/dropdown.html#/usage>
 
 다만 함수를 실행하는 것을 잊지 말아야 합니다. 정적인 웹 페이지라면 특정 HTML `class`를 가진 모든 엘리먼트에 대해 한 번만 호출하면 되므로 그다지 어렵지 않지만, 동적으로 자바스크립트에서 HTML 엘리먼트를 생성하는 경우 상당히 번거롭습니다.
 
