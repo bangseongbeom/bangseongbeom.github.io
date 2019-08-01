@@ -27,7 +27,7 @@ category: web
 
 직접 함수를 실행해 엘리먼트에 자바스크립트를 적용하는 방법입니다:
 
-<div markdown="1" class="codepen" data-prefill>
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
 
 ```html
 <span class="random">Click me!</span>
@@ -63,9 +63,12 @@ makeRandom(document.querySelectorAll(".random"));
 
 직접 함수를 실행하는 것 대신, [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)로 [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class)나 [`data-*`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)같은 HTML 애트리뷰트의 변화를 감시합니다:
 
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
+
 ```html
 <span class="random">Click me!</span>
 ```
+{: data-lang="html"}
 
 ```js
 for (let random of document.querySelectorAll(".random")) { // 변화 감지 이전
@@ -101,6 +104,10 @@ new MutationObserver(function(mutations) {
   subtree: true
 });
 ```
+{: data-lang="js"}
+
+</div>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 상당히 복잡합니다. `MutationObserver` 자체가 원체 복잡하기 때문입니다. 변화 감지 이전, 애트리뷰트의 변화(`attributeFilter`)와 엘리먼트의 변화(`childList`)를 개별적으로 다루어야 하기 때문에 코드가 무척 길어집니다.
 
@@ -112,9 +119,12 @@ new MutationObserver(function(mutations) {
 
 [커스텀 엘리먼트](https://developers.google.com/web/fundamentals/web-components/customelements)를 만들어 웹 컴포넌트를 구현합니다:
 
+<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-editable="true" data-default-tab="js,result">
+
 ```html
 <x-random>Click me!</x-random>
 ```
+{: data-lang="html"}
 
 ```js
 customElements.define(
@@ -130,6 +140,10 @@ customElements.define(
   }
 );
 ```
+{: data-lang="js"}
+
+</div>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 코드 길이도 짧고 사용하기도 쉽습니다. 앞서 소개한 방식 중 가장 깔끔합니다.
 
