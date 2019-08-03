@@ -5,7 +5,7 @@ category: web
 
 자바스크립트에서 클로저(closure)란 무엇인지, 그리고 클로저를 사용하는 이유에 대해 알아봅니다.
 
-## 클로저가 뭐야
+## 클로저
 
 클로저는 다음과 같이 표현할 수 있습니다:
 
@@ -27,11 +27,15 @@ console.log(foo.bar); // 임의의 키 사용
     > <p>6. Set the [[Environment]] internal slot of F to the value of Scope.</p>
     > <p>8. Set the [[ECMAScriptCode]] internal slot of F to Body.</p>
 
+## 스코프
+
 **스코프(scope)란 중괄호(`{}`)로 둘러쌓인 코드의 영역을 뜻합니다.** `if`, `for`, `function`같이 중괄호를 필요로 하는 구문이라면 스코프를 형성합니다. (`if`, `for` 등의 경우 `if (true) alert(123);`같은 한 줄 문법으로 인해 중괄호를 사용하지 않고도 스코프를 형성할 수 있습니다.)
 
 특정 스코프 안에서 선언된 변수는 스코프 바깥에서 사용할 수 없습니다.
 
 스코프는 계층 구조를 형성합니다. `function` 안에 `for`가 있다면, `for`의 상위 스코프는 `function`입니다.
+
+## 스코프 환경
 
 내부적으로 각 스코프는 **스코프 환경**(Lexical Environment)이라는 것을 형성합니다. 하나의 스코프 환경은 해당 스코프에 존재하는 변수 목록과 상위 스코프의 스코프 환경을 가집니다. **결국 스코프 환경을 알면 스코프가 만들어질 당시의 사용 가능한 모든 변수를 알 수 있습니다.**
 
