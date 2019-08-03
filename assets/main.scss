@@ -555,7 +555,7 @@ code {
 }
 
 hr {
-  margin: $spacing-unit / 2 auto;
-  max-width: $spacing-unit;
+  margin: $spacing-unit auto;
+  max-width: $spacing-unit * 2;
   border: solid 1px black;
 }
