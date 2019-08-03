@@ -5,7 +5,7 @@ category: web
 
 [제이쿼리(jQuery)](https://jquery.com/), [리액트(React)](https://reactjs.org/), [뷰.js(Vue.js)](https://vuejs.org/)같은 프레임워크 없이 웹 컴포넌트를 만드는 방법에 대해 알아봅니다.
 
-## 바닐라 웹 컴포넌트의 의미
+---
 
 **바닐라:** 프레임워크나 라이브러리 없이, 바닐라 아이스크림처럼 '순수하게' 개발한다는 의미로 사용하는 표현입니다.
 
