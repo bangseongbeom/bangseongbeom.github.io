@@ -22,7 +22,7 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 
 ## 홈 오토메이션: [Adafruit IO](https://io.adafruit.com/)
 
-[Adafruit IO](https://io.adafruit.com/)는 집 안에서의 IoT 기기 제어를 손쉽게 하기 위해 [Adafruit](https://www.adafruit.com/)에서 만든 IoT 플랫폼입니다. Adafruit는 메이커를 위한 강좌, 아두이노 IDE에서 동작하는 라이브러리, 그리고 IoT와 관련된 여러 기기를 만드는 제조사로도 유명합니다.
+[Adafruit IO](https://io.adafruit.com/)는 집 안에서의 IoT 기기 제어를 손쉽게 하기 위해 [Adafruit](https://www.adafruit.com/)에서 만든 IoT 플랫폼입니다. Adafruit는 메이커를 위한 강좌, 아두이노 IDE에서 동작하는 여러 라이브러리를 만듭니다. 그리고 IoT와 관련된 여러 기기를 만드는 제조사로도 유명합니다.
 
 IoT 환경을 집에서 직접 구축하는 데 있어 가장 중요한 것은 편의성입니다. Adafruit IO는 편리한 개발을 위해 전용 라이브러리를 제공합니다. IoT 기기를 원격으로 제어하기 위한 대시보드 역시 드래그 앤 드롭으로 빠르게 만들 수 있습니다. 웹 기반으로 동작하기에 데스크톱, 모바일을 가리지 않고 언제 어디서나 제어할 수 있습니다.
 
