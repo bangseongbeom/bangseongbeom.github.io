@@ -3,11 +3,11 @@ title: IoT 플랫폼 업체 비교
 category: maker
 ---
 
-[Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 IoT 플랫폼 업체를 비교합니다.
+홈 오토메이션이나 상용화를 위해 [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 IoT 플랫폼 업체를 비교합니다.
 
 ---
 
-IoT 센서로부터 데이터를 얻거나 IoT 기기에 명령을 내리기 위해서는 먼저 데이터를 교환할 서버가 필요합니다. 라즈베리파이 등을 이용해 IoT 기기를 제어하는 서버로서 사용할 수도 있지만, 기기를 따로 마련해야 할 뿐더러 직접 손으로 구축, 관리해야 한다는 부담이 있습니다.
+집 안에서 인터넷을 통해 전등을 원격으로 제어, 관리할 수 있는 환경을 만드는 것은 어렵습니다. 데이터를 교환하기 위한 서버 컴퓨터가 필요하기 때문입니다. 라즈베리파이같은 저성능 컴퓨터를 서버로 사용할 수도 있지만, 컴퓨터를 따로 마련해야 할 뿐더러 직접 손으로 구축, 관리해야 한다는 부담이 있습니다.
 
 IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 됩니다. 기기를 제어하기 위한 대시보드, 다른 서비스와의 연동 기능을 몇 번의 클릭만으로 적용할 수 있어 무척 편리합니다.
 
