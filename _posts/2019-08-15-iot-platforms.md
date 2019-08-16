@@ -26,6 +26,8 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 
 ## 홈 오토메이션: [Adafruit IO](https://io.adafruit.com/)
 
+전등이나 스위치 제어 등 홈 오토메이션을 위해서는 [Adafruit IO](https://io.adafruit.com/)를 추천합니다.
+
 [Adafruit IO](https://io.adafruit.com/)는 [Adafruit](https://www.adafruit.com/)에서 만든 IoT 플랫폼입니다. Adafruit는 메이커를 위한 강좌나, 아두이노 IDE에서 동작하는 여러 라이브러리를 만듭니다. 그리고 IoT와 관련된 여러 기기를 만드는 제조사로도 유명합니다.
 
 IoT 환경을 집에서 직접 구축하는 데 있어 가장 중요한 것은 편의성입니다. Adafruit IO는 편리한 개발을 위해 **전용 라이브러리를 제공**합니다. MQTT를 배우지 않아도 됩니다.
