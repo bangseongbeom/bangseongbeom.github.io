@@ -1,4 +1,4 @@
 ---
 layout: category
-title: 메이커
+title: 아두이노
 ---
