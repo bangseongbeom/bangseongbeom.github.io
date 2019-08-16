@@ -1,6 +1,6 @@
 ---
 title: MQTT 연결 방식
-category: maker
+category: arduino
 ---
 
 MQTT의 TLS 보안 연결이나 웹소켓을 통한 연결 방식에 대해 소개합니다.
