@@ -30,7 +30,7 @@ category: python
 
 ## 설치
 
-시그널을 사용하기 위해서는 먼저 [Blinker(블링커)](https://pythonhosted.org/blinker/)라는 추가적인 라이브러리가 필요합니다. 독특하게도 플라스크는 자신이 설치될 때 자동으로 Blinker를 함께 설치하지 않습니다. 우리가 직접 설치해야 합니다. 아마 플라스크의 용량이나 외부 라이브러리 의존도를 줄이기 위해 자주 쓰이지 않는 기능을 별도로 설치하도록 설계한 것 같습니다.
+시그널을 사용하기 위해서는 먼저 [**Blinker(블링커)**](https://pythonhosted.org/blinker/)라는 추가적인 라이브러리가 필요합니다. 독특하게도 플라스크는 자신이 설치될 때 자동으로 Blinker를 함께 설치하지 않습니다. 우리가 직접 설치해야 합니다. 아마 플라스크의 용량이나 외부 라이브러리 의존도를 줄이기 위해 자주 쓰이지 않는 기능을 별도로 설치하도록 설계한 것 같습니다.
 
 Linux, macOS라면 `pip install blinker`를, Windows라면 `py -m pip install blinker`를 통해 Blinker를 설치합시다.
 
@@ -58,17 +58,17 @@ request_started.connect(when_request_started)
 
 1. 먼저 [`request_started`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_started)라는 시그널을 `import`로 가져옵니다. 이 시그널은 플라스크 내부에서 HTTP 요청이 처리되기 직전을 감지합니다. 이외에도 [`request_finished`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_finished), [`template_rendered`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.template_rendered) 등 [다양한 내장 시그널](https://flask.palletsprojects.com/en/1.1.x/api/#signals)이 있습니다.
 2. 시그널을 처리할 함수를 만듭니다. 이때 시그널을 발생시킨 주체인 [`Flask`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask) 객체가 `sender`라는 매개변수로 들어옵니다. 만약 여러 플라스크 애플리케이션 객체를 사용하는 특수한 경우라면, 이 `sender`를 통해 앱 별로 필터링할 수 있습니다.
-3. `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [`@connect_via`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
+3. `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
 
 ## 시그널 객체
 
-신호를 주고받기 위해서는 Blinker의 시그널 객체가 필요합니다. 시그널 객체가 있어야만 메서드를 통해 신호를 보내거나[`send()`](https://pythonhosted.org/blinker/#blinker.base.Signal.send), 신호를 받는 함수를 연결할 수 있습니다[`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect).
+Blinker에서 신호를 주고받기 위해서는 **시그널 객체**가 필요합니다. 시그널 객체가 있어야만 메서드를 통해 신호를 보내거나[`send()`](https://pythonhosted.org/blinker/#blinker.base.Signal.send), 신호를 받는 함수를 연결할 수 있습니다[`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect).
 
 보통은 플라스크 내장 시그널만을 사용하기 때문에 직접 시그널 객체를 만들 일은 없습니다. 
 
 ### 이름 있는 시그널, 이름 없는 시그널
 
-시그널 객체는 이름이 있는 경우와 없는 경우로 나뉘어집니다. 이름이 있는 경우 [`signal()`](https://pythonhosted.org/blinker/#blinker.base.signal)이라는 함수를 호출합니다. 소문자로 시작함에 유의하세요. 이 함수는 내부적으로 [`NamedSignal`](https://pythonhosted.org/blinker/#blinker.base.NamedSignal)이라는 객체를 만듭니다. 이름이 없는 경우 [`Signal()`](https://pythonhosted.org/blinker/index.html#blinker.base.Signal)을 호출해 생성합니다:
+시그널 객체는 이름이 있는 경우와 없는 경우로 나뉘어집니다. **이름이 있는 경우** [`signal()`](https://pythonhosted.org/blinker/#blinker.base.signal)이라는 함수를 호출합니다. 소문자로 시작함에 유의하세요. 이 함수는 내부적으로 [`NamedSignal`](https://pythonhosted.org/blinker/#blinker.base.NamedSignal)이라는 객체를 만듭니다. **이름이 없는 경우** [`Signal()`](https://pythonhosted.org/blinker/index.html#blinker.base.Signal)을 호출해 생성합니다:
 
 ```py
 from blinker import Signal, signal
