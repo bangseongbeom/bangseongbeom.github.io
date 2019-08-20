@@ -58,9 +58,9 @@ request_started.connect(when_request_started)
 
 ## 시그널 객체
 
-Blinker에서 신호를 주고받기 위해서는 **시그널 객체**가 필요합니다. 시그널 객체가 있어야만 메서드를 통해 신호를 보내거나[`send()`](https://pythonhosted.org/blinker/#blinker.base.Signal.send), 신호를 받는 함수를 연결할 수 있습니다[`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect).
+Blinker에서 신호를 주고받기 위해서는 **시그널 객체**가 필요합니다. 시그널 객체의 [`send()`](https://pythonhosted.org/blinker/#blinker.base.Signal.send) 메서드를 통해 신호를 보낼 수 있으며, [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드로 신호를 받는 함수를 연결할 수 있습니다.
 
-보통은 플라스크 내장 시그널만을 사용하기 때문에 직접 시그널 객체를 만들 일은 없습니다. 
+보통은 플라스크 내장 시그널만을 사용하기 때문에 우리가 직접 시그널 객체를 만들 일은 거의 없을 겁니다. 다만 플라스크의 기능을 확장하는 라이브러리를 만든다면 직접 시그널을 만들어 백엔드 웹 개발자에게 제공해야 할 수도 있습니다.
 
 ### 이름 있는 시그널, 이름 없는 시그널
 
