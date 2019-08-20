@@ -36,9 +36,7 @@ Linux, macOS라면 `pip install blinker`를, Windows라면 `py -m pip install bl
 
 만약 Blinker를 설치하지 않고 시그널을 사용하려 하면 다음과 같은 오류가 발생합니다:
 
-```
-RuntimeError: Signalling support is unavailable because the blinker library is not installed.
-```
+> RuntimeError: Signalling support is unavailable because the blinker library is not installed.
 
 ## 예제
 
