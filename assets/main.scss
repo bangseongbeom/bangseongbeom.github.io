@@ -572,8 +572,8 @@ hr {
     a {
       display: block;
       padding: $spacing-unit / 4;
-      border: 1px solid $grey-color-light
+      border: 1px solid black;
+      text-decoration: none;
     }
-    &:hover .svg-icon { fill: currentColor; }
   }
 }
