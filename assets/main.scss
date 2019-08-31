@@ -239,7 +239,7 @@ a:hover {
 .site-nav .page-link:hover,
 .site-nav .page-link:not(:last-child):hover,
 .site-nav .site-title a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:focus,
@@ -566,11 +566,5 @@ hr {
   margin: 0 auto;
   li {
     display: inline-block;
-    a {
-      display: block;
-      padding: $spacing-unit / 4;
-      border: 1px solid black;
-      text-decoration: none;
-    }
   }
 }
