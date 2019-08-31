@@ -56,24 +56,26 @@ layout: default
   </div>
 
   <h2>이 블로그의 다른 글</h2>
-  <div id="previous-posts">
-    {% if page.previous %}
-      {% if page.previous.previous %}
-        <p><a href="{{ page.previous.previous.url }}">&laquo;&laquo; {{ page.previous.previous.title }}</a></p>
-      {% endif %}
+  {% if page.previous || page.next %}
+    <ul id="other-posts">
+        {% if page.previous %}
+          {% if page.previous.previous %}
+            <li><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></li>
+          {% endif %}
 
-      <p><a href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a></p>
-    {% endif %}
-  </div>
-  <div id="next-posts">
-    {% if page.next %}
-      <p><a href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a></p>
+          <li><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></li>
+        {% endif %}
+        {% if page.next %}
+          <li><a href="{{ page.next.url }}">{{ page.next.title }}</a></li>
 
-      {% if page.next.next %}
-        <p><a href="{{ page.next.next.url }}">{{ page.next.next.title }} &raquo;&raquo;</a></p>
-      {% endif %}
-    {% endif %}
-  </div>
+          {% if page.next.next %}
+            <li><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></li>
+          {% endif %}
+        {% endif %}
+    </ul>
+  {% else %}
+    <p>다른 글이 없습니다.</p>
+  {% endif %}
 
   {%- if site.staticman -%}
     <h2 id="comments">댓글</h2>
