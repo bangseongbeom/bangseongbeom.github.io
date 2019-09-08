@@ -14,14 +14,14 @@ layout: default
         {{ page.date | date: date_format }}
       </time> 작성
       <span id="modification-info" hidden>
-        • <time id="date-modified"></time> 수정 • <span id="revision"></span>번째 수정판
+        • <time id="date-modified"></time> 수정
         <script
             data-githubownername="{{ site.github.owner_name }}"
             data-githubrepositoryname="{{ site.github.repository_name }}"
             data-path="{{ page.path }}">
           var modificationInfo = document.querySelector("#modification-info");
           var dateModified = document.querySelector("#modification-info #date-modified");
-          var revision = document.querySelector("#modification-info #revision");
+//           var revision = document.querySelector("#modification-info #revision");
           var ownerName = document.querySelector("#modification-info script").dataset.githubownername;
           var repositoryName = document.querySelector("#modification-info script").dataset.githubrepositoryname;
           var path = document.querySelector("#modification-info script").dataset.path;
@@ -37,7 +37,7 @@ layout: default
                 let date = new Date(JSON.parse(this.response)[0].commit.author.date);
                 dateModified.datetime = date.toISOString();
                 dateModified.textContent = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000).toISOString().split("T")[0];
-                revision.textContent = lastPage - 1;
+//                 revision.textContent = lastPage - 1;
                 modificationInfo.hidden = false;
               }
             }
@@ -46,8 +46,8 @@ layout: default
           client.send();
         </script>
       </span>
-      <br /> <a href="{{ site.github.repository_url }}/commits/{{ site.github.source.branch }}{{ site.github.source.path }}{{ page.path }}">📜 수정 내역 보기</a>
-      • <a href="{{ site.github.repository_url }}/edit/{{ site.github.source.branch }}{{ site.github.source.path }}{{ page.path }}">🖊️ 수정 (로그인 필요)</a>
+      <br />
+      <a href="{{ site.github.repository_url }}/edit/{{ site.github.source.branch }}{{ site.github.source.path }}{{ page.path }}">🖊️ 수정 (로그인 필요)</a>
     </p>
   </header>
 
