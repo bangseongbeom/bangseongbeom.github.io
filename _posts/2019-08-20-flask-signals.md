@@ -11,21 +11,6 @@ category: python
 
 이를 위해, 플라스크는 플라스크 내부의 코드 중간에 백엔드 웹 개발자가 정의한 함수를 실행할 수 있는 기능을 제공합니다. 그중 하나가 바로 **시그널**입니다. 특정 순간에 연결된 함수를 실행하는 것이 마치 신호를 발생시키는 것 같다고 하여, 영어로 신호라는 뜻을 가진 시그널이라는 이름이 붙게 되었습니다.
 
-## 시그널 vs 내장 데커레이터
-
-플라스크 내부 동작을 감지하는 방식으로는 시그널만 있는 것이 아닙니다. 플라스크는 **내장 데커레이터**라는 또다른 방식을 제공합니다.
-
-내장 데커레이터로는 [`before_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.before_request), [`after_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.after_request), [`teardown_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.before_request) 등이 있습니다. 내장 데커레이터와 시그널 둘 다 플라스크의 내부 코드 흐름에 백엔드 웹 개발자가 만든 함수를 실행할 수 있도록 해주지만, 내장 데커레이터와 달리 시그널은 다음과 같은 특징을 가지므로 주의해야 합니다:
-
-- 시그널의 종류가 내장 데커레이터의 종류보다 더 다양합니다.
-- 시그널 처리 함수에서 **데이터를 수정**하는 것은 권장되지 않습니다. 데이터를 수정하고 싶다면 내장 데커레이터를 사용하세요[^signal-caveat].
-- 여러 시그널 처리 함수가 연결되었을 때 **특정 순서대로 함수가 실행되는 것**을 보장하지 않습니다. 순서 보장을 원하는 경우 내장 데커레이터를 사용하세요[^signal-caveat].
-
-[^signal-caveat]: <https://flask.palletsprojects.com/en/1.1.x/signals/>
-
-    > However, there are differences in how they work. The core before_request() handler, for example, is executed in a specific order and is able to abort the request early by returning a response. In contrast all signal handlers are executed in undefined order and do not modify any data.
- 
-
 ## 설치
 
 시그널을 사용하기 위해서는 먼저 [**Blinker(블링커)**](https://pythonhosted.org/blinker/)라는 라이브러리가 필요합니다. 용량 및 의존성 문제로 인해 이 라이브러리는 플라스크를 설치할 때 자동으로 함께 설치되지 않습니다.
@@ -103,6 +88,20 @@ def when_request_started(sender, **extra):
 app = Flask(__name__)
 request_started.connect(when_request_started, sender=app)
 ```
+
+## 시그널 vs 내장 데커레이터
+
+플라스크 내부 동작을 감지하는 방식으로는 시그널만 있는 것이 아닙니다. 플라스크는 **내장 데커레이터**라는 또다른 방식을 제공합니다.
+
+내장 데커레이터로는 [`before_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.before_request), [`after_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.after_request), [`teardown_request()`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.before_request) 등이 있습니다. 내장 데커레이터와 시그널 둘 다 플라스크의 내부 코드 흐름에 백엔드 웹 개발자가 만든 함수를 실행할 수 있도록 해주지만, 내장 데커레이터와 달리 시그널은 다음과 같은 특징을 가지므로 주의해야 합니다:
+
+- 시그널의 종류가 내장 데커레이터의 종류보다 더 다양합니다.
+- 시그널 처리 함수에서 **데이터를 수정**하는 것은 권장되지 않습니다. 데이터를 수정하고 싶다면 내장 데커레이터를 사용하세요[^signal-caveat].
+- 여러 시그널 처리 함수가 연결되었을 때 **특정 순서대로 함수가 실행되는 것**을 보장하지 않습니다. 순서 보장을 원하는 경우 내장 데커레이터를 사용하세요[^signal-caveat].
+
+[^signal-caveat]: <https://flask.palletsprojects.com/en/1.1.x/signals/>
+
+    > However, there are differences in how they work. The core before_request() handler, for example, is executed in a specific order and is able to abort the request early by returning a response. In contrast all signal handlers are executed in undefined order and do not modify any data.
 
 ## 참고
 
