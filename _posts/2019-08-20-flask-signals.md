@@ -115,9 +115,19 @@ sig = Signal()
 def hi(sender):
     print("Hi", sender)
 
-sig.connect(hi, sender="Paul")
-sig.send("John")
-sig.send("Paul")
+sig.connect(hi, sender="Paul")  # `"Paul"`만 처리
+sig.send("John")  # 처리 안 함
+sig.send("Paul")  # 처리
+```
+
+## `@connect_via` 데커레이터
+
+[`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 대신 [`@connect_via`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via) 데커레이터를 이용해 시그널 처리 함수를 손쉽게 등록할 수 있습니다:
+
+```py
+@sig.connect_via("Paul")  # `"Paul"`만 처리
+def hi(sender):
+    print("Hi", sender)
 ```
 
 ## 참고
