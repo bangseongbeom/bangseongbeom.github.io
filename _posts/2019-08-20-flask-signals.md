@@ -9,7 +9,7 @@ category: python
 
 플라스크는 내부적으로 템플릿을 렌더링한다거나 HTTP 요청을 준비하는 등 눈에 보이지 않는 곳에서 다양한 작업을 수행합니다. 일반적인 경우라면 백엔드 웹 개발자가 이러한 과정까지 세세히 신경쓸 필요는 없습니다. 하지만 과정 중간 중간에 로그를 기록한다거나 어떤 코드를 삽입하고 싶다면 어떻게 해야 할까요?
 
-이를 위해, 플라스크는 플라스크 내부의 코드 중간에 백엔드 웹 개발자가 정의한 함수를 실행할 수 있는 기능을 제공합니다. 그중 하나가 바로 **시그널**입니다. 특정 순간에 연결된 함수를 실행하는 것이 마치 신호를 발생시키는 것 같다고 하여, 영어로 **신호**라는 뜻을 가진 시그널이라는 이름이 붙게 되었습니다.
+이를 위해, 플라스크는 플라스크 내부의 코드 중간에 백엔드 웹 개발자가 정의한 함수를 실행할 수 있는 기능을 제공합니다. 그중 하나가 바로 **시그널**입니다. 특정 순간에 연결된 함수를 실행하는 것이 마치 신호를 발생시키는 것 같다고 하여, 영어로 신호라는 뜻을 가진 시그널이라는 이름이 붙게 되었습니다.
 
 ## 시그널 vs 내장 데커레이터
 
@@ -28,7 +28,7 @@ category: python
 
 ## 설치
 
-시그널을 사용하기 위해서는 먼저 [**Blinker(블링커)**](https://pythonhosted.org/blinker/)라는 추가적인 라이브러리가 필요합니다. 독특하게도, 이 라이브러리는 플라스크를 설치할 때 자동으로 함께 설치되지 않습니다. 시그널을 사용하고 싶다면 Blinker를 직접 설치해야 합니다. 아마 이 라이브러리는 플라스크를 동작시키는 데 반드시 필요하지도 않을 뿐더러, 플라스크의 용량을 줄이기 위해 자동으로 설치되지 않도록 한 것 같습니다.
+시그널을 사용하기 위해서는 먼저 [**Blinker(블링커)**](https://pythonhosted.org/blinker/)라는 라이브러리가 필요합니다. 용량 및 의존성 문제로 인해 이 라이브러리는 플라스크를 설치할 때 자동으로 함께 설치되지 않습니다.
 
 Linux, macOS라면 `pip install blinker`를, Windows라면 `py -m pip install blinker`를 통해 Blinker를 설치합시다.
 
@@ -52,9 +52,17 @@ def when_request_started(sender, **extra):
 request_started.connect(when_request_started)
 ```
 
-1. 먼저 [`request_started`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_started)라는 시그널을 `import`로 가져옵니다. 이 시그널은 플라스크 내부에서 HTTP 요청이 처리되기 직전을 감지합니다. 이외에도 [`request_finished`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_finished), [`template_rendered`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.template_rendered) 등 [다양한 내장 시그널](https://flask.palletsprojects.com/en/1.1.x/api/#signals)이 있습니다.
-2. 시그널을 처리할 함수를 만듭니다. 이때 시그널을 발생시킨 주체인 [`Flask`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask) 객체가 `sender`라는 매개변수로 들어옵니다. 만약 여러 플라스크 애플리케이션 객체를 사용하는 특수한 경우라면, 이 `sender`를 통해 앱 별로 필터링할 수 있습니다.
-3. `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
+1. **시그널 `import`**
+
+    먼저 [`request_started`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_started)라는 시그널을 `import`로 가져옵니다. 이 시그널은 플라스크 내부에서 HTTP 요청이 처리되기 직전을 감지합니다. 이외에도 [`request_finished`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_finished), [`template_rendered`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.template_rendered) 등 [다양한 내장 시그널](https://flask.palletsprojects.com/en/1.1.x/api/#signals)이 있습니다.
+    
+2. **시그널을 처리할 함수 만들기**
+
+    시그널을 처리할 함수를 만듭니다. 이때 시그널을 발생시킨 주체인 [`Flask`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask) 객체가 `sender`라는 매개변수로 들어옵니다. 만약 여러 플라스크 애플리케이션 객체를 사용하는 특수한 경우라면, 이 `sender`를 통해 앱 별로 필터링할 수 있습니다.
+    
+3. **함수 연결**
+
+    `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
 
 ## 시그널 객체
 
