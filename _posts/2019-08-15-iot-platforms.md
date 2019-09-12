@@ -45,3 +45,5 @@ AWS는 여전히 인기 있는 클라우드 제공자입니다. [AWS IoT](https:
 ## MQTT 테스트: [Mosquitto Test Server](https://test.mosquitto.org/), [HiveMQ Public Broker](http://www.mqtt-dashboard.com/), [Solace PubSub+](https://solace.com/cloud/)
 
 MQTT 프로토콜만을 테스트하고 싶다면 [Mosquitto Test Server](https://test.mosquitto.org/), [HiveMQ Public Broker](http://www.mqtt-dashboard.com/), [Solace PubSub+](https://solace.com/cloud/)를 사용하세요. 이들은 무료로도 충분한 규모의 MQTT 브로커를 제공합니다.
+
+[이외에도 다양한 공개 MQTT 브로커가 있습니다.](https://github.com/mqtt/mqtt.github.io/wiki/public_brokers)
