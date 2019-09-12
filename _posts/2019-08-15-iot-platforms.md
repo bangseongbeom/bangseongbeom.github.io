@@ -5,7 +5,7 @@ category: arduino
 
 홈 오토메이션이나 IoT 제품 판매를 위해 어떤 IoT 플랫폼을 사용해야 할까요? [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 업체를 비교해보았습니다.
 
----
+# IoT 플랫폼이 필요한 이유
 
 집 안에서 인터넷을 통해 전등을 원격으로 제어, 관리할 수 있는 환경을 만드는 것은 어렵습니다. 데이터를 교환하기 위한 서버 컴퓨터가 필요하기 때문입니다. 라즈베리파이같은 저성능 컴퓨터를 서버로 사용할 수도 있지만, 컴퓨터를 따로 마련해야 할 뿐더러 직접 손으로 구축, 관리해야 한다는 부담이 있습니다.
 
