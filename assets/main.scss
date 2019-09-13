@@ -390,6 +390,8 @@ blockquote {
   float: none;
   border: thin solid;
   margin: $spacing-unit / 2 0;
+  border-top: none;
+  margin-top: 0;
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
