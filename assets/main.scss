@@ -45,7 +45,7 @@ article header {
 }
 
 header, .site-header {
-  border-bottom: none;
+  border-bottom: thin solid;
 }
 
 article header,
@@ -388,10 +388,7 @@ blockquote {
 .site-nav {
   position: static;
   float: none;
-  border: thin solid;
-  margin: $spacing-unit / 2 0;
-  border-top: none;
-  margin-top: 0;
+  border: none;
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
