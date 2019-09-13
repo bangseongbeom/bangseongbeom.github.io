@@ -388,7 +388,8 @@ blockquote {
 .site-nav {
   position: static;
   float: none;
-  border: none;
+  border: thin solid;
+  margin: $spacing-unit / 4;
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
