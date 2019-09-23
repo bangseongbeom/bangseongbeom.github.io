@@ -21,7 +21,7 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 |[dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/)|IoT 플랫폼|😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료)|😞 기기 당 월 2,000원|
 |[Mosquitto Test Server](https://test.mosquitto.org/)|테스트 용 MQTT 브로커|⚠️ 무료 (모두가 데이터를 볼 수 있음)|테스트 용|
 |[HiveMQ Public Broker](http://www.mqtt-dashboard.com/)|테스트 용 MQTT 브로커|⚠️ 무료 (모두가 데이터를 볼 수 있음)|테스트 용|
-|[AWS IoT](https://aws.amazon.com/iot/)|IoT 플랫폼|😞 12개월 무료|😐 복잡함|⚠️ ESP32, 라즈베리파이 (ESP8266 미지원)|
+|[AWS IoT](https://aws.amazon.com/iot/)|IoT 플랫폼|😞 12개월 무료|😐 복잡함|
 |[CloudMQTT](https://www.cloudmqtt.com/)|MQTT 브로커 호스팅|😞 동시 연결 5개 무료|😐 동시 연결 100개 월 20,000원|
 |[Solace PubSub+](https://solace.com/cloud/)|MQTT 브로커 호스팅|😃 동시 연결 50개 무료|😞 동시 연결 100개 월 45,000원|
 
