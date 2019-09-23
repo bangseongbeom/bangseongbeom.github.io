@@ -103,6 +103,11 @@ section header button,
   text-decoration: underline;
 }
 
+main table {
+  display: block;
+  border: none;
+}
+
 em a,
 em button,
 [role~="menubar"] a,
