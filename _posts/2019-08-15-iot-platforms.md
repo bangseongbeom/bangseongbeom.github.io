@@ -13,41 +13,41 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 
 ## 요약 정리
 
-||종류|무료 사용|가격 정책|
+|| 종류 | 무료 사용 | 가격 정책 |
 |---|---|---|---|
-|[Adafruit IO](https://io.adafruit.com/)|IoT 플랫폼|😃 피드 10개 무료 (피드: MQTT의 토픽과 유사)|😃 피드 무제한 월 10,000원|
-|[Blynk](https://blynk.io)|IoT 플랫폼|😞 데이터 업로드/다운로드 무제한, UI 위젯 약 5-10개 무료|😞 UI 위젯 하나에 500-1,000원|
-|[ThingSpeak](https://thingspeak.com/)|IoT 플랫폼 + MATLAB|😞 채널 4개 무료 (채널: MQTT의 토픽과 유사)|😞 1년 65만 원 (상용이 아니라면 더 저렴)|
-|[dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/)|IoT 플랫폼|😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료)|😞 기기 당 월 2,000원|
-|[Mosquitto Test Server](https://test.mosquitto.org/)|테스트 용 MQTT 브로커|⚠️ 무료 (모두가 데이터를 볼 수 있음)|테스트 용|
-|[HiveMQ Public Broker](http://www.mqtt-dashboard.com/)|테스트 용 MQTT 브로커|⚠️ 무료 (모두가 데이터를 볼 수 있음)|테스트 용|
-|[AWS IoT](https://aws.amazon.com/iot/)|IoT 플랫폼|😞 12개월 무료|😐 복잡함|
-|[CloudMQTT](https://www.cloudmqtt.com/)|MQTT 브로커 호스팅|😞 동시 연결 5개 무료|😐 동시 연결 100개 월 20,000원|
-|[Solace PubSub+](https://solace.com/cloud/)|MQTT 브로커 호스팅|😃 동시 연결 50개 무료|😞 동시 연결 100개 월 45,000원|
+| [Adafruit IO](https://io.adafruit.com/) | IoT 플랫폼 | 😃 피드 10개 무료 (피드: MQTT의 토픽과 유사) | 😃 피드 무제한 월 10,000원 |
+| [Blynk](https://blynk.io) | IoT 플랫폼 | 😞 데이터 업로드/다운로드 무제한, UI 위젯 약 5-10개 무료 | 😞 UI 위젯 하나에 500-1,000원 |
+| [ThingSpeak](https://thingspeak.com/) | IoT 플랫폼 + MATLAB | 😞 채널 4개 무료 (채널: MQTT의 토픽과 유사) | 😞 1년 65만 원 (상용이 아니라면 더 저렴) |
+| [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | IoT 플랫폼 | 😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료) | 😞 기기 당 월 2,000원 |
+| [Mosquitto Test Server](https://test.mosquitto.org/) | 테스트 용 MQTT 브로커 | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | 테스트 용 |
+| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | 테스트 용 MQTT 브로커 | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | 테스트 용 |
+| [AWS IoT](https://aws.amazon.com/iot/) | IoT 플랫폼 | 😞 12개월 무료 | 😐 복잡함 |
+| [CloudMQTT](https://www.cloudmqtt.com/) | MQTT 브로커 호스팅 | 😞 동시 연결 5개 무료 | 😐 동시 연결 100개 월 20,000원 |
+| [Solace PubSub+](https://solace.com/cloud/) | MQTT 브로커 호스팅 | 😃 동시 연결 50개 무료 | 😞 동시 연결 100개 월 45,000원 |
 
-||전용 라이브러리|HTTP REST|MQTT|
+|| 전용 라이브러리 | HTTP REST | MQTT |
 |---|---|---|---|
-|[Adafruit IO](https://io.adafruit.com/)|✔️ ESP8266, ESP32, 파이썬|✔️ 지원|⚠️ 지원 (정해진 토픽 구조로만 가능)|
-|[Blynk](https://blynk.io)|✔️ ESP8266, ESP32, 파이썬|✔️ 지원|❌ 미지원|
-|[ThingSpeak](https://thingspeak.com/)|❌ 미지원|✔️ 지원|⚠️ 지원 (정해진 토픽 구조로만 가능)|
-|[dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/)|❌ 미지원|✔️ 지원|❌ 미지원|
-|[Mosquitto Test Server](https://test.mosquitto.org/)|❌ 미지원|❌ 미지원|✔️ 지원|
-|[HiveMQ Public Broker](http://www.mqtt-dashboard.com/)|❌ 미지원|❌ 미지원|✔️ 지원|
-|[AWS IoT](https://aws.amazon.com/iot/)|⚠️ ESP32, 라즈베리파이 (ESP8266 미지원)|✔️ 지원|✔️ 지원|
-|[CloudMQTT](https://www.cloudmqtt.com/)|❌ 미지원|✔️ 지원|✔️ 지원|
-|[Solace PubSub+](https://solace.com/cloud/)|❌ 미지원|✔️ 지원|✔️ 지원|
+| [Adafruit IO](https://io.adafruit.com/) | ✔️ ESP8266, ESP32, 파이썬 | ✔️ 지원 | ⚠️ 지원 (정해진 토픽 구조로만 가능) |
+| [Blynk](https://blynk.io) | ✔️ ESP8266, ESP32, 파이썬 | ✔️ 지원 | ❌ 미지원 |
+| [ThingSpeak](https://thingspeak.com/) | ❌ 미지원 | ✔️ 지원 | ⚠️ 지원 (정해진 토픽 구조로만 가능) |
+| [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | ❌ 미지원 | ✔️ 지원 | ❌ 미지원 |
+| [Mosquitto Test Server](https://test.mosquitto.org/) | ❌ 미지원 | ❌ 미지원 | ✔️ 지원 |
+| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | ❌ 미지원 | ❌ 미지원 | ✔️ 지원 |
+| [AWS IoT](https://aws.amazon.com/iot/) | ⚠️ ESP32, 라즈베리파이 (ESP8266 미지원) | ✔️ 지원 | ✔️ 지원 |
+| [CloudMQTT](https://www.cloudmqtt.com/) | ❌ 미지원 | ✔️ 지원 | ✔️ 지원 |
+| [Solace PubSub+](https://solace.com/cloud/) | ❌ 미지원 | ✔️ 지원 | ✔️ 지원 |
 
-||데스크톱 대시보드|모바일 대시보드|
+|| 데스크톱 대시보드 | 모바일 대시보드 |
 |---|---|---|
-|[Adafruit IO](https://io.adafruit.com/)|✔️ 웹 기반|✔️ 웹 기반, 모바일 레이아웃 (예시)|
-|[Blynk](https://blynk.io)|❌ 미지원|✔️ 안드로이드, iOS 기반 (예시)|
-|[ThingSpeak](https://thingspeak.com/)|✔️ 웹 기반, 버튼과 같은 상호 작용 위젯 미제공 (예시)|❓|
-|[dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/)|✔️ 웹 기반, 무료는 지원 안 함 (예시)|❓|
-|[Mosquitto Test Server](https://test.mosquitto.org/)|❌ 미지원|❓|
-|[HiveMQ Public Broker](http://www.mqtt-dashboard.com/)|❓|❓|
-|[AWS IoT](https://aws.amazon.com/iot/)|✔️ 웹 기반 (예시)|❓|
-|[CloudMQTT](https://www.cloudmqtt.com/)|❓|❓|
-|[Solace PubSub+](https://solace.com/cloud/)|❓|❓|
+| [Adafruit IO](https://io.adafruit.com/) | ✔️ 웹 기반 | ✔️ 웹 기반, 모바일 레이아웃 (예시) |
+| [Blynk](https://blynk.io) | ❌ 미지원 | ✔️ 안드로이드, iOS 기반 (예시) |
+| [ThingSpeak](https://thingspeak.com/) | ✔️ 웹 기반, 버튼과 같은 상호 작용 위젯 미제공 (예시) | ❓ |
+| [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | ✔️ 웹 기반, 무료는 지원 안 함 (예시) | ❓ |
+| [Mosquitto Test Server](https://test.mosquitto.org/) | ❌ 미지원 | ❓ |
+| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | ❓ | ❓ |
+| [AWS IoT](https://aws.amazon.com/iot/) | ✔️ 웹 기반 (예시) | ❓ |
+| [CloudMQTT](https://www.cloudmqtt.com/) | ❓ | ❓ |
+| [Solace PubSub+](https://solace.com/cloud/) | ❓ | ❓ |
 
 ## 홈 오토메이션: [Adafruit IO](https://io.adafruit.com/)
 
