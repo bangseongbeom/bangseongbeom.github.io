@@ -3,7 +3,7 @@ title: IoT 플랫폼 업체 비교
 category: arduino
 ---
 
-홈 오토메이션이나 IoT 제품 판매를 위해 어떤 IoT 플랫폼을 사용해야 할까요? [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 업체를 비교해보았습니다.
+홈 오토메이션이나 IoT 제품 개발을 위해 어떤 IoT 플랫폼을 사용해야 할까요? [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 업체를 비교해보았습니다.
 
 # IoT 플랫폼이 필요한 이유
 
