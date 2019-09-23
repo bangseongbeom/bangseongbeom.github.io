@@ -109,6 +109,10 @@ main table {
   overflow: auto;
 }
 
+main table th, main table td {
+  min-width: 6em;
+}
+
 em a,
 em button,
 [role~="menubar"] a,
