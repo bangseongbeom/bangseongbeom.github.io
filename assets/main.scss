@@ -115,10 +115,6 @@ main table td, main table th {
 
 em a,
 em button,
-aside header em a,
-aside header em button,
-main header em a,
-main header em button,
 [role~="menubar"] a,
 [role~="toolbar"] a,
 [role~="menubar"] button,
@@ -143,14 +139,13 @@ nav button,
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: none;
+  text-decoration: underline;
   background: none;
   font-size: 16px;
   font-weight: normal;
-  font-style: normal;
   line-height: 1.5;
   padding: 0.75em;
-  border: thin solid;
+  border: none;
   margin: 2px 0;
   outline: 0 solid silver;
   outline-offset: 0;
