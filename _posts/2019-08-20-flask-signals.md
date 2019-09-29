@@ -92,7 +92,9 @@ request_started.connect(when_request_started)
 
     `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
 
-## 이름 있는 시그널
+## 고급 기능
+
+### 이름 있는 시그널
 
 시그널 객체는 이름이 있는 경우와 없는 경우로 나뉘어집니다. **이름이 있는 경우** [`signal()`](https://pythonhosted.org/blinker/#blinker.base.signal)이라는 함수를 호출합니다. 소문자로 시작함에 유의하세요. 이 함수는 내부적으로 [`NamedSignal`](https://pythonhosted.org/blinker/#blinker.base.NamedSignal)이라는 객체를 만듭니다. **이름이 없는 경우** [`Signal()`](https://pythonhosted.org/blinker/index.html#blinker.base.Signal)을 호출해 생성합니다:
 
@@ -103,7 +105,7 @@ named_ready = signal("named-ready")  # 이름 있는 시그널
 anonymous_ready = Signal()  # 이름 없는 시그널
 ```
 
-## 특정 `sender`만 처리
+### 특정 `sender`만 처리
 
 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드에 `sender` 키워드 매개변수를 제공하면 특정 `sender`로부터 발생하는 신호만 처리하게 됩니다. 이를 통해 더 편리하게 **특정 `sender`만 처리**할 수 있습니다:
 
@@ -120,7 +122,7 @@ sig.send("John")  # 처리 안 함
 sig.send("Paul")  # 처리
 ```
 
-## `@connect_via` 데커레이터
+### `@connect_via` 데커레이터
 
 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 대신 [`@connect_via`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via) 데커레이터를 이용해 시그널 처리 함수를 손쉽게 등록할 수 있습니다:
 
