@@ -159,6 +159,11 @@ em button {
   border: 0.0625em solid;
 }
 
+em a:hover,
+em button:hover {
+  text-decoration: none;
+}
+
 nav,
 nav.site-nav,
 [role~="group"],
