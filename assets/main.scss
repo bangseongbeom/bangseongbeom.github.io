@@ -164,6 +164,11 @@ em button:hover {
   text-decoration: none;
 }
 
+em a:focus,
+em button:focus {
+  text-decoration: none;
+}
+
 nav,
 nav.site-nav,
 [role~="group"],
