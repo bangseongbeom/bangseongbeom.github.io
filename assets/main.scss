@@ -151,6 +151,14 @@ nav button,
   outline-offset: 0;
 }
 
+em a,
+em button {
+  text-decoration: none;
+  font-style: normal;
+  pading: 0.625em;
+  border: 0.125em solid;
+}
+
 nav,
 nav.site-nav,
 [role~="group"],
