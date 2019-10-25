@@ -253,7 +253,11 @@ button:active svg {
   background: inherit;
 }
 
-a:hover, button:hover, .site-nav .page-link:hover, .site-nav .page-link:not(:last-child):hover, .site-nav .site-title a:hover {
+a:hover,
+button:hover,
+.site-nav .page-link:hover,
+.site-nav .page-link:not(:last-child):hover,
+.site-nav .site-title a:hover {
   background: silver;
   outline-width: medium;
   outline-color: silver;
@@ -314,7 +318,8 @@ button[type="submit"] {
   font-weight: bold;
 }
 
-input, textarea {
+input,
+textarea {
   border: 0.125em solid black;
   outline: 0 solid silver;
   outline-offset: 0;
@@ -323,18 +328,21 @@ input, textarea {
   line-height: 1.5;
 }
 
-input:hover, textarea:hover {
+input:hover,
+textarea:hover {
   outline-width: medium;
   transition: outline 50ms;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: black;
   outline-width: thick;
   outline-color: black;
 }
 
-input:active, textarea:active {
+input:active,
+textarea:active {
   border-color: black;
   outline-width: thick;
   outline-color: silver;
@@ -348,7 +356,8 @@ form label:only-child {
   display: block;
 }
 
-form input, form textarea {
+form input,
+form textarea {
   height: auto;
   padding: 0.625em;
   margin: 0.125em 0;
@@ -356,7 +365,8 @@ form input, form textarea {
   background: $background-color;
 }
 
-form label:only-child input, form label:only-child textarea {
+form label:only-child input,
+form label:only-child textarea {
   display: block;
   width: 100%;
   margin-left: 0;
@@ -511,7 +521,12 @@ blockquote {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: $spacing-unit;
   line-height: 1.25;
   clear: both;
