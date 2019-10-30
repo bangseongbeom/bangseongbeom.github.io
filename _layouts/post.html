@@ -58,22 +58,22 @@ layout: default
         {% if page.previous %}
           {% if page.previous.previous %}
             <li>
-              <a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a>
+              <a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a>
             </li>
           {% endif %}
 
           <li>
-            <a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+            <a href="{{ page.previous.url }}">{{ page.previous.title }}</a>
           </li>
         {% endif %}
         {% if page.next %}
           <li>
-            <a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a>
+            <a href="{{ page.next.url }}">{{ page.next.title }}</a>
           </li>
 
           {% if page.next.next %}
             <li>
-              <a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a>
+              <a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a>
             </li>
           {% endif %}
         {% endif %}
