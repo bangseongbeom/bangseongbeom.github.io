@@ -59,16 +59,36 @@ layout: default
       <ul class="post-list">
         {% if page.previous %}
           {% if page.previous.previous %}
-            <li><h3><a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3></li>
+            <li>
+              <h3><a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
+              {%- if site.show_excerpts -%}
+                {{ post.excerpt }}
+              {%- endif -%}
+            </li>
           {% endif %}
 
-          <li><h3><a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3></li>
+          <li>
+            <h3><a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
+            {%- if site.show_excerpts -%}
+              {{ post.excerpt }}
+            {%- endif -%}
+          </li>
         {% endif %}
         {% if page.next %}
-          <li><h3><a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a></h3></li>
+          <li>
+            <h3><a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
+            {%- if site.show_excerpts -%}
+              {{ post.excerpt }}
+            {%- endif -%}
+          </li>
 
           {% if page.next.next %}
-            <li><h3><a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3></li>
+            <li>
+              <h3><a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
+              {%- if site.show_excerpts -%}
+                {{ post.excerpt }}
+              {%- endif -%}
+            </li>
           {% endif %}
         {% endif %}
       </ul>
