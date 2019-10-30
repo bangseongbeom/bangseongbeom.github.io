@@ -65,7 +65,12 @@ header nav li {
   display: inline;
 }
 
-h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
@@ -98,7 +103,8 @@ main table {
   overflow: auto;
 }
 
-main table td, main table th {
+main table td,
+main table th {
   min-width: 6em;
 }
 
