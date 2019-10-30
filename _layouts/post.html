@@ -59,16 +59,16 @@ layout: default
       <ul>
           {% if page.previous %}
             {% if page.previous.previous %}
-              <li><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></li>
+              <h3><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
             {% endif %}
 
-            <li><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></li>
+            <h3><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
           {% endif %}
           {% if page.next %}
-            <li><a href="{{ page.next.url }}">{{ page.next.title }}</a></li>
+            <h3><a href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
 
             {% if page.next.next %}
-              <li><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></li>
+              <h3><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
             {% endif %}
           {% endif %}
       </ul>
