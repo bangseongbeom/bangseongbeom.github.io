@@ -56,20 +56,22 @@ layout: default
   <section id="other-posts">
     <h2>이 블로그의 다른 글</h2>
     {% if page.previous || page.next %}
-      {% if page.previous %}
-        {% if page.previous.previous %}
-          <h3><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
-        {% endif %}
+      <ul class="post-list">
+        {% if page.previous %}
+          {% if page.previous.previous %}
+            <li><h3><a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3></li>
+          {% endif %}
 
-        <h3><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
-      {% endif %}
-      {% if page.next %}
-        <h3><a href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
-
-        {% if page.next.next %}
-          <h3><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
+          <li><h3><a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3></li>
         {% endif %}
-      {% endif %}
+        {% if page.next %}
+          <li><h3><a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a></h3></li>
+
+          {% if page.next.next %}
+            <li><h3><a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3></li>
+          {% endif %}
+        {% endif %}
+      </ul>
     {% else %}
       <p>다른 글이 없습니다.</p>
     {% endif %}
