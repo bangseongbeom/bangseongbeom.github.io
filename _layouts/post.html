@@ -62,7 +62,7 @@ layout: default
             <li>
               <h3><a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
               {%- if site.show_excerpts -%}
-                {{ post.excerpt }}
+                {{ post.previous.previous.excerpt }}
               {%- endif -%}
             </li>
           {% endif %}
@@ -70,7 +70,7 @@ layout: default
           <li>
             <h3><a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
             {%- if site.show_excerpts -%}
-              {{ post.excerpt }}
+              {{ post.previous.excerpt }}
             {%- endif -%}
           </li>
         {% endif %}
@@ -78,7 +78,7 @@ layout: default
           <li>
             <h3><a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
             {%- if site.show_excerpts -%}
-              {{ post.excerpt }}
+              {{ page.next.excerpt }}
             {%- endif -%}
           </li>
 
@@ -86,7 +86,7 @@ layout: default
             <li>
               <h3><a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
               {%- if site.show_excerpts -%}
-                {{ post.excerpt }}
+                {{ page.next.next.excerpt }}
               {%- endif -%}
             </li>
           {% endif %}
