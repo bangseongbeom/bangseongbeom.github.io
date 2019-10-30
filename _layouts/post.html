@@ -56,22 +56,20 @@ layout: default
   <section id="other-posts">
     <h2>이 블로그의 다른 글</h2>
     {% if page.previous || page.next %}
-      <ul>
-          {% if page.previous %}
-            {% if page.previous.previous %}
-              <h3><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
-            {% endif %}
+      {% if page.previous %}
+        {% if page.previous.previous %}
+          <h3><a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
+        {% endif %}
 
-            <h3><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
-          {% endif %}
-          {% if page.next %}
-            <h3><a href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
+        <h3><a href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
+      {% endif %}
+      {% if page.next %}
+        <h3><a href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
 
-            {% if page.next.next %}
-              <h3><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
-            {% endif %}
-          {% endif %}
-      </ul>
+        {% if page.next.next %}
+          <h3><a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
+        {% endif %}
+      {% endif %}
     {% else %}
       <p>다른 글이 없습니다.</p>
     {% endif %}
