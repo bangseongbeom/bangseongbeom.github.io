@@ -15,8 +15,8 @@ category: arduino
 | [Blynk](https://blynk.io) | 😞 데이터 업로드/다운로드 무제한, UI 위젯 약 5-10개 무료 | 😞 UI 위젯 하나에 500-1,000원 |
 | [ThingSpeak](https://thingspeak.com/) | 😞 채널 4개 무료 (채널: MQTT의 토픽과 유사) | 😞 1년 65만 원 (상용이 아니라면 더 저렴) |
 | [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | 😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료) | 😞 기기 당 월 2,000원 |
-| [Mosquitto Test Server](https://test.mosquitto.org/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) ||
-| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) ||
+| [Mosquitto Test Server](https://test.mosquitto.org/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | ⚠️ 없음 |
+| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | ⚠️ 없음 |
 | [AWS IoT](https://aws.amazon.com/iot/) | 😞 12개월 무료 | 😐 복잡함 |
 | [CloudMQTT](https://www.cloudmqtt.com/) | 😞 동시 연결 5개 무료 | 😐 동시 연결 100개 월 20,000원 |
 | [Solace PubSub+](https://solace.com/cloud/) | 😃 동시 연결 50개 무료 | 😞 동시 연결 100개 월 45,000원 |
