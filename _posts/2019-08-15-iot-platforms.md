@@ -5,25 +5,23 @@ category: arduino
 
 홈 오토메이션이나 IoT 제품 개발을 위해 어떤 IoT 플랫폼을 사용해야 할까요? [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 업체를 비교해보았습니다.
 
-# IoT 플랫폼이 필요한 이유
-
-집 안에서 인터넷을 통해 전등을 원격으로 제어, 관리할 수 있는 환경을 만드는 것은 어렵습니다. 데이터를 교환하기 위한 서버 컴퓨터가 필요하기 때문입니다. 라즈베리파이같은 저성능 컴퓨터를 서버로 사용할 수도 있지만, 컴퓨터를 따로 마련해야 할 뿐더러 직접 손으로 구축, 관리해야 한다는 부담이 있습니다.
-
-IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 됩니다. 기기를 제어하기 위한 대시보드, 다른 서비스와의 연동 기능을 몇 번의 클릭만으로 적용할 수 있어 무척 편리합니다.
-
 ## 요약 정리
 
-|| 종류 | 무료 사용 | 가격 정책 |
-|---|---|---|---|
-| [Adafruit IO](https://io.adafruit.com/) | IoT 플랫폼 | 😃 피드 10개 무료 (피드: MQTT의 토픽과 유사) | 😃 피드 무제한 월 10,000원 |
-| [Blynk](https://blynk.io) | IoT 플랫폼 | 😞 데이터 업로드/다운로드 무제한, UI 위젯 약 5-10개 무료 | 😞 UI 위젯 하나에 500-1,000원 |
-| [ThingSpeak](https://thingspeak.com/) | IoT 플랫폼 + MATLAB | 😞 채널 4개 무료 (채널: MQTT의 토픽과 유사) | 😞 1년 65만 원 (상용이 아니라면 더 저렴) |
-| [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | IoT 플랫폼 | 😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료) | 😞 기기 당 월 2,000원 |
-| [Mosquitto Test Server](https://test.mosquitto.org/) | 테스트 용 MQTT 브로커 | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | 테스트 용 |
-| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | 테스트 용 MQTT 브로커 | ⚠️ 무료 (모두가 데이터를 볼 수 있음) | 테스트 용 |
-| [AWS IoT](https://aws.amazon.com/iot/) | IoT 플랫폼 | 😞 12개월 무료 | 😐 복잡함 |
-| [CloudMQTT](https://www.cloudmqtt.com/) | MQTT 브로커 호스팅 | 😞 동시 연결 5개 무료 | 😐 동시 연결 100개 월 20,000원 |
-| [Solace PubSub+](https://solace.com/cloud/) | MQTT 브로커 호스팅 | 😃 동시 연결 50개 무료 | 😞 동시 연결 100개 월 45,000원 |
+### 가격 정책
+
+|| 무료 사용 | 가격 정책 |
+|---|---|---|
+| [Adafruit IO](https://io.adafruit.com/) | 😃 피드 10개 무료 (피드: MQTT의 토픽과 유사) | 😃 피드 무제한 월 10,000원 |
+| [Blynk](https://blynk.io) | 😞 데이터 업로드/다운로드 무제한, UI 위젯 약 5-10개 무료 | 😞 UI 위젯 하나에 500-1,000원 |
+| [ThingSpeak](https://thingspeak.com/) | 😞 채널 4개 무료 (채널: MQTT의 토픽과 유사) | 😞 1년 65만 원 (상용이 아니라면 더 저렴) |
+| [dweet.io](http://dweet.io/)<br />[dweetpro.io](https://dweetpro.io/) | 😃 기기 당 5초에 메시지 1개 무료 (대시보드는 유료) | 😞 기기 당 월 2,000원 |
+| [Mosquitto Test Server](https://test.mosquitto.org/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) ||
+| [HiveMQ Public Broker](http://www.mqtt-dashboard.com/) | ⚠️ 무료 (모두가 데이터를 볼 수 있음) ||
+| [AWS IoT](https://aws.amazon.com/iot/) | 😞 12개월 무료 | 😐 복잡함 |
+| [CloudMQTT](https://www.cloudmqtt.com/) | 😞 동시 연결 5개 무료 | 😐 동시 연결 100개 월 20,000원 |
+| [Solace PubSub+](https://solace.com/cloud/) | 😃 동시 연결 50개 무료 | 😞 동시 연결 100개 월 45,000원 |
+
+### 라이브러리 및 프로토콜 지원
 
 || 전용 라이브러리 | HTTP REST | MQTT |
 |---|---|---|---|
@@ -37,6 +35,8 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 | [CloudMQTT](https://www.cloudmqtt.com/) | ❌ 미지원 | ✔️ 지원 | ✔️ 지원 |
 | [Solace PubSub+](https://solace.com/cloud/) | ❌ 미지원 | ✔️ 지원 | ✔️ 지원 |
 
+### 대시보드 지원
+
 || 데스크톱 대시보드 | 모바일 대시보드 |
 |---|---|---|
 | [Adafruit IO](https://io.adafruit.com/) | ✔️ 웹 기반 | ✔️ 웹 기반, 모바일 레이아웃 (예시) |
@@ -49,7 +49,9 @@ IoT 플랫폼 업체를 통한다면 힘들여 서버를 구축하지 않아도 
 | [CloudMQTT](https://www.cloudmqtt.com/) | ❓ | ❓ |
 | [Solace PubSub+](https://solace.com/cloud/) | ❓ | ❓ |
 
-## 홈 오토메이션: [Adafruit IO](https://io.adafruit.com/)
+## 추천 서비스
+
+### 홈 오토메이션: [Adafruit IO](https://io.adafruit.com/)
 
 전등이나 스위치 제어 등 홈 오토메이션을 위해서는 [Adafruit IO](https://io.adafruit.com/)를 추천합니다.
 
@@ -61,13 +63,13 @@ IoT 기기를 원격으로 제어하기 위한 **대시보드** 역시 드래그
 
 금전적인 부분도 빼놓을 수 없습니다. 규모가 크지 않다면 **무료로 제공하는 [10개의 피드](https://io.adafruit.com/)로도 충분**합니다. (피드는 MQTT의 토픽과 유사한 개념으로, 하나의 데이터 흐름을 뜻합니다) [월 10,000원 정도의 추가금을 지불하면 피드를 무제한](https://io.adafruit.com/plus)으로 사용할 수도 있습니다.
 
-## 상용: [AWS IoT](https://aws.amazon.com/iot/), [Blynk](https://blynk.io/)
+### 상용 서비스: [AWS IoT](https://aws.amazon.com/iot/), [Blynk](https://blynk.io/)
 
 AWS는 여전히 인기 있는 클라우드 제공자입니다. [AWS IoT](https://aws.amazon.com/iot/) 역시 그 명성에 걸맞게 다양한 기능을 제공합니다. 특히 가장 강력한 장점은 **AWS의 다른 서비스들과 손쉽게 연동**할 수 있다는 것입니다. [Amazon Kinesis](https://aws.amazon.com/kinesis/), [Amazon MSK](https://aws.amazon.com/msk/)를 통해 데이터를 실시간으로 분석하거나 가치 있는 정보를 찾아낼 수 있습니다.
 
 [Blynk](https://blynk.io/)는 **모바일 대시보드**를 만드는데 있어 탁월합니다. 아름다운 UI, 실시간 제어, 데이터 시각화를 제공합니다. 사용자에게 멋진 애플리케이션을 제공하고 싶다면 다소 값이 나가더라도 Blynk를 사용하는 것이 좋은 선택일 것입니다.
 
-## MQTT 테스트: [Mosquitto Test Server](https://test.mosquitto.org/), [HiveMQ Public Broker](http://www.mqtt-dashboard.com/), [Solace PubSub+](https://solace.com/cloud/)
+### MQTT 테스트 용: [Mosquitto Test](https://test.mosquitto.org/), [HiveMQ Public](http://www.mqtt-dashboard.com/), [Solace PubSub+](https://solace.com/cloud/)
 
 MQTT 프로토콜만을 테스트하고 싶다면 [Mosquitto Test Server](https://test.mosquitto.org/), [HiveMQ Public Broker](http://www.mqtt-dashboard.com/), [Solace PubSub+](https://solace.com/cloud/)를 사용하세요. 이들은 무료로도 충분한 규모의 MQTT 브로커를 제공합니다.
 
