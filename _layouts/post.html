@@ -61,33 +61,21 @@ layout: default
           {% if page.previous.previous %}
             <li>
               <h3><a class="post-link" href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a></h3>
-              {%- if site.show_excerpts -%}
-                {{ post.previous.previous.excerpt }}
-              {%- endif -%}
             </li>
           {% endif %}
 
           <li>
             <h3><a class="post-link" href="{{ page.previous.url }}">{{ page.previous.title }}</a></h3>
-            {%- if site.show_excerpts -%}
-              {{ post.previous.excerpt }}
-            {%- endif -%}
           </li>
         {% endif %}
         {% if page.next %}
           <li>
             <h3><a class="post-link" href="{{ page.next.url }}">{{ page.next.title }}</a></h3>
-            {%- if site.show_excerpts -%}
-              {{ page.next.excerpt }}
-            {%- endif -%}
           </li>
 
           {% if page.next.next %}
             <li>
               <h3><a class="post-link" href="{{ page.next.next.url }}">{{ page.next.next.title }}</a></h3>
-              {%- if site.show_excerpts -%}
-                {{ page.next.next.excerpt }}
-              {%- endif -%}
             </li>
           {% endif %}
         {% endif %}
