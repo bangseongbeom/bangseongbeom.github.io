@@ -581,6 +581,10 @@ code {
   background: yellow;
 }
 
+.footnotes {
+  margin-top: $spacing-unit;
+}
+
 .footnote::before {
 //   content: "[";
 //   -webkit-user-select: text;
