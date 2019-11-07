@@ -14,7 +14,7 @@ category: linux
 - 주소를 지정하는 역할을 하는 `struct sockaddr_in`에는 `AF_INET`, `AF_IPX` 등 **AF**로 시작하는 상수만 사용합니다. AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다.
 - 실제 통신을 담당하는 `socket()`에는 `PF_INET`, `PF_IPX` 등 **PF**로 시작하는 상수만 사용합니다. PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다.
 
-## 실제로 두 값은 같다
+## AF와 PF는 같은 값을 가진다
 
 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. 리눅스 커널 코드를 살펴보면, `PF_INET`이 `AF_INET`과 같은 값으로 정의되어 있음을 알 수 있습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
 
