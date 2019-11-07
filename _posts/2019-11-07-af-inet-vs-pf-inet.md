@@ -20,8 +20,8 @@ category: linux
 
 그래서 다음과 같이 설계했습니다:
 
-- 주소를 지정하는 역할을 하는 `struct sockaddr_in`에는 `AF_INET`, `AF_IPX` 등 **AF**로 시작하는 상수만 사용합니다. AF는 **A**ddress **F**amily의 줄임말입니다.
-- 실제 통신을 담당하는 `socket()`에는 `PF_INET`, `PF_IPX` 등 **PF**로 시작하는 상수만 사용합니다. PF는 **P**rotocol **F**amily의 줄임말입니다.
+- 주소를 지정하는 역할을 하는 `struct sockaddr_in`에는 `AF_INET`, `AF_IPX` 등 **AF**로 시작하는 상수만 사용합니다. AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다.
+- 실제 통신을 담당하는 `socket()`에는 `PF_INET`, `PF_IPX` 등 **PF**로 시작하는 상수만 사용합니다. PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다.
 
 ## 실제로 두 값은 같다
 
