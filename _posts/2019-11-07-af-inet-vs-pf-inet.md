@@ -7,14 +7,7 @@ category: linux
 
 ## 원래 의도
 
-초창기 소켓 프로그래밍 API를 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 두 프로토콜이 서로 다르다고 할지라도 같은 주소 체계를 사용할 가능성도 있으니까요. **(물론 실제로 그런 일은 일어나지 않았죠.)**[^dadi]
-
-[^dadi]:
-    <http://www.cs.ubbcluj.ro/~dadi/compnet/labs/socketstheory/syscalls.html>
-
-    > In some documentation, you'll see mention of a mystical "PF_INET". This is a weird etherial beast that is rarely seen in nature, but I might as well clarify it a bit here. Once a long time ago, it was thought that maybe a address family (what the "AF" in "AF_INET" stands for) might support several protocols that were referenced by their protocol family (what the "PF" in "PF_INET" stands for).
-    >
-    > That didn't happen. Oh well. So the correct thing to do is to use AF_INET in your struct sockaddr_in and PF_INET in your call to socket(). But practically speaking, you can use AF_INET everywhere. And, since that's what W. Richard Stevens does in his book, that's what I'll do here.
+초창기 소켓 프로그래밍 API를 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 두 프로토콜이 서로 다르다고 할지라도 같은 주소 체계를 사용할 가능성도 있으니까요. **(물론 실제로 그런 일은 일어나지 않았죠.)**
 
 예를 들자면, IP 주소가 IP(인터넷 프로토콜)뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
@@ -41,3 +34,11 @@ category: linux
 
 <http://man7.org/linux/man-pages/man2/socket.2.html#NOTES>
 > ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
+
+## 참고
+
+- <http://www.cs.ubbcluj.ro/~dadi/compnet/labs/socketstheory/syscalls.html>
+
+    > In some documentation, you'll see mention of a mystical "PF_INET". This is a weird etherial beast that is rarely seen in nature, but I might as well clarify it a bit here. Once a long time ago, it was thought that maybe a address family (what the "AF" in "AF_INET" stands for) might support several protocols that were referenced by their protocol family (what the "PF" in "PF_INET" stands for).
+    >
+    > That didn't happen. Oh well. So the correct thing to do is to use AF_INET in your struct sockaddr_in and PF_INET in your call to socket(). But practically speaking, you can use AF_INET everywhere. And, since that's what W. Richard Stevens does in his book, that's what I'll do here.
