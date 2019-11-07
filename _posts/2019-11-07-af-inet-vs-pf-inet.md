@@ -40,4 +40,4 @@ category: linux
 문서에서는 모든 곳에 AF를 사용하길 권장합니다:
 
 <http://man7.org/linux/man-pages/man2/socket.2.html#NOTES>
-> The manifest constants used under 4.x BSD for protocol families are PF_UNIX, PF_INET, and so on, while AF_UNIX, AF_INET, and so on are used for address families.  However, already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
+> ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
