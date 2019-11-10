@@ -20,9 +20,11 @@ category: linux
     - IPX: `PF_IPX`
     - 애플토크: `PF_APPLETALK`
 
-## AF와 PF는 같은 값을 가진다
+## AF와 PF는 같다
 
-하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. 리눅스 커널 코드를 살펴보면, `PF_INET`이 `AF_INET`과 같은 값으로 정의되어 있음을 알 수 있습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
+그러나 원래 의도하던 대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다.
+
+AF와 PF의 구분은 무의미해졌죠. 그렇다고 둘 중에 하나를 제거해버린다면 하위 호환성이 깨져 컴파일에 실패할 것입니다. 그래서 제거 대신 `PF_INET`와 `AF_INET` 모두 같은 값으로 정의하는 식으로 해결했습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
 
 ```c
 /* Protocol families, same as address families. */
@@ -34,7 +36,7 @@ category: linux
 
 ## 권장 방식: 모든 곳에 AF를 쓰자
 
-문서에서는 모든 곳에 AF를 사용하길 권장합니다:
+리눅스 문서에서는 모든 곳에 AF를 사용하길 권장합니다:
 
 <http://man7.org/linux/man-pages/man2/socket.2.html#NOTES>
 > ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
