@@ -13,23 +13,19 @@ category: linux
 
 - [`sockaddr_in.sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)는 **통신을 위한 주소**를 지정하는 역할을 합니다.
 
-    여기에는 `AF_INET`, `AF_IPX`같이 **AF로 시작하는 상수**만 사용합니다:
+    여기에는 `AF_INET`, `AF_IPX`같이 **AF로 시작하는 상수**만 사용합니다 (**AF**는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다):
 
     - IP 주소: `AF_INET`
     - IPX 주소: `AF_IPX`
     - 애플토크 주소: `AF_APPLETALK`
     
-    **AF**는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다.
-    
 - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)은 실제 **통신을 위한 프로토콜**을 지정합니다.
 
-    여기에는 `PF_INET`, `PF_IPX`같이 **PF로 시작하는 상수**만 사용합니다:
+    여기에는 `PF_INET`, `PF_IPX`같이 **PF로 시작하는 상수**만 사용합니다 (**PF**는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다):
 
     - IP: `PF_INET`
     - IPX: `PF_IPX`
     - 애플토크: `PF_APPLETALK`
-    
-    **PF**는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다.
 
 ## AF와 PF는 같다
 
