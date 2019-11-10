@@ -1,6 +1,7 @@
 ---
 title: 자바스크립트 var, let 차이점
 category: web
+redirect_from: /difference-var-let.html
 ---
 
 자바스크립트에서 변수를 선언할 때 사용하는 `var`, `let`, `const`의 차이와 스코프, 호이스팅에 대해 알아봅시다.
