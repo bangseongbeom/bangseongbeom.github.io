@@ -7,12 +7,18 @@ category: linux
 
 ## 원래 의도
 
-초창기 소켓 프로그래밍 API를 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 두 프로토콜이 서로 다르다고 할지라도 같은 주소 체계를 사용할 가능성도 있으니까요. 예를 들자면, IP 주소가 IP(인터넷 프로토콜)뿐만 아니라 다른 프로토콜도 지원하는 식입니다. **(물론 실제로 그런 일은 일어나지 않았죠.)**
+초창기 소켓 프로그래밍 API를 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면, IP 주소가 IP뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
-그래서 다음과 같이 설계했습니다:
+이를 위해 주소를 지정해야하는 경우와 프로토콜을 지정해야하는 경우, 각각 다른 값을 사용하기로 했습니다:
 
-- 주소를 지정하는 역할을 하는 `struct sockaddr_in`에는 `AF_INET`, `AF_IPX` 등 **AF**로 시작하는 상수만 사용합니다. AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다.
-- 실제 통신을 담당하는 `socket()`에는 `PF_INET`, `PF_IPX` 등 **PF**로 시작하는 상수만 사용합니다. PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다.
+- [`sockaddr_in.sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)는 통신을 위한 주소를 지정하는 역할을 합니다. 여기에는 `AF_INET`, `AF_IPX`같이 **AF**로 시작하는 상수만 사용합니다. AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다.
+    - IP 주소: `AF_INET`
+    - IPX 주소: `AF_IPX`
+    - 애플토크 주소: `AF_APPLETALK`
+- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)은 실제 통신을 위한 프로토콜을 지정합니다. 여기에는 `PF_INET`, `PF_IPX`같이 **PF**로 시작하는 상수만 사용합니다. PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다.
+    - IP: `PF_INET`
+    - IPX: `PF_IPX`
+    - 애플토크: `PF_APPLETALK`
 
 ## AF와 PF는 같은 값을 가진다
 
