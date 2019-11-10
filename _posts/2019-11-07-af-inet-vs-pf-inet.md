@@ -11,13 +11,13 @@ category: linux
 
 둘의 구분을 위해 **주소의 종류**를 지정해야 하는 경우와 **프로토콜의 종류**를 지정해야 하는 경우 각각 다른 값을 사용하기로 했습니다.
 
-- [`sockaddr_in.sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소를 지정해야 하는 경우 **AF로 시작하는 상수**를 사용합니다 (**AF**는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다):
+- [`sockaddr_in.sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소를 지정해야 하는 경우, **AF로 시작하는 상수**를 사용합니다 (**AF**는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다):
 
     - IP 주소: `AF_INET`
     - IPX 주소: `AF_IPX`
     - 애플토크 주소: `AF_APPLETALK`
 
-- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 경우 **PF로 시작하는 상수**만 사용합니다 (**PF**는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다):
+- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 경우, **PF로 시작하는 상수**만 사용합니다 (**PF**는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다):
 
     - IP 프로토콜: `PF_INET`
     - IPX 프로토콜: `PF_IPX`
