@@ -25,9 +25,9 @@ category: linux
 
 ## 의도는 좋았다. 그러나...
 
-그러나 원래 의도하던 대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. IP 주소는 오직 IP 프로토콜만 사용합니다. 다른 프로토콜 역시 마찬가지였죠.
+그러나 원래 의도하던 대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. 오늘날, IP 주소는 오직 IP 프로토콜에서만 사용합니다.
 
-그렇다고 AF와 PF 둘 중에 하나를 제거해버린다면 하위 호환성이 깨져 컴파일에 실패할 것입니다. 그래서 제거 대신 `PF_INET`와 `AF_INET` 모두 같은 값으로 정의하는 식으로 해결했습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
+이제 더 이상 AF와 PF의 구분은 의미가 없습니다. 리눅스는 `PF_INET`와 `AF_INET` 모두 같은 값으로 정의하고 있습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
 
 ```c
 /* Protocol families, same as address families. */
