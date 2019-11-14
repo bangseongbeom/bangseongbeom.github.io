@@ -11,8 +11,8 @@ category: linux
 
 둘의 구분을 위해 주소의 종류를 지정해야 하는 경우와 프로토콜의 종류를 지정해야 하는 경우, 각각 다른 값을 사용하기로 했습니다:
 
-- [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)와 같이 주소를 지정해야 하는 경우, `AF_INET`, `AF_IPX`같이 **AF**로 시작하는 상수 사용 (AF는 **A**ddress **F**amily의 줄임말)
-- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)과 같이 프로토콜을 지정해야 하는 경우, `PF_INET`, `PF_IPX`같이 **PF**로 시작하는 상수 사용 (PF는 **P**rotocol **F**amily의 줄임말):
+- [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)와 같이 주소를 지정해야 하는 경우, `AF_INET`, `AF_IPX`같이 **AF**로 시작하는 상수 사용 (AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말)
+- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)과 같이 프로토콜을 지정해야 하는 경우, `PF_INET`, `PF_IPX`같이 **PF**로 시작하는 상수 사용 (PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말):
 
 ## 의도는 좋았다. 그러나...
 
