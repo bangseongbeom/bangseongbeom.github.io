@@ -7,18 +7,26 @@ category: linux
 
 ## 원래 의도
 
-초창기 소켓 프로그래밍 API를 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
+초창기 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면 **IP 주소**가 **IP 프로토콜**뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
-둘의 구분을 위해 주소의 종류를 지정해야 하는 경우와 프로토콜의 종류를 지정해야 하는 경우, 각각 다른 값을 사용하기로 했습니다:
+그래서 다음과 같이 상수를 달리 하여 사용하기로 했습니다:
 
-- [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)와 같이 주소를 지정해야 하는 경우, `AF_INET`, `AF_IPX`같이 **AF**로 시작하는 상수 사용 (AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말)
-- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)과 같이 프로토콜을 지정해야 하는 경우, `PF_INET`, `PF_IPX`같이 **PF**로 시작하는 상수 사용 (PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말):
+- `AF_INET`
+    - [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 통신 주소 체계를 결정해야 하는 구조체/함수에 사용
+    - AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말
+    - 이외에도 `AF_IPX`, `AF_APPLETALK` 등이 있음
+- `PF_INET`
+    - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 구조체/함수에 사용
+    - PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
+    - 이외에도 `AF_IPX`, `AF_APPLETALK` 등이 있음
 
 ## 의도는 좋았다. 그러나...
 
 그러나 원래의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. 오늘날, IP 주소는 오직 IP 프로토콜에서만 사용합니다.
 
-더 이상 AF와 PF의 구분은 의미가 없기에, 지금은 `PF_INET`와 `AF_INET` 모두 같은 값으로 정의되어 있습니다([/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)):
+더 이상 AF와 PF의 구분은 의미가 없기에, 지금의 `PF_INET`는 `AF_INET`으로서 정의되어 있습니다(결국 `PF_INET`과 `AF_INT`은 같은 값을 가집니다):
+
+[/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)
 
 ```c
 /* Protocol families, same as address families. */
