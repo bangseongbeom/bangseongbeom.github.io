@@ -48,12 +48,10 @@ category: linux
 
 ## 권장 방식
 
-리눅스 문서에서는 모든 곳에 AF를 사용하길 권장합니다:
+[`socket()` 함수에 관한 리눅스 man 페이지](http://man7.org/linux/man-pages/man2/socket.2.html#NOTES)에서는 모든 곳에 AF를 사용하길 권장합니다:
 
-<http://man7.org/linux/man-pages/man2/socket.2.html#NOTES>
 > ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
 
-유명한 소켓 프로그래밍 입문서인 [Beej's Guide to Network Programming](http://beej.us/guide/bgnet/)에서는 AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용하고 있습니다:
+유명한 소켓 프로그래밍 입문서인 [Beej's Guide to Network Programming](http://beej.us/guide/bgnet/html/#socket)에서는 AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용하고 있습니다:
 
-<http://beej.us/guide/bgnet/html/#socket>
 > So the most correct thing to do is to **use AF_INET in your struct sockaddr_in and PF_INET in your call to socket()**.
