@@ -3,11 +3,16 @@ title: AF_INET vs PF_INET
 category: linux
 ---
 
-리눅스 소켓 프로그래밍에서 `AF_INET`과 `PF_INET`의 차이에 대해 알아봅니다.
+리눅스 소켓 프로그래밍에서, IP 프로토콜을 지정하는데 사용하는 상수로는 `AF_INET`과 `PF_INET`이 있습니다. 이 둘의 차이가 무엇일까요?
 
 ## 원래 의도
 
-초창기 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면 **IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원**하는 식입니다.
+초창기 고대 개발자들이 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면 **IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원**하는 식입니다[^bgnet-1].
+
+[bgnet-1]:
+    <http://beej.us/guide/bgnet/html/#socket>
+
+    > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
 그래서 다음과 같이 상수를 달리 하여 사용하기로 했습니다:
 
@@ -22,7 +27,12 @@ category: linux
 
 ## 의도는 좋았다. 그러나...
 
-그러나 원래의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다. 오늘날, IP 주소는 오직 IP 프로토콜에서만 사용합니다.
+그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2]. 오늘날, IP 주소는 오직 IP 프로토콜에서만 사용합니다.
+
+[^bgnet-2]:
+    <http://beej.us/guide/bgnet/html/#socket>
+
+    > That didn’t happen. And they all lived happily ever after, The End.
 
 더 이상 AF와 PF의 구분은 의미가 없기에, 지금의 `PF_INET`는 `AF_INET`으로서 정의되어 있습니다(결국 `PF_INET`과 `AF_INT`은 같은 값을 가집니다):
 
@@ -36,17 +46,14 @@ category: linux
 #define PF_INET		AF_INET
 ```
 
-## 권장 방식: 모든 곳에 AF를 쓰자
+## 권장 방식
 
 리눅스 문서에서는 모든 곳에 AF를 사용하길 권장합니다:
 
 <http://man7.org/linux/man-pages/man2/socket.2.html#NOTES>
 > ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
 
-## 참고
+유명한 소켓 프로그래밍 입문서인 [Beej's Guide to Network Programming](http://beej.us/guide/bgnet/)에서는 AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용하고 있습니다:
 
-- <http://www.cs.ubbcluj.ro/~dadi/compnet/labs/socketstheory/syscalls.html>
-
-    > In some documentation, you'll see mention of a mystical "PF_INET". This is a weird etherial beast that is rarely seen in nature, but I might as well clarify it a bit here. Once a long time ago, it was thought that maybe a address family (what the "AF" in "AF_INET" stands for) might support several protocols that were referenced by their protocol family (what the "PF" in "PF_INET" stands for).
-    >
-    > That didn't happen. Oh well. So the correct thing to do is to use AF_INET in your struct sockaddr_in and PF_INET in your call to socket(). But practically speaking, you can use AF_INET everywhere. And, since that's what W. Richard Stevens does in his book, that's what I'll do here.
+<http://beej.us/guide/bgnet/html/#socket>
+> So the most correct thing to do is to **use AF_INET in your struct sockaddr_in and PF_INET in your call to socket()**.
