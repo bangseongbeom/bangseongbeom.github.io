@@ -14,11 +14,11 @@ category: linux
 - `AF_INET`
     - [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 통신 주소 체계를 결정해야 하는 구조체/함수에 사용
     - AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말
-    - 이외에도 `AF_IPX`, `AF_APPLETALK` 등이 있음
+    - 이외에도 AF로 시작하는 상수는 `AF_IPX`, `AF_APPLETALK` 등이 있음
 - `PF_INET`
     - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 구조체/함수에 사용
     - PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
-    - 이외에도 `AF_IPX`, `AF_APPLETALK` 등이 있음
+    - 이외에도 PF로 시작하는 상수는 `PF_IPX`, `PF_APPLETALK` 등이 있음
 
 ## 의도는 좋았다. 그러나...
 
