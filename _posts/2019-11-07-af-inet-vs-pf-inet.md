@@ -9,7 +9,7 @@ category: linux
 
 초창기 고대 개발자들이 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다. 예를 들자면 **IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원**하는 식입니다[^bgnet-1].
 
-[bgnet-1]:
+[^bgnet-1]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
