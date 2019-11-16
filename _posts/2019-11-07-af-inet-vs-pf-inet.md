@@ -14,7 +14,9 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-즉, 소켓 프로그래밍에서 **주소 체계**와 **프로토콜**은 서로 다른 개념입니다. 그렇기에 IP 주소 체계를 지정하는 방법과 IP 프로토콜을 지정하는 방법 역시 다릅니다:
+즉, 소켓 프로그래밍에서 **주소 체계**와 **프로토콜**은 서로 다른 개념입니다.
+
+그렇기에 IP 주소 체계를 지정하는 방법과 IP 프로토콜을 지정하는 방법 역시 다릅니다:
 
 - `AF_INET`은 IP 주소 체계를 지정하는데 사용합니다.
     - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 **주소 체계**를 결정해야 하는 구조체에서 사용합니다.
