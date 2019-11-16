@@ -14,8 +14,6 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-그래서 다음과 같이 상수를 달리 하여 사용하기로 했습니다:
-
 - `AF_INET`
     - [`sin_family`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 통신 주소 체계를 결정해야 하는 구조체/함수에 사용
     - AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말
