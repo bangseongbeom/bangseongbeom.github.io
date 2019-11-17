@@ -7,16 +7,16 @@ category: linux
 
 ## 원래 의도
 
-초창기 개발자들이 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다.[^bgnet-1].
+아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다.[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜만 지원하는 것이 아니라 다른 프로토콜도 지원하는 식이죠.
 
 [^bgnet-1]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이를 위해, 소켓 프로그래밍에서는 프로토콜 주소 체계와 프로토콜 자체를 하나의 개념으로 보는 것이 아니라 별개의 개념으로 봅니다.
+이렇게 되면 주소 체계와 프로토콜 간의 관계는 더 이상 일 대 일 대응이 아닙니다. 그러므로 주소 체계와 프로토콜을 동일한 방식으로 표현하기보다는 서로 다른 방식으로 표현하는 것이 더 좋습니다.
 
-IP 프로토콜 역시 마찬가지로 IP 주소 체계와 IP 프로토콜 자체로 나뉘어져 있습니다:
+IP 프로토콜 역시 IP 주소 체계와 IP 프로토콜로 나뉘어져 있습니다:
 
 - **`AF_INET`은 IP 주소 체계를 지정할 때 사용합니다**. [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용합니다.
     - `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다. 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
