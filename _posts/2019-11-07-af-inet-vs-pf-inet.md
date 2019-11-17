@@ -55,6 +55,6 @@ category: linux
 
 > ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
 
-유명한 소켓 프로그래밍 입문서인 [<Beej's Guide to Network Programming>에서는 AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
+유명한 소켓 프로그래밍 입문서인 <Beej's Guide to Network Programming>에서는 [AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
 
 > So the most correct thing to do is to **use AF_INET in your struct sockaddr_in and PF_INET in your call to socket()**.
