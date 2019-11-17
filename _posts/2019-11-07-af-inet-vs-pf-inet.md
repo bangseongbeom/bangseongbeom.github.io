@@ -37,7 +37,7 @@ category: linux
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-더 이상 AF와 PF의 구분은 의미가 없기에, 지금의 `PF_INET`는 `AF_INET`으로서 정의되어 있습니다(결국 `PF_INET`과 `AF_INT`은 같은 값을 가집니다):
+더 이상 AF와 PF의 구분은 의미가 없기에, 지금의 `PF_INET`는 `AF_INET`으로서 정의되어 있습니다(결국 `PF_INET`과 `AF_INET`은 같은 값을 가집니다):
 
 [/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)
 
