@@ -14,15 +14,12 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이를 위해 소켓 프로그래밍에서는 주소 체계와 프로토콜을 구분합니다.
+이를 위해, 소켓 프로그래밍에서는 프로토콜 주소 체계와 프로토콜 자체를 하나의 개념으로 보는 것이 아니라 별개의 개념으로 봅니다. IP 프로토콜 역시 마찬가지입니다. IP 프로토콜은 IP 주소 체계(192.168.0.1 같은 것)와 IP 프로토콜 자체로 나뉘어져 있습니다:
 
-**`AF_INET`은 IP 주소 체계를 지정할 때 사용합니다**. [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용합니다.
-
-반면, **`PF_INET`은 IP 프로토콜을 지정합니다**. [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 함수에서 사용합니다.
-
- `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다. 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
-
-이와 유사하게, `PF_INET`의 PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다. 프로토콜을 지정하기 위한 표현 앞에는 모두 PF가 들어갑니다. `PF_IPX`, `PF_APPLETALK` 등이 있습니다.
+- **`AF_INET`은 IP 주소 체계를 지정할 때 사용합니다**. [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용합니다.
+    - `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다. 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
+- **`PF_INET`은 IP 프로토콜을 지정합니다**. [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 함수에서 사용합니다.
+    - `PF_INET`의 PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말입니다. 프로토콜을 지정하기 위한 표현 앞에는 모두 PF가 들어갑니다. `PF_IPX`, `PF_APPLETALK` 등이 있습니다.
 
 ## 의도는 좋았다. 그러나...
 
