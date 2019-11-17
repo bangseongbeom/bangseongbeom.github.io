@@ -14,7 +14,7 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 주소 체계와 프로토콜 간의 관계는 더 이상 일 대 일 대응이 아닙니다. 그러므로 주소 체계와 프로토콜을 동일한 방식으로 표현하기보다는 서로 다른 방식으로 표현하는 것이 더 좋습니다.
+이렇게 되면 주소 체계와 프로토콜 간의 관계는 더 이상 일 대 일 대응이 아닙니다. 그러므로 주소 체계와 프로토콜을 동일시하는 것 대신 서로를 구분하는 편이 더 좋습니다.
 
 IP 프로토콜 역시 IP 주소 체계와 IP 프로토콜로 나뉘어져 있습니다:
 
