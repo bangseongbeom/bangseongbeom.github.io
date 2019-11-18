@@ -36,6 +36,10 @@ body {
   display: block;
 }
 
+ul, ol {
+  margin-left: 16px;
+}
+
 article {
   margin-bottom: $spacing-unit;
 }
