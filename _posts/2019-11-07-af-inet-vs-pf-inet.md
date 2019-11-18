@@ -7,16 +7,16 @@ category: linux
 
 ## 원래 의도
 
-아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 예를 들어 IP 주소가 IP 프로토콜만 지원하는 것이 아니라 다른 프로토콜도 지원하는 식이죠.
+아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜만 지원하는 것이 아니라 다른 프로토콜도 지원하는 식이죠.
 
 [^bgnet-1]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 주소 체계와 프로토콜 간의 관계는 더 이상 일 대 일 대응이 아닙니다. 그러므로 주소 체계와 프로토콜을 동일시하는 것 대신 서로를 구분하는 편이 더 좋습니다.
+주소 체계와 프로토콜은 더 이상 하나의 개념이 아닙니다. IP 주소 체계의 사용이 반드시 IP 프로토콜의 사용을 의미하지 않습니다. 주소 체계는 프로토콜과 개별적으로 사용될 수 있기 때문입니다.
 
-IP 프로토콜 역시 IP 주소 체계와 IP 프로토콜로 나뉘어져 있습니다:
+이 두 개념은 다릅니다. 그러므로 코드에서도 차이를 두어 서로를 구분하는 편이 좋습니다. IP 프로토콜 역시 IP 주소 체계와 IP 프로토콜로 나뉘어져 있습니다:
 
 - **`AF_INET`은 IP 주소 체계를 지정할 때 사용합니다**. [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용합니다.
     - `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다. 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
@@ -25,16 +25,14 @@ IP 프로토콜 역시 IP 주소 체계와 IP 프로토콜로 나뉘어져 있�
 
 ## 의도는 좋았다. 그러나...
 
-그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2]. 오늘날까지도 **IP 주소는 오직 IP 프로토콜에서만 사용**합니다.
+그러나, 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2]. 오늘날까지도 **IP 주소는 오직 IP 프로토콜에서만 사용**합니다.
 
 [^bgnet-2]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-더 이상 AF와 PF의 구분은 의미가 없기에, 지금의 `PF_INET`는 `AF_INET`으로서 정의되어 있습니다(결국 `PF_INET`과 `AF_INET`은 같은 값을 가집니다):
-
-[/include/linux/socket.h](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)
+더 이상 AF와 PF의 구분은 의미가 없습니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지고록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
