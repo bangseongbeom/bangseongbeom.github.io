@@ -383,9 +383,9 @@ blockquote {
 }
 
 .wrapper {
-  padding-left: $spacing-unit / 2;
-  padding-right: $spacing-unit / 2;
-  max-width: calc(#{$content-width} - (#{$spacing-unit}));
+  padding-left: 16px;
+  padding-right: 16px;
+  max-width: calc(#{$content-width} - 32px);
 }
 
 .site-header {
