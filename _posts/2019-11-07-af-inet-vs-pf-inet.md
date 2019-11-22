@@ -26,6 +26,7 @@ category: linux
     - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용합니다.
     - `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말입니다. 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
 
+
 `PF_INET`
 :
     - **IP 프로토콜**을 지정합니다.
