@@ -32,6 +32,11 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
+:root,
+html {
+  letter-spacing: -1px;
+}
+
 body {
   display: block;
 }
