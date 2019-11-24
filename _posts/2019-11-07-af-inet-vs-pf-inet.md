@@ -26,8 +26,7 @@ struct sockaddr_in {
 우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 인터넷 프로토콜을 사용하기 위해서는 다음처럼 `PF_INET`이나 `AF_INET`을 명시해야 합니다:
 
 ```c
-int sockfd = socket(PF_INET, SOCK_STREAM, 0);
-struct sockaddr_in addr;
+socket(PF_INET, SOCK_STREAM, 0);
 addr.sin_family = AF_INET;
 ```
 
@@ -36,16 +35,14 @@ addr.sin_family = AF_INET;
 신기한 것은 두 값을 바꿔 넣어도 문제 없이 동작한다는 점입니다:
 
 ```c
-int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-struct sockaddr_in addr;
+socket(AF_INET, SOCK_STREAM, 0);
 addr.sin_family = PF_INET;
 ```
 
 심지어 둘 다 AF로 해도 잘 동작합니다:
 
 ```c
-int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-struct sockaddr_in addr;
+socket(AF_INET, SOCK_STREAM, 0);
 addr.sin_family = AF_INET;
 ```
 
