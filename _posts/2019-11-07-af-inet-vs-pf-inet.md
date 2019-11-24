@@ -7,7 +7,7 @@ category: linux
 
 ## 의문
 
-통신을 하는 데 있어 프로토콜을 명시하지 않을 수는 없죠. 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html), 통신할 서버의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체를 사용하기 위해서는, 어떤 프로토콜을 사용할 것인지 지정해주어야 합니다:
+통신을 하는 데 있어 프로토콜을 지정하지 않을 수는 없죠. 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수나 통신할 서버의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체는 어떤 프로토콜을 사용할 것인지 요구합니다:
 
 ```c
 sockfd = socket(
