@@ -35,7 +35,11 @@ $on-large:         $on-laptop !default;
 :root,
 html {
   letter-spacing: -0.0625em;
-  word-spacing: 0.0625em;
+}
+
+code,
+pre {
+  letter-spacing: normal;
 }
 
 body {
