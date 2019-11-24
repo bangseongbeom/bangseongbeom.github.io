@@ -42,7 +42,7 @@ my_sockaddr.sin_family = AF_INET; // AF_INET을 명시해 인터넷 프로토콜
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 주소 체계와 프로토콜이라는 두 개념을 구별할 필요가 생깁니다. 주소 체계는 프로토콜과 **개별적으로** 사용될 수 있기 때문입니다. IP 주소 체계를 사용한다고 해서 이것이 더 이상 IP 프로토콜의 사용을 의미하지 않습니다.
+이렇게 되면 **주소 체계**와 **프로토콜**이라는 두 개념을 구별할 필요가 생깁니다. 주소 체계는 프로토콜과 **개별적으로** 사용될 수 있기 때문입니다. IP 주소 체계를 사용한다고 해서 이것이 더 이상 IP 프로토콜의 사용을 의미하지 않는다는 소리죠.
 
 이러한 이유로 인해 주소 체계에는 AF를, 프로토콜에는 PF를 붙이게 되었습니다.
 
