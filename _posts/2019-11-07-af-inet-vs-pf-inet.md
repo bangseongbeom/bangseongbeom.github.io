@@ -31,7 +31,7 @@ struct sockaddr_in addr;
 addr.sin_family = AF_INET;
 ```
 
-`PF_INET`과 `AF_INET` 중 INET은 **I**nter**NET**의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
+`PF_INET`과 `AF_INET` 중 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
 
 신기한 것은 두 값을 바꿔 넣어도 문제 없이 동작한다는 점입니다:
 
@@ -51,8 +51,6 @@ addr.sin_family = AF_INET;
 
 ## 이유
 
-IP라는 프로토콜을 표현하기 위해 `AF_INET`과 `PF_INET`이라는 두 개의 방법이 존재한다는 것이 이상하게 느껴질 수 있습니다. 왜 굳이 주소 체계와 프로토콜을 따로 분리하여 표현할까요? 어차피 IP 주소 체계는 IP 프로토콜에서만 사용될텐데 말이죠.
-
 이유는 이렇습니다. 아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
 [^bgnet-1]:
@@ -62,17 +60,18 @@ IP라는 프로토콜을 표현하기 위해 `AF_INET`과 `PF_INET`이라는 두
 
 이렇게 되면 주소 체계와 프로토콜이라는 두 개념을 구별할 필요가 생깁니다. 주소 체계는 프로토콜과 **개별적으로** 사용될 수 있기 때문입니다. IP 주소 체계를 사용한다고 해서 이것이 더 이상 IP 프로토콜의 사용을 의미하지 않습니다.
 
-**코드에서도 차이를 두어 주소 체계와 프로토콜을 구분**하는 편이 좋습니다. IP의 경우 IP 주소 체계를 위한 `AF_INET`, IP 프로토콜을 위한 `PF_INET`으로 나누어져 있습니다:
+## AF와 PF의 차이
 
-`AF_INET`
-:   - **IP 주소 체계** 지정 (192.168.0.1, 8.8.4.4같은 주소들을 사용하는 체계)
-    - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 결정해야 하는 구조체에서 사용
-    - `AF_INET`의 AF는 **A**ddress **F**amily(주소 패밀리)의 줄임말 (주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.)
-
-`PF_INET`
-:   - **IP 프로토콜** 지정
-    - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 함수에서 사용
-    - `PF_INET`의 PF는 **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말 (프로토콜을 지정하기 위한 표현 앞에는 모두 PF가 들어갑니다. `PF_IPX`, `PF_APPLETALK` 등이 있습니다.)
+AF
+:   - **A**ddress **F**amily(주소 패밀리)의 줄임말
+    - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 **주소 체계**를 결정해야 하는 구조체에서 사용
+    - `AF_INET`: **IP 주소 체계** 지정 (192.168.0.1, 8.8.4.4같은 주소들을 사용하는 체계)
+    - 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
+PF
+:   - **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
+    - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 **프로토콜**을 지정해야 하는 함수에서 사용
+    - `PF_INET`: **IP 프로토콜** 지정
+    - 프로토콜을 지정하기 위한 표현 앞에는 모두 PF가 들어갑니다. `PF_IPX`, `PF_APPLETALK` 등이 있습니다.
 
 ## 이론과 현실의 차이
 
