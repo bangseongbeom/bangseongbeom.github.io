@@ -23,35 +23,19 @@ struct sockaddr_in {
 };
 ```
 
-우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 인터넷 프로토콜을 사용하기 위해서는 다음처럼 `PF_INET`이나 `AF_INET`을 명시해야 합니다:
+우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 다음처럼 `PF_INET`이나 `AF_INET`을 명시해 인터넷 프로토콜을 사용할 수 있습니다:
 
 ```c
-socket(PF_INET, SOCK_STREAM, 0);
+socket(PF_INET, SOCK_STREAM, 0); // PF_INET으로 인터넷 프로토콜 사용
 struct sockaddr_in my_sockaddr;
-my_sockaddr.sin_family = AF_INET;
+my_sockaddr.sin_family = AF_INET; // AF_INET으로 인터넷 프로토콜 사용
 ```
 
-`PF_INET`과 `AF_INET` 중 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
+`PF_INET`과 `AF_INET`의 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
 
-신기한 것은 두 값을 바꿔 넣어도 문제 없이 동작한다는 점입니다:
+## 설계 당시의 의도
 
-```c
-socket(AF_INET, SOCK_STREAM, 0);
-struct sockaddr_in my_sockaddr;
-my_sockaddr.sin_family = PF_INET;
-```
-
-심지어 둘 다 AF로 해도 잘 동작합니다:
-
-```c
-socket(AF_INET, SOCK_STREAM, 0);
-struct sockaddr_in my_sockaddr;
-my_sockaddr.sin_family = AF_INET;
-```
-
-## 이유
-
-이유는 이렇습니다. 아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
+아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
 [^bgnet-1]:
     <http://beej.us/guide/bgnet/html/#socket>
@@ -60,13 +44,14 @@ my_sockaddr.sin_family = AF_INET;
 
 이렇게 되면 주소 체계와 프로토콜이라는 두 개념을 구별할 필요가 생깁니다. 주소 체계는 프로토콜과 **개별적으로** 사용될 수 있기 때문입니다. IP 주소 체계를 사용한다고 해서 이것이 더 이상 IP 프로토콜의 사용을 의미하지 않습니다.
 
-## AF와 PF의 차이
+이러한 이유로 인해 주소 체계에는 AF를, 프로토콜에는 PF를 붙이게 되었습니다:
 
 AF
 :   - **A**ddress **F**amily(주소 패밀리)의 줄임말
     - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 **주소 체계**를 결정해야 하는 구조체에서 사용
     - `AF_INET`: **IP 주소 체계** 지정 (192.168.0.1, 8.8.4.4같은 주소들을 사용하는 체계)
     - 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
+
 PF
 :   - **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
     - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 **프로토콜**을 지정해야 하는 함수에서 사용
@@ -75,14 +60,14 @@ PF
 
 ## 이론과 현실의 차이
 
-그러나, 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2]. 오늘날까지도 **IP 주소는 오직 IP 프로토콜에서만 사용**합니다.
+그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2].
 
 [^bgnet-2]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-오늘날 AF와 PF의 구분은 의미가 없습니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
+오늘날 AF와 PF의 구분은 의미가 없습니다. **IP 주소는 오직 IP 프로토콜에서만 사용**합니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
