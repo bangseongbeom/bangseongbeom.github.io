@@ -27,6 +27,7 @@ struct sockaddr_in {
 
 ```c
 socket(PF_INET, SOCK_STREAM, 0);
+struct sockaddr_in my_sockaddr;
 my_sockaddr.sin_family = AF_INET;
 ```
 
@@ -36,6 +37,7 @@ my_sockaddr.sin_family = AF_INET;
 
 ```c
 socket(AF_INET, SOCK_STREAM, 0);
+struct sockaddr_in my_sockaddr;
 my_sockaddr.sin_family = PF_INET;
 ```
 
@@ -43,6 +45,7 @@ my_sockaddr.sin_family = PF_INET;
 
 ```c
 socket(AF_INET, SOCK_STREAM, 0);
+struct sockaddr_in my_sockaddr;
 my_sockaddr.sin_family = AF_INET;
 ```
 
