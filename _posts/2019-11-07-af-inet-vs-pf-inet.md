@@ -32,7 +32,9 @@ struct sockaddr_in my_sockaddr;
 my_sockaddr.sin_family = AF_INET; // AF_INET을 명시해 인터넷 프로토콜 사용
 ```
 
-`PF_INET`과 `AF_INET` 뒤에 붙은 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
+`PF_INET`과 `AF_INET` 뒤에 붙은 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠.
+
+그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
 
 ## 설계 당시의 의도
 
