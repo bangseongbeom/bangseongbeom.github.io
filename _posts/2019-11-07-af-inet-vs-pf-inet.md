@@ -26,9 +26,9 @@ struct sockaddr_in {
 우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 다음처럼 `PF_INET`이나 `AF_INET`을 명시해 인터넷 프로토콜을 사용할 수 있습니다:
 
 ```c
-socket(PF_INET, SOCK_STREAM, 0); // PF_INET으로 인터넷 프로토콜 사용
+socket(PF_INET, SOCK_STREAM, 0); // PF_INET을 명시해 인터넷 프로토콜 사용
 struct sockaddr_in my_sockaddr;
-my_sockaddr.sin_family = AF_INET; // AF_INET으로 인터넷 프로토콜 사용
+my_sockaddr.sin_family = AF_INET; // AF_INET을 명시해 인터넷 프로토콜 사용
 ```
 
 `PF_INET`과 `AF_INET` 뒤에 붙은 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
