@@ -61,7 +61,7 @@ article header {
 
 .site-header {
   border-bottom: thin solid gainsboro;
-  box-shadow: 0 2px 4px gainsboro;
+  box-shadow: 0 0 4px 2px gainsboro;
 }
 
 article header,
@@ -622,6 +622,6 @@ hr {
 
 #other-posts {
   border: thin solid gainsboro;
-  box-shadow: 0 2px 4px gainsboro;
+  box-shadow: 0 0 4px 2px gainsboro;
   padding: 0 $spacing-unit / 2;
 }
