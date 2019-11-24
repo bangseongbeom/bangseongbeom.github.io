@@ -44,12 +44,12 @@ my_sockaddr.sin_family = AF_INET; // AF_INET으로 인터넷 프로토콜 사용
 
 이렇게 되면 주소 체계와 프로토콜이라는 두 개념을 구별할 필요가 생깁니다. 주소 체계는 프로토콜과 **개별적으로** 사용될 수 있기 때문입니다. IP 주소 체계를 사용한다고 해서 이것이 더 이상 IP 프로토콜의 사용을 의미하지 않습니다.
 
-이러한 이유로 인해 주소 체계에는 AF를, 프로토콜에는 PF를 붙이게 되었습니다:
+이러한 이유로 인해 주소 체계에는 AF를, 프로토콜에는 PF를 붙이게 되었습니다.
 
 AF
 :   - **A**ddress **F**amily(주소 패밀리)의 줄임말
     - [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 **주소 체계**를 결정해야 하는 구조체에서 사용
-    - `AF_INET`: **IP 주소 체계** 지정 (192.168.0.1, 8.8.4.4같은 주소들을 사용하는 체계)
+    - `AF_INET`: **IP 주소 체계** 지정
     - 주소 체계를 지정하기 위한 표현 앞에는 모두 AF가 들어갑니다. `AF_IPX`, `AF_APPLETALK` 등이 있습니다.
 
 PF
@@ -67,7 +67,7 @@ PF
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-오늘날 AF와 PF의 구분은 의미가 없습니다. **IP 주소는 오직 IP 프로토콜에서만 사용**합니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
+오늘날 AF와 PF의 구분은 의미가 없습니다. **IP 주소는 오직 IP 프로토콜에서만 사용합니다.** 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
@@ -79,12 +79,12 @@ PF
 
 ## 오늘날의 권장 방식
 
-`AF_INET`과 `PF_INET`이 아무런 차이가 없다는 것을 알았습니다. 그렇다면, 우리는 
+어떤 방식을 사용하는 것이 좋을까요? 원래 의도를 존중하여 AF를 쓸 자리에는 AF를, PF를 쓸 자리에는 PF를 써야 할까요? 아니면 AF와 PF 중 하나만 골라서 사용할까요?
 
-[`socket()` 함수에 관한 리눅스 man 페이지](http://man7.org/linux/man-pages/man2/socket.2.html#NOTES)에서는 모든 곳에 AF를 사용하길 권장합니다:
-
-> ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
-
-반면, 유명한 소켓 프로그래밍 입문서인 <Beej's Guide to Network Programming>에서는 [AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
+유명한 소켓 프로그래밍 입문서인 <Beej's Guide to Network Programming>에서는 [AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
 
 > So the most correct thing to do is to **use AF_INET in your struct sockaddr_in and PF_INET in your call to socket()**.
+
+반면, [리눅스 man 페이지](http://man7.org/linux/man-pages/man2/socket.2.html#NOTES)에서는 모든 곳에 AF를 사용하길 권장합니다:
+
+> ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
