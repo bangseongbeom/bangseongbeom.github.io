@@ -7,7 +7,7 @@ category: linux
 
 ## 의문
 
-통신을 하는 데 있어 프로토콜을 명시하지 않을 수는 없죠. 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)과 통신할 서버의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)은 어떤 프로토콜을 사용할 것인지 지정하도록 요구합니다:
+통신을 하는 데 있어 프로토콜을 명시하지 않을 수는 없죠. 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수, 그리고 통신할 서버의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체 모두 어떤 프로토콜을 사용할 것인지 지정하도록 요구합니다:
 
 ```c
 sockfd = socket(
@@ -82,7 +82,7 @@ PF
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-AF와 PF의 구분은 의미가 없습니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
+오늘날 AF와 PF의 구분은 의미가 없습니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
