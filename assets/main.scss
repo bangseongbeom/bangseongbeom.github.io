@@ -32,9 +32,10 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
-:root,
-html {
-  letter-spacing: -0.0625em;
+// :root,
+// html,
+blockquote {
+  letter-spacing: normal;
 }
 
 code,
@@ -396,7 +397,6 @@ blockquote {
   color: inherit;
   border-left-color: currentcolor;
   font-style: inherit;
-  letter-spacing: normal;
 }
 
 .wrapper {
