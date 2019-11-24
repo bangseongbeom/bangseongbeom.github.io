@@ -27,7 +27,7 @@ struct sockaddr_in {
 
 ```c
 socket(PF_INET, SOCK_STREAM, 0);
-addr.sin_family = AF_INET;
+my_sockaddr.sin_family = AF_INET;
 ```
 
 `PF_INET`과 `AF_INET` 중 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠. 그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
@@ -36,14 +36,14 @@ addr.sin_family = AF_INET;
 
 ```c
 socket(AF_INET, SOCK_STREAM, 0);
-addr.sin_family = PF_INET;
+my_sockaddr.sin_family = PF_INET;
 ```
 
 심지어 둘 다 AF로 해도 잘 동작합니다:
 
 ```c
 socket(AF_INET, SOCK_STREAM, 0);
-addr.sin_family = AF_INET;
+my_sockaddr.sin_family = AF_INET;
 ```
 
 ## 이유
