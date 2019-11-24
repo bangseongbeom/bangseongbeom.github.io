@@ -65,7 +65,7 @@ PF
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-오늘날 AF와 PF의 구분은 의미가 없습니다. **IP 주소는 오직 IP 프로토콜에서만 사용합니다.** 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 `PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의하고 있습니다:
+오늘날 AF와 PF의 구분은 의미가 없습니다. IP 주소는 오직 IP 프로토콜에서만 사용합니다. 지금의 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 **`PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의**하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
