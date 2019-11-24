@@ -48,8 +48,9 @@ article header {
   font-size: small;
 }
 
-header, .site-header {
-  border-bottom: solid gainsboro;
+.site-header {
+  border-bottom: thin solid gainsboro;
+  box-shadow: 0 2px 4px gainsboro;
 }
 
 article header,
@@ -604,10 +605,10 @@ code {
 hr {
   margin: $spacing-unit / 2 auto;
   width: 4em;
-  border: solid thin black;
+  border: thin solid black;
 }
 
 #other-posts {
-  border: solid gainsboro;
+  border: thin solid gainsboro;
   padding: 0 $spacing-unit / 2;
 }
