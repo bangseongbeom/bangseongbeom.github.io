@@ -579,11 +579,15 @@ code {
   padding: 0.125em 0.25em;
 }
 
-.highlight {
+pre.highlight {
   .highlighter-rouge & {
     border: thin solid gainsboro;
     background: #f6f6f6;
   }
+}
+
+pre.highlight {
+  margin-bottom: 0;
 }
 
 .social-media-list {
