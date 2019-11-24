@@ -11,15 +11,16 @@ category: linux
 
 ```c
 sockfd = socket(
-    int socket_family, /* socket_family에 사용할 프로토콜을 지정 */
+    int socket_family, //사용할 프로토콜 지정
     int socket_type,
     int protocol);
 ```
 
 ```c
 struct sockaddr_in {
-    sa_family_t sin_family; /* sin_family에 사용할 프로토콜을 지정 */
-    /* ... */
+    sa_family_t    sin_family; // 사용할 프로토콜 지정
+    in_port_t      sin_port;
+    struct in_addr sin_addr;
 };
 ```
 
