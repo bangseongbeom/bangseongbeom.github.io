@@ -60,7 +60,7 @@ article header {
 }
 
 .site-header {
-  border-bottom: thin solid gainsboro;
+  border-bottom: solid gainsboro;
 //   box-shadow: 0 0 4px 2px gainsboro;
 }
 
@@ -626,7 +626,7 @@ hr {
 }
 
 #other-posts {
-  border: thin solid gainsboro;
+  border: solid gainsboro;
 //   box-shadow: 0 0 4px 2px gainsboro;
   padding: 0 $spacing-unit / 2;
 }
