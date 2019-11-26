@@ -42,10 +42,13 @@ category: linux
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 **`PF_INET`이 `AF_INET`과 같은 값을 가지도록 정의**하고 있습니다:
+[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 **PF가 AF와 같은 값을 가지도록 정의**하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
+#define PF_UNSPEC	AF_UNSPEC
+#define PF_UNIX		AF_UNIX
+#define PF_LOCAL	AF_LOCAL
 #define PF_INET		AF_INET
 ```
 
