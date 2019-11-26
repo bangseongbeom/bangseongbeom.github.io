@@ -7,13 +7,13 @@ category: linux
 
 ## 의문
 
-통신을 하는 데 있어 프로토콜이 빠질 수는 없죠. 소켓 프로그래밍을 하기 위해서는 먼저 어떤 프로토콜을 사용할 것인지 지정해야 합니다.
+통신을 하는 데 있어 프로토콜이 빠질 수는 없죠. 소켓 프로그래밍을 하기 위해서는 먼저 어떤 프로토콜을 사용할 것인지 명시해야 합니다.
 
-소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수나 통신할 대상의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체를 사용하기 위해서는 프로토콜을 지정해야 합니다:
+소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수, 통신할 대상의 주소를 지정하는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체를 사용하기 위해서는 프로토콜을 명시해야 합니다:
 
 ```c
 int socket(
-    int socket_family, // 사용할 프로토콜 지정
+    int socket_family, // 사용할 프로토콜 명시
     int socket_type,
     int protocol
 )
@@ -21,13 +21,13 @@ int socket(
 
 ```c
 struct sockaddr_in {
-    sa_family_t    sin_family; // 사용할 프로토콜 지정
+    sa_family_t    sin_family; // 사용할 프로토콜 명시
     in_port_t      sin_port;
     struct in_addr sin_addr;
 };
 ```
 
-우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 다음처럼 `PF_INET`이나 `AF_INET`을 명시해 인터넷 프로토콜을 사용할 수 있습니다:
+우리가 만드는 소프트웨어는 대부분 인터넷 프로토콜 위에서 동작합니다. 프로토콜을 명시해야 할 자리에 다음처럼 `PF_INET`이나 `AF_INET`을 명시하여 인터넷 프로토콜(IP)을 사용할 수 있습니다:
 
 ```c
 socket(PF_INET, SOCK_STREAM, 0); // PF_INET을 명시해 인터넷 프로토콜 사용
@@ -37,7 +37,7 @@ my_sockaddr.sin_family = AF_INET; // AF_INET을 명시해 인터넷 프로토콜
 
 `PF_INET`과 `AF_INET` 뒤에 붙은 INET은 **I**nter**NET** Protocol의 줄임말입니다. 인터넷 프로토콜을 의미하죠.
 
-그렇다면 앞에 붙은 PF와 AF는 무엇일까요?
+그렇다면 앞에 붙은 PF와 AF는 무엇일까요? 왜 인터넷 프로토콜을 명시하기 위한 표현이 두 가지나 될까요?
 
 ## 설계 당시의 의도
 
