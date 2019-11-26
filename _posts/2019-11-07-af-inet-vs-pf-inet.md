@@ -14,9 +14,9 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 **헷갈리는 경우**가 발생합니다. 인터넷 프로토콜을 예로 들어봅시다. 인터넷 프로토콜을 그저 `INET`(**I**nter**NET** Protocol의 줄임말)이라고만 표현하면, 이것이 인터넷 '프로토콜' 자체를 의미하는지, 아니면 인터넷 프로토콜의 '주소 체계'를 의미하는지 혼동됩니다.
+이렇게 되면 **헷갈리는 경우**가 발생합니다. 인터넷 프로토콜을 예로 들어봅시다. 인터넷 프로토콜을 그저 `INET`(**I**nter**NET** Protocol의 줄임말)이라고만 표현하면, 이것이 인터넷 '프로토콜' 자체를 의미하는지, 아니면 인터넷 프로토콜의 '주소 체계'를 의미하는지 혼동될 수 있습니다.
 
-그래서 **주소 체계에는 AF**를, **프로토콜 자체에는 PF**를 붙이게 되었습니다.
+그래서 **주소 체계에는 AF**를, **프로토콜 자체에는 PF**를 붙이게 되었습니다. `AF_INET`이나 `PF_INET`처럼 말입니다.
 
 **AF**:
 - **A**ddress **F**amily(주소 패밀리)의 줄임말
@@ -39,7 +39,7 @@ category: linux
 
 ## AF와 PF는 실제로 같다
 
-**그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2].** 오늘날 IP 주소는 오직 IP 프로토콜에서만 사용하고 있습니다. 다른 프로토콜과 주소 체계도 마찬가지입니다. AF와 PF의 구분이 의도와는 다르게 아무런 쓸모가 없게 되었죠.
+**그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2].** 오늘날 IP 주소는 오직 IP 프로토콜에서만 사용합니다. 다른 프로토콜 역시 마찬가지입니다. 의도와는 다르게 AF와 PF의 구분이 아무런 쓸모가 없게 되었죠.
 
 [^bgnet-2]:
     <http://beej.us/guide/bgnet/html/#socket>
