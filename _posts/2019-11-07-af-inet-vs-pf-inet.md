@@ -10,9 +10,9 @@ category: linux
 아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 주소 체계가 여러 프로토콜을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
 [^bgnet-1]:
-  <http://beej.us/guide/bgnet/html/#socket>
+    <http://beej.us/guide/bgnet/html/#socket>
 
-  > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
+    > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
 `INET`(**I**nter**NET** Protocol)이라고만 하면 이것이 인터넷 프로토콜 자체를 의미하는지, 아니면 인터넷 프로토콜의 주소 체계를 의미하는지 헷갈립니다. 그래서 다음과 같이 주소 체계에는 AF를, 프로토콜에는 PF를 붙이게 되었습니다:
 
@@ -38,9 +38,9 @@ category: linux
 **그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2].** 오늘날 IP 주소는 오직 IP 프로토콜에서만 사용하고 있기 때문입니다. 다른 프로토콜과 주소 체계도 마찬가지입니다. AF와 PF의 구분이 아무런 쓸모가 없게 되었죠.
 
 [^bgnet-2]:
-  <http://beej.us/guide/bgnet/html/#socket>
+    <http://beej.us/guide/bgnet/html/#socket>
 
-  > That didn’t happen. And they all lived happily ever after, The End.
+    > That didn’t happen. And they all lived happily ever after, The End.
 
 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 **PF가 AF와 같은 값을 가지도록 정의**하고 있습니다:
 
