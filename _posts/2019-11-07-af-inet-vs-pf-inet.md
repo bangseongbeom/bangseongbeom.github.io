@@ -14,7 +14,7 @@ category: linux
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 헷갈리는 경우가 발생합니다. 인터넷 프로토콜을 예로 들어봅시다. 인터넷 프로토콜을 그저 `INET`(**I**nter**NET** Protocol의 줄임말)이라고만 표현하면, **이것이 인터넷 프로토콜 자체를 의미하는지, 아니면 인터넷 프로토콜의 주소 체계를 의미하는지 혼동됩니다**.
+이렇게 되면 **헷갈리는 경우**가 발생합니다. 인터넷 프로토콜을 예로 들어봅시다. 인터넷 프로토콜을 그저 `INET`(**I**nter**NET** Protocol의 줄임말)이라고만 표현하면, 이것이 인터넷 프로토콜 자체를 의미하는지, 아니면 인터넷 프로토콜의 주소 체계를 의미하는지 혼동됩니다.
 
 그래서 **주소 체계에는 AF**를, **프로토콜 자체에는 PF**를 붙이게 되었습니다.
 
