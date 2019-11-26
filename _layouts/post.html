@@ -59,21 +59,25 @@ layout: default
           {% if page.previous.previous %}
             <li>
               <a href="{{ page.previous.previous.url }}">{{ page.previous.previous.title }}</a>
+              <p>{{ page.previous.previous.excerpt }}</p>
             </li>
           {% endif %}
 
           <li>
             <a href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+            <p>{{ page.previous.excerpt }}</p>
           </li>
         {% endif %}
         {% if page.next %}
           <li>
             <a href="{{ page.next.url }}">{{ page.next.title }}</a>
+            <p>{{ page.next.excerpt }}</p>
           </li>
 
           {% if page.next.next %}
             <li>
               <a href="{{ page.next.next.url }}">{{ page.next.next.title }}</a>
+              <p>{{ page.next.next.excerpt }}</p>
             </li>
           {% endif %}
         {% endif %}
