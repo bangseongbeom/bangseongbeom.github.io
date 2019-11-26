@@ -48,7 +48,11 @@ body {
 }
 
 ul, ol {
-  margin: $spacing-unit / 2 0 $spacing-unit / 2 2em;
+  margin: $spacing-unit * 0.75 0 $spacing-unit * 0.75 2em;
+}
+
+p {
+  margin: $spacing-unit * 0.75 0;
 }
 
 article {
