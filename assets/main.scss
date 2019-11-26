@@ -546,11 +546,11 @@ h6 {
 }
 
 .post-list > li {
+  margin-top: $spacing-unit;
   margin-bottom: $spacing-unit;
 }
 
 .post-list h3 {
-  margin-top: $spacing-unit / 2;
   margin-bottom: 0;
 }
 
