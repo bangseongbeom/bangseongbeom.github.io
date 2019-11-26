@@ -48,7 +48,7 @@ body {
 }
 
 ul, ol {
-  margin-left: 2em;
+  margin: $spacing-unit / 2 0 $spacing-unit / 2 2em;
 }
 
 article {
