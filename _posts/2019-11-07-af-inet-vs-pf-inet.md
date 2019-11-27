@@ -3,20 +3,20 @@ title: AF_INET vs PF_INET
 category: linux
 ---
 
-리눅스 소켓 프로그래밍에서, IP 프로토콜을 지정하는 데 사용하는 상수로는 `AF_INET`과 `PF_INET`이 있습니다. 이 둘의 차이가 무엇일까요?
+리눅스 소켓 프로그래밍에서, 인터넷 프로토콜(IP)을 지정하는 데 사용하는 상수로는 `AF_INET`과 `PF_INET`이 있습니다. 이 둘의 차이가 무엇일까요?
 
 ## AF와 PF의 의도한 차이
 
-아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 '주소 체계'가 여러 '프로토콜'을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 IP 주소가 IP 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
+아주 오래 전 소켓 프로그래밍을 설계할 당시에는, **하나의 '주소 체계'가 여러 '프로토콜'을 지원**할 것을 염두에 두고 만들었습니다[^bgnet-1]. 이를테면 인터넷 프로토콜의 주소 체계(192.168.0.1, 8.8.4.4, ...)가 인터넷 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
 [^bgnet-1]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-이렇게 되면 **헷갈리는 경우**가 발생합니다. 인터넷 프로토콜을 예로 들어봅시다. 인터넷 프로토콜을 그저 `INET`이라고만 하면, 이것이 인터넷 '프로토콜' 자체를 의미하는지, 아니면 인터넷 프로토콜의 '주소 체계'를 의미하는지 파악하기 어렵습니다.
+이렇게 되면 프로토콜과 주소 체계를 좀 더 명확히 구분해야 할 필요성이 생깁니다. 그렇지 않을 경우 '인터넷 프로토콜'이라는 말이 '프로토콜' 자체를 의미하는지, 아니면 인터넷 프로토콜의 '주소 체계'를 의미하는지 혼란스럽기 때문입니다.
 
-그래서 **주소 체계에는 AF**를, **프로토콜 자체에는 PF**를 붙여 서로를 구분하기로 했습니다. 인터넷 프로토콜의 경우 `AF_INET`과 `PF_INET`으로 분리될 것입니다.
+이에 따라 **주소 체계에는 AF**를, **프로토콜 자체에는 PF**를 붙여 서로를 구분하기로 했습니다. 인터넷 프로토콜의 경우 INET(**I**nter**NET**) 앞에 AF와 PF를 붙여 `AF_INET`과 `PF_INET`으로 구분합니다.
 
 **AF**:
 - **A**ddress **F**amily(주소 패밀리)의 줄임말
