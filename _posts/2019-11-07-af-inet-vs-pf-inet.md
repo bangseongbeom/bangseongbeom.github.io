@@ -39,14 +39,14 @@ category: linux
 
 ## AF와 PF는 실제로 같다
 
-**그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2].** 오늘날까지도 IP 주소 체계는 오직 IP 프로토콜에서만 사용됩니다.
+그러나 설계 당시의 의도대로 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 실제로 일어나지 않았습니다[^bgnet-2]. 오늘날까지도 IP 주소 체계는 오직 IP 프로토콜에서만 사용됩니다.
 
 [^bgnet-2]:
     <http://beej.us/guide/bgnet/html/#socket>
 
     > That didn’t happen. And they all lived happily ever after, The End.
 
-[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 **PF가 AF와 같은 값을 가지도록 정의**하고 있습니다:
+[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)은 PF가 AF와 같은 값을 가지도록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
@@ -58,7 +58,7 @@ category: linux
 
 ## 권장 방식
 
-AF와 PF는 서로 아무런 차이가 없다는 것을 알았습니다. 그렇다면 둘 중 어느 것을 사용하는 것이 좋을까요? **원래 의도를 존중하여 AF를 쓸 자리에는 AF를, PF를 쓸 자리에는 PF를** 써야 할까요? 아니면 **속 편하게 AF와 PF 중 하나만 골라서** 사용할까요?
+AF와 PF는 서로 아무런 차이가 없다는 것을 알았습니다. 그렇다면 둘 중 어느 것을 사용하는 것이 좋을까요? 원래 의도를 존중하여 AF를 쓸 자리에는 AF를, PF를 쓸 자리에는 PF를 써야 할까요? 아니면 단순히 AF와 PF 중 하나만 골라서 사용할까요?
 
 유명한 소켓 프로그래밍 입문서인 <Beej's Guide to Network Programming>에서는 [AF_INET과 PF_INET을 설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
 
