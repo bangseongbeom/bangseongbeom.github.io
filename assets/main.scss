@@ -49,17 +49,17 @@ body {
 
 ul,
 ol {
-  margin: $spacing-unit * 0.5 0 $spacing-unit * 0.5 2em;
+  margin: 1em 0 1em 2em;
 }
 
 li,
 li p {
-  margin-top: $spacing-unit * 0.25;
-  margin-bottom: $spacing-unit * 0.25;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 p {
-  margin: $spacing-unit * 0.5 0;
+  margin: 1em 0;
 }
 
 article {
@@ -408,6 +408,8 @@ blockquote {
   color: inherit;
   border-left-color: currentcolor;
   font-style: inherit;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .wrapper {
