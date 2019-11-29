@@ -581,7 +581,7 @@ code {
 
 pre,
 code {
-  border: none;
+  border: thin solid gainsboro;
   border-radius: 0;
   background: #f6f6f6;
 }
@@ -592,7 +592,7 @@ code {
 
 pre.highlight {
   .highlighter-rouge & {
-    border: none;
+    border: thin solid gainsboro;
     background: #f6f6f6;
   }
 }
