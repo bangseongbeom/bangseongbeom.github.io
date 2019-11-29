@@ -59,7 +59,7 @@ li p {
 }
 
 p {
-  margin: $spacing-unit * 0.75 0;
+  margin: $spacing-unit * 0.5 0;
 }
 
 article {
@@ -71,7 +71,7 @@ article header {
 }
 
 .site-header {
-  border-bottom: solid gainsboro;
+  border-bottom: thin solid gainsboro;
 //   box-shadow: 0 0 4px 2px gainsboro;
 }
 
@@ -637,7 +637,7 @@ hr {
 }
 
 #other-posts {
-  border: solid gainsboro;
+  border: thin solid gainsboro;
 //   box-shadow: 0 0 4px 2px gainsboro;
-  padding: $spacing-unit / 2;
+  padding: $spacing-unit / 2 0;
 }
