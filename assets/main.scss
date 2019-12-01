@@ -558,6 +558,11 @@ h6 {
   font-weight: bold;
 }
 
+.post-list > li {
+  margin-top: $spacing-unit * 1.5;
+  margin-bottom: $spacing-unit * 1.5;
+}
+
 .post-list h3 {
   margin-bottom: $spacing-unit * 0.25;
 }
