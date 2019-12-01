@@ -20,22 +20,22 @@ category: linux
 
 **AF**:
 - **A**ddress **F**amily(주소 패밀리)의 줄임말
-- 프로토콜 이름 앞에 AF를 붙임: `AF_INET`, `AF_IPX`, `AF_APPLETALK`
-- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 **주소 체계**를 결정해야 하는 구조체에서 사용:
+- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 '주소 체계'를 결정해야 하는 구조체에서 사용:
 
   ```c
   struct sockaddr_in sockaddr;
   sockaddr.sin_family = AF_INET;
   ```
+- 프로토콜 이름 앞에 'AF'를 붙여 해당 프로토콜의 '주소 체계'를 나타냄: `AF_INET`, `AF_IPX`, `AF_APPLETALK`
 
 **PF**:
 - **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
-- 프로토콜 이름 앞에 PF를 붙임: `PF_INET`, `PF_IPX`, `PF_APPLETALK`
-- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 **프로토콜**을 지정해야 하는 함수에서 사용:
+- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 '프로토콜'을 지정해야 하는 함수에서 사용:
 
   ```c
   int sockfd = socket(PF_INET, SOCK_STREAM, 0);
   ```
+- 프로토콜 이름 앞에 'PF'를 붙여 해당 '프로토콜' 자체를 나타냄: `PF_INET`, `PF_IPX`, `PF_APPLETALK`
 
 ## AF와 PF는 실제로 같다
 
