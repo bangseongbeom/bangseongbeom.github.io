@@ -641,7 +641,11 @@ hr {
 }
 
 #other-posts {
-  border: thin solid gainsboro;
-//   box-shadow: 0 0 4px 2px gainsboro;
+  border: thin solid lightgray;
+//   box-shadow: 0 0 4px 2px lightgray;
   padding: $spacing-unit / 2 0;
+}
+
+ul#markdown-toc {
+  border: thin solid lightgray;
 }
