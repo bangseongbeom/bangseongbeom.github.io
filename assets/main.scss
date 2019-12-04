@@ -71,7 +71,7 @@ article header {
 }
 
 .site-header {
-  border-bottom: thin solid lightgray;
+  border-bottom: thin solid silver;
 //   box-shadow: 0 0 4px 2px gainsboro;
 }
 
@@ -641,7 +641,7 @@ hr {
 }
 
 #other-posts {
-  border: thin solid lightgray;
+  border: thin solid silver;
 //   box-shadow: 0 0 4px 2px lightgray;
   padding: $spacing-unit / 2 0;
 }
@@ -650,5 +650,5 @@ ul#markdown-toc {
   display: inline-block;
   margin: 0;
   padding: $spacing-unit $spacing-unit * 2;
-  border: thin solid lightgray;
+  border: thin solid silver;
 }
