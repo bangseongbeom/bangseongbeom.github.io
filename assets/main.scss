@@ -649,6 +649,6 @@ hr {
 ul#markdown-toc {
   display: inline-block;
   margin: 0;
-  padding: 0 $spacing-unit;
+  padding: $spacing-unit $spacing-unit * 2;
   border: thin solid lightgray;
 }
