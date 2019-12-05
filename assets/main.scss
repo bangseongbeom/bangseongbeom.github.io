@@ -71,7 +71,7 @@ article header {
 }
 
 .site-header {
-  border-bottom: solid;
+  border-bottom: none;
 //   box-shadow: 0 0 4px 2px gainsboro;
 }
 
@@ -164,7 +164,7 @@ nav button,
   text-align: center;
   text-decoration: underline;
   background: none;
-  font-size: 16px;
+  font-size: larger;
   font-weight: normal;
   line-height: 1.5;
   padding: 0.75em;
