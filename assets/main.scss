@@ -409,6 +409,10 @@ blockquote {
   max-width: calc(#{$content-width} - 32px);
 }
 
+.wrapper:after {
+  display: none;
+}
+
 .site-header {
   border-top: none;
   text-align: center;
