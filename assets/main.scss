@@ -409,7 +409,8 @@ blockquote {
   max-width: calc(#{$content-width} - 32px);
 }
 
-.wrapper:after {
+.wrapper:after,
+.footer-col-wrapper:after {
   display: none;
 }
 
