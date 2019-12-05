@@ -60,14 +60,10 @@ AF와 PF는 서로 아무런 차이가 없다는 것을 알았습니다. 그렇�
 
 ## 참고
 
-- <span id="footnote-bgnet-1">[bgnet-1]</span>:
-
-  <http://beej.us/guide/bgnet/html/#socket>
+- <span id="footnote-bgnet-1">[bgnet-1]</span>: <http://beej.us/guide/bgnet/html/#socket>
 
   > Once upon a time, a long time ago, it was thought that maybe an address family (what the “AF” in “AF_INET” stands for) might support several protocols that were referred to by their protocol family (what the “PF” in “PF_INET” stands for).
 
-- <span id="footnote-bgnet-2">[bgnet-2]</span>:
-  
-  <http://beej.us/guide/bgnet/html/#socket>
+- <span id="footnote-bgnet-2">[bgnet-2]</span>: <http://beej.us/guide/bgnet/html/#socket>
 
   > That didn’t happen. And they all lived happily ever after, The End.
