@@ -7,7 +7,11 @@ layout: default
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
       {%- if page.author -%}
-        <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span></span><br>
+        <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img src="https://avatars0.githubusercontent.com/u/9026978?s=64" style="width: 32px; height: 32px; border-radius: 16px" />
+          <span class="p-author h-card" itemprop="name">{{ page.author | escape }}</span>
+        </span>
+        <br />
       {%- endif -%}
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
