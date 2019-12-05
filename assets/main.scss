@@ -454,6 +454,8 @@ blockquote {
   background-color: inherit;
   text-align: center;
   line-height: 1.5;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .site-nav label[for="nav-trigger"] {
