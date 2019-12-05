@@ -416,7 +416,6 @@ blockquote {
 
 .site-header {
   border-top: none;
-  text-align: center;
 }
 
 .site-header nav {
@@ -428,7 +427,6 @@ blockquote {
 
 .site-title {
   display: block;
-  float: none;
 }
 
 .site-title a {
@@ -437,6 +435,7 @@ blockquote {
   font-size: xx-large;
   line-height: 1.5;
   font-weight: bold;
+  padding: 0;
   color: $brand-color;
 }
 
