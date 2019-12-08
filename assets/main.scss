@@ -427,12 +427,13 @@ blockquote {
 
 .site-title {
   display: block;
+  line-height: 1.5;
 }
 
 .site-title a {
   display: inline-block;
   float: none;
-  font-size: xx-large;
+  font-size: medium;
   line-height: 1.5;
   font-weight: bold;
   padding: 0;
