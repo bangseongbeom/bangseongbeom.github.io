@@ -654,3 +654,15 @@ hr {
 //   padding: 0 $spacing-unit * 0.5 0 $spacing-unit;
 //   border: thin solid silver;
 // }
+
+.page-link.android::before {
+  content: "🤖" " ";
+}
+
+.page-link.arduino::before {
+  content: "⚡" " ";
+}
+
+.page-link.design::before {
+  content: "📐" " ";
+}
