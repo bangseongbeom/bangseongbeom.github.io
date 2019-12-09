@@ -666,3 +666,23 @@ hr {
 .page-link.design::before {
   content: "📐" " ";
 }
+
+.page-link.git::before {
+  content: "🛢️" " ";
+}
+
+.page-link.java::before {
+  content: "☕" " ";
+}
+
+.page-link.linux::before {
+  content: "🐧" " ";
+}
+
+.page-link.python::before {
+  content: "🐍" " ";
+}
+
+.page-link.web::before {
+  content: "🕸️" " ";
+}
