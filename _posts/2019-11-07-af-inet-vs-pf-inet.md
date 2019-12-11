@@ -14,12 +14,12 @@ category: linux
 이에 따라 주소 체계와 프로토콜을 다음과 같이 구분하기로 했습니다:
 
 **AF**:
-- 프로토콜 이름 앞에 'AF'를 붙여 해당 프로토콜의 주소 체계를 나타냄:
+- **A**ddress **F**amily(주소 패밀리)의 줄임말
+- 프로토콜 이름 앞에 'AF'를 붙여 해당 프로토콜의 '주소 체계'를 나타냄:
     - `AF_INET`: 인터넷 프로토콜 주소 체계
     - `AF_IPX`: [IPX 주소 체계](https://en.wikipedia.org/wiki/Internetwork_Packet_Exchange#IPX_addressing)
     - `AF_APPLETALK`: [애플토크 주소 체계](https://en.wikipedia.org/wiki/AppleTalk#Addressing)
-- **A**ddress **F**amily(주소 패밀리)의 줄임말
-- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 '주소 체계'를 결정해야 하는 구조체에서 사용:
+- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 지정해야 하는 구조체에서 사용:
 
   ```c
   struct sockaddr_in sockaddr;
@@ -27,11 +27,11 @@ category: linux
   ```
 
 **PF**:
-- 프로토콜 이름 앞에 'PF'를 붙여 해당 프로토콜 자체를 나타냄:
+- **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
+- 프로토콜 이름 앞에 'PF'를 붙여 해당 '프로토콜' 자체를 나타냄:
     - `PF_INET`: 인터넷 프로토콜 
     - `PF_IPX`: IPX
     - `PF_APPLETALK`: 애플토크
-- **P**rotocol **F**amily(프로토콜 패밀리)의 줄임말
 - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 함수에서 사용:
 
   ```c
