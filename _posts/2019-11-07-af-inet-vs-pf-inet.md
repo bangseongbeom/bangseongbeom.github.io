@@ -19,7 +19,7 @@ category: linux
     - `AF_INET`: 인터넷 프로토콜 주소 체계
     - `AF_IPX`: [IPX 주소 체계](https://en.wikipedia.org/wiki/Internetwork_Packet_Exchange#IPX_addressing)
     - `AF_APPLETALK`: [애플토크 주소 체계](https://en.wikipedia.org/wiki/AppleTalk#Addressing)
-- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 주소 체계를 지정해야 하는 구조체에서 사용:
+- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)같이 '주소 체계'를 지정해야 하는 구조체에서 사용:
 
   ```c
   struct sockaddr_in sockaddr;
@@ -32,7 +32,7 @@ category: linux
     - `PF_INET`: 인터넷 프로토콜 
     - `PF_IPX`: IPX
     - `PF_APPLETALK`: 애플토크
-- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 프로토콜을 지정해야 하는 함수에서 사용:
+- [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)같이 '프로토콜'을 지정해야 하는 함수에서 사용:
 
   ```c
   int sockfd = socket(PF_INET, SOCK_STREAM, 0);
