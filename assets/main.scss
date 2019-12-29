@@ -169,7 +169,7 @@ nav button,
   line-height: 1.5;
   padding: 0.75em;
   border: none;
-  margin: $spacing-unit * 0.125 0;
+  margin: 0.25em;
   outline: 0 solid silver;
   outline-offset: 0;
 }
@@ -198,7 +198,6 @@ nav,
 [role~="menubar"],
 [role~="toolbar"] {
   margin: $spacing-unit * 0.5 0;
-  padding: 0 $spacing-unit * 0.125;
 }
 
 nav nav,
