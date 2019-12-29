@@ -198,6 +198,7 @@ nav.site-nav,
 [role~="menubar"],
 [role~="toolbar"] {
   padding: 16px 0;
+  line-height: 56px;
 }
 
 nav nav,
@@ -423,7 +424,6 @@ blockquote {
   right: 0;
   border-radius: 0;
   margin: 0;
-  line-height: 56px;
 }
 
 .site-title {
