@@ -197,6 +197,7 @@ nav,
 [role~="group"],
 [role~="menubar"],
 [role~="toolbar"] {
+  margin: $spacing-unit * 0.5 0;
 }
 
 nav nav,
