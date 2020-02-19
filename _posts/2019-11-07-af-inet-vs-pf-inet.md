@@ -3,7 +3,7 @@ title: AF_INET vs PF_INET
 category: linux
 ---
 
-리눅스 소켓 프로그래밍에서, [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)이나 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)을 사용할 때, IP(인터넷 프로토콜)임을 지정하기 위해 `AF_INET`과 `PF_INET` 중 어느 것을 사용해도 상관이 없는 것을 확인할 수 있습니다. 이 둘의 차이가 무엇일까요?
+리눅스 소켓 프로그래밍에서, [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html)이나 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html)을 사용할 때 IP(인터넷 프로토콜)임을 지정하기 위해 `AF_INET`과 `PF_INET` 중 어느 것을 사용해도 상관이 없습니다. 왜 아무런 차이도 없는 상수를 두 개나 만들었을까요?
 
 ## 원래 의도
 
