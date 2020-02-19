@@ -35,7 +35,7 @@ sockfd = socket(PF_INET, SOCK_STREAM, 0); // 여기에는 'PF_INET'같이 PF로 
 
 **그러나**, AF와 PF의 구분은 설계 당시의 의도일 뿐이었습니다. 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 **실제로 일어나지 않았습니다**<sup>[[bgnet-2]](#footnote-bgnet-2)</sup>. 오늘날까지도 IP 주소 체계는 오직 IP 프로토콜에서만 사용됩니다.
 
-[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)에서도 PF가 AF와 같은 값을 가지도록 정의하고 있습니다:
+[리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)에서도 PF와 AF는 서로 같은 값을 가지도록 정의하고 있습니다:
 
 ```c
 /* Protocol families, same as address families. */
