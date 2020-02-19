@@ -92,6 +92,11 @@ header nav li {
   display: inline;
 }
 
+header nav li:nth-child(4)::after {
+  content: "\A";
+  white-space: pre-line;
+}
+
 h1:first-child,
 h2:first-child,
 h3:first-child,
