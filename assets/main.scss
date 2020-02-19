@@ -92,10 +92,10 @@ header nav li {
   display: inline;
 }
 
-header nav li:nth-child(4n)::after {
-  content: "\A";
-  white-space: pre-line;
-}
+// header nav li:nth-child(4n)::after {
+//   content: "\A";
+//   white-space: pre-line;
+// }
 
 h1:first-child,
 h2:first-child,
@@ -458,7 +458,7 @@ blockquote {
   float: none;
   border: none;
   background-color: inherit;
-  text-align: center;
+  text-align: left;
   line-height: 1.5;
 }
 
