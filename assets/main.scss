@@ -428,6 +428,7 @@ blockquote {
   display: block;
   line-height: 1.5;
   font-size: medium;
+  float: none;
 }
 
 .site-title a {
@@ -452,7 +453,7 @@ blockquote {
   float: none;
   border: none;
   background-color: inherit;
-  text-align: right;
+  text-align: center;
   line-height: 1.5;
 }
 
