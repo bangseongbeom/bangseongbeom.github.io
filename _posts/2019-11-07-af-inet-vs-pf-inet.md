@@ -24,11 +24,11 @@ category: linux
 struct sockaddr_in addr;
 int sockfd;
 
-addr.sin_family = AF_INET; # 여기에는 'AF_INET'같이 AF로 시작하는 상수 사용
+addr.sin_family = AF_INET; // 여기에는 'AF_INET'같이 AF로 시작하는 상수 사용
 addr.sin_port = htons(54321);
 addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-sockfd = socket(PF_INET, SOCK_STREAM, 0); # 여기에는 'PF_INET'같이 PF로 시작하는 상수 사용
+sockfd = socket(PF_INET, SOCK_STREAM, 0); // 여기에는 'PF_INET'같이 PF로 시작하는 상수 사용
 ```
 
 ## AF와 PF의 구분은 무의미
