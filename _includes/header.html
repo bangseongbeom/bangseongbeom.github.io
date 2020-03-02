@@ -13,9 +13,14 @@
       {% if titles_size > 0 %}
         <ul role="menubar">
           {% for path in page_paths %}
-            {% assign my_page = site.pages | where: "path", path | first %}
-            {% if my_page.title %}
-              <li role="none"><a role="menuitem" class="page-link {{ my_page.name | split: "." | first }}" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
+            {% assign site_page = site.pages | where: "path", path | first %}
+            {% if site_page_categories contains site_page.categories[0] %}
+              {% assign containing = "containing" %}
+            {% else %}
+              {% assign containing = "" %}
+            {% endif %}
+            {% if site_page.title %}
+              <li role="none"><a role="menuitem" class="page-link {{ site_page.name | split: "." | first }} {{ containing }}" href="{{ site_page.url | relative_url }}">{{ site_page.title | escape }}</a></li>
             {% endif %}
           {% endfor %}
         </ul>
