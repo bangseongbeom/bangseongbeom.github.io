@@ -451,14 +451,14 @@ blockquote {
   font-size: medium;
   line-height: 1.5;
   font-weight: bold;
-  padding: 0;
-  margin: 0;
+  padding: 0.25em;
+  margin: 0.25em;
   color: $brand-color;
 }
 
 .site-title img {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   vertical-align: middle;
 }
 
