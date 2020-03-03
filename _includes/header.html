@@ -16,8 +16,10 @@
             {% assign site_page = site.pages | where: "path", path | first %}
             {% if site_page_categories contains site_page.categories[0] %}
               {% assign containing = "containing" %}
+              containing
             {% else %}
               {% assign containing = "" %}
+              -
             {% endif %}
             {% if site_page.title %}
               <li role="none"><a role="menuitem" class="page-link {{ site_page.name | split: "." | first }} {{ containing }}" href="{{ site_page.url | relative_url }}">{{ site_page.title | escape }}</a></li>
