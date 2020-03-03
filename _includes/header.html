@@ -13,16 +13,15 @@
       {% if titles_size > 0 %}
         <ul role="menubar">
           {% for path in page_paths %}
-            {% assign site_page = site.pages | where: "path", path | first %}
-            {% if site_page_categories contains site_page.categories[0] %}
+            {% assign category_page = site.pages | where: "path", path | first %}
+            {% assign category_page_category = site_page.name | split: "." | first %}
+            {% if page.categories contains category_page_category %}
               {% assign containing = "containing" %}
-              containing
             {% else %}
               {% assign containing = "" %}
-              -
             {% endif %}
             {% if site_page.title %}
-              <li role="none"><a role="menuitem" class="page-link {{ site_page.name | split: "." | first }} {{ containing }}" href="{{ site_page.url | relative_url }}">{{ site_page.title | escape }}</a></li>
+              <li role="none"><a role="menuitem" class="page-link {{ category_page_category }} {{ containing }}" href="{{ category_page.url | relative_url }}">{{ category_page.title | escape }}</a></li>
             {% endif %}
           {% endfor %}
         </ul>
