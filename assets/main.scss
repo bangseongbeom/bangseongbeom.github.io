@@ -144,7 +144,8 @@ button {
 
 a.active,
 a.active:visited,
-button.active {
+button.active,
+.site-nav .page-link.active {
   font-weight: bolder;
 }
 
