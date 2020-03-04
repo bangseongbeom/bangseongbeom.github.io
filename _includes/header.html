@@ -16,12 +16,12 @@
             {% assign category_page = site.pages | where: "path", path | first %}
             {% assign category_page_category = category_page.name | split: "." | first %}
             {% if page.categories contains category_page_category %}
-              {% assign containing = "containing" %}
+              {% assign active = "active" %}
             {% else %}
-              {% assign containing = "" %}
+              {% assign active = "" %}
             {% endif %}
             {% if category_page.title %}
-              <li role="none"><a role="menuitem" class="page-link {{ category_page_category }} {{ containing }}" href="{{ category_page.url | relative_url }}">{{ category_page.title | escape }}</a></li>
+              <li role="none"><a role="menuitem" class="page-link {{ category_page_category }} {{ active }}" href="{{ category_page.url | relative_url }}">{{ category_page.title | escape }}</a></li>
             {% endif %}
           {% endfor %}
         </ul>
