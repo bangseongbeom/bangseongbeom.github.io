@@ -18,8 +18,8 @@ category: linux
 
 이 상수들은 쓰임새도 달랐습니다:
 
-- 소켓 주소를 담는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체에서는 주소를 지정하기 위해 사용할 '주소 체계'를 요구합니다. **AF**로 시작하는 상수가 필요합니다.
-- 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수에서는 연결을 하기 위한 '프로토콜'을 요구합니다. **PF**로 시작하는 상수가 필요합니다.
+- 소켓 주소를 담는 [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체에서는 주소를 지정하기 위해 사용할 '주소 체계'를 요구합니다. 여기서는 **AF**로 시작하는 상수가 필요합니다.
+- 소켓을 생성하는 [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수에서는 연결을 하기 위한 '프로토콜'을 요구합니다. 여기서는 **PF**로 시작하는 상수가 필요합니다.
 
 원래 의도대로 소켓 프로그래밍을 한다면 이런 형태가 됩니다:
 
