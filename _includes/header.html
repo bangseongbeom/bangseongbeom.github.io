@@ -15,6 +15,7 @@
           {% for path in page_paths %}
             {% assign category_page = site.pages | where: "path", path | first %}
             {% assign category_page_category = category_page.name | split: "." | first %}
+            {{ page.category }}
             {% if page.categories contains category_page_category || page.category == category_page_category %}
               {% assign active = "active" %}
             {% else %}
