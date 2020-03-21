@@ -456,6 +456,7 @@ blockquote {
   display: inline-block;
   font-size: medium;
   line-height: 1.5;
+  float: left;
   font-weight: bold;
   padding: 0.25em;
   margin: 0.25em;
@@ -470,7 +471,7 @@ blockquote {
 
 .site-nav {
   position: static;
-  float: left;
+  float: none;
   border: none;
   background-color: inherit;
   text-align: right;
