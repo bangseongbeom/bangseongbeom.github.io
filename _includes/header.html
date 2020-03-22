@@ -11,6 +11,7 @@
         </a>
       </div>
       {% if titles_size > 0 %}
+        <input type="checkbox">
         <ul role="menubar">
           {% for path in page_paths %}
             {% assign category_page = site.pages | where: "path", path | first %}
