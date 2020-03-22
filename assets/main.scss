@@ -503,9 +503,22 @@ blockquote {
   float: right;
 }
 
+@media (min-width: $content-width) {
+  .site-nav input[type="checkbox"] + label {
+    display: none;
+  }
+}
+
 .site-nav input[type="checkbox"] + label + ul {
   white-space: nowrap;
   overflow: auto;
+}
+
+@media (min-width: $content-width) {
+  .site-nav input[type="checkbox"] + label + ul {
+    white-space: normal;
+    overflow: visible;
+  }
 }
 
 .site-nav input[type="checkbox"]:checked + label + ul {
