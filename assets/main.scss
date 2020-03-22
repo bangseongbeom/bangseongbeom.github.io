@@ -297,7 +297,8 @@ a:hover,
 button:hover,
 .site-nav .page-link:hover,
 .site-nav .page-link:not(:last-child):hover,
-.site-nav .site-title a:hover {
+.site-nav .site-title a:hover,
+label:hover {
   background: silver;
 }
 
