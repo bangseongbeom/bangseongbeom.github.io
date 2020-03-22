@@ -179,7 +179,8 @@ nav button,
 [role~="navigation"] a,
 [role~="navigation"] button,
 .site-nav .page-link,
-.site-nav .page-link:not(:last-child) {
+.site-nav .page-link:not(:last-child),
+label {
   display: inline-block;
   width: auto;
   box-sizing: content-box;
