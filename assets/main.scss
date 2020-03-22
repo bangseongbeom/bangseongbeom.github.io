@@ -495,13 +495,18 @@ blockquote {
   display: block;
 }
 
+.site-nav input[type="checkbox"] {
+  float: right;
+}
+
 .site-nav input[type="checkbox"] + ul {
   white-space: nowrap;
   overflow: auto;
 }
 
 .site-nav input[type="checkbox"]:checked + ul {
-  
+  white-space: normal;
+  overflow: visible;
 }
 
 .post-title {
