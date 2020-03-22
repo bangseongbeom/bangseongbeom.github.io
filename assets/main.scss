@@ -523,7 +523,7 @@ blockquote {
 }
 
 .site-nav input[type="checkbox"]:checked + label + ul {
-  clear: both;
+  clear: right;
   white-space: normal;
   overflow: visible;
 }
