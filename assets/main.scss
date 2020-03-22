@@ -496,15 +496,19 @@ blockquote {
 }
 
 .site-nav input[type="checkbox"] {
+  display: none;
+}
+
+.site-nav input[type="checkbox"] + label {
   float: right;
 }
 
-.site-nav input[type="checkbox"] + ul {
+.site-nav input[type="checkbox"] + label + ul {
   white-space: nowrap;
   overflow: auto;
 }
 
-.site-nav input[type="checkbox"]:checked + ul {
+.site-nav input[type="checkbox"]:checked + label + ul {
   white-space: normal;
   overflow: visible;
 }
