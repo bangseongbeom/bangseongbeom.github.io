@@ -32,7 +32,8 @@
           {% endfor %}
         </ul>
         <script>
-          document.querySelector(".site-nav ul").scrollLeft = document.querySelector(".page-link.active").offsetLeft;
+          var activePageLink = document.querySelector(".page-link.active");
+          activePageLink.offsetParent.scrollLeft = activePageLink.offsetLeft;
         </script>
       {% endif %}
     </nav>
