@@ -322,6 +322,14 @@ button:focus,
   outline-color: black;
 }
 
+a:focus-visible,
+button:focus-visible,
+.site-nav .page-link:focus-visible,
+.site-nav .page-link:not(:last-child):focus-visible,
+.site-nav .site-title a:focus-visible {
+  outline: none;
+}
+
 a:focus {
   text-decoration: underline;
 }
