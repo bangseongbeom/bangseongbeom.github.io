@@ -318,13 +318,6 @@ button:focus,
 .site-nav .page-link:not(:last-child):focus,
 .site-nav .site-title a:focus {
   background: silver;
-}
-
-a:focus-visible,
-button:focus-visible,
-.site-nav .page-link:focus-visible,
-.site-nav .page-link:not(:last-child):focus-visible,
-.site-nav .site-title a:focus-visible {
   outline-width: thick;
   outline-color: black;
 }
