@@ -512,21 +512,18 @@ blockquote {
 }
 
 .site-nav ul {
-  white-space: nowrap;
-  overflow: auto;
+  display: none;
 }
 
 @media (min-width: $content-width) {
   .site-nav input[type="checkbox"] + label + ul {
-    white-space: normal;
-    overflow: visible;
+    display: block;
   }
 }
 
 .site-nav input[type="checkbox"]:checked + label + ul {
   clear: right;
-  white-space: normal;
-  overflow: visible;
+  display: block;
 }
 
 .post-title {
