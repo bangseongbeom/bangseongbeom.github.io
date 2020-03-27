@@ -479,6 +479,8 @@ blockquote {
   background-color: inherit;
   text-align: right;
   line-height: 1.5;
+  margin: auto;
+  max-width: $content-width;
 }
 
 .site-nav::after {
