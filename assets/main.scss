@@ -481,6 +481,12 @@ blockquote {
   line-height: 1.5;
 }
 
+.site-nav::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 // .site-nav ul {
 //   white-space: nowrap;
 //   overflow: auto;
