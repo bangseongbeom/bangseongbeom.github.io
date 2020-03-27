@@ -81,11 +81,13 @@ section header {
 header nav ul {
   list-style: none;
   margin: 0;
+  float: right;
 }
 
 header nav li {
   display: inline;
   margin: 0;
+  float: left;
 }
 
 // header nav li:nth-child(4n)::after {
