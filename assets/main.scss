@@ -85,6 +85,8 @@ header nav ul {
 
 header nav li {
   display: inline;
+  float: left;
+  margin: 0;
 }
 
 // header nav li:nth-child(4n)::after {
