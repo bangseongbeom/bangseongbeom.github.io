@@ -217,14 +217,6 @@ em button:focus {
   text-decoration: none;
 }
 
-nav,
-.site-header nav,
-[role~="group"],
-[role~="menubar"],
-[role~="toolbar"] {
-  margin: $spacing-unit * 0 0;
-}
-
 nav nav,
 nav [role~="menubar"],
 nav [role~="toolbar"],
