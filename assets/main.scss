@@ -70,11 +70,6 @@ article header {
   font-size: small;
 }
 
-.site-header {
-  border-bottom: none;
-//   box-shadow: 0 0 4px 2px gainsboro;
-}
-
 article header,
 aside header,
 main header,
@@ -430,8 +425,11 @@ blockquote {
 }
 
 .site-header {
+  border-bottom: none;
+//   box-shadow: 0 0 4px 2px gainsboro;
   border-top: none;
   min-height: auto;
+  padding: 16px 0;
 }
 
 .site-header nav {
