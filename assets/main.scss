@@ -429,8 +429,9 @@ blockquote {
   border-bottom: none;
 //   box-shadow: 0 0 4px 2px gainsboro;
   border-top: none;
+  max-width: calc(#{$content-width} - 16px);
   min-height: auto;
-  padding: 16px 0;
+  padding: 8px;
 }
 
 .site-header nav {
