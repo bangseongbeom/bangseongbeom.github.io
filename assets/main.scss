@@ -424,9 +424,9 @@ blockquote {
 }
 
 .wrapper {
-  padding-left: 8px;
-  padding-right: 8px;
-  max-width: calc(#{$content-width} - 16px);
+  padding-left: 0;
+  padding-right: 0;
+  max-width: calc(#{$content-width} - 0);
 }
 
 .wrapper:after,
