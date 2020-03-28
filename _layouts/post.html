@@ -50,9 +50,9 @@ layout: default
       </span>
     </p>
   </header>
-  
-  {% include toc.html html=content id='toc' %}
-
+  <section id="toc">
+    {% include toc.html html=content %}
+  </section>
   <div class="post-content e-content" itemprop="articleBody">
     {% include anchor_headings.html html=content anchorBody='%heading%' noContent=true %}
   </div>
