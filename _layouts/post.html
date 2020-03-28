@@ -2,7 +2,6 @@
 layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  {% include toc.html html=content %}
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
@@ -51,6 +50,8 @@ layout: default
       </span>
     </p>
   </header>
+  
+  {% include toc.html html=content %}
 
   <div class="post-content e-content" itemprop="articleBody">
     {% include anchor_headings.html html=content %}
