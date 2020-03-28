@@ -95,12 +95,16 @@ layout: default
 
   {%- if site.staticman -%}
     <h2 id="comments">댓글</h2>
-    {%- include staticman_comments.html -%}
+    <article style="margin: 16px">
+      {%- include staticman_comments.html -%}
+    </article>
   {%- endif -%}
 
   {%- if site.disqus.shortname -%}
     <h2 id="comments">댓글</h2>
-    {%- include disqus_comments.html -%}
+    <article style="margin: 16px">
+      {%- include disqus_comments.html -%}
+    </article>
   {%- endif -%}
 
 </article>
