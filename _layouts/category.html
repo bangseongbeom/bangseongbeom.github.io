@@ -12,7 +12,7 @@ layout: default
     <ul class="post-list">
       {%- for post in category -%}
       <li>
-        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        <p><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></p>
         {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
         <p><span class="post-meta">{{ post.date | date: date_format }}</span></p>
         {% if site.show_excerpts %}
