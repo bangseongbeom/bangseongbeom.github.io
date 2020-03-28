@@ -433,8 +433,8 @@ blockquote {
 }
 
 .site-header .wrapper {
-  padding: 8px;
-  max-width: calc(#{$content-width} - 16px);
+  padding: 4px;
+  max-width: calc(#{$content-width} - 8px);
 }
 
 .site-header nav {
