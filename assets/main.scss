@@ -113,16 +113,6 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
-  text-decoration: underline;
-  text-decoration: underline gray;
-}
-
 figcaption:first-child::before {
   content: "▼" " ";
 }
@@ -145,6 +135,16 @@ button {
   outline: 0 solid silver;
   font: inherit;
   text-decoration: underline;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  text-decoration: underline;
+  text-decoration: underline gray;
 }
 
 a.active,
