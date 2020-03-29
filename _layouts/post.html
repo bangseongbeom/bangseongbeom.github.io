@@ -51,7 +51,10 @@ layout: default
     </p>
   </header>
   <section id="toc">
-    {% include toc.html html=content %}
+    <details>
+      <summary>목차</summary>
+      {% include toc.html html=content %}
+    </details>
   </section>
   <div class="post-content e-content" itemprop="articleBody">
     {% include anchor_headings.html html=content anchorBody='%heading%' noContent=true %}
