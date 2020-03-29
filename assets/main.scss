@@ -700,7 +700,10 @@ hr {
   display: inline-block;
   margin: 0;
   padding: 0.5em 0.5em 0.5em 2em;
-  background: gainsboro;
+  background: #eee;
+}
+
+#toc > ul a {
   text-decoration: none;
 }
 
