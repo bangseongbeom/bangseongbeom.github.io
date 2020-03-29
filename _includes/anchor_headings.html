@@ -1,6 +1,6 @@
 {% capture headingsWorkspace %}
   {% comment %}
-    Version 1.0.5-bangseongbeom.github.io
+    Version 1.0.5
       https://github.com/allejo/jekyll-anchor-headings
 
     "Be the pull request you wish to see in the world." ~Ben Balter
@@ -21,7 +21,6 @@
       * h_max         (int)    :  6     - The maximum header level to build an anchor for; any header greater than this value will be ignored
       * bodyPrefix    (string) :  ''    - Anything that should be inserted inside of the heading tag _before_ its anchor and content
       * bodySuffix    (string) :  ''    - Anything that should be inserted inside of the heading tag _after_ its anchor and content
-      * noContent     (bool)
 
     Output:
       The original HTML with the addition of anchors inside of all of the h1-h6 headings.
@@ -98,9 +97,9 @@
       <h{{ _hAttrToStrip }}
         {{ include.bodyPrefix }}
         {% if beforeHeading %}
-          {{ anchor }}{% if include.noContent != true %}{{ header }}{% endif %}
+          {{ anchor }}{{ header }}
         {% else %}
-          {% if include.noContent != true %}{{ header }}{% endif %}{{ anchor }}
+          {{ header }}{{ anchor }}
         {% endif %}
         {{ include.bodySuffix }}
       </h{{ _workspace | last }}
