@@ -700,7 +700,8 @@ hr {
   display: inline-block;
   margin: 0;
   padding: 0.5em 0.5em 0.5em 2em;
-  border: medium solid gainsboro;
+  background: gainsboro;
+  text-decoration: none;
 }
 
 #other-posts {
