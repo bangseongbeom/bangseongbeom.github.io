@@ -49,16 +49,17 @@ body {
 
 ul,
 ol {
-  margin: 0.5em 0.5em 0.5em 2em;
+  margin: 1em 0em 1em 1.5em;
 }
 
 li,
 li p {
-  margin: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 p {
-  margin: 1em;
+  margin: 1em 0;
 }
 
 article {
@@ -98,7 +99,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin: $spacing-unit * 1.5 $spacing-unit * 0.5 $spacing-unit * 0.5 $spacing-unit * 0.5;
+  margin: $spacing-unit * 1.5 0 $spacing-unit * 0.5 0;
   line-height: 1.25;
   clear: both;
   font-weight: normal;
@@ -409,14 +410,14 @@ blockquote {
   color: inherit;
   border-left-color: currentcolor;
   font-style: inherit;
-  margin: 1em;
-  padding-left: 4px;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .wrapper {
-  padding-left: 0;
-  padding-right: 0;
-  max-width: calc(#{$content-width} - 0px);
+  padding-left: 16px;
+  padding-right: 16px;
+  max-width: calc(#{$content-width} - 32px);
 }
 
 .wrapper:after,
