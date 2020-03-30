@@ -702,10 +702,11 @@ hr {
 }
 
 #toc summary {
+  display: inline-block;
   margin: 0.25em;
   padding: 0.5em;
   line-height: 1.5;
-  border: 3px solid black;
+  border: 3px solid gray;
 }
 
 #toc a {
