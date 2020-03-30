@@ -697,6 +697,10 @@ hr {
   background: #eee;
 }
 
+#toc > * {
+  margin: 0;
+}
+
 #toc summary {
   margin: 0.25em;
   padding: 0.5em;
@@ -704,7 +708,6 @@ hr {
 }
 
 #toc ul {
-  margin: 1em 1em 1em 2em;
   line-height: 1.25;
 }
 
