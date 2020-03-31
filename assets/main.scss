@@ -178,7 +178,7 @@ nav button,
 label {
   display: inline-block;
   width: auto;
-  box-sizing: border-box;
+  box-sizing: content-box;
   min-width: 1.5em;
   height: auto;
   text-align: center;
