@@ -197,6 +197,7 @@ label {
 em a,
 em button,
 summary {
+  display: inline-block;
   text-decoration: none;
   font-style: normal;
   padding: 0.5em;
