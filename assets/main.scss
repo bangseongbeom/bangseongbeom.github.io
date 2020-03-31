@@ -691,6 +691,11 @@ hr {
   display: inline-block;
   background: #eee;
   line-height: 1.25;
+  padding: 0 16px;
+}
+
+#toc summary {
+  margin: 16px 0;
 }
 
 #toc a {
