@@ -689,13 +689,12 @@ hr {
 
 #toc {
   display: inline-block;
-  background: #eee;
-  line-height: 1.25;
-  padding: 0 16px;
 }
 
-#toc summary {
-  margin: 16px 0;
+#toc details {
+  background: #eee;
+  padding: 0 16px;
+  line-height: 1.25;
 }
 
 #toc a {
