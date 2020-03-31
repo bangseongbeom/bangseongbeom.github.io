@@ -691,13 +691,19 @@ hr {
   display: inline-block;
 }
 
-#toc details {
+#toc summary {
+  padding: 0.625em;
+  border: 0.125em solid #ddd;
+  margin: 0.25em 0;
+}
+
+#toc details > ul {
   background: #eee;
   padding: 0 16px;
   line-height: 1.25;
 }
 
-#toc a {
+#toc details a {
   text-decoration: none;
 }
 
