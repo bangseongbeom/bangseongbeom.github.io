@@ -289,7 +289,7 @@ button:hover,
 .site-nav .page-link:not(:last-child):hover,
 .site-nav .site-title a:hover,
 label:hover {
-  background: silver;
+  background: #eee;
 }
 
 a:hover {
@@ -326,9 +326,7 @@ a:active, button:active,
 .site-nav .page-link:active,
 .site-nav .page-link:not(:last-child):active,
 .site-nav .site-title a:active {
-  background: silver;
-  outline-width: thick;
-  outline-color: silver;
+  background: #ddd;
 }
 
 [role~="menubar"] em a,
