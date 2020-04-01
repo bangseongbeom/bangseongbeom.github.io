@@ -290,7 +290,7 @@ button:hover,
 .site-nav .page-link:not(:last-child):hover,
 .site-nav .site-title a:hover,
 label:hover {
-  background: #eee;
+  background: #ddd;
 }
 
 a:hover {
@@ -308,7 +308,7 @@ button:focus,
 .site-nav .page-link:focus,
 .site-nav .page-link:not(:last-child):focus,
 .site-nav .site-title a:focus {
-  background: #eee;
+  background: #ddd;
   outline-width: thick;
   outline-color: black;
 }
@@ -327,7 +327,7 @@ a:active, button:active,
 .site-nav .page-link:active,
 .site-nav .page-link:not(:last-child):active,
 .site-nav .site-title a:active {
-  background: #ddd;
+  background: #ccc;
 }
 
 [role~="menubar"] em a,
