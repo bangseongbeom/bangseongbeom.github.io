@@ -53,7 +53,9 @@ layout: default
   <section id="toc">
     <details>
       <summary>목차</summary>
-      {% include toc.html html=content %}
+      <nav>
+        {% include toc.html html=content %}
+      </nav>
     </details>
   </section>
   <div class="post-content e-content" itemprop="articleBody">
