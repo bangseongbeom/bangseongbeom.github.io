@@ -692,12 +692,13 @@ hr {
   display: inline-block;
 }
 
-#toc details > ul {
-  line-height: 1.25;
+#toc nav {
+  padding: 0 16px;
+  background: #ddd;
 }
 
-#toc details a {
-  text-decoration: none;
+#toc details > ul {
+  line-height: 1.25;
 }
 
 #other-posts {
