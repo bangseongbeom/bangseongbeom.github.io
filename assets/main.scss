@@ -686,17 +686,12 @@ hr {
   text-decoration: none;
 }
 
-#toc {
-  display: inline-block;
-}
-
 #toc nav {
+  line-height: 1.25;
+  display: inline-block;
+  margin: 16px 0;
   padding: 0 16px;
   background: #ddd;
-}
-
-#toc details > ul {
-  line-height: 1.25;
 }
 
 #other-posts {
