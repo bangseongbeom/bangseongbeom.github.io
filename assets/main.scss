@@ -138,6 +138,10 @@ button {
   transition: outline 0.125s;
 }
 
+.site-nav .page-link {
+  color: inherit;
+}
+
 a.active,
 a.active:visited,
 button.active,
