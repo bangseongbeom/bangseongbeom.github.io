@@ -422,7 +422,7 @@ blockquote {
 .wrapper {
   padding-left: 16px;
   padding-right: 16px;
-  max-width: calc(#{$content-width} - 212px - 32px);
+  max-width: calc(#{$content-width} - 32px);
 }
 
 .wrapper:after,
