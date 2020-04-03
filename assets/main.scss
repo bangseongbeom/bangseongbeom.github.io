@@ -32,6 +32,11 @@ $on-large:         $on-laptop !default;
   background-color: $text-color;
 }
 
+body {
+  display: block;
+  color: $text-color;
+}
+
 // :root,
 // html,
 blockquote {
