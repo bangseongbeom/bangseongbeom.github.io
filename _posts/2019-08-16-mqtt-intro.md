@@ -1,6 +1,6 @@
 ---
 title: MQTT 소개
-category: arduino
+category: iot
 ---
 
 MQTT의 필요성과 특징에 대해 소개합니다.
