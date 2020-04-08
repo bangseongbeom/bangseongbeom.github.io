@@ -439,7 +439,7 @@ blockquote {
   top: 0;
   right: 0;
   border-radius: 0;
-  max-width: calc(#{$content-width});
+  max-width: calc(#{$content-width} - 12px - 12px);
 }
 
 .site-title {
