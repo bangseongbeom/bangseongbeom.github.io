@@ -140,10 +140,6 @@ button {
   transition: outline 0.125s;
 }
 
-.site-nav .page-link {
-  color: inherit;
-}
-
 a.active,
 a.active:visited,
 button.active,
@@ -182,6 +178,7 @@ body [role~="banner"] button,
 .site-nav .page-link:not(:last-child),
 label {
   display: inline-block;
+  color: #000;
   width: auto;
   box-sizing: content-box;
   min-width: 1.5em;
