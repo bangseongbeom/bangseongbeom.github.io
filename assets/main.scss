@@ -476,7 +476,8 @@ blockquote {
   text-align: right;
   line-height: 1.5;
   margin: auto;
-  max-width: $content-width;
+  padding: 12px;
+  max-width: calc(#{$content-width} - 12px - 12px);
 }
 
 .site-nav::after {
