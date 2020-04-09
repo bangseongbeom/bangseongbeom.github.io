@@ -291,7 +291,8 @@ button:hover,
 .site-nav .page-link:hover,
 .site-nav .page-link:not(:last-child):hover,
 .site-nav .site-title a:hover,
-label:hover {
+label:hover,
+summary:hover {
   background: #ddd;
 }
 
@@ -309,7 +310,8 @@ a:focus,
 button:focus,
 .site-nav .page-link:focus,
 .site-nav .page-link:not(:last-child):focus,
-.site-nav .site-title a:focus {
+.site-nav .site-title a:focus,
+summary:focus {
   background: #ddd;
   outline-width: thick;
   outline-color: black;
@@ -328,7 +330,8 @@ a:focus {
 a:active, button:active,
 .site-nav .page-link:active,
 .site-nav .page-link:not(:last-child):active,
-.site-nav .site-title a:active {
+.site-nav .site-title a:active,
+summary:active {
   background: #ccc;
 }
 
