@@ -190,7 +190,7 @@ label {
   text-align: center;
   text-decoration: underline;
   background: none;
-  font-size: 16px;
+  font-size: inherit;
   font-weight: normal;
   line-height: 1.5;
   padding: 0.75em;
@@ -483,6 +483,10 @@ blockquote {
   margin: auto;
   padding: 12px;
   max-width: calc(#{$content-width} - 12px - 12px);
+}
+
+.site-nav > * {
+  font-size: 16px;
 }
 
 .site-nav::after {
