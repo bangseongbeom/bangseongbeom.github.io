@@ -3,11 +3,11 @@ title: AF_INET vs PF_INET
 category: linux
 ---
 
-리눅스 소켓 프로그래밍을 처음 설계할 당시에는, 프로토콜과 프로토콜의 주소 체계를 별개의 개념으로 바라보았습니다. 그러나 지금은 그렇지 않죠.
+`192.168.0.1`같은 IP 주소를 꼭 인터넷 프로토콜에서만 사용해야 할까요? 다른 '프로토콜'에서 IP '주소 체계'를 사용하도록 하면 어떨까요? 
 
 ## 원래 의도
 
-아주 오래 전 소켓 프로그래밍을 설계할 당시에는, 확장성을 위해 한 종류의 '주소 체계'가 여러 '프로토콜'을 지원할 수 있도록 했습니다[^bgnet-1]. 인터넷 프로토콜을 예로 들자면 `192.168.0.1`, `8.8.4.4`같은 주소 체계가 인터넷 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
+아주 오래 전 소켓 프로그래밍을 설계한 사람들은, 확장성을 위해 한 종류의 '주소 체계'가 여러 '프로토콜'을 지원할 수 있도록 했습니다[^bgnet-1]. 인터넷 프로토콜을 예로 들자면, `192.168.0.1`, `8.8.4.4`같은 주소 체계가 인터넷 프로토콜뿐만 아니라 다른 프로토콜도 지원하는 식입니다.
 
 [^bgnet-1]: <http://beej.us/guide/bgnet/html/#socket>
 
@@ -37,6 +37,7 @@ sockfd = socket(PF_INET, SOCK_STREAM, 0); // PF로 시작하는 상수 사용
 물론 하나의 주소 체계가 여러 프로토콜을 지원하는 일은 **실제로 일어나지 않았습니다[^bgnet-2].**
 
 [^bgnet-2]: <http://beej.us/guide/bgnet/html/#socket>
+
     > That didn’t happen. And they all lived happily ever after, The End.
 
 [리눅스 커널](https://github.com/torvalds/linux/blob/26bc672134241a080a83b2ab9aa8abede8d30e1c/include/linux/socket.h#L215-L219)에서도 이 두 상수 종류를 구분하지 않고, PF로 시작하는 상수와 AF로 시작하는 상수가 서로 같은 값을 가지도록 정의하고 있습니다:
@@ -48,6 +49,8 @@ sockfd = socket(PF_INET, SOCK_STREAM, 0); // PF로 시작하는 상수 사용
 #define PF_LOCAL	AF_LOCAL
 #define PF_INET		AF_INET
 ```
+
+즉, 리눅스에서는 PF를 써야 할 자리에 AF를 써도 되고, AF를 써야 할 자리에 PF를 써도 됩니다.
 
 ## 권장 방법
 
