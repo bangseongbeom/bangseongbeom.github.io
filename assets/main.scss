@@ -676,6 +676,11 @@ pre.highlight {
   background: yellow;
 }
 
+.footnote {
+  border-top: 3px solid currentcolor;
+  margin: 1.5em 0;
+}
+
 .footnote::before {
 //   content: "[";
 //   -webkit-user-select: text;
