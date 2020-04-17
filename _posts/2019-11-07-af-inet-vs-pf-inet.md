@@ -56,7 +56,7 @@ sockfd = socket(PF_INET, SOCK_STREAM, 0); // PF로 시작하는 상수 사용
 
 AF와 PF는 서로 아무런 차이가 없다는 것을 알았습니다. 그렇다면 둘 중 어느 것을 사용하는 것이 좋을까요? 원래 의도를 존중하여 AF를 쓸 자리에는 AF를, PF를 쓸 자리에는 PF를 써야 할까요? 아니면 단순히 AF와 PF 중 하나만 골라서 사용할까요?
 
-사실 저도 잘 모르겠습니다. 일단 몇몇 사례를 조사했습니다.
+몇몇 사례를 조사했지만, 권장 방식이 어느 하나로 통일되어 있지는 않은 것 같습니다.
 
 유명한 소켓 프로그래밍 입문서인 <Beej's Guide to Network Programming>에서는 AF_INET과 PF_INET을 [설계 당시의 의도대로 구별하여 사용](http://beej.us/guide/bgnet/html/#socket)하고 있습니다:
 
