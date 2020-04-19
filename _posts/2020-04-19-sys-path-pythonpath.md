@@ -30,6 +30,8 @@ print(sys.path)
 
 이제 `example.py`를 실행합니다. 다음과 같이 [`sys.path`]에 여러 경로가 추가되어 있는 것을 확인할 수 있습니다:
 
+실행:
+
 ```sh
 python3 example.py
 ```
@@ -89,6 +91,8 @@ import common  # common.py 불러오기
     > The format is the same as the shell’s PATH: one or more directory pathnames separated by os.pathsep (e.g. colons on Unix or semicolons on Windows).
 
 다음 명령어는 [`PYTHONPATH`] 환경 변수에 `/oh/my/pythonpath1`과`/oh/my/pythonpath2`를 추가한 뒤 파이썬 파일을 실행합니다. [`sys.path`]에 `'/oh/my/pythonpath1'`, `'/oh/my/pythonpath2'`가 추가된 것을 확인할 수 있습니다:
+
+실행:
 
 ```sh
 PYTHONPATH=/oh/my/pythonpath1:/oh/my/pythonpath2 python3 example.py
