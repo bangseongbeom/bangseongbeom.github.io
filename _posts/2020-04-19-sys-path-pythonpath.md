@@ -46,25 +46,30 @@ python3 example.py
 
 `sys.path`는 파이썬 내부적으로 다음과 같이 구성됩니다:
 
-1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^module-search-path-1]**
+1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
     예시에서는 이로 인해 `'/home/ubuntu'`가 추가되었습니다.
 
-    ℹ️정보: 특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면, 파이썬 파일이라는 것이 존재하지 않으므로 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다.
+    ℹ️정보: 특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면, 파이썬 파일이라는 것이 존재하지 않으므로 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
   
-2. **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^module-search-path-2]**
+2. **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
 
     예시에서는 이로 인해 `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`가 추가되었습니다.
     
     ℹ️정보: [`sys.path`]에는 디렉터리 경로뿐만 아니라 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
     
-[^module-search-path-1]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^the-module-search-path-1]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
-    > The directory containing the input script (or the current directory when no file is specified).
+    > - The directory containing the input script
+    
 
-[^module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^the-module-search-path-1-current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
-    > The installation-dependent default.
+    > (or the current directory when no file is specified)
+
+[^the-module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+
+    > - The installation-dependent default.
 
 ## `sys.path` 수정하기
 
