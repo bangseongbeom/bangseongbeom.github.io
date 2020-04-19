@@ -57,5 +57,5 @@ binfmt.d                 group-               magic              rc2.d          
 
 ## 참고
 
-- [What does the .d stand for in directory names?](https://unix.stackexchange.com/questions/4029/what-does-the-d-stand-for-in-directory-names): 관련 스택오버플로 질문
-- [In linux, why are folders for configuration files always named *.d](https://superuser.com/questions/230247/in-linux-why-are-folders-for-configuration-files-always-named-d): 관련 스택오버플로 질문
+- [What does the .d stand for in directory names? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/4029/what-does-the-d-stand-for-in-directory-names): 관련 스택오버플로 질문
+- [In linux, why are folders for configuration files always named \*.d - Super User](https://superuser.com/questions/230247/in-linux-why-are-folders-for-configuration-files-always-named-d): 관련 스택오버플로 질문
