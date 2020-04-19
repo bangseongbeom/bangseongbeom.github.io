@@ -1,5 +1,5 @@
 ---
-title: `sys.path`, `PYTHONPATH`
+title: sys.path, PYTHONPATH
 category: python
 ---
 
