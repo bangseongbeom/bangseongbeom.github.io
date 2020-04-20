@@ -49,7 +49,9 @@ pre {
 }
 
 ul,
-ol {
+ol,
+li > ul,
+li > ol {
   margin: 1em 0em 1em 1em;
 }
 
