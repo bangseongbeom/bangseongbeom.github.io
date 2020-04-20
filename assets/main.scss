@@ -781,3 +781,12 @@ hr {
   margin: 1.5em 0;
   padding: 0 1.5em;
 }
+
+.example::before {
+  display: block;
+  content: "예시";
+  font-size: smaller;
+  font-weight: bold;
+  color: #3c73d5;
+  margin: 1.5em 0;
+}
