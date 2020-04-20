@@ -659,9 +659,9 @@ code {
   background: #dce3f1;
 }
 
-code {
-  padding: 0.125em 0.25em;
-}
+// code {
+//   padding: 0.125em 0.25em;
+// }
 
 .highlighter-rouge pre.highlight {
   border: thin solid gainsboro;
@@ -669,9 +669,9 @@ code {
   background: #f6f6f6;
 }
 
-.example .highlighter-rouge pre.highlight {
-  background: #dce3f1;
-}
+// .example .highlighter-rouge pre.highlight {
+//   background: #dce3f1;
+// }
 
 pre.highlight {
   margin-bottom: 0;
@@ -776,10 +776,9 @@ hr {
 // }
 
 .example {
-  border: 4px solid #3c73d5;
-  background: #eef2fa;
+  border-left: 4px solid #3c73d5;
+  padding: 0.25em;
   margin: 1.5em 0;
-  padding: 0 1.5em;
 }
 
 .example::before {
