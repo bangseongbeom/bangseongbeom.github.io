@@ -654,14 +654,14 @@ code {
   background: #f6f6f6;
 }
 
-.example pre,
-.example code {
-  background: #dce3f1;
-}
-
-// code {
-//   padding: 0.125em 0.25em;
+// .example pre,
+// .example code {
+//   background: #dce3f1;
 // }
+
+code {
+  padding: 0.125em 0.25em;
+}
 
 .highlighter-rouge pre.highlight {
   border: thin solid gainsboro;
