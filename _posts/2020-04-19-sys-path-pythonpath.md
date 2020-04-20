@@ -49,7 +49,7 @@ Hello, world!
 
 [`sys.path`]에는 파이썬에 의해 기본적으로 몇 가지 경로가 미리 추가되어 있습니다.
 
-1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
+1.  **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
     <div markdown="1" class="example">
 
@@ -70,7 +70,7 @@ Hello, world!
 
     ℹ️정보: 특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면 어떻게 될까요? 이때는 파이썬 파일이라는 것이 존재하지 않으므로, 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
   
-2. **`PYTHONPATH` 환경 변수**
+2.  **`PYTHONPATH` 환경 변수**
 
     파이썬 코드 내부에서 [`sys.path`]를 조작하는 것뿐만 아니라, 파이썬 코드 밖에서도 [`PYTHONPATH`] 환경 변수를 조작해 [`sys.path`]에 경로를 추가할 수 있습니다.
 
@@ -99,7 +99,7 @@ Hello, world!
     
     </div>
 
-3. **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
+3.  **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
 
     <div markdown="1" class="example">
 
