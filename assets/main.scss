@@ -421,6 +421,7 @@ blockquote {
   font-size: inherit;
   color: inherit;
   border-left-color: lightgray;
+  padding-left: 0.5em;
   font-style: inherit;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -769,7 +770,7 @@ hr {
 
 .example {
   border-left: 4px solid #3c73d5;
-  padding-left: 1em;
+  padding-left: 0.5em;
   margin: 1.5em 0;
 }
 
@@ -785,7 +786,7 @@ hr {
 
 .note {
   border-left: 4px solid #02c39a;
-  padding-left: 1em;
+  padding-left: 0.5em;
   margin: 1.5em 0;
 }
 
