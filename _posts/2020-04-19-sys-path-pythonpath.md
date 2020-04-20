@@ -17,18 +17,11 @@ category: python
 
 ### 예시
 
-<figure>
+`/opt/common.py` 파일:
     
 ```py
 print("Hello, world!")
 ```
-
-<figcaption>
-
-`/opt/common.py` 파일
-
-</figcaption>
-<figure>
 
 `/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다:
 
