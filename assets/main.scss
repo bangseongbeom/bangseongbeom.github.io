@@ -784,6 +784,7 @@ hr {
 .example::before {
   display: block;
   content: "예시";
+  line-height: 1.25;
   font-size: larger;
   font-weight: bold;
   color: #3c73d5;
