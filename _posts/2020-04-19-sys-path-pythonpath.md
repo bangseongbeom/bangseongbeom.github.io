@@ -39,7 +39,7 @@ python3 example.py
 
 결과:
 
-```py
+```
 Hello, world!
 ```
 
@@ -58,7 +58,7 @@ Hello, world!
     
     실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
     
-    ```py
+    ```
     [`'/home/ubuntu'`, ...]
     ```
 
@@ -85,7 +85,7 @@ Hello, world!
 
     실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:
 
-    ```py
+    ```
     [..., '/foo', '/bar', ...]
     ```
 
@@ -100,7 +100,7 @@ Hello, world!
 
     실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
 
-    ```py
+    ```
     [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
     `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
     ```
