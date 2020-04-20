@@ -17,7 +17,7 @@ category: python
 
 ### 예시
 
-<div class="example" markdown="1">
+<div markdown="1" class="example">
 
 `/opt/common.py` 파일:
     
