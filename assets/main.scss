@@ -782,6 +782,8 @@ hr {
   font-weight: bold;
   color: #3c73d5;
   margin: 1em 0;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .note {
@@ -798,4 +800,6 @@ hr {
   font-weight: bold;
   color: #02c39a;
   margin: 1em 0;
+  -webkit-user-select: text;
+  user-select: text;
 }
