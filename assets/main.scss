@@ -654,6 +654,11 @@ code {
   background: #f6f6f6;
 }
 
+.example pre,
+.example code {
+  background: #98c1d9;
+}
+
 code {
   padding: 0.125em 0.25em;
 }
@@ -770,7 +775,7 @@ hr {
 
 .example {
   border: 2px solid #98c1d9;
-  background: #e0fbfc;
+  background: #e1e5f2;
   margin: 1.5em 0;
   padding: 0 1.5em;
 }
