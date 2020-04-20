@@ -24,7 +24,9 @@ print("Hello, world!")
 ```
 
 <figcaption>
-    `/opt/common.py` 파일
+
+`/opt/common.py` 파일
+
 </figcaption>
 <figure>
 
