@@ -17,6 +17,8 @@ category: python
 
 ### 예시
 
+<div class="example">
+
 `/opt/common.py` 파일:
     
 ```py
@@ -42,6 +44,8 @@ python3 example.py
 ```
 Hello, world!
 ```
+
+</div>
 
 ## `sys.path`의 기본 구성과 `PYTHONPATH`
 
