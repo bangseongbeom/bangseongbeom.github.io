@@ -49,28 +49,28 @@ Hello, world!
 
 [`sys.path`]에는 파이썬에 의해 기본적으로 몇 가지 경로가 미리 추가되어 있습니다.
 
-1.  **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
+1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
-    <div markdown="1" class="example">
+   <div markdown="1" class="example">
 
-    `/home/ubuntu/example.py` 파일:
+   `/home/ubuntu/example.py` 파일:
     
     ```py
-    import sys
-    print(sys.path)
+   import sys
+   print(sys.path)
     ```
     
     실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
     
     ```
-    [`'/home/ubuntu'`, ...]
+   [`'/home/ubuntu'`, ...]
     ```
     
     </div>
 
     ℹ️정보: 특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면 어떻게 될까요? 이때는 파이썬 파일이라는 것이 존재하지 않으므로, 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
   
-2.  **`PYTHONPATH` 환경 변수**
+2. **`PYTHONPATH` 환경 변수**
 
     파이썬 코드 내부에서 [`sys.path`]를 조작하는 것뿐만 아니라, 파이썬 코드 밖에서도 [`PYTHONPATH`] 환경 변수를 조작해 [`sys.path`]에 경로를 추가할 수 있습니다.
 
@@ -81,40 +81,40 @@ Hello, world!
     `/home/ubuntu/example.py` 파일:
     
     ```py
-    import sys
-    print(sys.path)
+   import sys
+   print(sys.path)
     ```
 
     실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 뒤, 파이썬 파일을 실행합니다:
 
     ```sh
-    PYTHONPATH=/foo:/bar python3 example.py
+   PYTHONPATH=/foo:/bar python3 example.py
     ```
 
     실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:
 
     ```
-    [..., '/foo', '/bar', ...]
+   [..., '/foo', '/bar', ...]
     ```
     
     </div>
 
-3.  **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
+3. **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
 
     <div markdown="1" class="example">
 
     `/home/ubuntu/example.py` 파일:
     
     ```py
-    import sys
-    print(sys.path)
+   import sys
+   print(sys.path)
     ```
 
     실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
 
     ```
-    [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
-    `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
+   [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
+   `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
     ```
     
     </div>
