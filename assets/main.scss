@@ -656,19 +656,21 @@ code {
 
 .example pre,
 .example code {
-  background: #98c1d9;
+  background: #dccdfd;
 }
 
 code {
   padding: 0.125em 0.25em;
 }
 
-pre.highlight {
-  .highlighter-rouge & {
-    border: thin solid gainsboro;
-    border: none;
-    background: #f6f6f6;
-  }
+.highlighter-rouge pre.highlight {
+  border: thin solid gainsboro;
+  border: none;
+  background: #f6f6f6;
+}
+
+.example .highlighter-rouge pre.highlight {
+  background: #dccdfd;
 }
 
 pre.highlight {
@@ -774,7 +776,7 @@ hr {
 // }
 
 .example {
-  border: 2px solid #98c1d9;
+  border: 2px solid #8b80f9;
   background: #e1e5f2;
   margin: 1.5em 0;
   padding: 0 1.5em;
