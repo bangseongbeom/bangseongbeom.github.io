@@ -654,11 +654,6 @@ code {
   background: #f6f6f6;
 }
 
-// .example pre,
-// .example code {
-//   background: #dce3f1;
-// }
-
 code {
   padding: 0.125em 0.25em;
 }
@@ -668,10 +663,6 @@ code {
   border: none;
   background: #f6f6f6;
 }
-
-// .example .highlighter-rouge pre.highlight {
-//   background: #dce3f1;
-// }
 
 pre.highlight {
   margin-bottom: 0;
@@ -775,18 +766,35 @@ hr {
 //   content: "🌐";
 // }
 
+
 .example {
-  border-left: 4px solid #3c73d5;
-  padding-left: 1em;
+  border-left: 8px solid #d5c900;
+  padding-left: 0.5em;
   margin: 1.5em 0;
 }
 
 .example::before {
   display: block;
-  content: "예시";
+  content: "⚽예시";
   line-height: 1.25;
   font-size: larger;
   font-weight: bold;
-  color: #3c73d5;
+  color: #d5c900;
+  margin: 1em 0;
+}
+
+.note {
+  border-left: 8px solid #02c39a;
+  padding-left: 0.5em;
+  margin: 1.5em 0;
+}
+
+.note::before {
+  display: block;
+  content: "💡참고";
+  line-height: 1.25;
+  font-size: larger;
+  font-weight: bold;
+  color: #02c39a;
   margin: 1em 0;
 }
