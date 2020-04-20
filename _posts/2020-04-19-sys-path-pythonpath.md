@@ -18,9 +18,11 @@ category: python
 ### 예시
 
 <figure>
+    
 ```py
 print("Hello, world!")
 ```
+
 <figcaption>`/opt/common.py` 파일</figcaption>
 <figure>
 
