@@ -15,8 +15,6 @@ category: python
 
 [`append()`]: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
 
-### 예시
-
 <div markdown="1" class="example">
 
 `/opt/common.py` 파일:
@@ -53,6 +51,8 @@ Hello, world!
 
 1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
+    <div markdown="1" class="example">
+
     `/home/ubuntu/example.py` 파일:
     
     ```py
@@ -65,6 +65,8 @@ Hello, world!
     ```
     [`'/home/ubuntu'`, ...]
     ```
+    
+    </div>
 
     ℹ️정보: 특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면 어떻게 될까요? 이때는 파이썬 파일이라는 것이 존재하지 않으므로, 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
   
@@ -73,6 +75,8 @@ Hello, world!
     파이썬 코드 내부에서 [`sys.path`]를 조작하는 것뿐만 아니라, 파이썬 코드 밖에서도 [`PYTHONPATH`] 환경 변수를 조작해 [`sys.path`]에 경로를 추가할 수 있습니다.
 
     [`PYTHONPATH`]에는 [`sys.path`]에 추가할 여러 경로들이 들어갑니다. 리눅스에서는 `/foo:/bar`처럼 `:`로 두 경로를 구분하고, 윈도우에서는 `/foo;/bar`처럼 `;`로 두 경로를 구분합니다. (`PATH` 환경 변수와 동일한 방식)[^pythonpath-format]
+    
+    <div markdown="1" class="example">
 
     `/home/ubuntu/example.py` 파일:
     
@@ -92,8 +96,12 @@ Hello, world!
     ```
     [..., '/foo', '/bar', ...]
     ```
+    
+    </div>
 
 3. **파이썬의 설치 환경에 따라 자동으로 추가되는 경로[^the-module-search-path-2]**
+
+    <div markdown="1" class="example">
 
     `/home/ubuntu/example.py` 파일:
     
@@ -108,6 +116,8 @@ Hello, world!
     [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
     `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
     ```
+    
+    </div>
 
     ℹ️정보: [`sys.path`]에는 디렉터리 경로뿐만 아니라 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
     
