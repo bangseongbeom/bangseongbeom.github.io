@@ -68,7 +68,7 @@ Hello, world!
     
     </div>
 
-    <div markdown="1" class="info">
+    <div markdown="1" class="note">
     
     특정 파이썬 파일을 실행하는 것 대신 파이썬 인터프리터에서 직접 `print(sys.path)`를 입력하면 어떻게 될까요? 이때는 파이썬 파일이라는 것이 존재하지 않으므로, 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 직접 입력해보면 `'/home/ubuntu'` 대신 `''`(빈 문자열은 결국 현재 디렉터리)가 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
     
@@ -123,7 +123,7 @@ Hello, world!
     
     </div>
 
-    <div markdown="1" class="info">
+    <div markdown="1" class="note">
     
     [`sys.path`]에는 디렉터리 경로뿐만 아니라 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
     
