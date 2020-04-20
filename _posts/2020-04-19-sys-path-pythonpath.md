@@ -100,7 +100,7 @@ import common  # common.py 불러오기
 실행:
 
 ```sh
-$ PYTHONPATH=/oh/my/pythonpath1:/oh/my/pythonpath2 python3 example.py
+PYTHONPATH=/oh/my/pythonpath1:/oh/my/pythonpath2 python3 example.py
 ```
 
 결과 ([`sys.path`]에 `'/oh/my/pythonpath1'`, `'/oh/my/pythonpath2'`가 추가된 것을 확인할 수 있습니다):
