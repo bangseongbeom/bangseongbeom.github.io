@@ -45,7 +45,7 @@ Hello, world!
 
 ## `sys.path`의 기본 구성과 `PYTHONPATH`
 
-[`sys.path`]에는 기본적으로 파이썬에 의해 몇 가지 경로가 추가되어 있습니다:
+[`sys.path`]에는 파이썬에 의해 기본적으로 몇 가지 경로가 미리 추가되어 있습니다.
 
 1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
