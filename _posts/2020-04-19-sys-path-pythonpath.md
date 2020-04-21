@@ -65,9 +65,9 @@ Hello, world!
 
 [`sys.path`]에는 파이썬에 의해 기본적으로 몇 가지 경로가 미리 추가되어 있습니다.
 
-### 실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로
+### `.py` 파일이 속한 디렉터리의 절대 경로
 
-[^the-module-search-path-1]
+[`sys.path`]에는 가장 먼저 `.py` 파일이 속한 디렉터리의 절대 경로가 추가됩니다[^the-module-search-path-1].
 
 [^the-module-search-path-1]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
@@ -119,7 +119,9 @@ print(sys.path)
   
 ### `PYTHONPATH` 환경 변수
 
-파이썬 코드 내부에서 [`sys.path`]를 조작하는 것뿐만 아니라, 파이썬 코드 밖에서도 [`PYTHONPATH`] 환경 변수를 조작해 [`sys.path`]에 경로를 추가할 수 있습니다.
+[`PYTHONPATH`] 환경 변수에 경로를 추가하면, 파이썬은 이 경로들을 [`sys.path`]에 추가해줍니다.
+
+이를 통해 파이썬 코드 내부에서 뿐만 아니라 파이썬 코드 밖에서도 [`sys.path`]를 조작할 수 있습니다.
 
 [`PYTHONPATH`]에는 [`sys.path`]에 추가할 여러 경로들이 들어갑니다. 리눅스에서는 `/foo:/bar`처럼 `:`로 두 경로를 구분하고, 윈도우에서는 `/foo;/bar`처럼 `;`로 두 경로를 구분합니다. (`PATH` 환경 변수와 동일한 방식)[^pythonpath-format]
 
