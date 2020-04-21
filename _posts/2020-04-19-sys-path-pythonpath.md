@@ -272,7 +272,7 @@ print(sys.path)
 2. `PYTHONPATH` 환경 변수
 3. 기타 기본 경로
 
-만약 표준 모듈과 같은 이름으로 로컬 파일을 만들게 되면 문제가 발생할 수 있습니다[^error]. 자세한 내용은 ...을 참고하세요.
+만약 표준 모듈과 같은 이름으로 로컬 파일을 만들게 되면, 위의 순서로 인해 로컬 파일을 우선하여 불러옵니다. 이로 인해 문제가 발생할 수 있습니다[^error]. 자세한 내용은 ...을 참고하세요.
 
 [^error]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
