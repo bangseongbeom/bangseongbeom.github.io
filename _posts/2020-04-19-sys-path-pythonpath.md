@@ -19,7 +19,7 @@ category: python
 
 <figcaption markdown="span">
 
-`/opt/common.py`:
+`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:
 
 </figcaption>
     
@@ -95,7 +95,7 @@ print(sys.path)
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py` 실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
+실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
 
 </figcaption>
 
