@@ -49,7 +49,7 @@ import common
 
 <figcaption markdown="span">
 
-실행 결과:
+`/home/ubuntu/example.py` 실행 결과:
 
 </figcaption>
 
@@ -95,7 +95,7 @@ print(sys.path)
 
 <figcaption markdown="span">
 
-실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
+`/home/ubuntu/example.py` 실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
 
 </figcaption>
 
@@ -150,7 +150,7 @@ print(sys.path)
 
 <figcaption markdown="span">
 
-실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 뒤, 파이썬 파일을 실행합니다:
+실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 상태로 실행합니다:
 
 </figcaption>
 
@@ -205,7 +205,7 @@ print(sys.path)
 
 <figcaption markdown="span">
 
-실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
+`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
 
 </figcaption>
 
