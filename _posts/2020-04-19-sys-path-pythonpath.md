@@ -71,7 +71,7 @@ Hello, world!
 
 [^the-module-search-path-1]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
-    > - The directory containing the input script
+    > The directory containing the input script
     
 
 <div markdown="1" class="example">
@@ -182,7 +182,7 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 [^the-module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
-    > - The installation-dependent default.
+    > The installation-dependent default.
 
 <div markdown="1" class="example">
 
@@ -228,4 +228,8 @@ print(sys.path)
 
 `import`는 [`sys.path`] 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 특정 경로에서 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다.
 
-...
+[`sys.path`]의 기본값으로 추가되는 경로 역시 순서대로 추가됩니다. [파이썬 공식 튜토리얼](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)에 따르면 이 순서는 다음과 같습니다:
+
+1. `.py` 파일이 속한 디렉터리의 절대 경로
+2. `PYTHONPATH` 환경 변수
+3. 기타 기본 경로
