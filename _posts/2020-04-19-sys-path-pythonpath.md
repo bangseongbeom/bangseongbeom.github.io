@@ -80,7 +80,7 @@ Hello, world!
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py` 파일:
+`/home/ubuntu/example.py`:
 
 </figcaption>
 
@@ -133,7 +133,7 @@ print(sys.path)
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py` 파일:
+`example.py`:
 
 </figcaption>
 
@@ -188,7 +188,7 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py` 파일:
+`example.py`:
 
 </figcaption>
 
