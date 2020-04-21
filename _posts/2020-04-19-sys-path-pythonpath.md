@@ -256,7 +256,7 @@ print(sys.path)
 
 `import`는 [`sys.path`] 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 특정 경로에서 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다.
 
-[`sys.path`]의 기본값으로 추가되는 경로는 이 문서에서 언급한 순서대로 추가됩니다[^ahead]:
+[`sys.path`]의 기본값은 이 문서에서 언급한 순서대로 추가됩니다[^ahead]:
 
 [^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
