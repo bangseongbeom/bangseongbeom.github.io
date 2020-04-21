@@ -17,13 +17,13 @@ category: python
 
 <div markdown="1" class="example">
 
-<figure kramdown="1">
+<figure markdown="1">
     
 ```py
 print("Hello, world!")
 ```
 
-<figcaption>
+<figcaption markdown="1">
 
 `/opt/common.py` 파일
 
@@ -31,7 +31,7 @@ print("Hello, world!")
 
 </figure>
 
-<figure kramdown="1">
+<figure markdown="1">
 
 ```py
 import sys
@@ -39,7 +39,7 @@ sys.path.append("/opt")
 import common
 ```
 
-<figcaption>
+<figcaption markdown="1">
 
 `/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다.
 
