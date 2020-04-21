@@ -123,7 +123,7 @@ print(sys.path)
 
 <div markdown="1" class="note">
 
-특정 파이썬 파일을 실행하는 것 대신, 파이썬 인터프리터에서 **직접 `print(sys.path)`를 입력**하면 어떻게 될까요? 이때는 파이썬 파일이 존재하지 않으므로, `.py` 파일이 속한 디렉터리의 절대 경로 대신 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 실행해보면 `'/home/ubuntu'`같은 절대 경로 대신 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 추가되는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
+특정 파이썬 파일을 실행하는 것 대신, 파이썬 인터프리터에서 **직접 `print(sys.path)`를 실행**하면 어떻게 될까요? 이때는 파이썬 파일이 존재하지 않으므로, 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 `print(sys.path)`를 실행해보면 `'/home/ubuntu'`같은 절대 경로 대신 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
  
 [^the-module-search-path-1-current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
