@@ -47,17 +47,33 @@ import common
 
 </figure>
 
+<figure markdown="1">
+
+<figcaption markdown="span">
+
 실행:
+
+</figcaption>
 
 ```sh
 python3 example.py
 ```
 
+</figure>
+
+<figure markdown="1">
+
+<figcaption markdown="span">
+
 결과:
+
+</figcaption>
 
 ```
 Hello, world!
 ```
+
+</figure>
 
 </div>
 
@@ -67,20 +83,36 @@ Hello, world!
 
 1. **실행하는데 사용한 `.py` 파일이 속한 디렉터리의 절대 경로[^the-module-search-path-1]**
 
-   <div markdown="1" class="example">
+    <div markdown="1" class="example">
 
-   `/home/ubuntu/example.py` 파일:
+    <figure markdown="1">
+
+    <figcaption markdown="span">
+
+    `/home/ubuntu/example.py` 파일:
+    
+    </figcaption>
     
     ```py
    import sys
    print(sys.path)
     ```
     
+    </figure>
+
+    <figure markdown="1">
+
+    <figcaption markdown="span">
+
     실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
+    
+    </figcation>
     
     ```
    [`'/home/ubuntu'`, ...]
     ```
+    
+    </figure>
     
     </div>
 
@@ -98,24 +130,48 @@ Hello, world!
     
     <div markdown="1" class="example">
 
+    <figure markdown="1">
+
+    <figcaption markdown="span">
+
     `/home/ubuntu/example.py` 파일:
+    
+    </figcaption>
     
     ```py
    import sys
    print(sys.path)
     ```
+    
+    </figure>
+
+    <figure markdown="1">
+
+    <figcaption markdown="span">
 
     실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 뒤, 파이썬 파일을 실행합니다:
+    
+    </figcaption>
 
     ```sh
    PYTHONPATH=/foo:/bar python3 example.py
     ```
+    
+    </figure>
+
+    <figure markdown="1">
+
+    <figcaption markdown="span">
 
     실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:
+    
+    </figcaption>
 
     ```
    [..., '/foo', '/bar', ...]
     ```
+    
+    </figure>
     
     </div>
 
@@ -123,19 +179,35 @@ Hello, world!
 
     <div markdown="1" class="example">
 
+    <figure markdown="1">
+
+    <figcaption markdown="span">
+
     `/home/ubuntu/example.py` 파일:
+    
+    </figcaption>
     
     ```py
    import sys
    print(sys.path)
     ```
+    
+    </figure>
+
+    <figure markdown="1">
+
+    <figcaption markdown="span">
 
     실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
+    
+    </figcaption>
 
     ```
    [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
    `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
     ```
+    
+    </figure>
     
     </div>
 
