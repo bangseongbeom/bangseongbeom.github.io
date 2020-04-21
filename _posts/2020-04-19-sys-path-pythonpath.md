@@ -223,3 +223,9 @@ print(sys.path)
 [`sys.path`]에는 디렉터리 경로뿐만 아니라 `'/usr/lib/python36.zip'`처럼 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
 
 </div>
+
+## 주의: `sys.path`의 순서
+
+`import`는 `sys.path` 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다.
+
+...
