@@ -206,7 +206,7 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 ### 기타 기본 경로
 
-이외에도 [`sys.path`]에는 파이썬에 포함된 여러 표준 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^installation-dependent].
+이외에도 [`sys.path`]에는 파이썬에 포함된 여러 내장 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^installation-dependent].
 
 [^installation-dependent]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
@@ -272,7 +272,7 @@ print(sys.path)
 2. `PYTHONPATH` 환경 변수
 3. 기타 기본 경로
 
-만약 표준 모듈과 같은 이름으로 로컬 파일을 만들게 되면, 위의 순서로 인해 로컬 파일을 우선하여 불러옵니다. 이로 인해 문제가 발생할 수 있습니다[^error]. 자세한 내용은 ...을 참고하세요.
+만약 내장 모듈과 같은 이름으로 로컬 파일을 만들게 되면, 위의 순서로 인해 로컬 파일을 우선하여 불러옵니다. 이로 인해 문제가 발생할 수 있습니다[^error]. 자세한 내용은 ...을 참고하세요.
 
 [^error]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
