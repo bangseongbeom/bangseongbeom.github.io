@@ -11,9 +11,7 @@ category: python
 
 ## `sys.path`에 `append()`로 경로 추가
 
-[`sys.path`]는 디렉터리의 경로들이 기록된 문자열 리스트입니다. 이 리스트에 [`append()`] 메서드로 경로를 추가하면 해당 경로에 있는 파이썬 파일을 `import` 문으로 불러올 수 있습니다.
-
-[`append()`]: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
+[`sys.path`]는 디렉터리의 경로들이 기록된 문자열 리스트입니다. 이 리스트에 경로를 추가하면 해당 경로에 있는 파이썬 파일을 `import` 문으로 불러올 수 있습니다.
 
 <div markdown="1" class="example">
 
@@ -35,7 +33,7 @@ print("Hello, world!")
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다:
+`/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:
 
 </figcaption>
 
