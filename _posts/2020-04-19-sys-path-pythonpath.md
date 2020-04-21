@@ -3,7 +3,7 @@ title: sys.path, PYTHONPATH
 category: python
 ---
 
-파이썬에서는 모듈을 찾기 위한 기반 디렉터리 목록으로 [`sys.path`]와 [`PYTHONPATH`] 환경 변수를 사용합니다. 이 두 변수를 적절히 수정해 다른 디렉터리에 있는 파이썬 파일을 손쉽게 불러올 수 있습니다.
+`import` 문을 통해 다른 파이썬 파일을 불러올 때, 파이썬은 내부적으로 파일을 찾기 위해 [`sys.path`]와 [`PYTHONPATH`]에 있는 경로를 탐색합니다. 이 두 변수를 적절히 수정해 임의의 디렉터리에 있는 파이썬 파일을 손쉽게 불러올 수 있습니다.
 
 [`sys.path`]: https://docs.python.org/3/library/sys.html#sys.path
 
@@ -176,7 +176,7 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 ### 기타 기본 경로
 
-이외에도 파이썬에 설치된 여러 가지 모듈을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^the-module-search-path-2].
+이외에도 [`sys.path`]에는 파이썬에 포함된 여러 표준 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^the-module-search-path-2].
 
 [^the-module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
