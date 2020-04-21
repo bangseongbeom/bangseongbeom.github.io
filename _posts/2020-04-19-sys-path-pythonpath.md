@@ -67,9 +67,9 @@ Hello, world!
 
 ### `.py` 파일이 속한 디렉터리의 절대 경로
 
-[`sys.path`]에는 가장 먼저 `.py` 파일이 속한 디렉터리의 절대 경로가 추가됩니다[^the-module-search-path-1].
+[`sys.path`]에는 가장 먼저 `.py` 파일이 속한 디렉터리의 절대 경로가 추가됩니다[^input-script].
 
-[^the-module-search-path-1]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^input-script]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The directory containing the input script
     
@@ -109,9 +109,9 @@ print(sys.path)
 
 <div markdown="1" class="note">
 
-특정 파이썬 파일을 실행하는 것 대신, 파이썬 인터프리터에서 **직접 `print(sys.path)`를 실행**하면 어떻게 될까요? 이때는 파이썬 파일이 존재하지 않으므로, 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 `print(sys.path)`를 실행해보면 `'/home/ubuntu'`같은 절대 경로 대신 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다[^the-module-search-path-1-current-directory].
+특정 파이썬 파일을 실행하는 것 대신, 파이썬 인터프리터에서 **직접 `print(sys.path)`를 실행**하면 어떻게 될까요? 이때는 파이썬 파일이 존재하지 않으므로, 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 `print(sys.path)`를 실행해보면 `'/home/ubuntu'`같은 절대 경로 대신 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다[^current-directory].
  
-[^the-module-search-path-1-current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > (or the current directory when no file is specified)
 
@@ -178,9 +178,9 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 ### 기타 기본 경로
 
-이외에도 [`sys.path`]에는 파이썬에 포함된 여러 표준 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^the-module-search-path-2].
+이외에도 [`sys.path`]에는 파이썬에 포함된 여러 표준 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^installation-dependent].
 
-[^the-module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^installation-dependent]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The installation-dependent default.
 
@@ -228,7 +228,14 @@ print(sys.path)
 
 `import`는 [`sys.path`] 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 특정 경로에서 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다.
 
-[`sys.path`]의 기본값으로 추가되는 경로 역시 순서대로 추가됩니다. [파이썬 공식 튜토리얼](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)에 따르면 이 순서는 다음과 같습니다:
+[`sys.path`]의 기본값으로 추가되는 경로 역시 이 문서에서 언급한 순서대로 추가됩니다[^ahead]:
+
+[^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+
+    > - The directory containing the input script (or the current directory when no file is specified).
+    > - PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).
+    > - The installation-dependent default.
+    > The directory containing the script being run is placed at the beginning of the search path, ahead of the standard library path.
 
 1. `.py` 파일이 속한 디렉터리의 절대 경로
 2. `PYTHONPATH` 환경 변수
