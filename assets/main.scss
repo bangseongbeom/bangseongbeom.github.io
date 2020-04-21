@@ -52,7 +52,7 @@ ul,
 ol,
 li > ul,
 li > ol {
-  margin: 1.5em 0em 1.5em 1em;
+  margin: 1em 0em 1em 1em;
 }
 
 li,
@@ -61,7 +61,7 @@ li p {
 }
 
 p {
-  margin: 1.5em 0;
+  margin: 1em 0;
 }
 
 article {
@@ -768,38 +768,38 @@ hr {
 // }
 
 
-.example {
-  border-left: 4px solid #3c73d5;
+.example,
+.note {
+  border-left: 4px solid;
   padding-left: 0.5em;
-  margin: 1.5em 0;
+  margin: 1em 0;
+}
+
+.example::before,
+.note::before {
+  display: block;
+  line-height: 1.25;
+  font-size: larger;
+  font-weight: bold;
+  margin: 1em 0;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.example {
+  border-color: #3c73d5;
 }
 
 .example::before {
-  display: block;
   content: "⚽ 예시";
-  line-height: 1.25;
-  font-size: larger;
-  font-weight: bold;
   color: #3c73d5;
-  margin: 1em 0;
-  -webkit-user-select: text;
-  user-select: text;
 }
 
 .note {
-  border-left: 4px solid #02c39a;
-  padding-left: 0.5em;
-  margin: 1.5em 0;
+  border-color: #02c39a;
 }
 
 .note::before {
-  display: block;
   content: "💡 참고";
-  line-height: 1.25;
-  font-size: larger;
-  font-weight: bold;
   color: #02c39a;
-  margin: 1em 0;
-  -webkit-user-select: text;
-  user-select: text;
 }
