@@ -106,7 +106,7 @@ Hello, world!
 
     실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
     
-    </figcation>
+    </figcaption>
     
     ```
    [`'/home/ubuntu'`, ...]
