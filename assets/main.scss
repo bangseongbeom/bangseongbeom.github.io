@@ -418,7 +418,7 @@ blockquote {
   font-size: inherit;
   color: inherit;
   border-left-color: lightgray;
-  padding-left: 0.5em;
+  padding-left: 1em;
   font-style: inherit;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -767,11 +767,10 @@ hr {
 //   content: "🌐" " ";
 // }
 
-
 .example,
 .note {
   border-left: 4px solid;
-  padding-left: 0.5em;
+  padding-left: 1em;
   margin: 1em 0;
 }
 
