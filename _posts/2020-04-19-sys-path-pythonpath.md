@@ -77,7 +77,7 @@ Hello, world!
 
 </div>
 
-## `sys.path`의 기본 구성과 `PYTHONPATH`
+## `sys.path`의 기본값
 
 [`sys.path`]에는 파이썬에 의해 기본적으로 몇 가지 경로가 미리 추가되어 있습니다.
 
