@@ -17,19 +17,35 @@ category: python
 
 <div markdown="1" class="example">
 
-`/opt/common.py` 파일:
+<figure kramdown="1">
     
 ```py
 print("Hello, world!")
 ```
 
-`/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다:
+<figcaption>
+
+`/opt/common.py` 파일
+
+</figcaption>
+
+</figure>
+
+<figure kramdown="1">
 
 ```py
 import sys
 sys.path.append("/opt")
 import common
 ```
+
+<figcaption>
+
+`/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다.
+
+</figcaption>
+
+</figure>
 
 실행:
 
