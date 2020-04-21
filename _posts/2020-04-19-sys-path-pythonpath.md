@@ -19,7 +19,7 @@ category: python
 
 <figure markdown="1">
 
-<figcaption markdown="1">
+<figcaption markdown="span">
 
 `/opt/common.py` 파일:
 
@@ -33,7 +33,7 @@ print("Hello, world!")
 
 <figure markdown="1">
 
-<figcaption markdown="1">
+<figcaption markdown="span">
 
 `/home/ubuntu/example.py` 파일. [`sys.path`]에 `/opt` 디렉터리를 추가해 `common.py`를 `import`할 수 있도록 합니다:
 
