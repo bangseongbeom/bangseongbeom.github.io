@@ -188,9 +188,9 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 </div>
 
-### 파이썬의 설치 환경에 따라 자동으로 추가되는 경로
+### 기타 기본 경로
 
-[^the-module-search-path-2]
+이외에도 파이썬에 설치된 여러 가지 모듈을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^the-module-search-path-2].
 
 [^the-module-search-path-2]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
