@@ -33,7 +33,7 @@ print("Hello, world!")
 
 <figcaption markdown="span">
 
-`/home/ubuntu/example.py`. [`sys.path`]에 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:
+`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:
 
 </figcaption>
 
