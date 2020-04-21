@@ -72,7 +72,12 @@ Hello, world!
 [^input-script]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The directory containing the input script
-    
+
+특정 파이썬 파일을 실행하는 것 대신, **파이썬 인터프리터에서 직접 `print(sys.path)`를 실행**하면 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다[^current-directory].
+ 
+[^current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+
+    > (or the current directory when no file is specified)
 
 <div markdown="1" class="example">
 
@@ -107,13 +112,36 @@ print(sys.path)
 
 </div>
 
-<div markdown="1" class="note">
+<div markdown="1" class="example">
 
-특정 파이썬 파일을 실행하는 것 대신, 파이썬 인터프리터에서 **직접 `print(sys.path)`를 실행**하면 어떻게 될까요? 이때는 파이썬 파일이 존재하지 않으므로, 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다. 실제로 인터프리터에서 `print(sys.path)`를 실행해보면 `'/home/ubuntu'`같은 절대 경로 대신 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다[^current-directory].
- 
-[^current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+<figure markdown="1">
 
-    > (or the current directory when no file is specified)
+<figcaption markdown="span">
+
+`python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:
+
+</figcaption>
+
+```py
+>>> import sys
+>>> print(sys.path)
+```
+
+</figure>
+
+<figure markdown="1">
+
+<figcaption markdown="span">
+
+실행 결과 (일부 생략). 앞의 예시와 달리 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다:
+
+</figcaption>
+
+```
+[`''`, ...]
+```
+
+</figure>
 
 </div>
   
@@ -228,7 +256,7 @@ print(sys.path)
 
 `import`는 [`sys.path`] 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 특정 경로에서 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다.
 
-[`sys.path`]의 기본값으로 추가되는 경로 역시 이 문서에서 언급한 순서대로 추가됩니다[^ahead]:
+[`sys.path`]의 기본값으로 추가되는 경로는 이 문서에서 언급한 순서대로 추가됩니다[^ahead]:
 
 [^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
@@ -240,3 +268,9 @@ print(sys.path)
 1. `.py` 파일이 속한 디렉터리의 절대 경로
 2. `PYTHONPATH` 환경 변수
 3. 기타 기본 경로
+
+만약 표준 모듈과 같은 이름으로 로컬 파일을 만들게 되면 문제가 발생할 수 있습니다[^error]. 자세한 내용은 ...을 참고하세요.
+
+[^error]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+
+    > This means that scripts in that directory will be loaded instead of modules of the same name in the library directory. This is an error unless the replacement is intended.
