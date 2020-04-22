@@ -145,7 +145,7 @@ import mypackage.empty
 
 [^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
 
-    > For a package, the same effect can be achieved by including a __main__.py module, the contents of which will be executed when the module is run with -m.
+    > For a package, the same effect can be achieved by including a `__main__.py` module, the contents of which will be executed when the module is run with `-m`.
 
 {% include example.html %}
 
