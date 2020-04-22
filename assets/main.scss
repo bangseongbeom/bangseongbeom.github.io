@@ -775,8 +775,8 @@ hr {
   margin: 1em 0;
 }
 
-.example::before,
-.note::before {
+.example > :first-child,
+.note > :first-child {
   display: block;
   line-height: 1.25;
   font-size: larger;
@@ -790,8 +790,7 @@ hr {
   border-color: #3c73d5;
 }
 
-.example::before {
-  content: "⚽ 예시";
+.example > :first-child {
   color: #3c73d5;
 }
 
@@ -799,7 +798,6 @@ hr {
   border-color: #02c39a;
 }
 
-.note::before {
-  content: "💡 참고";
+.note > :first-child {
   color: #02c39a;
 }
