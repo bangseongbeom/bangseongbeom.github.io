@@ -117,7 +117,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 # 아무 것도 없음
 ```
 
-이제 `mypackage/main.py`를 만듭니다. 여기서 `mypackage/emtpy.py`를 `import`하기 위해서는 `import mypackage.empty`처럼 디렉터리 이름을 함께 명시해야 합니다:
+이제 `mypackage/main.py`를 만듭니다. 여기서 `mypackage/empty.py`를 `import`하기 위해서는 `import mypackage.empty`처럼 디렉터리 이름을 함께 명시해야 합니다:
 
 ```py
 # main.py
