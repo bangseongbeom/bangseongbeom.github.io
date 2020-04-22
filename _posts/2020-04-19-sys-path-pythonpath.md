@@ -67,71 +67,55 @@ Hello, world!
 
     > (or the current directory when no file is specified)
 
-<div markdown="1" class="example">
+{% include example.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`/home/ubuntu/example.py`:
-
-</figcaption>
+{% include figcaption.html %}`/home/ubuntu/example.py`:{% include endfigcaption.html %}
 
 ```py
 import sys
 print(sys.path)
 ```
 
-</figure>
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:
-
-</figcaption>
+{% include figcaption.html %}실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:{% include endfigcaption.html %}
 
 ```
 [`'/home/ubuntu'`, ...]
 ```
 
-</figure>
+{% include endfigure.html %}
 
-</div>
+{% include endexample.html %}
 
-<div markdown="1" class="example">
+{% include example.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:
-
-</figcaption>
+{% include figcaption.html %}`python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:{% include endfigcaption.html %}
 
 ```py
 >>> import sys
 >>> print(sys.path)
 ```
 
-</figure>
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-실행 결과 (일부 생략). 앞의 예시와 달리 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다:
-
-</figcaption>
+{% include figcaption.html %}실행 결과 (일부 생략). 앞의 예시와 달리 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다:{% include endfigcaption.html %}
 
 ```
 [`''`, ...]
 ```
 
-</figure>
+{% include endfigure.html %}
 
-</div>
+{% include endexample.html %}
   
 ### `PYTHONPATH` 환경 변수
 
@@ -145,52 +129,40 @@ print(sys.path)
 
     > The format is the same as the shell’s PATH: one or more directory pathnames separated by os.pathsep (e.g. colons on Unix or semicolons on Windows).
 
-<div markdown="1" class="example">
+{% include example.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`example.py`:
-
-</figcaption>
+{% include figcaption.html %}`example.py`:{% include endfigcaption.html %}
 
 ```py
 import sys
 print(sys.path)
 ```
 
-</figure>
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 상태로 실행합니다:
-
-</figcaption>
+{% include figcaption.html %}실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 상태로 실행합니다:{% include endfigcaption.html %}
 
 ```sh
 PYTHONPATH=/foo:/bar python3 example.py
 ```
 
-</figure>
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:
-
-</figcaption>
+{% include figcaption.html %}실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:{% include endfigcaption.html %}
 
 ```
 [..., '/foo', '/bar', ...]
 ```
 
-</figure>
+{% include endfigure.html %}
 
-</div>
+{% include endexample.html %}
 
 ### 기타 기본 경로
 
@@ -200,45 +172,37 @@ PYTHONPATH=/foo:/bar python3 example.py
 
     > The installation-dependent default.
 
-<div markdown="1" class="example">
+{% include example.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`example.py`:
-
-</figcaption>
+{% include figcaption.html %}`example.py`:{% include endfigcaption.html %}
 
 ```py
 import sys
 print(sys.path)
 ```
 
-</figure>
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:
-
-</figcaption>
+{% include figcaption.html %}`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:{% include endfigcaption.html %}
 
 ```
 [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
 `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
 ```
 
-</figure>
+{% include endfigure.html %}
 
-</div>
+{% include endexample.html %}
 
-<div markdown="1" class="note">
+{% include note.html %}
 
 [`sys.path`]에는 디렉터리 경로뿐만 아니라 `'/usr/lib/python36.zip'`처럼 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
 
-</div>
+{% include endnote.html %}
 
 ## 주의: `sys.path`의 순서
 
