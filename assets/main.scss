@@ -794,10 +794,18 @@ hr {
   color: #3c73d5;
 }
 
+.example > :first-child::before {
+  content: "⚽" " ";
+}
+
 .note {
   border-color: #02c39a;
 }
 
 .note > :first-child {
   color: #02c39a;
+}
+
+.note > :first-child::before {
+  content: "💡" " ";
 }
