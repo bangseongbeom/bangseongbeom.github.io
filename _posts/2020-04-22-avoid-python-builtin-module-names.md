@@ -125,7 +125,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 import mypackage.empty
 ```
 
-이처럼 `import` 시 언제나 `mypackage`를 명시해야 합니다. `mypackage`라는 이름의 내장 모듈이 존재하지 않는 한, 이름이 덮어씌워지는 현상이 일어나지 않습니다.
+`mypackage`라는 이름의 내장 모듈이 존재하지 않는 한, 이름이 덮어씌워지는 현상이 일어나지 않습니다.
 
 {% include endexample.html %}
 
