@@ -13,45 +13,41 @@ category: python
 
 [`sys.path`]는 디렉터리의 경로들이 기록된 문자열 리스트입니다. 이 리스트에 경로를 추가하면 해당 경로에 있는 파이썬 파일을 `import` 문으로 불러올 수 있습니다.
 
-<div markdown="1" class="example">
+{% include example.html %}
 
-{% capture figcaption %}`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:{% endcapture %}
+{% include figure.html %}
 
-{% capture content %}
+{% include figcaption.html %}`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:{% include endfigcaption.html %}
+
 ```py
 print("Hello, world!")
 ```
-{% endcapture %}
 
-{% include figure.html figcaption=figcaption content=content %}
+{% include endfigure.html %}
 
-{% capture figcaption %}`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:{% endcapture %}
+{% include figure.html %}
 
-{% capture content %}
+{% include figcaption.html %}`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:{% include endfigcaption.html %}
+
 ```py
 import sys
 sys.path.append("/opt")
 import common
 ```
-{% endcapture %}
 
-{% include figure.html figcaption=figcaption content=content %}
+{% include endfigure.html %}
 
-<figure markdown="1">
+{% include figure.html %}
 
-<figcaption markdown="span">
-
-`/home/ubuntu/example.py` 실행 결과:
-
-</figcaption>
+{% include figcaption.html %}`/home/ubuntu/example.py` 실행 결과:{% include endfigcaption.html %}
 
 ```
 Hello, world!
 ```
 
-</figure>
+{% include endfigure.html %}
 
-</div>
+{% include endexample.html %}
 
 ## `sys.path`의 기본값
 
