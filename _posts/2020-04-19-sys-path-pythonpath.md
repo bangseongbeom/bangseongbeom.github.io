@@ -187,7 +187,7 @@ print(sys.path)
 
 {% include figure.html %}
 
-{% include figcaption.html %}`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`, `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`를 확인할 수 있습니다:{% include endfigcaption.html %}
+{% include figcaption.html %}`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등을 확인할 수 있습니다:{% include endfigcaption.html %}
 
 ```
 [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
