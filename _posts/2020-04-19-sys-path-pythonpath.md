@@ -25,21 +25,17 @@ print("Hello, world!")
 
 {% include figure.html figcaption=figcaption content=content %}
 
-<figure markdown="1">
+{% capture figcaption %}`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:{% endcapture %}
 
-<figcaption markdown="span">
-
-`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:
-
-</figcaption>
-
+{% capture content %}
 ```py
 import sys
 sys.path.append("/opt")
 import common
 ```
+{% endcapture %}
 
-</figure>
+{% include figure.html figcaption=figcaption content=content %}
 
 <figure markdown="1">
 
