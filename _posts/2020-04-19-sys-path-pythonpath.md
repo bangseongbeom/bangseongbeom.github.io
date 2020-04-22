@@ -15,19 +15,15 @@ category: python
 
 <div markdown="1" class="example">
 
-<figure markdown="1">
+{% capture figcaption %}`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:{% endcapture %}
 
-<figcaption markdown="span">
-
-`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:
-
-</figcaption>
-    
+{% capture content %}
 ```py
 print("Hello, world!")
 ```
+{% endcapture %}
 
-</figure>
+{% include figure.html figcaption=figcaption content=content %}
 
 <figure markdown="1">
 
