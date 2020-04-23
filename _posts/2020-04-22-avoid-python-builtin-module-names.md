@@ -94,7 +94,7 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 디렉터리를 만드는 식으로 한다면 한 가지 주의해야 할 점이 있습니다. `import`는 처음 `python3` 명령어를 통해 실행된 파일을 기준으로 다른 파이썬 파일을 찾습니다. 이러한 현상으로 인해 **파이썬 파일 실행 시 해당 파일을 직접 실행하면 디렉터리 이름을 찾을 수 없어 문제가 발생합니다.** 해당 디렉터리 안에 들어와 있는 상태에서, 그 디렉터리와 같은 이름으로 된 디렉터리를 찾으려 하기 때문입니다.
 
-대신 디렉터리 자체를 실행하도록 하여 이 문제를 해결할 수 있습니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
+대신 디렉터리 '자체'를 실행하도록 하여 이 문제를 해결할 수 있습니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
 
 [^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
 
