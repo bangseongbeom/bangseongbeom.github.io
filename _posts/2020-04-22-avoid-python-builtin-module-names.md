@@ -33,8 +33,6 @@ category: python
 import re
 ```
 
-이제 `main.py`를 실행하면 오류가 출력될 것입니다. [`re`] 내장 모듈의 내부에서는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있는데, **이 코드는 [`enum`] 내장 모듈을 불러오는 게 아니라 위에서 만든 `enum.py`를 불러올 것이기 때문입니다.**
-
 `main.py`를 실행하면 다음과 같은 오류가 출력됩니다:
 
 ```py
@@ -46,7 +44,9 @@ Traceback (most recent call last):
 AttributeError: module 'enum' has no attribute 'IntFlag'
 ```
 
-[`re`]는 `enum.IntFlag`에 의존하려 했으나, 우리가 만든 `enum.py`에는 `IntFlag`가 없어 오류가 발생했습니다.
+`enum.IntFlag`를 찾을 수 없어 오류가 발생했습니다.
+
+[`re`] 내장 모듈의 내부에서는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **파일이 덮어씌워지는 현상으로 인해, 이 코드는 [`enum`] 내장 모듈을 불러오는 게 아니라 앞에서 만든 아무 내용도 없는 `enum.py` 파일을 불러옵니다. 이 `enum.py`에는 '당연히' `IntFlag`가 없기 때문에, 이를 찾을 수 없다는 오류가 발생하게 됩니다.**
 
 {% include endexample.html %}
 
