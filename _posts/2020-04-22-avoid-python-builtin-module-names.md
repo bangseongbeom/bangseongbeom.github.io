@@ -7,7 +7,7 @@ category: python
 
 ## 문제점
 
-파이썬에서는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러올 경우 내장 모듈 대신 우리가 만든 파일이 불러와지는 현상이 있습니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때, `import enum`이라는 코드를 실행하면 [`enum`], 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 됩니다.
+파이썬에는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러올 경우 내장 모듈 대신 우리가 만든 파일이 불러와지는 현상이 있습니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때, `import enum`이라는 코드를 실행하면 [`enum`], 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 됩니다.
 
 [^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
@@ -58,7 +58,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 ## 부정확한 오류 메시지
 
-**이 오류가 무서운 점은, 오류 메시지로부터 무엇이 문제인지 추론하기가 어렵다는 것입니다.** 내장 모듈이 덮어씌워졌다고 해서 '내장 모듈이 덮어씌워졌으니 확인해주세요.' 같은 친절한 오류를 출력하지 않습니다. `AttributeError: module 'enum' has no attribute 'IntFlag'`같은 오류가 발생합니다. [`AttributeError`]는 사용하고자 하는 특정한 메서드나 클래스가 없을 때 발생하는데, 이 정보만 가지고는 내장 모듈이 덮어씌워졌다는 것을 생각하기 어렵습니다.
+**이 오류가 무서운 점은, 오류 메시지로부터 무엇이 문제인지 추론하기가 어렵다는 것입니다.** 내장 모듈이 덮어씌워졌다고 해서 '내장 모듈이 덮어씌워졌으니 확인해주세요.' 같은 친절한 오류를 출력하지 않습니다. 대신 `AttributeError: module 'enum' has no attribute 'IntFlag'`와 같은 오류가 발생합니다. [`AttributeError`]는 사용하고자 하는 특정한 메서드나 클래스가 없을 때 발생하는데, 이 정보만 가지고는 내장 모듈이 덮어씌워졌다는 것을 생각하기 어렵습니다.
 
 [`AttributeError`]: https://docs.python.org/3/library/exceptions.html#AttributeError
 
@@ -68,7 +68,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 ## 완화 방법: 디렉터리 생성
 
-완벽한 해결책은 아니지만, 디렉터리를 만든 뒤 작업하면 이름 중복으로 인한 문제를 어느 정도 해결할 수 있습니다. 같은 디렉터리 내부의 파일을 `import`할 때, 해당 파일의 이름만이 아니라 디렉터리 이름을 함께 명시해야 하기 때문입니다.
+완벽한 해결책은 아니지만, 디렉터리를 만들어 작업하면 이름 중복으로 인한 문제를 어느 정도 해결할 수 있습니다. 같은 디렉터리 내부의 파일을 `import`할 때, 해당 파일의 이름만이 아니라 디렉터리 이름을 함께 명시해야 하기 때문입니다.
 
 {% include example.html %}
 
@@ -81,26 +81,26 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 이제 `mypackage/main.py`를 만듭니다:
 
 ```py
-import mypackage.empty  # mypackage.를 앞에 붙여 empty 불러오기
+import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 ```
 
-디렉터리 안에서는 파이썬 파일을 불러오기 위해 언제나 `mypackage.`를 붙여주어야 합니다. `mypackage`라는 이름의 내장 모듈이 존재하지 않는 한, 이름이 덮어씌워지는 현상이 일어나지 않습니다.
+디렉터리 안에서는 파이썬 파일을 불러오기 위해 언제나 불러올 파일 이름 앞에 `mypackage`를 붙여주어야 합니다.
+
+이제 `mypackage`라는 이름의 내장 모듈이 존재하지 않는 한, 이름이 덮어씌워지는 현상이 일어나지 않습니다.
 
 {% include endexample.html %}
 
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
-디렉터리를 만드는 식으로 한다면 한 가지 주의해야 할 점이 있습니다. **파이썬 파일을 해당 디렉터리 안에서 파이썬 파일을 직접 실행하면 안 됩니다.** `import`의 기준이 되는 경로를 디렉터리 바깥에 두어야 제대로 동작합니다.
+디렉터리를 만드는 식으로 한다면 한 가지 주의해야 할 점이 있습니다. `import`는 처음 `python3` 명령어를 통해 실행된 파일을 기준으로 다른 파이썬 파일을 찾습니다. 이러한 현상으로 인해 **파이썬 파일 실행 시 해당 파일을 직접 실행하면 디렉터리 이름을 찾을 수 없어 문제가 발생합니다.** 해당 디렉터리 안에 들어와 있는 상태에서, 그 디렉터리와 같은 이름으로 된 디렉터리를 찾으려 하기 때문입니다.
 
-대신 디렉터리 자체를 실행하도록 해야 합니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
+대신 디렉터리 자체를 실행하도록 하여 이 문제를 해결할 수 있습니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
 
 [^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
 
     > For a package, the same effect can be achieved by including a `__main__.py` module, the contents of which will be executed when the module is run with `-m`.
 
 {% include example.html %}
-
-`mypackage`라는 디렉터리를 기반으로 예를 들어보겠습니다.
 
 먼저 `mypackage/__main__.py`를 만듭니다. 저는 `/home/ubuntu`에 만들겠습니다:
 
