@@ -7,7 +7,7 @@ category: python
 
 ## 문제점
 
-파이썬에서는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러올 경우, 내장 모듈 대신 우리가 만든 파일이 불러와집니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때 `import enum` 코드를 실행하면 [`enum`] 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 됩니다.
+파이썬에서는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러올 경우 내장 모듈 대신 우리가 만든 파일이 불러와지는 현상이 있습니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때, `import enum`이라는 코드를 실행하면 [`enum`], 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 됩니다.
 
 [^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
