@@ -90,9 +90,9 @@ import mypackage.empty  # mypackage.를 앞에 붙여 empty 불러오기
 
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
-디렉터리를 만드는 식으로 할 때 한 가지 주의해야 할 점이 있습니다. **`python3 main.py`처럼, 파이썬 파일을 해당 디렉터리 안에서 직접 실행하면 안 됩니다.** 파이썬 파일 탐색 시 사용할 기준 경로를 디렉터리 바깥에 두어야 `import mypackage.foo`에서 `mypackage/foo` 디렉터리를 탐색할 수 있기 때문입니다.
+디렉터리를 만드는 식으로 한다면 한 가지 주의해야 할 점이 있습니다. **파이썬 파일을 해당 디렉터리 안에서 파이썬 파일을 직접 실행하면 안 됩니다.** `import`의 기준이 되는 경로를 디렉터리 바깥에 두어야 제대로 동작합니다.
 
-대신 디렉터리 자체를 실행하도록 하면 됩니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
+대신 디렉터리 자체를 실행하도록 해야 합니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행할 때 `__main__.py`가 실행됩니다[^package-main].
 
 [^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
 
