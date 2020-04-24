@@ -29,6 +29,42 @@ FOO=123 bash bar.sh
 
 {% include endexample.html %}
 
+## 유효 범위
+
+이렇게 선언된 환경 변수는 실행 대상 프로그램 내에서만 유효합니다[^current-shell].
+
+[^current-shell]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
+
+    > If no command name results, the variable assignments affect the current shell environment.
+    
+{% include example.html %}
+
+`bar.sh`를 만듭니다:
+
+```sh
+echo $FOO
+```
+
+다음 명령어를 실행합니다:
+
+```sh
+FOO=123 bash bar.sh
+```
+
+`123`이 출력되는 것을 확인할 수 있습니다.
+
+이후 입력할 명령어에서도 `FOO`를 계속 사용할 수 있는지 확인해봅시다.
+
+다음 명령어를 실행합니다:
+
+```sh
+echo $FOO
+```
+
+아무 것도 출력되지 않습니다.
+
+{% include endexample.html %}
+
 ## 주의: 명령어 내에서 환경 변수 바로 사용
 
 상식적으로는 동작할 것 같지만, 명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 다음, 변수를 해석해야 하는 부분을 모두 해석하고 나서, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
@@ -66,9 +102,9 @@ ABC=456 bash -c 'echo $ABC'
 
 ## 주의: 실행 대상 없이 환경 변수만 선언
 
-별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `FOO=123 bash bar.sh`가 아니라 `FOO=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 전체에서 유효하게 됩니다[^current-shell].
+별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `FOO=123 bash bar.sh`가 아니라 `FOO=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 전체에서 유효하게 됩니다[^current-shell-environment-executed].
 
-[^current-shell]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
+[^current-shell-environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
     > If no command name results, the variable assignments affect the current shell environment.  Otherwise, the variables are added to the environment of the executed command and do not affect the current shell environment.
 
