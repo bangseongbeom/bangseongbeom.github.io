@@ -17,7 +17,7 @@ category: python
 
 이 현상은 언뜻 보기에 별 문제가 없어 보입니다. 해당 내장 모듈이 프로그램 내에서 전혀 쓰이지 않는다면, 내장 모듈 대신 자기가 만든 파이썬 파일을 사용하고 싶을 수도 있으니까요.
 
-하지만 이 현상에는 한 가지 주의해야 할 점이 있습니다. **우리가 다른 내장 모듈이나 외부 패키지 등을 `import`했을 때 그 파일 안에 있는 `import`에도 이 현상이 적용됩니다.**
+하지만 이 현상에는 한 가지 주의해야 할 점이 있습니다. **타인이 작성한 코드(내장 모듈, 외부 라이브러리)가 내장 모듈을 `import`했을 때, 그 파일 안에 있는 `import`에도 이 현상이 적용됩니다.** 우리 코드가 아님에도 내장 모듈과 동일한 이름의 파이썬 파일을 불러오게 되는 것이죠.
 
 {% include example.html %}
 
@@ -50,7 +50,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 `enum.IntFlag`를 찾을 수 없다는 오류가 발생했습니다. 왜 이 오류가 발생했을까요?
 
-[`re`] 내장 모듈의 내부에서는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **내장 모듈을 덮어씌우는 현상으로 인해, [`re`] 안의 `import enum`은 [`enum`] 내장 모듈을 불러오지 않습니다. 앞에서 만든 아무 내용도 없는 `enum.py` 파일을 불러옵니다.** `enum.py`에는 '당연히' `IntFlag`가 없습니다. 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
+[`re`] 내장 모듈에는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **여기서 `import enum`은 [`enum`] 내장 모듈을 불러오지 않습니다. 앞에서 만든 아무 내용도 없는 `enum.py`를 불러옵니다.** `enum.py`에는 '당연히' `IntFlag`가 없습니다. 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
 
 {% include endexample.html %}
 
