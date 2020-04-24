@@ -53,51 +53,39 @@ import common
 
 {% include example.html %}
 
-{% include figure.html %}
-
-{% include figcaption.html %}`/home/ubuntu/example.py`:{% include endfigcaption.html %}
+먼저 테스트 용 파일을 만듭니다. 여기서는 `/home/ubuntu`에 `example.py`라는 이름으로 만들겠습니다:
 
 ```py
 import sys
 print(sys.path)
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}실행 결과 (일부 생략). 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다:{% include endfigcaption.html %}
+실행 결과:
 
 ```
 [`'/home/ubuntu'`, ...]
 ```
 
-{% include endfigure.html %}
+리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다.
 
 {% include endexample.html %}
 
 {% include example.html %}
 
-{% include figure.html %}
-
-{% include figcaption.html %}`python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:{% include endfigcaption.html %}
+`python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:
 
 ```py
 >>> import sys
 >>> print(sys.path)
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}실행 결과 (일부 생략). 앞의 예시와 달리 `''`(빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미)이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다:{% include endfigcaption.html %}
+실행 결과 (일부 생략):
 
 ```
 [`''`, ...]
 ```
 
-{% include endfigure.html %}
+앞의 예시와 달리 빈 문자열인 `''`이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다. 빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미합니다.
 
 {% include endexample.html %}
   
@@ -115,36 +103,26 @@ print(sys.path)
 
 {% include example.html %}
 
-{% include figure.html %}
-
-{% include figcaption.html %}`example.py`:{% include endfigcaption.html %}
+테스트 용 파일을 하나 만듭니다:
 
 ```py
 import sys
 print(sys.path)
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}실행 명령어. [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 추가한 상태로 실행합니다:{% include endfigcaption.html %}
+다음과 같이 [`PYTHONPATH`] 환경 변수에 `/foo`와 `/bar`를 넣은 채로 `python3` 명령어를 실행합니다:
 
 ```sh
 PYTHONPATH=/foo:/bar python3 example.py
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}실행 결과 (일부 생략). [`sys.path`]에 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다:{% include endfigcaption.html %}
+실행 결과 (일부 생략):
 
 ```
 [..., '/foo', '/bar', ...]
 ```
 
-{% include endfigure.html %}
+`'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다.
 
 {% include endexample.html %}
 
@@ -158,27 +136,21 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 {% include example.html %}
 
-{% include figure.html %}
-
-{% include figcaption.html %}`example.py`:{% include endfigcaption.html %}
+테스트 용 파일을 하나 만듭니다:
 
 ```py
 import sys
 print(sys.path)
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}`example.py` 실행 결과 (일부 생략). `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등을 확인할 수 있습니다:{% include endfigcaption.html %}
+실행 결과 (일부 생략):
 
 ```
 [..., `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'`,
 `'/usr/local/lib/python3.6/dist-packages'`, `'/usr/lib/python3/dist-packages'`]
 ```
 
-{% include endfigure.html %}
+`'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등 내장 모듈을 위한 여러 경로들을 확인할 수 있습니다.
 
 {% include endexample.html %}
 
@@ -216,6 +188,6 @@ print(sys.path)
 
 {% include note.html %}
 
-내장 모듈을 덮어쓰는 현상에는 한 가지 문제점이 있습니다. 자세한 내용은 [<파이썬 내장 모듈과 동일한 이름 피하기>](https://www.bangseongbeom.com/avoid-python-builtin-module-names.html)를 참고하세요.
+내장 모듈을 덮어쓰는 현상으로 인해 발견하기 어려운 오류가 발생할 수 있습니다. 자세한 내용은 [<파이썬 내장 모듈과 동일한 이름 피하기>](/avoid-python-builtin-module-names.html)를 참고하세요.
 
 {% include endnote.html %}
