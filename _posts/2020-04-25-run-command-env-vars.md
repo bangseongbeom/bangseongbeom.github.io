@@ -3,7 +3,7 @@ title: 환경 변수 선언과 함께 명령어를 실행하는 법
 category: linux
 ---
 
-`FOO=123 bash bar.sh`처럼 명령어 뒤에 환경 변수를 선언하면 환경 변수와 함께 명령어를 실행할 수 있습니다.
+`FOO=123 bash bar.sh`처럼 명령어 앞에 환경 변수를 선언해 환경 변수와 함께 명령어를 실행할 수 있습니다.
 
 [`bash 매뉴얼`](http://man7.org/linux/man-pages/man1/bash.1.html)에서는 기본적으로 변수 할당과 함께 명령어를 실행할 수 있음[^simple-command]을 언급하고 있습니다.
 
