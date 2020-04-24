@@ -3,11 +3,11 @@ title: 파이썬 내장 모듈과 동일한 이름 피하기
 category: python
 ---
 
-파이썬 내장 모듈과 동일한 이름으로 파이썬 파일을 만들게 될 경우, 이름이 덮어씌워지는 현상으로 인해 해당 내장 모듈에 의존하고 있는 모든 코드가 제대로 동작하지 않을 수 있습니다.
+파이썬 내장 모듈과 동일한 이름으로 파이썬 파일을 만들지 마세요. 이름이 덮어씌워지는 현상으로 인해 해당 내장 모듈에 의존하고 있는 모든 코드가 제대로 동작하지 않을 수 있습니다.
 
 ## 문제점
 
-파이썬에는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러올 경우 내장 모듈 대신 우리가 만든 파일이 불러와지는 현상이 있습니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때, `import enum`이라는 코드를 실행하면 [`enum`], 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 됩니다.
+파이썬에는 내장 모듈과 동일한 이름의 파이썬 파일을 `import`로 불러오게 되면 내장 모듈 대신 우리가 만든 파일이 불러와집니다[^ahead]. 현재 디렉터리에 `enum.py`가 존재할 때, `import enum`이라는 코드를 실행하면 [`enum`], 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 되는 것이죠.
 
 [^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
@@ -15,11 +15,13 @@ category: python
 
 [`enum`]: https://docs.python.org/3/library/enum.htm
 
-이 현상에는 치명적인 문제점이 있습니다. **현재 디렉터리에 `enum.py`가 존재하는 한, 우리가 다른 내장 모듈이나 외부 패키지 등을 `import`했을 때 그 파일 안에 있는 `import enum`에도 이 현상이 적용된다는 것입니다.**
+이 현상은 언뜻 보기에 별 문제가 없어 보입니다. 내장 모듈을 사용하지 않고 대신 자기가 만든 파이썬 파일을 사용하고 싶을 수도 있으니까요.
+
+하지만 주의하세요. 현재 디렉터리에 내장 모듈과 동일한 이름의 파일이 존재하는 한, **우리가 다른 내장 모듈이나 외부 패키지 등을 `import`했을 때 그 파일 안에 있는 `import`에도 이 현상이 적용됩니다.**
 
 {% include example.html %}
 
-정말 그런지 실험해봅시다. 먼저 아무 내용도 없는 `enum.py`를 만듭니다:
+실험해봅시다. 먼저 아무 내용도 없는 `enum.py`를 만듭니다:
 
 ```py
 # 아무 것도 없음
@@ -44,9 +46,9 @@ Traceback (most recent call last):
 AttributeError: module 'enum' has no attribute 'IntFlag'
 ```
 
-`enum.IntFlag`를 찾을 수 없어 오류가 발생했습니다.
+`enum.IntFlag`를 찾을 수 없다는 오류가 발생했습니다.
 
-[`re`] 내장 모듈의 내부에서는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **파일이 덮어씌워지는 현상으로 인해, 이 코드는 [`enum`] 내장 모듈을 불러오는 게 아니라 앞에서 만든 아무 내용도 없는 `enum.py` 파일을 불러옵니다. 이 `enum.py`에는 '당연히' `IntFlag`가 없기 때문에, 이를 찾을 수 없다는 오류가 발생하게 됩니다.**
+왜 이 오류가 발생했을까요? [`re`] 내장 모듈의 내부에서는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **파일이 덮어씌워지는 현상으로 인해, [`re`] 안의 `import enum`은 [`enum`] 내장 모듈을 불러오는 게 아니라, 앞에서 만든 아무 내용도 없는 `enum.py` 파일을 불러옵니다.** 이 `enum.py`에는 '당연히' `IntFlag`가 없기 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
 
 {% include endexample.html %}
 
@@ -92,7 +94,7 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
-디렉터리를 만드는 식으로 한다면 한 가지 주의해야 할 점이 있습니다. `import`는 처음 `python3` 명령어를 통해 실행된 파일을 기준으로 다른 파이썬 파일을 찾습니다. 이러한 현상으로 인해 **파이썬 파일 실행 시 해당 파일을 직접 실행하면 디렉터리 이름을 찾을 수 없어 문제가 발생합니다.** 해당 디렉터리 안에 들어와 있는 상태에서, 그 디렉터리와 같은 이름으로 된 디렉터리를 찾으려 하기 때문입니다.
+디렉터리를 만드는 식으로 할 때 한 가지 주의해야 할 점이 있습니다. `import`는 처음 `python3` 명령어를 통해 실행된 파일을 기준으로 다른 파이썬 파일을 찾습니다. 이로 인해 **파이썬 파일 실행 시 해당 파일을 직접 실행하면 `import` 문에 문제가 발생합니다.** 해당 디렉터리 안에 들어와 있는 상태에서, 그 디렉터리와 같은 이름으로 된 디렉터리를 찾으려 하기 때문입니다.
 
 대신 디렉터리 '자체'를 실행하도록 하여 이 문제를 해결할 수 있습니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행하려 할 때 `__main__.py`가 실행됩니다[^package-main].
 
@@ -102,14 +104,14 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 {% include example.html %}
 
-디렉터리 안에 `mypackage/__main__.py`를 만들어둡니다. 내용은 상관 없습니다.
+먼저 `mypackage/__main__.py`를 만듭니다. 내용은 상관 없습니다.
 
-이제 다음과 같이 디렉터리를 직접 명시하여 `python3` 명령어를 실행합니다:
+이제 다음과 같이 **디렉터리를 직접 명시**하여 `python3` 명령어를 실행합니다:
 
 ```sh
 python3 mypackage
 ```
 
-그러면 디렉터리 안에 있는 `__main__.py` 실행됩니다. 
+디렉터리 안에 있는 `__main__.py` 실행되는 것을 확인하실 수 있습니다. 
 
 {% include endexample.html %}
