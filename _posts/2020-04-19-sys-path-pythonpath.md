@@ -15,19 +15,13 @@ category: python
 
 {% include example.html %}
 
-{% include figure.html %}
-
-{% include figcaption.html %}`/opt/common.py`. 아래의 `/home/ubuntu/example.py`에서 이 파일을 `import`할 겁니다:{% include endfigcaption.html %}
+먼저 아무 파이썬 파일을 하나 만듭시다. 내용은 상관 없습니다. 이 예시에서는 `/opt/common.py`에 만들겠습니다:
 
 ```py
-print("Hello, world!")
+# 아무 내용도 없음
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}`/home/ubuntu/example.py`. `sys.path.append("/opt")`로 `/opt` 디렉터리를 추가해 `/opt/common.py`를 `import`할 수 있도록 합니다:{% include endfigcaption.html %}
+이제 `/home/ubuntu/example.py`를 만듭니다:
 
 ```py
 import sys
@@ -35,17 +29,7 @@ sys.path.append("/opt")
 import common
 ```
 
-{% include endfigure.html %}
-
-{% include figure.html %}
-
-{% include figcaption.html %}`/home/ubuntu/example.py` 실행 결과:{% include endfigcaption.html %}
-
-```
-Hello, world!
-```
-
-{% include endfigure.html %}
+예시에서 `sys.path.append("/opt")`를 통해 `/opt` 디렉터리를 추가했습니다. 이로 인해 `/opt/common.py`를 `import`할 수 있게 됩니다.
 
 {% include endexample.html %}
 
