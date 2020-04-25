@@ -6,7 +6,9 @@ redirect_from: /run-command-env-vars.html
 
 `FOO=123 bash bar.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.
 
-[^simple-command]
+## 환경 변수 선언
+
+명령어 뒤에 `FOO=123`같이 환경 변수들을 배치하는 식으로 선언합니다[^simple-command].
 
 [^simple-command]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
 
@@ -32,7 +34,7 @@ FOO=123 bash bar.sh
 
 ## 유효 범위
 
-이렇게 선언된 환경 변수는 실행 대상 프로그램 내에서만 유효합니다[^current-shell].
+이렇게 선언한 환경 변수는 실행 대상 프로그램 내에서만 유효합니다[^current-shell]. 다음 명령어에서는 이전 명령어와 함께 선언한 환경 변수를 사용할 수 없습니다.
 
 [^current-shell]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
@@ -68,7 +70,7 @@ echo $FOO
 
 ## 주의: 명령어 내에서 환경 변수 사용 불가능
 
-상식적으로는 동작할 것 같지만, 명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 다음, 변수를 해석해야 하는 부분을 모두 해석하고 나서, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
+명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. `FOO=123`이라는 환경 변수 선언과 함께 `echo $FOO`를 실행한다고 해서 `$FOO`가 `123`으로 바뀌지 않습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 뒤, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
 
 [^environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
