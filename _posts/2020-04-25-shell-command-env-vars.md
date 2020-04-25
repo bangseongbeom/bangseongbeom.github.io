@@ -187,7 +187,7 @@ FOOBAR=123; echo $FOOBAR
 
 {% include note.html %}
 
-앞 예시에 `FOOBAR=123 || echo $FOOBAR`같이 `;`(세미콜론) 대신 `||`(OR 제어 연산자)를 사용하면 아무 것도 출력되지 않습니다. 다음 두 이유 때문입니다:
+앞 예시에 `FOOBAR=123 || echo $FOOBAR`같이 `;`(세미콜론) 대신 `||`(OR 제어 연산자)를 사용하면 **아무 것도 출력되지 않습니다.** 다음 두 이유 때문입니다:
 
 - 실행 대상 없이 환경 변수만 선언한 경우 해당 명령은 성공한 것으로 간주합니다[^status-of-zero].
 - `||` 제어 연산자는 첫 번째 명령의 실행에 성공할 경우 두 번째 명령을 아예 실행조차 하지 않습니다[^or-list].
@@ -210,7 +210,7 @@ FOOBAR=123; echo $FOOBAR
 
 {% include note.html %}
 
-앞 예시에 `FOOBAR=123 | echo $FOOBAR`같이 `;`(세미콜론) 대신 `|`(파이프)를 사용하면 아무 것도 출력되지 않습니다. `|`로 인해 쪼개진 부분 명령어들은, 이들이 모두 현재 셸 환경에서 실행되는 것이 아니라 각각 개별적인 환경에서 실행되기 때문입니다[^pipeline].
+앞 예시에 `FOOBAR=123 | echo $FOOBAR`같이 `;`(세미콜론) 대신 `|`(파이프)를 사용하면 **아무 것도 출력되지 않습니다.** `|`로 인해 쪼개진 부분 명령어들은, 이들이 모두 현재 셸 환경에서 실행되는 것이 아니라 각각 개별적인 환경에서 실행되기 때문입니다[^pipeline].
 
 [^pipeline]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
 
