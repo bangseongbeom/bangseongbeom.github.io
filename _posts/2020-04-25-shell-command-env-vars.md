@@ -204,7 +204,7 @@ FOOBAR=123; echo $FOOBAR
     >
     > command2 is executed if, and only if, command1 returns a non-zero exit status.
 
-`echo $FOOBAR`가 실행되지 않은 것일 뿐, `FOOBAR=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $FOOBAR`를 실행하면 `123`이 출력됩니다.
+물론 `echo $FOOBAR`가 실행되지 않은 것일 뿐, `FOOBAR=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $FOOBAR`를 실행하면 `123`이 출력됩니다.
 
 {% include endnote.html %}
 
@@ -216,7 +216,7 @@ FOOBAR=123; echo $FOOBAR
 
     > Each command in a pipeline is executed as a separate process (i.e., in a subshell).
     
-즉 `FOOBAR=123`은 현재 셸 환경에 선언된 것이 아니라 개별 환경에 선언된 것이므로, 이후 현재 셸에서 `echo $FOOBAR`를 실행해도 아무런 결과가 나오지 않습니다.
+즉 `FOOBAR=123`은 개별 환경에 선언된 것이지 현재 셸에 선언된 것이 아닙니다. 이후 `echo $FOOBAR`를 실행해도 아무런 결과가 나오지 않습니다.
 
 {% include endnote.html %}
 
