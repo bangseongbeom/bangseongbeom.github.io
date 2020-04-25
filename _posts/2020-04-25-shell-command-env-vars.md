@@ -1,5 +1,5 @@
 ---
-title: 환경 변수와 함께 명령어를 실행하는 법
+title: 셸에서 환경 변수와 함께 명령어를 실행하는 법
 category: linux
 redirect_from: /run-command-env-vars.html
 ---
