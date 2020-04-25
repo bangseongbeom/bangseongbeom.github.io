@@ -153,9 +153,11 @@ echo $FOO
 
 {% include endexample.html %}
 
-## 환경 변수의 유효 범위
+### 환경 변수의 유효 범위
 
-명령어와 함께 하는 환경 변수는 `|`, `;`, `&&`같은 제어 연산자의 사이를 뛰어넘지 못합니다. 제어 연산자 없는 단순 명령어 내에서만 적용되기 때문입니다[^simple-command-variables].
+`;`, `&&`, `||`같은 제어 연산자로 인해 여러 부분 명령어로 나뉘어질 수 있는 경우, 환경 변수는 각 부분 명령어(매뉴얼에서는 단순 명령어라고 합니다)에만 적용됩니다[^simple-command-variables]. 
+
+환경 변수 선언 부분과 실행 대상 프로그램을 잘못 분리하면 자칫 **실행 대상 없이 환경 변수만 선언**한 것처럼 해석될 수도 있습니다.
 
 [^simple-command-variables]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
@@ -182,6 +184,41 @@ FOOBAR=123; echo $FOOBAR
 `FOOBAR`는 이후에도 계속 유효하니, `echo $FOOBAR`를 실행하면 또다시 `123`을 출력합니다.
 
 {% include endexample.html %}
+
+{% include note.html %}
+
+앞 예시에 `FOOBAR=123 || echo $FOOBAR`같이 `;`(세미콜론) 대신 `||`(OR 제어 연산자)를 사용하면 아무 것도 출력되지 않습니다. 다음 두 이유 때문입니다:
+
+- 실행 대상 없이 환경 변수만 선언한 경우 해당 명령은 성공한 것으로 간주합니다[^status-of-zero].
+- `||` 제어 연산자는 첫 번째 명령의 실행에 성공할 경우 두 번째 명령을 아예 실행조차 하지 않습니다[^or-list].
+
+[^status-of-zero]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
+
+    > If there were no command substitutions, the command exits with a status of zero.
+    
+[^or-list]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
+
+    > An OR list has the form
+    >
+    >     command1 || command2
+    >
+    > command2 is executed if, and only if, command1 returns a non-zero exit status.
+
+`echo $FOOBAR`가 실행되지 않은 것일 뿐, `FOOBAR=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $FOOBAR`를 실행하면 `123`이 출력됩니다.
+
+{% include endnote.html %}
+
+{% include note.html %}
+
+앞 예시에 `FOOBAR=123 | echo $FOOBAR`같이 `;`(세미콜론) 대신 `|`(파이프)를 사용하면 아무 것도 출력되지 않습니다. `|`로 인해 쪼개진 부분 명령어들은, 이들이 모두 현재 셸 환경에서 실행되는 것이 아니라 각각 개별적인 환경에서 실행되기 때문입니다[^pipeline].
+
+[^pipeline]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
+
+    > Each command in a pipeline is executed as a separate process (i.e., in a subshell).
+    
+즉 `FOOBAR=123`은 현재 셸 환경에 선언된 것이 아니라 개별 환경에 선언된 것이므로, 이후 현재 셸에서 `echo $FOOBAR`를 실행해도 아무런 결과가 나오지 않습니다.
+
+{% include endnote.html %}
 
 ## 참고
 
