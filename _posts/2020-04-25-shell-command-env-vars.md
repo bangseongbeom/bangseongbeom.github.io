@@ -4,7 +4,7 @@ category: linux
 redirect_from: /run-command-env-vars.html
 ---
 
-`FOO=123 bash bar.sh`처럼 명령어 앞에 환경 변수를 선언하여 환경 변수와 함께 명령어를 실행할 수 있습니다.
+`FOO=123 bash bar.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.
 
 [^simple-command]
 
