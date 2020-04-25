@@ -105,7 +105,7 @@ ABC=456 bash -c 'echo $ABC'
 
 ## 주의: 실행 대상 없이 환경 변수만 선언
 
-별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `FOO=123 bash bar.sh`가 아니라 `FOO=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 전체에서 유효하게 됩니다[^current-shell-environment-executed].
+별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `FOO=123 bash bar.sh`가 아니라 `FOO=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 **전체**에서 유효하게 됩니다[^current-shell-environment-executed].
 
 [^current-shell-environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
