@@ -4,11 +4,11 @@ category: linux
 redirect_from: /run-command-env-vars.html
 ---
 
-`FOO=123 bash bar.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.
+`ABC=123 bash asdf.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.
 
 ## 환경 변수 선언
 
-명령어 뒤에 `FOO=123`같이 환경 변수들을 배치하는 식으로 선언합니다[^simple-command].
+명령어 뒤에 `ABC=123`같이 환경 변수들을 배치하는 식으로 선언합니다[^simple-command].
 
 [^simple-command]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
 
@@ -16,16 +16,16 @@ redirect_from: /run-command-env-vars.html
 
 {% include example.html %}
 
-`bar.sh`를 만듭니다:
+`asdf.sh`를 만듭니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
 다음 명령어를 실행합니다:
 
 ```sh
-FOO=123 bash bar.sh
+ABC=123 bash asdf.sh
 ```
 
 `123`이 출력되는 것을 확인할 수 있습니다.
@@ -42,26 +42,26 @@ FOO=123 bash bar.sh
     
 {% include example.html %}
 
-`bar.sh`를 만듭니다:
+`asdf.sh`를 만듭니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
 다음 명령어를 실행합니다:
 
 ```sh
-FOO=123 bash bar.sh
+ABC=123 bash asdf.sh
 ```
 
 `123`이 출력되는 것을 확인할 수 있습니다.
 
-이후 입력할 명령어에서도 `FOO`를 계속 사용할 수 있는지 확인해봅시다.
+이후 입력할 명령어에서도 `ABC`를 계속 사용할 수 있는지 확인해봅시다.
 
 다음 명령어를 실행합니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
 아무 것도 출력되지 않습니다.
@@ -70,7 +70,7 @@ echo $FOO
 
 ## 주의: 명령어 내에서 환경 변수 사용 불가능
 
-명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. `FOO=123`이라는 환경 변수 선언과 함께 `echo $FOO`를 실행한다고 해서 `$FOO`가 `123`으로 바뀌지 않습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 뒤, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
+명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. `ABC=123`이라는 환경 변수 선언과 함께 `echo $ABC`를 실행한다고 해서 `$ABC`가 `123`으로 해석되지 않습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 뒤, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
 
 [^environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
@@ -105,7 +105,7 @@ ABC=456 bash -c 'echo $ABC'
 
 ## 주의: 실행 대상 없이 환경 변수만 선언
 
-별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `FOO=123 bash bar.sh`가 아니라 `FOO=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 **전체**에서 유효하게 됩니다[^current-shell-environment-executed].
+별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `ABC=123 bash asdf.sh`가 아니라 `ABC=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 **전체**에서 유효하게 됩니다[^current-shell-environment-executed].
 
 [^current-shell-environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
@@ -113,16 +113,16 @@ ABC=456 bash -c 'echo $ABC'
 
 {% include example.html %}
 
-`bar.sh`를 만듭니다:
+`asdf.sh`를 만듭니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
 다음 명령어를 실행합니다:
 
 ```sh
-FOO=123 bash bar.sh
+ABC=123 bash asdf.sh
 ```
 
 `123`이 출력되는 것을 확인할 수 있습니다.
@@ -130,26 +130,26 @@ FOO=123 bash bar.sh
 이제 다음 명령어를 실행합니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
-아무 것도 출력되지 않습니다. `FOO`는 `bash bar.sh`를 실행하는 동안만 유효하기 때문입니다.
+아무 것도 출력되지 않습니다. `ABC`는 `bash asdf.sh`를 실행하는 동안만 유효하기 때문입니다.
 
-이번에는 `bash bar.sh` 없이 `FOO=123`만 입력합니다:
+이번에는 `bash asdf.sh` 없이 `ABC=123`만 입력합니다:
 
 ```sh
-FOO=123
+ABC=123
 ```
 
-이제 `FOO`는 현재 셸에서라면 계속 유효합니다.
+이제 `ABC`는 현재 셸에서라면 계속 유효합니다.
 
 정말 그런지 확인해봅시다. 다음 명령어를 실행합니다:
 
 ```sh
-echo $FOO
+echo $ABC
 ```
 
-`123`이 출력됩니다. `FOO`가 셸 환경 전체에서 유효하도록 선언되었으므로, `FOO`를 출력할 수 있습니다.
+`123`이 출력됩니다. `ABC`가 셸 환경 전체에서 유효하도록 선언되었으므로, `ABC`를 출력할 수 있습니다.
 
 {% include endexample.html %}
 
@@ -170,24 +170,24 @@ echo $FOO
 아래 두 명령어는 서로 다른 명령어입니다:
 
 ```sh
-FOOBAR=123 echo $FOOBAR
+ABCDEF=123 echo $ABCDEF
 ```
 
 ```sh
-FOOBAR=123; echo $FOOBAR
+ABCDEF=123; echo $ABCDEF
 ```
 
 위 명령어는 아무 것도 출력되지 않는 반면, 아래 명령어는 `123`이 출력됩니다.
 
-첫 번째 명령어와 달리 두 번째 명령어는 `;`이라는 제어 연산자로 분리되어 있습니다. 이로 인해 셸은 `FOOBAR=123`과 `echo $FOOBAR`를 각각 별개의 명령으로 바라봅니다. `FOOBAR=123`의 경우 별다른 실행 대상 프로그램 없이 환경 변수만을 선언한 것이므로, 이 환경 변수는 셸 환경 전체에서 유효하게 됩니다. 그러므로 다음 명령인 `echo $FOOBAR`에서도 `FOOBAR`를 출력할 수 있습니다.
+첫 번째 명령어와 달리 두 번째 명령어는 `;`이라는 제어 연산자로 분리되어 있습니다. 이로 인해 셸은 `ABCDEF=123`과 `echo $ABCDEF`를 각각 별개의 명령으로 바라봅니다. `ABCDEF=123`의 경우 별다른 실행 대상 프로그램 없이 환경 변수만을 선언한 것이므로, 이 환경 변수는 셸 환경 전체에서 유효하게 됩니다. 그러므로 다음 명령인 `echo $ABCDEF`에서도 `ABCDEF`를 출력할 수 있습니다.
 
-`FOOBAR`는 이후에도 계속 유효하니, `echo $FOOBAR`를 실행하면 또다시 `123`을 출력합니다.
+`ABCDEF`는 이후에도 계속 유효하니, `echo $ABCDEF`를 실행하면 또다시 `123`을 출력합니다.
 
 {% include endexample.html %}
 
 {% include note.html %}
 
-앞 예시에 `FOOBAR=123 || echo $FOOBAR`같이 `;`(세미콜론) 대신 `||`(OR 제어 연산자)를 사용하면 **아무 것도 출력되지 않습니다.** 다음 두 이유 때문입니다:
+앞 예시에 `ABCDEF=123 || echo $ABCDEF`같이 `;`(세미콜론) 대신 `||`(OR 제어 연산자)를 사용하면 **아무 것도 출력되지 않습니다.** 다음 두 이유 때문입니다:
 
 - 실행 대상 없이 환경 변수만 선언한 경우 해당 명령은 성공한 것으로 간주합니다[^status-of-zero].
 - `||` 제어 연산자는 첫 번째 명령의 실행에 성공할 경우 두 번째 명령을 아예 실행조차 하지 않습니다[^or-list].
@@ -204,19 +204,19 @@ FOOBAR=123; echo $FOOBAR
     >
     > command2 is executed if, and only if, command1 returns a non-zero exit status.
 
-물론 `echo $FOOBAR`가 실행되지 않은 것일 뿐, `FOOBAR=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $FOOBAR`를 실행하면 `123`이 출력됩니다.
+물론 `echo $ABCDEF`가 실행되지 않은 것일 뿐, `ABCDEF=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $ABCDEF`를 실행하면 `123`이 출력됩니다.
 
 {% include endnote.html %}
 
 {% include note.html %}
 
-앞 예시에 `FOOBAR=123 | echo $FOOBAR`같이 `;`(세미콜론) 대신 `|`(파이프)를 사용하면 **아무 것도 출력되지 않습니다.** `|`로 인해 쪼개진 부분 명령어들은, 이들이 모두 현재 셸 환경에서 실행되는 것이 아니라 각각 개별적인 환경에서 실행되기 때문입니다[^pipeline].
+앞 예시에 `ABCDEF=123 | echo $ABCDEF`같이 `;`(세미콜론) 대신 `|`(파이프)를 사용하면 **아무 것도 출력되지 않습니다.** `|`로 인해 쪼개진 부분 명령어들은, 이들이 모두 현재 셸 환경에서 실행되는 것이 아니라 각각 개별적인 환경에서 실행되기 때문입니다[^pipeline].
 
 [^pipeline]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SHELL_GRAMMAR)
 
     > Each command in a pipeline is executed as a separate process (i.e., in a subshell).
     
-즉 `FOOBAR=123`은 개별 환경에 선언된 것이지 현재 셸에 선언된 것이 아닙니다. 이후 `echo $FOOBAR`를 실행해도 아무런 결과가 나오지 않습니다.
+즉 `ABCDEF=123`은 개별 환경에 선언된 것이지 현재 셸에 선언된 것이 아닙니다. 이후 `echo $ABCDEF`를 실행해도 아무런 결과가 나오지 않습니다.
 
 {% include endnote.html %}
 
