@@ -1,6 +1,7 @@
 ---
 title: /etc/group-, /etc/passwd-, /etc/shadow- 끝 하이픈의 의미
 category: linux
+redirect_from: /hyphen-files.html
 ---
 
 리눅스에서 `/etc/group-`, `/etc/passwd-`, `/etc/shadow-`의 파일 이름 끝에 있는 하이픈(`-`)은 백업 파일을 의미합니다.
