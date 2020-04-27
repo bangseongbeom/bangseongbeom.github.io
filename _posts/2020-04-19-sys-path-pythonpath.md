@@ -1,5 +1,5 @@
 ---
-title: sys.path, PYTHONPATH&#58; 파이썬 파일 탐색 경로
+title: "sys.path, PYTHONPATH: 파이썬 파일 탐색 경로"
 category: python
 ---
 
