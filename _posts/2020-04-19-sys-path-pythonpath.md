@@ -1,5 +1,5 @@
 ---
-title: sys.path, PYTHONPATH
+title: sys.path, PYTHONPATH: 파이썬 파일 기반 경로
 category: python
 ---
 
