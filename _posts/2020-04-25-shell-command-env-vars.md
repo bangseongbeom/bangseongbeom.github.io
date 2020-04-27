@@ -6,7 +6,7 @@ redirect_from: /run-command-env-vars.html
 
 `ABC=123 bash asdf.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.
 
-## 환경 변수 선언
+## 선언
 
 명령어 뒤에 `ABC=123`같이 환경 변수들을 배치하는 식으로 선언합니다[^simple-command].
 
@@ -153,7 +153,7 @@ echo $ABC
 
 {% include endexample.html %}
 
-### 환경 변수의 유효 범위
+### 유효 범위와 제어 연산자
 
 `;`, `&&`, `||`같은 제어 연산자로 인해 여러 부분 명령어로 나뉘어질 수 있는 경우, 환경 변수는 각 부분 명령어(매뉴얼에서는 단순 명령어라고 합니다)에만 적용됩니다[^simple-command-variables]. 
 
