@@ -37,13 +37,13 @@ C 셸(csh)은 `source`, 본 셸(sh)은 `.` 명령어만 지원합니다.
 
 이 셸의 개발자는 `.`이라는 명령어에 대해 **다른 명령어와 혼동되고, 발견하기 어려우며, `.`이라는 명령어를 모르는 사람으로 하여금 `.`을 지칭할 수 없다**는 문제가 있음을 지적했습니다. 이와 함께 아예 `.`을 폐기하고 `source`만을 지원하기로 했습니다[^fish-issuecomment].
 
-[^fish-issuecomment]: https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318
+[^fish-issuecomment]: <https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318>
 
     > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
 
 ### `source`와 `.`의 기능이 다른 셸: Z 셸
 
-Z 셸(zsh)은 조금 독특합니다. `source`는 우선 현재 작업 디렉터리를 살핀 뒤, 현재 작업 디렉터리에서 스크립트 파일을 찾을 수 없다면 `PATH` 환경 변수에 존재하는 경로들로부터 스크립트 파일을 찾습니다[^zsh-source]. `.`의 경우 `source`와 동일한 동작을 하지 않고, `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
+[Z 셸](http://zsh.sourceforge.net/)(zsh)은 조금 독특합니다. `source`는 우선 현재 작업 디렉터리를 살핀 뒤, 현재 작업 디렉터리에서 스크립트 파일을 찾을 수 없다면 `PATH` 환경 변수에 존재하는 경로들로부터 스크립트 파일을 찾습니다[^zsh-source]. `.`의 경우 `source`와 동일한 동작을 하지 않고, `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
 
 [^zsh-source]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
 
