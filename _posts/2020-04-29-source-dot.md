@@ -113,7 +113,7 @@ source asdf.sh: 123
 
 {% include example.html %}
 
-먼저 `asdf.sh` 파일을 만듭니다. 이 예시에서는 `/home/ubuntu`에 만들겠습니다:
+먼저 `asdf.sh` 파일을 만듭니다. 이 예시에서는 `/home/ubuntu`에 만들겠습니다. ([`pwd`](https://linux.die.net/man/1/pwd)는 현재 작업 디렉터리를 출력하는 명령어입니다):
 
 ```sh
 echo "In file 1: $(pwd)"
@@ -121,7 +121,7 @@ cd ..
 echo "In file 2: $(pwd)"
 ```
 
-이제 이 파일을 다음처럼 실행합니다. [`pwd`](https://linux.die.net/man/1/pwd)는 현재 작업 디렉터리를 출력하는 명령어입니다 (반드시 `bash` 먼저 실행해야 합니다):
+이제 이 파일을 다음처럼 실행합니다. (반드시 `bash` 먼저 실행해야 합니다):
 
 ```sh
 pwd
@@ -149,7 +149,7 @@ In file 2: /home
 
 ### `./asdf.sh`
 
-`./asdf.sh`와 `. asdf.sh`를 혼동하지 마세요. `./asdf.sh`는 `bash ./asdf.sh`와 동일합니다.
+`./asdf.sh`와 `. asdf.sh`를 혼동하지 마세요. `./asdf.sh`는 `bash asdf.sh`와 동일합니다.
 
 ## 참고
 
