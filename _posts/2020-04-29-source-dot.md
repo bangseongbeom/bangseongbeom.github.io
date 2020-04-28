@@ -152,7 +152,7 @@ In file 2: /home
 
 {% include endexample.html %}
 
-## `./asdf.sh`와 `. asdf.sh` 혼동 주의
+## `./asdf.sh` vs `. asdf.sh`: 혼동 주의
 
 `./asdf.sh`와 `. asdf.sh`를 혼동하지 마세요. `./asdf.sh`는 `bash asdf.sh`와 동일합니다.
 
