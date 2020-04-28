@@ -3,8 +3,6 @@ title: "source, . (점): 셸 스크립트 실행 명령어"
 category: linux
 ---
 
-## 셸 스크립트 실행
-
 [배시](https://linux.die.net/man/1/bash)(Bash)에서 `source`와 `.`는 동일한 기능을 하는 명령어로, 셸 스크립트를 실행하는 데 사용합니다.
 
 {% include example.html %}
