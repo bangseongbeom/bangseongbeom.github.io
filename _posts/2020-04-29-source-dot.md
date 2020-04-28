@@ -158,6 +158,7 @@ In file 2: /home
 
 ## 참고
 
+- [Dot (command) - Wikipedia](https://en.wikipedia.org/wiki/Dot_(command))
 - [What is the difference between “source” and “.”? - Ask Ubuntu](https://askubuntu.com/questions/25488/what-is-the-difference-between-source-and): 관련 스택오버플로 질문
 - [Bash: using dot or “source” calling another script - what is difference? - Stack Overflow](https://stackoverflow.com/questions/20094271/bash-using-dot-or-source-calling-another-script-what-is-difference): 관련 스택오버플로 질문
 - [running script with “. ” and with “source ” - Unix & Linux](https://unix.stackexchange.com/questions/17815/running-script-with-and-with-source): 관련 스택오버플로 질문
