@@ -15,7 +15,7 @@ echo Hello
 
 다음 명령어로 셸 스크립트를 실행합니다:
 
-```
+```sh
 source asdf.sh
 # 한 번 더 실행
 . asdf.sh
