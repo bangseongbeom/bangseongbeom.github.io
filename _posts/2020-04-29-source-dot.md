@@ -17,7 +17,6 @@ echo Hello
 
 ```sh
 source asdf.sh
-# 한 번 더 실행
 . asdf.sh
 ```
 
