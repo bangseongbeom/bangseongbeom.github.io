@@ -24,13 +24,13 @@ source asdf.sh
 
 {% include endexample.html %}
 
-### `source`와 `.`의 기원: C 셀과 본 셸
+## `source`와 `.`의 기원: C 셀과 본 셸
 
 C 셸(csh)은 `source`, 본 셸(sh)은 `.` 명령어만 지원합니다.
 
 배시가 제공하는 `source`와 `.`은 본 셸과 C 셸로부터 유래한 것으로 보입니다. 이를 통해 배시는 오래된 셸들과의 호환성을 확보할 수 있습니다.
 
-### 왜 `source`가 `.`에 비해 더 권장되는가: fish 셸
+## 왜 `source`가 `.`에 비해 더 권장되는가: fish 셸
 
 [fish 셸](https://fishshell.com/)은 다양한 부가 기능을 가진 현대적인 셸입니다.
 
@@ -40,7 +40,7 @@ C 셸(csh)은 `source`, 본 셸(sh)은 `.` 명령어만 지원합니다.
 
     > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
 
-### `source`와 `.`의 기능이 다른 셸: Z 셸
+## `source`와 `.`의 기능이 다른 셸: Z 셸
 
 [Z 셸](http://zsh.sourceforge.net/)(zsh)은 조금 독특합니다. `source`는 우선 현재 작업 디렉터리를 살핀 뒤, 현재 작업 디렉터리에서 스크립트 파일을 찾을 수 없다면 `PATH` 환경 변수에 존재하는 경로들로부터 스크립트 파일을 찾습니다[^zsh-source]. `.`의 경우 `source`와 동일한 동작을 하지 않고, `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
 
@@ -146,7 +146,7 @@ In file 2: /home
 
 {% include endexample.html %}
 
-### `./asdf.sh`와 `. asdf.sh` 혼동 주의
+## `./asdf.sh`와 `. asdf.sh` 혼동 주의
 
 `./asdf.sh`와 `. asdf.sh`를 혼동하지 마세요. `./asdf.sh`는 `bash asdf.sh`와 동일합니다.
 
