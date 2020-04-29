@@ -80,7 +80,7 @@ source asdf.sh: 123
 
 {% include endexample.html %}
 
-### 스크립트 바깥에서의 `cd` 유지
+### 스크립트 바깥에서도 `cd` 유지
 
 `source`: 스크립트 안에서 `cd`를 실행한 결과가 그대로 유지됩니다.
 
