@@ -30,10 +30,10 @@ source asdf.sh
 
 - 공통점: `source`(또는 `.`)와 `bash` 명령어 모두 다음과 같이 셸 스크립트 파일을 실행할 수 있습니다.
 
-```sh
-source asdf.sh
-bash asdf.h
-```
+   ```sh
+   source asdf.sh
+   bash asdf.h
+   ```
 
 반면 이 둘은 새로운 셸을 만드는 데 있어 차이를 보입니다.
 
