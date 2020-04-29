@@ -5,6 +5,8 @@ category: linux
 
 [배시](https://linux.die.net/man/1/bash)(Bash)에서 `source`와 `.`은 동일한 기능을 하는 명령어로, 셸 스크립트를 실행하는 데 사용합니다.
 
+[배시]: https://linux.die.net/man/1/bash
+
 {% include example.html %}
 
 다음과 같이 셸 스크립트 파일을 만듭니다. 여기서는 `asdf.sh`라는 이름으로 만들겠습니다:
@@ -23,38 +25,6 @@ source asdf.sh
 `source`와 `.` 모두 `asdf.sh`를 실행합니다. `Hello`가 두 번 출력되는 것을 확인할 수 있습니다.
 
 {% include endexample.html %}
-
-## `source` vs `.`
-
-### `source`와 `.`의 기원: C 셀과 본 셸
-
-C 셸(csh)은 `source`, 본 셸(sh)은 `.` 명령어만 지원합니다.
-
-배시가 제공하는 `source`와 `.`은 본 셸과 C 셸로부터 유래한 것으로 보입니다. 이를 통해 배시는 오래된 셸들과의 호환성을 확보할 수 있습니다.
-
-### 왜 `source`가 `.`에 비해 더 권장되는가: fish 셸
-
-[fish 셸](https://fishshell.com/)은 다양한 부가 기능을 가진 현대적인 셸입니다.
-
-이 셸의 개발자는 `.` 명령어에 대해 **다른 명령어와 혼동되고, 발견하기 어려우며, `.`이라는 명령어를 모르는 사람으로 하여금 `.`을 지칭하거나 소리내어 읽을 수 없다**는 문제가 있음을 지적했습니다. 이로 인해 아예 `.`을 폐기하고 `source`만을 지원하기로 했습니다[^fish-issuecomment].
-
-[^fish-issuecomment]: <https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318>
-
-    > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
-
-### `source`와 `.`의 기능이 다른 셸: Z 셸
-
-[Z 셸](http://zsh.sourceforge.net/)(zsh)은 조금 독특합니다. `source`는 우선 현재 작업 디렉터리를 살핀 뒤, 현재 작업 디렉터리에서 스크립트 파일을 찾을 수 없다면 `PATH` 환경 변수에 존재하는 경로들로부터 스크립트 파일을 찾습니다[^zsh-source]. `.`의 경우 `source`와 동일한 동작을 하지 않고, `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
-
-[^zsh-source]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
-
-    > source file [ arg ... ]
-    > Same as ‘.’, except that the current directory is always searched and is always searched first, before directories in $path.
-
-[^zsh-dot]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
-
-    > . file [ arg ... ]
-    > If file does not contain a slash, or if PATH_DIRS is set, the shell looks in the components of $path to find the directory containing file. Files in the current directory are not read unless ‘.’ appears somewhere in $path.
 
 ## `source` vs `bash`
 
@@ -155,6 +125,40 @@ In file 2: /home
 ## `./asdf.sh` vs `. asdf.sh`: 혼동 주의
 
 `./asdf.sh`와 `. asdf.sh`를 혼동하지 마세요. `./asdf.sh`는 `bash asdf.sh`와 동일합니다.
+
+## `source` vs `.`
+
+### `source`와 `.`의 기원
+
+C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸입니다. C 셸은 `source`, 본 셸은 `.` 명령어만 지원합니다.
+
+[배시]의 두 명령어는 본 셸과 C 셸로부터 유래한 것으로 보입니다. 이를 통해 [배시]는 오래된 셸들과의 호환성을 확보할 수 있습니다.
+
+### 왜 `source`가 `.`에 비해 더 권장되는가
+
+[fish 셸](https://fishshell.com/)의 개발자는 `.` 명령어에 대해 **다른 명령어와 혼동되고, 발견하기 어려우며, `.`이라는 명령어를 모르는 사람으로 하여금 `.`을 지칭하거나 소리내어 읽을 수 없다**는 문제가 있음을 지적했습니다. 이로 인해 아예 `.`을 폐기하고 `source`만을 지원하기로 했습니다[^fish-issuecomment].
+
+[^fish-issuecomment]: <https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318>
+
+    > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
+
+### `source`와 `.`의 기능이 다른 셸
+
+[Z 셸](http://zsh.sourceforge.net/)(zsh)은 조금 독특합니다.
+
+`source` 명령어의 경우 [배시]처럼 현재 작업 디렉터리에서만 스크립트를 찾는 것에서 끝나지 않습니다. 스크립트 파일을 찾을 수 없다면 `PATH` 환경 변수에 존재하는 경로들로부터도 스크립트 파일을 찾습니다[^zsh-source].
+
+특이하게도 `.`는 `source`와 동일한 동작을 하지 않고 약간 차이가 있습니다. `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
+
+[^zsh-source]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
+
+    > source file [ arg ... ]
+    > Same as ‘.’, except that the current directory is always searched and is always searched first, before directories in $path.
+
+[^zsh-dot]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
+
+    > . file [ arg ... ]
+    > If file does not contain a slash, or if PATH_DIRS is set, the shell looks in the components of $path to find the directory containing file. Files in the current directory are not read unless ‘.’ appears somewhere in $path.
 
 ## 참고
 
