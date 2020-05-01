@@ -1,5 +1,5 @@
 ---
-title: "source, . (점): 셸 스크립트 실행 명령어"
+title: "source, . (점): 셸 스크립트 실행"
 category: linux
 ---
 
