@@ -95,35 +95,9 @@ ASDF[3]=World # Hello를 World로 변경
 
 {% include endexample.html %}
 
-## 제거
+## 배열 끝 추가
 
-`unset` 명령어를 통해 배열의 값을 제거할 수 있습니다. `unset 변수이름[0]`, `unset 변수이름[1]` 형태입니다. `unset 변수이름` 형태로 배열 전체를 제거할 수도 있습니다[^unset].
-
-[^unset]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
-
-    > The unset builtin is used to destroy arrays. `unset name[subscript]` destroys the array element at index subscript. Negative subscripts to indexed arrays are interpreted as described above. Unsetting the last element of an array variable does not unset the variable. `unset name`, where name is an array, removes the entire array.
-
-{% include example.html %}
-
-다음 코드는 배열의 값을 하나 제거합니다:
-
-```sh
-A[5]=123
-unset A[5]
-```
-
-{% include endexample.html %}
-
-{% include example.html %}
-
-다음 코드는 배열 전체를 제거합니다:
-
-```sh
-A=(123 456 789)
-unset A
-```
-
-{% include endexample.html %}
+...
 
 ## 획득
 
@@ -219,15 +193,32 @@ echo ${ASDF[0]}
 
 `for` 명령어를 통해 배열의 값 하나 하나에 동일한 연산을 수행할 수 있습니다. 값을 대량으로 변경하거나 모든 값을 출력할 때 사용합니다.
 
-## 삭제
+## 제거
 
-`unset` 명령어를 통해 배열에 존재하는 값을 제거할 수 있습니다.
+`unset` 명령어를 통해 배열의 값을 제거할 수 있습니다. `unset 변수이름[0]`, `unset 변수이름[1]` 형태입니다. `unset 변수이름` 형태로 배열 전체를 제거할 수도 있습니다[^unset].
+
+[^unset]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > The unset builtin is used to destroy arrays. `unset name[subscript]` destroys the array element at index subscript. Negative subscripts to indexed arrays are interpreted as described above. Unsetting the last element of an array variable does not unset the variable. `unset name`, where name is an array, removes the entire array.
 
 {% include example.html %}
 
+다음 코드는 배열의 값을 하나 제거합니다:
+
 ```sh
-ASDF=(123 456 789)
-echo $ASD
+A[5]=123
+unset A[5]
+```
+
+{% include endexample.html %}
+
+{% include example.html %}
+
+다음 코드는 배열 전체를 제거합니다:
+
+```sh
+A=(123 456 789)
+unset A
 ```
 
 {% include endexample.html %}
@@ -290,6 +281,10 @@ declare -a QWER=(100 200 300)
 연관 배열에 들어있는 값 중 하나를 수정합니다.
 
 ## 연관 배열 삭제
+
+## 2차원 배열
+
+배시는 1차원 배열만을 지원합니다. 2차원 배열부터는 
 
 ## 참고
 
