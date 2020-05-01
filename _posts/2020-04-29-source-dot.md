@@ -128,13 +128,13 @@ In file 2: /home
 
 ## `source` vs `.`
 
-### 기원
+### 두 명령어의 기원: C 셸과 본 셸
 
 C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸입니다. C 셸은 `source`, 본 셸은 `.` 명령어만 지원합니다.
 
 [배시]의 두 명령어는 본 셸과 C 셸로부터 유래한 것으로 보입니다. 이를 통해 [배시]는 오래된 셸들과의 호환성을 확보할 수 있습니다.
 
-### 왜 `source`가 더 권장되는가
+### 왜 `source`가 더 권장되는가: fish 셸
 
 [fish 셸](https://fishshell.com/)의 개발자는 `.` 명령어에 대해 **다른 명령어와 혼동되고, 발견하기 어려우며, `.`이라는 명령어를 모르는 사람으로 하여금 `.`을 지칭하거나 소리내어 읽을 수 없다**는 문제가 있음을 지적했습니다. 이로 인해 아예 `.`을 폐기하고 `source`만을 지원하기로 했습니다[^fish-issuecomment].
 
@@ -142,7 +142,7 @@ C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸�
 
     > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
 
-### `source`와 `.`의 기능이 다른 셸
+### 두 명령어의 기능이 다른 셸: Z 셸
 
 [Z 셸](http://zsh.sourceforge.net/)(zsh)은 조금 독특합니다.
 
