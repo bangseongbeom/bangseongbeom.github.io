@@ -1,6 +1,7 @@
 ---
-title: 디렉터리 이름 끝 '.d'의 의미
+title: 디렉터리 이름 끝 .d
 category: linux
+redirect_from: /dot-d-directories.html
 ---
 
 `.d`는 "D"irectiory의 "D"에서 따온 말입니다. 기존 단일 설정 파일과의 이름 충돌을 피하기 위해, 여러 설정 파일을 디렉터리로서 묶는다는 의미로 `.d`를 붙이게 되었습니다.
