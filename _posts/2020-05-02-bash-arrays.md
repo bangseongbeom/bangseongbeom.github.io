@@ -1,6 +1,7 @@
 ---
-title: 셸 배열
+title: 배시 배열
 category: linux
+redirect_from: /shell-arrays.html
 ---
 
 배열을 통해 여러 값을 효과적으로 다룰 수 있습니다.
