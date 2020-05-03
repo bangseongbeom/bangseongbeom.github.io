@@ -1,5 +1,5 @@
 ---
-title: 디렉터리 이름 끝 .d
+title: 디렉터리 이름 끝 '.d'
 category: linux
 redirect_from: /dot-d-directories.html
 ---
