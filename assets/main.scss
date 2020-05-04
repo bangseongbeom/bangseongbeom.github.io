@@ -798,6 +798,18 @@ hr {
   content: "📖" " ";
 }
 
+.example.invalid {
+  border-color: #d03256;
+}
+
+.example.invalid > :first-child {
+  color: #d03256;
+}
+
+.example.invalid > :first-child::before {
+  content: "📖" " ";
+}
+
 .note {
   border-color: #02c39a;
 }
