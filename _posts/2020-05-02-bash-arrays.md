@@ -30,7 +30,7 @@ ASDF=(100 200 Hello)
 
 {% include endexample.html %}
 
-{% include invalid_example.html %}
+{% include example.html invalid=True %}
 
 다른 프로그래밍 언어와 달리, 배시에서는 `=` 좌우에 띄어쓰기가 있으면 안 됩니다:
 
@@ -44,7 +44,7 @@ ASDF = (100 200 Hello)  # 잘못됨!
 -bash: syntax error near unexpected token `('
 ```
 
-{% include endinvalid_example.html %}
+{% include endexample.html %}
 
 ## 인덱스와 값 얻기
 
