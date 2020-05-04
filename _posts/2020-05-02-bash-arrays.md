@@ -30,7 +30,7 @@ ASDF=(100 200 Hello)
 
 {% include endexample.html %}
 
-{% include example.html invalid=True %}
+{% include example.html invalid=true %}
 
 다른 프로그래밍 언어와 달리, 배시에서는 `=` 좌우에 띄어쓰기가 있으면 안 됩니다:
 
