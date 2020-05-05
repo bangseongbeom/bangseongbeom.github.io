@@ -265,6 +265,58 @@ ASDF[1]="B   B"
 | `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
 | `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
 
+특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
+
+## 배열 크기
+
+`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구할 수 있습니다[^length-of-array].
+
+[^length-of-array]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > ${#name[subscript]} expands to the length of ${name[subscript]}. If subscript is ‘@’ or ‘*’, the expansion is the number of elements in the array.
+
+{% include example.html %}
+
+```sh
+ASDF=(123 456 789)
+ZXCV=(A B C D E F G)
+
+echo ${#ASDF[@]}
+echo ${#ZXCV[@]}
+```
+
+실행 결과:
+
+```
+3
+7
+```
+
+{% include endexample.html %}
+
+{% include note.html %}
+
+`${#ASDF[1]}`과 같이 길이를 구할 때 `@` 대신 인덱스를 넣을 경우, 배열에 존재하는 값의 개수를 구하는 게 아니라 해당 값의 문자열 길이를 얻습니다:
+
+```sh
+ASDF=(Short LongLongLong "  ")
+echo ${#ASDF[0]}
+echo ${#ASDF[1]}
+echo ${#ASDF[2]}
+```
+
+실행 결과:
+
+```
+5
+12
+2
+```
+
+{% include endnote.html %}
+
+## 배열 전체 인덱스 얻기
+
 ## 배열 순회
 
 `for` 명령어를 통해 배열의 값 하나 하나에 동일한 연산을 수행할 수 있습니다. 값을 대량으로 변경하거나 모든 값을 출력할 때 사용합니다.
@@ -300,10 +352,6 @@ unset A
 {% include endexample.html %}
 
 ### 값 제거 vs 빈 문자열
-
-## 배열 크기
-
-`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구할 수 있습니다. 
 
 ## 음수 인덱스
 
