@@ -30,6 +30,16 @@ ASDF=(100 200 Hello)
 
 {% include endexample.html %}
 
+{% include example.html %}
+
+**공백을 포함한 문자열**은 [배시]의 문법 상 작은따옴표나 큰따옴표로 묶어야 합니다:
+
+```sh
+ASDF=('H e l l o' "w o r l d")
+```
+
+{% include endexample.html %}
+
 {% include example.html invalid=true %}
 
 다른 프로그래밍 언어와 달리, 배시에서는 `=` 좌우에 띄어쓰기가 있으면 안 됩니다:
@@ -125,6 +135,16 @@ ASDF[0]=99999
 ASDF=(Hello)
 ASDF[1]=Linus
 ASDF[2]=Torvalds
+```
+
+{% include endexample.html %}
+
+{% include example.html %}
+
+**공백을 포함한 문자열**은 [배시]의 문법 상 작은따옴표나 큰따옴표로 묶어야 합니다:
+
+```sh
+ASDF[1]="Linus Torvalds"
 ```
 
 {% include endexample.html %}
