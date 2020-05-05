@@ -821,7 +821,7 @@ hr {
 }
 
 .example.invalid > :first-child::before {
-  content: "📖" " ";
+  content: "🚫" " ";
 }
 
 .note {
