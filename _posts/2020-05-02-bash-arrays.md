@@ -365,6 +365,8 @@ echo ${#ASDF[2]}
 2
 ```
 
+`Short`는 5글자, `LongLongLong`은 12글자, `  `은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
+
 {% include endnote.html %}
 
 ## 배열 전체 인덱스 얻기
