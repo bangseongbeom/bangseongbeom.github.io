@@ -299,9 +299,62 @@ unset A
 
 {% include endexample.html %}
 
-## [특이한 성질] 음수 인덱스
+### 값 제거 vs 빈 문자열
+
+## 배열 크기
+
+`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구할 수 있습니다. 
+
+## 음수 인덱스
+
+`ASDF[-1]`과 같이 인덱스 자리에 음수를 사용하면 배열이 가진 마지막 인덱스에서부터 거꾸로 접근합니다. `ASDF[-1]`이 마지막 인덱스입니다[^negative-number].
+
+[^negative-number]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > When assigning to an indexed array, if name is subscripted by a negative number, that number is interpreted as relative to one greater than the maximum index of name, so negative indices count back from the end of the array, and an index of -1 references the last element.
+
+{% include example.html %}
+
+```sh
+ASDF=(100 200 300)
+echo ${ASDF[-1]} # ASDF[2]와 같음
+echo ${ASDF[-2]} # ASDF[1]과 같음
+echo ${ASDF[-3]} # ASDF[0]과 같음
+```
+
+출력 결과:
+
+```
+300
+200
+100
+```
+
+{% include endexample.html %}
+
+음수 인덱스는 가장 마지막 인덱스부터 거꾸로 접근하기 때문에, 값이 들어있지 않은 인덱스는 아무런 값도 출력하지 않습니다.
+
+다음은 인덱스 9부터 거꾸로 값들을 출력하는 코드입니다:
+
+```sh
+ASDF=(100 200 300)
+ASDF[9]=1000
+echo ${ASDF[-1]} # ASDF[9]와 같음
+echo ${ASDF[-2]} # ASDF[8]과 같음
+echo ${ASDF[-3]} # ASDF[7]과 같음
+```
+
+출력 결과:
+
+```
+1000
 
 
+```
+
+보시는 바와 같이 `${ASDF[-2]}`, `${ASDF[-1]}`은 아무 것도 출력되지 않은 것을 확인할 수 있습니다. 
+
+{% include endexample.html %}
 
 ## [특이한 성질] 배열 이름 자체로 접근
 
