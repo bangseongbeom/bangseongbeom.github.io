@@ -64,6 +64,14 @@ p {
   margin: 1.5em 0;
 }
 
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
 article {
   margin-bottom: $spacing-unit;
 }
