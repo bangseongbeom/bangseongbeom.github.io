@@ -458,19 +458,19 @@ echo ${ASDF[-3]} # ASDF[7]과 같음
 
 ## [특이한 성질] 배열 이름 자체로 접근
 
-배시에서는 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 **배열의 첫 번째 값처럼 해석합니다[^without-a-subscript].**
+배시에서는 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 **배열의 첫 번째 값처럼 취급합니다[^without-a-subscript].** `ASDF=100`을 `ASDF[0]=100`처럼 취급한다는 소리죠.
 
 [^without-a-subscript]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Referencing an array variable without a subscript is equivalent to referencing with a subscript of 0.
 
-| 입력 | 해석 |
+| 코드 | 배시의 취급 결과 |
 |---|---|
 | `ASDF=100` | `ASDF[0]=100` |
 | `echo ${ASDF}` | `echo ${ASDF[0]}` |
 | `ASDF=100`<br>`ASDF[1]=200` | `ASDF[0]=100`<br>`ASDF[1]=200` |
 
-이는 배열의 값을 수정할 때, 배열의 값을 출력할 때 모두 적용됩니다. 심지어는 배열이 아직 생성되지 않았을 때의 값 또한 배열의 첫 번째 값처럼 취급합니다.
+배열의 값을 수정할 때, 배열의 값을 출력할 때 모두 적용됩니다. 심지어는 배열이 아직 생성되지 않았을 때의 값 또한 배열의 첫 번째 값처럼 취급합니다.
 
 ## [특이한 성질] 명시적 선언
 
