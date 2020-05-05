@@ -204,14 +204,38 @@ ASDF[12345]=99999
 
 {% include example.html %}
 
-다음은 인덱스 12345에 `99999`를 추가하는 코드입니다:
-
 ```sh
-ASDF=(100 200 300)
-ASDF[12345]=99999
+ASDF=([10]=100 [0]=200 [2]=300)
 ```
 
 {% include endexample.html %}
+
+{% include note.html %}
+
+인덱스를 명시하지 않을 경우의 규칙은 언제나 **왼쪽보다 1 더 큰 인덱스**입니다.`배열이름=([인덱스]=값 값)`같이 인덱스를 지정하다가 지정하지 않아도 왼쪽 인덱스 기준으로 1 더 큰 값으로 지정됩니다.
+
+```sh
+ASDF=([10]=Welcome [2]=Hello Global World [50]=Bye)
+echo ${ASDF[10]}
+echo ${ASDF[2]}
+echo ${ASDF[3]} # Global
+echo ${ASDF[4]} # World
+echo ${ASDF[50]}
+```
+
+`Global`은 `[2]=Hello`로 인해 인덱스 3에 할당됩니다. `World`는 `Global`의 인덱스보다 1 더 큰 인덱스 4에 할당됩니다.
+
+실행 결과:
+
+```sh
+Welcome
+Hello
+Global
+World
+Bye
+```
+
+{% include endnote.html %}
 
 ## 배열 끝에 추가
 
