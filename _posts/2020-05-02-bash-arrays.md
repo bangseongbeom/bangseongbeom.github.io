@@ -157,7 +157,7 @@ asdf[2] = "Hello"
 
 ## [특이한 성질] 순서대로 값이 존재하지 않아도 된다
 
-배열에 값을 추가할 때 인덱스 0부터 순서대로 값을 넣지 않아도 됩니다[^nor-contiguously].
+배시에서는 배열에 값을 추가할 때 인덱스 0부터 순서대로 값을 넣지 않아도 됩니다[^nor-contiguously].
 
 [^nor-contiguously]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -176,7 +176,7 @@ ASDF[12345]=99999
 
 ### 배열 생성: 인덱스 명시
 
-배열을 생성할 때 인덱스 0부터 순서대로 값을 넣기 싫은 경우, `배열이름=([인덱스]=값 [인덱스]=값)` 형태로 인덱스를 지정하여 생성하는 것도 가능합니다[^subscript-is-supplied].
+배열을 생성할 때 `배열이름=([인덱스]=값 [인덱스]=값)` 형태로 인덱스를 지정하여 생성하는 것도 가능합니다[^subscript-is-supplied].
 
 [^subscript-is-supplied]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -223,11 +223,20 @@ echo "${ASDF[@]}"
 
 ### 다른 형태와 비교
 
-`"${배열이름[@]}"`같은 형태 말고도 `@` 대신 `*`를 사용할 수도 있고, 큰따옴표를 빼버릴 수도 있습니다. 이들은 다음과 같은 특징을 가집니다[^at-or-asterisk]:
+`"${배열이름[@]}"`같은 형태 말고도 `@` 대신 `*`를 사용할 수도 있고, 큰따옴표를 빼버릴 수도 있습니다[^at-or-asterisk].
 
 [^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
+
+다음과 같은 배열이 존재한다고 했을 때:
+
+```sh
+ASDF[0]="A A"
+ASDF[1]="B   B"
+```
+
+각 명령어 별로 다른 결과를 보입니다:
 
 | 명령어 | 중간 결과 | 출력 | 특징 |
 |---|---|---|---|
@@ -272,57 +281,23 @@ unset A
 
 ## [특이한 성질] 음수 인덱스
 
+
+
 ## [특이한 성질] 배열 이름 자체로 접근
 
-배시에서는 `ASDF`처럼 대괄호(`[]`) 없이 배열에 접근하려 하면 **배열의 첫 번째 값처럼 취급합니다[^without-a-subscript].**
+배시에서는 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 **배열의 첫 번째 값처럼 해석합니다[^without-a-subscript].**
 
 [^without-a-subscript]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Referencing an array variable without a subscript is equivalent to referencing with a subscript of 0.
 
+| 입력 | 해석 |
+|---|---|
+| `ASDF=100` | `ASDF[0]=100` |
+| `echo ${ASDF}` | `echo ${ASDF[0]}` |
+| `ASDF=100`<br>`ASDF[1]=200` | `ASDF[0]=100`<br>`ASDF[1]=200` |
+
 이는 배열의 값을 수정할 때, 배열의 값을 출력할 때 모두 적용됩니다. 심지어는 배열이 아직 생성되지 않았을 때의 값 또한 배열의 첫 번째 값처럼 취급합니다.
-
-{% include example.html %}
-
-다음은 배열의 값을 수정할 때 대괄호 없이 접근하는 경우 배열의 첫 번째 값처럼 취급함을 보이는 코드입니다:
-
-```sh
-ASDF[0]=123
-ASDF[1]=456
-ASDF=Hello
-echo ${ASDF[0]}
-```
-
-`Hello`가 출력됩니다.
-
-{% include endexample.html %}
-
-{% include example.html %}
-
-다음은 배열의 값을 출력할 때 대괄호 없이 접근하는 경우 배열의 첫 번째 값처럼 취급함을 보이는 코드입니다:
-
-```sh
-ASDF[0]=11111
-ASDF[1]=22222
-echo $ASDF
-```
-
-`11111`이 출력됩니다.
-
-{% include endexample.html %}
-
-{% include example.html %}
-
-다음은 배열이 아직 생성되지 않았을 때에도 배열의 첫 번째 값처럼 취급함을 출력하는 코드입니다:
-
-```sh
-ASDF=123
-echo ${ASDF[0]}
-```
-
-`123`이 출력됩니다.
-
-{% include endexample.html %}
 
 ## [특이한 성질] 명시적 선언
 
