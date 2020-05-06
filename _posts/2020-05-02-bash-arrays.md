@@ -427,7 +427,40 @@ unset A
 
 {% include endexample.html %}
 
-### 값 제거 vs 빈 문자열
+### 값 제거 vs 빈 문자열 대입
+
+배시에서는 다음과 같이 변수에 빈 문자열을 대입하는 것을 허용합니다:
+
+```sh
+ASDF=(123 456 789)
+ASDF[2]= # 빈 문자열 대입
+```
+
+빈 문자열을 대입하는 것이 배열에 있는 값을 **제거**하는 것은 아닙니다. 빈 문자열 또한 정상적인 값으로 취급합니다.
+
+{% include example.html %}
+
+```sh
+ASDF=(123 456 789)
+echo "Count:" ${#ASDF[@]}
+echo "Get all:" "${ASDF[@]}"
+ASDF[1]=
+echo "Count:" ${#ASDF[@]}
+echo "Get all:" "${ASDF[@]}"
+```
+
+출력 결과:
+
+```
+Count: 3
+Get all: 123 456 789
+Count: 3
+Get all: 123  789
+```
+
+값이 제거되지 않고 그대로 남아있는 것을 확인할 수 있습니다.
+
+{% include endexample.html %}
 
 ## 음수 인덱스
 
