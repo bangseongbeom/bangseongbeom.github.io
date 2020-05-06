@@ -1,2 +1,6 @@
-<div markdown="1" class="example{% if include.invalid %} invalid{% endif %}">
-  <div>{% if include.invalid %}잘못된 {% endif %}예시</div>
+{%- if include.end == false -%}
+  <div markdown="1" class="example{% if include.invalid %} invalid{% endif %}">
+    <div>{% if include.invalid %}잘못된 {% endif %}예시</div>
+{%- else -%}
+  </div>
+{%- endif -%}
