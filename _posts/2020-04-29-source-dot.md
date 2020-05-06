@@ -28,7 +28,7 @@ source asdf.sh
 
 `source`와 `.` 모두 `asdf.sh`를 실행합니다. `Hello`가 두 번 출력되는 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## `source` vs `bash`
 
@@ -90,7 +90,7 @@ source asdf.sh: 123
 
 `bash`는 `123`이 출력되지 않은 반면, `source`는 `123`이 출력되었습니다. 여기서 우리는 `bash`로 인해 실행한 `asdf.sh`의 경우, 실행이 끝나면 더 이상 변수가 유효하지 않음을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### `cd`로 인한 경로 유지
 
@@ -132,7 +132,7 @@ In file 2: /home
 
 `bash asdf.sh`는 스크립트 파일 내부의 현재 작업 디렉터리를 바꾸었지만, 스크립트 파일 바깥은 연향을 받지 않았습니다. 반면, `source`는 스크립트 파일 바깥에서도 현재 작업 디렉터리에 영향을 주었습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### 요약
 

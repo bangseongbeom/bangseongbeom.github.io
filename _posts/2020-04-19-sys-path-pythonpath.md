@@ -31,7 +31,7 @@ import common
 
 예시에서 `sys.path.append("/opt")`를 통해 `/opt` 디렉터리를 추가했습니다. 이로 인해 `/opt/common.py`를 `import`할 수 있게 됩니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## `sys.path`의 기본값
 
@@ -68,7 +68,7 @@ print(sys.path)
 
 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -87,7 +87,7 @@ print(sys.path)
 
 앞의 예시와 달리 빈 문자열인 `''`이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다. 빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미합니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
   
 ### `PYTHONPATH` 환경 변수
 
@@ -124,7 +124,7 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### 기타 기본 경로
 
@@ -152,7 +152,7 @@ print(sys.path)
 
 `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등 내장 모듈을 위한 여러 경로들을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 

@@ -54,7 +54,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 [`re`] 내장 모듈에는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **여기서 `import enum`은 [`enum`] 내장 모듈을 불러오지 않습니다. 앞에서 만든 아무 내용도 없는 `enum.py`를 불러옵니다.** `enum.py`에는 '당연히' `IntFlag`가 없습니다. 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -96,7 +96,7 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 이제 
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
@@ -124,4 +124,4 @@ python3 mypackage
 
 디렉터리 안에 있는 `__main__.py` 실행되는 것을 확인하실 수 있습니다. 
 
-{% include endexample.html %}
+{% include example.html end=true %}

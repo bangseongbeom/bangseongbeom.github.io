@@ -32,7 +32,7 @@ ABC=123 bash asdf.sh
 
 `123`이 출력되는 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 유효 범위
 
@@ -68,7 +68,7 @@ echo $ABC
 
 아무 것도 출력되지 않습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 주의: 명령어 내에서 환경 변수 사용 불가능
 
@@ -91,7 +91,7 @@ ABC=456 echo $ABC
 
 위의 명령어는 아무 것도 출력하지 않습니다. `ABC` 환경 변수의 할당은 `$ABC`에 대한 해석이 완료된 후에야 진행하기 때문입니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -103,7 +103,7 @@ ABC=456 bash -c 'echo $ABC'
 
 앞의 예시와 달리 `$ABC`가 바로 해석되지 않고, 그저 `bash` 프로그램을 실행하면서 `'echo $ABC'`라는 문자열을 함께 전달합니다. `bash`에 `ABC` 환경 변수가 전달되므로 `bash`는 `echo $ABC`를 실행하면서 `ABC`의 값인 456을 출력합니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 주의: 실행 대상 없이 환경 변수만 선언
 
@@ -153,7 +153,7 @@ echo $ABC
 
 `123`이 출력됩니다. `ABC`가 셸 환경 전체에서 유효하도록 선언되었으므로, `ABC`를 출력할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### 유효 범위와 제어 연산자
 
@@ -185,7 +185,7 @@ ABCDEF=123; echo $ABCDEF
 
 `ABCDEF`는 이후에도 계속 유효하니, `echo $ABCDEF`를 실행하면 또다시 `123`을 출력합니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 

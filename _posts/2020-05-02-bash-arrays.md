@@ -28,7 +28,7 @@ redirect_from: /shell-arrays.html
 ASDF=(100 200 Hello)
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -38,7 +38,7 @@ ASDF=(100 200 Hello)
 ASDF=("H e l l o" 'w o r l d')
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html invalid=true %}
 
@@ -54,7 +54,7 @@ ASDF = (100 200 Hello) # 잘못됨!
 -bash: syntax error near unexpected token `('
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 값 얻기, 인덱스
 
@@ -86,7 +86,7 @@ echo ${ASDF[2]}
 300
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### [특이한 성질] 중괄호가 필요한 이유
 
@@ -160,7 +160,7 @@ ASDF=(100 200 300)
 ASDF[0]=99999
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -172,7 +172,7 @@ ASDF[1]=Linus
 ASDF[2]=Torvalds
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -183,7 +183,7 @@ ASDF[0]="Brian Fox"
 ASDF[1]='Stephen Bourne'
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## [특이한 성질] 암시적 배열 생성
 
@@ -228,7 +228,7 @@ ASDF=(100 200 300)
 ASDF[12345]=99999
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## [특이한 성질] 인덱스 명시 배열 생성
 
@@ -244,7 +244,7 @@ ASDF[12345]=99999
 ASDF=([10]=100 [0]=200 [2]=300)
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -292,7 +292,7 @@ ASDF+=(456 789)
 
 `123`과 `456`, `789`를 추가했습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html invalid=true %}
 
@@ -315,7 +315,7 @@ Alpha123
 
 `ASDF[0]`에 존재하는 `Alpha`와 `123`이 붙어 `Alpha123`이라는 결과가 나왔습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 배열 합치기
 
@@ -338,7 +338,7 @@ echo ${CCC[@]}
 123 456 789 1 4 7
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 앞서 말씀드렸듯 **배열의 값이 공백을 포함할 수도 있다면** `${변수이름[@]}` 대신 큰따옴표가 들어간 `"${변수이름[@]}"`를 사용해야 합니다. 그렇지 않을 경우 여러 공백을 하나로 묶는 배시의 성질로 인해 공백이 모두 무시되며 여러 가지 예기치 않은 결과가 일어날 수 있습니다.
 
@@ -369,7 +369,7 @@ echo ${CCC[@]}
 
 여러 공백을 하나로 묶는 배시의 성질로 인해 공백이 모두 무시된 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -392,7 +392,7 @@ echo "${CCC[@]}"
 
 예상 대로 공백이 출력됨을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 배열 크기 얻기
 
@@ -419,7 +419,7 @@ echo ${#ZXCV[@]}
 7
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 배열의 크기는 시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이 **아닙니다.** 순전히 배열에 들어 있는 값의 개수를 구합니다.
 
@@ -439,7 +439,7 @@ echo ${#ASDF[@]}
 
 시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이었다면 `100`을 출력해야 합니다. `3`을 출력하는 것으로 보아 배열에 들어있는 값의 개수를 구한다는 것을 알 수 있습니다. 
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -485,7 +485,7 @@ echo ${!ASDF[@]}
 0 1 2 777
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 배열 순회
 
@@ -509,7 +509,7 @@ done
 333
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -534,7 +534,7 @@ A[5]=123
 unset A[5]
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -545,7 +545,7 @@ A=(123 456 789)
 unset A
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### 값 제거 vs 빈 문자열 대입
 
@@ -562,7 +562,7 @@ ASDF=(123 456 789)
 ASDF[2]= # 빈 문자열 대입
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 그러므로 빈 문자열을 대입하는 것은 배열에 있는 값을 **제거**하는 게 아니라 그저 빈 문자열로 덮어쓸 뿐입니다.
 
@@ -588,7 +588,7 @@ Get all: 123  789
 
 값이 제거되지 않고 그대로 남아있는 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 음수 인덱스
 
@@ -615,7 +615,7 @@ echo ${ASDF[-3]} # ASDF[0]과 같음
 100
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include example.html %}
 
@@ -641,7 +641,7 @@ echo ${ASDF[-3]} # ASDF[7]과 같음
 
 보시는 바와 같이 `${ASDF[-2]}`, `${ASDF[-3]}`은 아무 것도 출력되지 않은 것을 확인할 수 있습니다. 
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## [특이한 성질] 배열 이름 자체로 접근
 
@@ -674,7 +674,7 @@ declare -a ASDF
 declare -a QWER=(100 200 300)
 ```
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -750,7 +750,7 @@ declare -A ASDF=(123 456 789)
 
 예상대로 오류가 발생한 것을 확인할 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ### 키에는 순서가 없다
 
@@ -773,7 +773,7 @@ echo ${ASDF[@]}
 
 연관 배열의 키에는 순서가 없으므로 출력 결과는 실행 환경마다 다를 수 있습니다.
 
-{% include endexample.html %}
+{% include example.html end=true %}
 
 ## 2차원 배열
 
