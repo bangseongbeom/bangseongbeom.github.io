@@ -32,10 +32,10 @@ ASDF=(100 200 Hello)
 
 {% include example.html %}
 
-**공백을 포함한 문자열**은 [배시]의 문법 상 작은따옴표나 큰따옴표로 묶어야 합니다:
+**공백을 포함한 문자열**은 [배시]의 문법 상 큰따옴표나 작은따옴표로 묶어야 합니다:
 
 ```sh
-ASDF=('H e l l o' "w o r l d")
+ASDF=("H e l l o" 'w o r l d')
 ```
 
 {% include endexample.html %}
@@ -141,10 +141,11 @@ ASDF[2]=Torvalds
 
 {% include example.html %}
 
-**공백을 포함한 문자열**은 [배시]의 문법 상 작은따옴표나 큰따옴표로 묶어야 합니다:
+**공백을 포함한 문자열**은 [배시]의 문법 상 큰따옴표나 작은따옴표로 묶어야 합니다:
 
 ```sh
-ASDF[1]="Linus Torvalds"
+ASDF[0]="Brian Fox"
+ASDF[1]='Stephen Bourne'
 ```
 
 {% include endexample.html %}
@@ -217,15 +218,16 @@ ASDF=([10]=100 [0]=200 [2]=300)
 인덱스를 명시하지 않을 경우의 규칙은 언제나 **왼쪽보다 1 더 큰 인덱스**입니다. 다음 코드를 보세요:
 
 ```sh
+# [3]=Global [4]=World
 ASDF=([10]=Welcome [2]=Hello Global World [50]=Bye)
 echo ${ASDF[10]}
 echo ${ASDF[2]}
-echo ${ASDF[3]} # Global
-echo ${ASDF[4]} # World
+echo ${ASDF[3]}
+echo ${ASDF[4]}
 echo ${ASDF[50]}
 ```
 
-`Global`은 `[2]=Hello`로 인해 인덱스 3에 할당됩니다. `World`는 `Global`의 인덱스보다 1 더 큰 인덱스 4에 할당됩니다.
+`Global`은 `[2]=Hello`의 왼쪽에 있으므로 인덱스 3에 할당됩니다. `World`는 `Global`의 인덱스보다 1 더 큰 인덱스 4에 할당됩니다.
 
 실행 결과:
 
@@ -365,7 +367,7 @@ echo ${#ASDF[2]}
 2
 ```
 
-`Short`는 5글자, `LongLongLong`은 12글자, `  `은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
+`Short`는 5글자, `LongLongLong`은 12글자, `"  "`은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
 
 {% include endnote.html %}
 
