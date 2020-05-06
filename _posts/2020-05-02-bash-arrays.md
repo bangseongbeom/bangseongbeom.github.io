@@ -90,9 +90,9 @@ echo ${ASDF[2]}
 
 ### [특이한 성질] 중괄호가 필요한 이유
 
-값을 얻기 위해서는 `echo ${ASDF[2]}`처럼 중괄호를 반드시 붙여야 합니다. `echo $ASDF[2]`처럼 중괄호를 빼면 안 됩니다. 중괄호를 붙이지 않으면 배시는 `ASDF[2]`를 통째로 변수로서 인식하지 않고 `ASDF`까지만 인식합니다.
+값을 얻기 위해서는 `echo ${ASDF[2]}`처럼 중괄호를 **반드시** 붙여야 합니다. `echo $ASDF[2]`처럼 중괄호를 붙이지 않으면, 배시는 `ASDF[2]`를 통째로 변수로서 인식하지 않고 `ASDF`까지만 인식합니다.
 
-그 이유는 배시에 대괄호를 사용하는 연산자가 이미 있기 때문입니다[^braces-are-required]. 대괄호 없이 `$ASDF[2]`처럼 한다면 배시는 `$ASDF`와 `[2]`로 나누어 인식합니다.
+그 이유는 대괄호가 특별한 값으로 먼저 취급되기 때문입니다[^braces-are-required]. 대괄호 없이 `$ASDF[2]`처럼 한다면 배시는 `$ASDF`와 `[2]`로 나누어 인식합니다.
 
 [^braces-are-required]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -106,24 +106,12 @@ echo ${ASDF[2]}
 
 ## 전체 값 얻기
 
-`"${배열이름[@]}"` 형태로 배열에 존재하는 모든 값을 얻습니다. **큰따옴표(`"`)에 주의하세요.**
+전체 값을 얻는 방법은 다음과 같은 4가지 형태가 있습니다:
 
-{% include example.html %}
-
-```sh
-ASDF=(111 222 333)
-echo "${ASDF[@]}"
-```
-
-{% include endexample.html %}
-
-### 다른 형태와 비교
-
-`"${배열이름[@]}"`같은 형태 말고도 `@` 대신 `*`를 사용할 수도 있고, 큰따옴표를 빼버릴 수도 있습니다[^at-or-asterisk].
-
-[^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
-
-    > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
+- `${변수이름[@]}`: 인덱스가 들어갈 자리에 `@`
+- `${변수이름[*]}`: 인덱스가 들어갈 자리에 `*`
+- `"${변수이름[@]}"`: 큰따옴표(`""`)로 묶은 뒤 인덱스가 들어갈 자리에 `@`
+- `"${변수이름[*]}"`: 큰따옴표(`""`)로 묶은 뒤 인덱스가 들어갈 자리에 `*`
 
 다음과 같은 배열이 존재한다고 했을 때:
 
@@ -132,16 +120,18 @@ ASDF[0]="A A"
 ASDF[1]="B   B"
 ```
 
-각 명령어 별로 다른 결과를 보입니다:
+각 형태 별로 다양한 결과를 보입니다:
 
 | 명령어 | 중간 결과 | 출력 | 특징 |
 |---|---|---|---|
+| `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
+| `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
 | `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 각 값을 개별적인 문자열로서 취급 |
-| `echo "${ASDF[*]}"` | `echo "A A B   B"` | `A A B   B` |  모든 값을 하나의 문자열로서 취급 |
-| `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
-| `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
+| `echo "${ASDF[*]}"` | `echo "A A B   B"` | `A A B   B` | 배열에 존재하는 모든 값을 하나의 문자열로서 취급 |
 
-특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
+**결론 1:** 배열의 값에 공백이 들어가지 않음을 보장할 수 있다면 `echo ${ASDF[@]}`나 `echo ${ASDF[*]}`을 사용해도 무방합니다.
+
+**결론 2:** 그렇지 않고 얼마든지 공백이 들어갈 수 있다면 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용해야 합니다.
 
 {% include note.html %}
 
