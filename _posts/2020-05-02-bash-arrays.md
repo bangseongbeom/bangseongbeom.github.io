@@ -56,11 +56,9 @@ ASDF = (100 200 Hello) # 잘못됨!
 
 {% include endexample.html %}
 
-## 값 얻기
+## 값 얻기, 인덱스
 
 배열로부터 값을 하나 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다.
-
-### 인덱스
 
 **인덱스**는 값이 배열의 어디에 위치해있는지를 가리키는 수입니다. 배열을 만들 때 나열한 순서대로 인덱스가 지정됩니다. 인덱스가 **0**이라면 **1번째** 값을, 인덱스가 **1**이라면 **2번째** 값을 의미합니다. (인덱스는 1이 아니라 **0부터 시작**합니다[^starts-at-zero])
 
@@ -640,9 +638,9 @@ declare -a QWER=(100 200 300)
 
 {% include endnote.html %}
 
-## 연관 배열
+## 연관 배열, 인덱스 배열, 키
 
-2009년 출시된 배시 4.0부터 **연관 배열**(associative array)이라는 새로운 문법이 추가되었습니다[^new-goodies]. 연관 배열은 기존 배열과 달리 인덱스가 들어갈 자리에 **문자열**이 들어간다는 차이가 있습니다.
+2009년 출시된 배시 4.0부터 **연관 배열**(associative array)이라는 새로운 문법이 추가되었습니다[^new-goodies].
 
 [^new-goodies]: [Bash, version 4 - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/bashver4.html)
 
@@ -651,24 +649,24 @@ declare -a QWER=(100 200 300)
     >
     > - Associative arrays.
 
-### 키
-
-기존 배열에서는 인덱스라고 했지만, 연관 배열에서는 이를 **키**라고 부릅니다.
-
-### 인덱스 배열 vs 연관 배열
+기존 배열과 달리, 연관 배열에는 인덱스가 들어갈 자리에 **문자열**이 들어갑니다. 이 문자열을 가리켜 **키**라고 합니다.
 
 기존의 인덱스를 사용하던 배열은 연관 배열과 구분할 필요가 있으므로 따로 **인덱스 배열**(indexed array)이라고 부릅니다.
 
-연관 배열의 기본적인 동작 방식은 인덱스 배열과 매우 유사합니다. 다음을 보세요:
+## 인덱스 배열 vs 연관 배열
+
+연관 배열의 기본적인 동작 방식은 인덱스 배열과 매우 유사합니다. 다음은 인덱스 배열과 연관 배열에서 제공하는 기능을 비교하는 표입니다:
 
 || 변경 | 얻기 | 전체 얻기 | 배열 크기 | 제거 |
 |---|---|---|---|---|
 | **인덱스 배열** | `ASDF[3]=Hello` | `${ASDF[3]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[3]` |
 | **연관 배열** | `ASDF[greeting]=Hello` | `${ASDF[greeting]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[greeting]` |
 
-### 연관 배열의 명시적 선언
+다만 연관 배열은 인덱스 배열과는 다른 두 가지 차이점이 존재합니다:
 
-명시적 선언을 해도 되고 안 해도 되는 인덱스 배열과 달리, 연관 배열을 사용하기 위해서는 반드시 **명시적으로 선언**해야만 합니다[^the-subscript-is-required]. 다음과 같이 선언합니다:
+### 명시적 선언 필수
+
+연관 배열과 인덱스 배열에는 한 가지 중요한 차이점이 있습니다. 명시적 선언을 해도 되고 안 해도 되는 인덱스 배열과 달리, 연관 배열을 사용하기 위해서는 반드시 **명시적으로 선언**해야만 합니다[^the-subscript-is-required]. 다음과 같이 선언합니다:
 
 [^the-subscript-is-required]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -678,11 +676,56 @@ declare -a QWER=(100 200 300)
 declare -A 변수이름
 ```
 
-연관 배열 또한 인덱스 배열과 동일하게 배열 선언과 함께 값을 추가할 수 있습니다. 다만 키를 명시하면서 인덱스 배열을 생성하던 것과 마찬가지로, 
+연관 배열 역시 인데스 배열처럼 배열 생성과 함께 값을 추가할 수 있습니다. 다만 인덱스 배열과 달리 **키를 자동으로 지정해주지 않습니다.** 그러므로 다음과 같이 언제나 키를 명시해야 합니다 (앞서 설명한 '인덱스 배열을 생성하면서 인덱스를 명시하는 방법'과 동일한 형태입니다):
 
 ```sh
 declare -A 변수이름=([키]=값 [키]=값 [키]=값)
 ```
+
+키를 지정하지 않으면 오류가 발생합니다.
+
+{% include example.html invalid=true %}
+
+다음은 연관 배열을 생성하면서 키를 명시하지 않는 잘못된 코드입니다:
+
+```sh
+declare -A ASDF=(123 456 789)
+```
+
+출력 결과:
+
+```
+-bash: ASDF: 123: must use subscript when assigning associative array
+-bash: ASDF: 456: must use subscript when assigning associative array
+-bash: ASDF: 789: must use subscript when assigning associative array
+```
+
+예상대로 오류가 발생한 것을 확인할 수 있습니다.
+
+{% include endexample.html %}
+
+### 키에는 순서가 없다
+
+인덱스 배열의 인덱스와 달리, 연관 배열의 키에는 **순서가 없습니다.** 그렇기 때문에 전체 값을 얻을 때에도 어떤 순서로 얻게 될지 알 수 없습니다.
+
+{% include example.html %}
+
+다음은 연관 배열의 키에 순서가 없음을 확인하는 코드입니다:
+
+```sh
+declare -A ASDF=([aaa]=111 [bbb]=222 [ccc]=333 [ddd]=444 [eee]=555)
+echo ${ASDF[@]}
+```
+
+출력 결과:
+
+```
+111 555 333 222 444
+```
+
+연관 배열의 키에는 순서가 없으므로 출력 결과는 실행 환경마다 다를 수 있습니다.
+
+{% include endexample.htm %}
 
 ## 2차원 배열
 
