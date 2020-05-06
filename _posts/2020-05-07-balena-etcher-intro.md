@@ -16,12 +16,12 @@ category: linux
 
 ## 사용 방법
 
-![](/assets/2020-05-27-balena-etcher-intro/balena-etcher-1.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
 
-![](/assets/2020-05-27-balena-etcher-intro/balena-etcher-2.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
 
-![](/assets/2020-05-27-balena-etcher-intro/balena-etcher-3.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
 
-![](/assets/2020-05-27-balena-etcher-intro/balena-etcher-4.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
 
-![](/assets/2020-05-27-balena-etcher-intro/balena-etcher-5.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
