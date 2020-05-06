@@ -137,7 +137,7 @@ ASDF[1]="B   B"
 
 배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 **결론 1:** 배열의 값에 공백이 들어가지 않음을 보장할 수 있다면 `echo ${ASDF[@]}`나 `echo ${ASDF[*]}`을 사용해도 무방합니다.
 
@@ -274,7 +274,7 @@ World
 Bye
 ```
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 배열 끝 값 추가
 
@@ -346,7 +346,7 @@ echo ${CCC[@]}
 
 배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 {% include example.html invalid=true %}
 
@@ -462,7 +462,7 @@ echo ${#ASDF[2]}
 
 `Short`는 5글자, `LongLongLong`은 12글자, `"  "`은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 배열 전체 인덱스 얻기
 
@@ -515,7 +515,7 @@ done
 
 `for` 명령어에 관한 자세한 내용은...
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 값 제거
 
@@ -684,7 +684,7 @@ declare -a QWER=(100 200 300)
 
     > Adding a superfluous declare -a statement to an array declaration may speed up execution of subsequent operations on the array.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 연관 배열, 인덱스 배열, 키
 

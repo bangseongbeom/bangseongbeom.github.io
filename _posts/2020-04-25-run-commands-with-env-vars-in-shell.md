@@ -208,7 +208,7 @@ ABCDEF=123; echo $ABCDEF
 
 물론 `echo $ABCDEF`가 실행되지 않은 것일 뿐, `ABCDEF=123`은 제대로 셸 전체 영역에 선언된 것이 맞습니다. 이후 다시 `echo $ABCDEF`를 실행하면 `123`이 출력됩니다.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 {% include note.html %}
 
@@ -220,7 +220,7 @@ ABCDEF=123; echo $ABCDEF
     
 즉 `ABCDEF=123`은 개별 환경에 선언된 것이지 현재 셸에 선언된 것이 아닙니다. 이후 `echo $ABCDEF`를 실행해도 아무런 결과가 나오지 않습니다.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 참고
 

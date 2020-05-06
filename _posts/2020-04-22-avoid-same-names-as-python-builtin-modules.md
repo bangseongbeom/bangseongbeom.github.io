@@ -60,7 +60,7 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 파이썬 파일을 불러오는 절차에 대한 자세한 내용은 [<sys.path, PYTHONPATH>](/sys-path-pythonpath.html)를 참고하세요.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 부정확한 오류 메시지
 

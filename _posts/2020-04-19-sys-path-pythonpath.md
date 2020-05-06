@@ -158,7 +158,7 @@ print(sys.path)
 
 [`sys.path`]에는 디렉터리 경로뿐만 아니라 `'/usr/lib/python36.zip'`처럼 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
 
-{% include endnote.html %}
+{% include note.html end=true %}
 
 ## 주의: `sys.path`의 순서
 
@@ -190,4 +190,4 @@ print(sys.path)
 
 내장 모듈을 덮어쓰는 현상으로 인해 발견하기 어려운 오류가 발생할 수 있습니다. 자세한 내용은 [<파이썬 내장 모듈과 동일한 이름 피하기>](/avoid-python-builtin-module-names.html)를 참고하세요.
 
-{% include endnote.html %}
+{% include note.html end=true %}
