@@ -56,9 +56,13 @@ ASDF = (100 200 Hello) # 잘못됨!
 
 {% include endexample.html %}
 
-## 값 얻기와 인덱스
+## 값 얻기
 
-배열로부터 값을 하나 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다. **인덱스**는 값이 배열의 어디에 위치해있는지를 가리키는 수입니다. 배열을 만들 때 나열한 순서대로 인덱스가 지정됩니다. 인덱스가 **0**이라면 **1번째** 값을, 인덱스가 **1**이라면 **2번째** 값을 의미합니다. (인덱스는 1이 아니라 **0부터 시작**합니다[^starts-at-zero])
+배열로부터 값을 하나 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다.
+
+### 인덱스
+
+**인덱스**는 값이 배열의 어디에 위치해있는지를 가리키는 수입니다. 배열을 만들 때 나열한 순서대로 인덱스가 지정됩니다. 인덱스가 **0**이라면 **1번째** 값을, 인덱스가 **1**이라면 **2번째** 값을 의미합니다. (인덱스는 1이 아니라 **0부터 시작**합니다[^starts-at-zero])
 
 [^starts-at-zero]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -98,7 +102,7 @@ echo ${ASDF[2]}
 
 {%include note.html %}
 
-`echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 것은 잠시 뒤에 알아보겠습니다.
+`echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 내용은 잠시 뒤에 알아보겠습니다.
 
 {%include endnote.html %}
 
@@ -140,6 +144,12 @@ ASDF[1]="B   B"
 | `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
 
 특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
+
+{% include note.html %}
+
+공백 문자의 취급과 큰따옴표, 작은따옴표에 관한 자세한 내용은...
+
+{% include endnote.html %}
 
 ## 값 변경 및 추가
 
@@ -183,7 +193,7 @@ ASDF[1]='Stephen Bourne'
 
 {% include endexample.html %}
 
-### [특이한 성질] 배열 생성: 암시적 배열 생성
+## [특이한 성질] 암시적 배열 생성
 
 다른 프로그래밍 언어와 달리 [배시]는 배열이 존재하지 않아도 해당 변수에 값을 추가할 수 있습니다. **변수가 배열이 아니라면 배시는 이를 배열로 만듭니다[^created-automatically].**
 
@@ -228,7 +238,7 @@ ASDF[12345]=99999
 
 {% include endexample.html %}
 
-### 배열 생성: 인덱스 명시
+## [특이한 성질] 인덱스 명시 배열 생성
 
 배열을 생성할 때 `배열이름=([인덱스]=값 [인덱스]=값)` 형태로 인덱스를 지정하여 생성하는 것도 가능합니다[^subscript-is-supplied].
 
@@ -455,6 +465,12 @@ done
 
 {% include endexample.html %}
 
+{% include note.html %}
+
+`for` 문에 관한 자세한 내용은...
+
+{% include endnote.html %}
+
 ## 값 제거
 
 `unset` 명령어를 통해 배열의 값을 제거할 수 있습니다. `unset 변수이름[0]`, `unset 변수이름[1]` 형태입니다. `unset 변수이름` 형태로 배열 전체를 제거할 수도 있습니다[^unset].
@@ -624,38 +640,59 @@ declare -a QWER=(100 200 300)
 
 {% include endnote.html %}
 
-## 배열의 종류: 인덱스 배열과 연관 배열
+## 연관 배열
 
-배열에는 두 가지 종류가 있습니다.
+2009년 출시된 배시 4.0부터 **연관 배열**(associative array)이라는 새로운 문법이 추가되었습니다[^new-goodies]. 연관 배열은 기존 배열과 달리 인덱스가 들어갈 자리에 **문자열**이 들어간다는 차이가 있습니다.
 
-**인덱스 배열:** 배열의 각 값을 0번부터 순차적으로 접근하는 배열입니다. 앞서 설명했던 모든 내용은 이 인덱스 배열에 대한 설명이었습니다. 일반적으로 '배열'이라고 하면 인덱스 배열을 뜻하는 경우가 많습니다.
+[^new-goodies]: [Bash, version 4 - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/bashver4.html)
 
-**연관 배열:** 배열의 각 값을... 배시 4.0에 새로 추가된...
+    > Chet Ramey announced Version 4 of Bash on the 20th of February, 2009.
+    > Among the new goodies:
+    >
+    > - Associative arrays.
 
-## 연관 배열 선언
+### 키
 
-인덱스 배열과 달리, 연관 배열을 사용하기 위해서는 반드시 명시적으로 선언해야 합니다[^the-subscript-is-required].
+기존 배열에서는 인덱스라고 했지만, 연관 배열에서는 이를 **키**라고 부릅니다.
 
-[^the-subscript-is-required]: [Arrays - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/arrays.html)
+### 인덱스 배열 vs 연관 배열
+
+기존의 인덱스를 사용하던 배열은 연관 배열과 구분할 필요가 있으므로 따로 **인덱스 배열**(indexed array)이라고 부릅니다.
+
+연관 배열의 기본적인 동작 방식은 인덱스 배열과 매우 유사합니다. 다음을 보세요:
+
+|| 변경 | 얻기 | 전체 얻기 | 배열 크기 | 제거 |
+|---|---|---|---|---|
+| **인덱스 배열** | `ASDF[3]=Hello` | `${ASDF[3]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[3]` |
+| **연관 배열** | `ASDF[greeting]=Hello` | `${ASDF[greeting]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[greeting]` |
+
+### 연관 배열의 명시적 선언
+
+명시적 선언을 해도 되고 안 해도 되는 인덱스 배열과 달리, 연관 배열을 사용하기 위해서는 반드시 **명시적으로 선언**해야만 합니다[^the-subscript-is-required]. 다음과 같이 선언합니다:
+
+[^the-subscript-is-required]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > When assigning to an associative array, the subscript is required.
 
-## 연관 배열 획득
+```sh
+declare -A 변수이름
+```
 
-연관 배열에 들어있는 값 중 하나를 얻습니다.
+연관 배열 또한 인덱스 배열과 동일하게 배열 선언과 함께 값을 추가할 수 있습니다. 다만 키를 명시하면서 인덱스 배열을 생성하던 것과 마찬가지로, 
 
-## 연관 배열 추가
-
-## 연관 배열 수정
-
-연관 배열에 들어있는 값 중 하나를 수정합니다.
-
-## 연관 배열 삭제
+```sh
+declare -A 변수이름=([키]=값 [키]=값 [키]=값)
+```
 
 ## 2차원 배열
 
-배시는 1차원 배열만을 지원합니다. 2차원 배열부터는 
+배시는 공식적으로 1차원 배열만을 지원합니다[^one-dimensional]. 2차원 배열을 위한 문법은 제공하지 않습니다.
+
+[^one-dimensional]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > Bash provides one-dimensional indexed and associative array variables.
 
 ## 참고
 
+- [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 - [Arrays - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/arrays.html)
