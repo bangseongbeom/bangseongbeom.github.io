@@ -511,7 +511,7 @@ done
 
 {% include note.html %}
 
-`for` 문에 관한 자세한 내용은...
+`for` 명령어에 관한 자세한 내용은...
 
 {% include endnote.html %}
 
