@@ -56,19 +56,13 @@ ASDF = (100 200 Hello) # 잘못됨!
 
 {% include endexample.html %}
 
-## 인덱스와 값 얻기
+## 값 얻기와 인덱스
 
-배열을 만들었으니 배열로부터 값을 얻을 수도 있어야겠죠? 배열로부터 값을 얻기 위해서는 먼저 얻고 싶은 값이 몇 번째에 존재하는지 알아야 합니다. 이를 가리켜 **인덱스**라 합니다.
-
-인덱스는 1이 아니라 **0부터 시작합니다[^starts-at-zero].** 인덱스가 **5**라면 이는 **6번째**를 뜻하며, 인덱스가 **0**이라면 이는 **1번째**를 뜻합니다.
+배열로부터 값을 하나 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다. **인덱스**는 값이 배열의 어디에 위치해있는지를 가리키는 수입니다. 배열을 만들 때 나열한 순서대로 인덱스가 지정됩니다. 인덱스가 **0**이라면 **1번째** 값을, 인덱스가 **1**이라면 **2번째** 값을 의미합니다. (인덱스는 1이 아니라 **0부터 시작**합니다[^starts-at-zero])
 
 [^starts-at-zero]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Indexing starts at zero.
-
----
-
-배열로부터 값을 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다.
 
 {% include example.html %}
 
@@ -107,6 +101,45 @@ echo ${ASDF[2]}
 `echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 것은 잠시 뒤에 알아보겠습니다.
 
 {%include endnote.html %}
+
+## 전체 값 얻기
+
+`"${배열이름[@]}"` 형태로 배열에 존재하는 모든 값을 얻습니다. **큰따옴표(`"`)에 주의하세요.**
+
+{% include example.html %}
+
+```sh
+ASDF=(111 222 333)
+echo "${ASDF[@]}"
+```
+
+{% include endexample.html %}
+
+### 다른 형태와 비교
+
+`"${배열이름[@]}"`같은 형태 말고도 `@` 대신 `*`를 사용할 수도 있고, 큰따옴표를 빼버릴 수도 있습니다[^at-or-asterisk].
+
+[^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
+
+다음과 같은 배열이 존재한다고 했을 때:
+
+```sh
+ASDF[0]="A A"
+ASDF[1]="B   B"
+```
+
+각 명령어 별로 다른 결과를 보입니다:
+
+| 명령어 | 중간 결과 | 출력 | 특징 |
+|---|---|---|---|
+| `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 각 값을 개별적인 문자열로서 취급 |
+| `echo "${ASDF[*]}"` | `echo "A A B   B"` | `A A B   B` |  모든 값을 하나의 문자열로서 취급 |
+| `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
+| `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
+
+특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
 
 ## 값 변경 및 추가
 
@@ -241,7 +274,7 @@ Bye
 
 {% include endnote.html %}
 
-## 배열 끝에 추가
+## 배열 끝 값 추가
 
 `배열이름+=(값1 값2 값3)` 형태로 배열에 값을 추가합니다.
 
@@ -281,45 +314,6 @@ Alpha123
 `ASDF[0]`에 존재하는 `Alpha`와 `123`이 붙어 `Alpha123`이라는 결과가 나왔습니다.
 
 {% include endexample.html %}
-
-## 전체 값 얻기
-
-`"${배열이름[@]}"` 형태로 배열에 존재하는 모든 값을 얻습니다. **큰따옴표(`"`)에 주의하세요.**
-
-{% include example.html %}
-
-```sh
-ASDF=(111 222 333)
-echo "${ASDF[@]}"
-```
-
-{% include endexample.html %}
-
-### 다른 형태와 비교
-
-`"${배열이름[@]}"`같은 형태 말고도 `@` 대신 `*`를 사용할 수도 있고, 큰따옴표를 빼버릴 수도 있습니다[^at-or-asterisk].
-
-[^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
-
-    > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
-
-다음과 같은 배열이 존재한다고 했을 때:
-
-```sh
-ASDF[0]="A A"
-ASDF[1]="B   B"
-```
-
-각 명령어 별로 다른 결과를 보입니다:
-
-| 명령어 | 중간 결과 | 출력 | 특징 |
-|---|---|---|---|
-| `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 각 값을 개별적인 문자열로서 취급 |
-| `echo "${ASDF[*]}"` | `echo "A A B   B"` | `A A B   B` |  모든 값을 하나의 문자열로서 취급 |
-| `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
-| `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 값이 가진 공백이 무시됨 |
-
-특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
 
 ## 배열 합치기
 
