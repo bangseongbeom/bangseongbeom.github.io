@@ -725,7 +725,7 @@ echo ${ASDF[@]}
 
 연관 배열의 키에는 순서가 없으므로 출력 결과는 실행 환경마다 다를 수 있습니다.
 
-{% include endexample.htm %}
+{% include endexample.html %}
 
 ## 2차원 배열
 
