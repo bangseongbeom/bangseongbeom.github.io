@@ -344,9 +344,9 @@ echo "${CCC[@]}"
 
 {% include endexample.html %}
 
-## 배열 크기
+## 배열 크기 얻기
 
-`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구합니다[^length-of-array].
+`${#변수이름[@]}` (`변수이름` 앞에 `#`이 있습니다) 형태로 배열에 들어 있는 값의 개수를 구합니다[^length-of-array].
 
 [^length-of-array]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
@@ -393,7 +393,7 @@ echo ${#ASDF[@]}
 
 {% include note.html %}
 
-`${#ASDF[1]}`과 같이 길이를 구할 때 `@` 대신 인덱스를 넣을 경우, 배열에 존재하는 값의 개수를 구하는 게 아니라 해당 값의 문자열 길이를 얻습니다:
+`${#변수이름[1]}`과 같이 길이를 구할 때 `@` 대신 인덱스를 넣을 경우, 배열에 존재하는 값의 개수를 구하는 게 아니라 해당 값의 문자열 길이를 얻습니다:
 
 ```sh
 ASDF=(Short LongLongLong "  ")
@@ -415,6 +415,27 @@ echo ${#ASDF[2]}
 {% include endnote.html %}
 
 ## 배열 전체 인덱스 얻기
+
+`${!변수이름[@]}` (`변수이름` 앞에 `!`가 있습니다) 형태로 배열이 가진 전체 인덱스 목록을 얻을 수 있습니다[^obtain-the-keys].
+
+[^obtain-the-keys]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > It is possible to obtain the keys (indices) of an array as well as the values. ${!name[@]} and ${!name[*]} expand to the indices assigned in array variable name. The treatment when in double quotes is similar to the expansion of the special parameters ‘@’ and ‘*’ within double quotes.
+
+{% include example.html %}
+
+```sh
+ASDF=(123 456 789 [777]=TripleSeven)
+echo ${!ASDF[@]}
+```
+
+출력 결과:
+
+```
+0 1 2 777
+```
+
+{% include endexample.html %}
 
 ## 배열 순회
 
@@ -472,14 +493,22 @@ unset A
 
 ### 값 제거 vs 빈 문자열 대입
 
-배시에서는 다음과 같이 변수에 빈 문자열을 대입하는 것을 허용합니다:
+배시는 배열에 빈 문자열(길이가 0인 문자열)이 들어가는 것을 정상적인 값의 설정으로 취급합니다[^null-string].
+
+[^null-string]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > The null string is a valid value.
+
+{% include example.html %}
 
 ```sh
 ASDF=(123 456 789)
 ASDF[2]= # 빈 문자열 대입
 ```
 
-빈 문자열을 대입하는 것이 배열에 있는 값을 **제거**하는 것은 아닙니다. 빈 문자열 또한 정상적인 값으로 취급합니다.
+{% include endexample.html %}
+
+그러므로 빈 문자열을 대입하는 것은 배열에 있는 값을 **제거**하는 게 아니라 그저 빈 문자열로 덮어쓸 뿐입니다.
 
 {% include example.html %}
 
