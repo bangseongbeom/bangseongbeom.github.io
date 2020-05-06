@@ -243,7 +243,7 @@ Bye
 
 ## 배열 끝에 추가
 
-`배열이름+=(값1 값2 값3)` 형태로 배열에 값을 추가할 수 있습니다.
+`배열이름+=(값1 값2 값3)` 형태로 배열에 값을 추가합니다.
 
 {% include example.html %}
 
@@ -261,7 +261,7 @@ ASDF+=(456 789)
 
 {% include example.html invalid=true %}
 
-배열 끝에 값을 추가할 때는 반드시 하나의 반드시 괄호를 붙여야 합니다. 다음 코드를 보세요:
+**단 하나의 값**을 추가한다고 해도 반드시 괄호를 붙여야 합니다. 다음 코드를 보세요:
 
 ```sh
 ASDF=(Alpha Beta Theta Gamma)
@@ -284,7 +284,7 @@ Alpha123
 
 ## 전체 값 얻기
 
-`"${배열이름[@]}"` 형태로 배열에 존재하는 모든 값을 얻을 수 있습니다. **큰따옴표(`"`)에 주의하세요.**
+`"${배열이름[@]}"` 형태로 배열에 존재하는 모든 값을 얻습니다. **큰따옴표(`"`)에 주의하세요.**
 
 {% include example.html %}
 
@@ -321,9 +321,32 @@ ASDF[1]="B   B"
 
 특수한 경우를 제외하고는 각 값을 개별적인 문자열로서 취급하는 `echo "${ASDF[@]}"` 형태를 사용하는 것이 좋습니다.
 
+## 배열 합치기
+
+`"${ASDF[@]}"`를 응용해 두 개의 배열을 하나로 합치는 데 사용할 수도 있습니다.
+
+{% include example.html %}
+
+```sh
+AAA=(123 456 789)
+BBB=(1 4 7)
+
+CCC=("${AAA[@]}" "${BBB[@]}")
+
+echo "${CCC[@]}"
+```
+
+출력 결과:
+
+```
+123 456 789 1 4 7
+```
+
+{% include endexample.html %}
+
 ## 배열 크기
 
-`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구할 수 있습니다[^length-of-array].
+`${#변수이름[@]}` 형태로 배열에 들어 있는 값의 개수를 구합니다[^length-of-array].
 
 [^length-of-array]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
