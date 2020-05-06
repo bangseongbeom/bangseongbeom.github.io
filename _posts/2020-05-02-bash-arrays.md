@@ -106,7 +106,11 @@ echo ${ASDF[2]}
 
 ## 전체 값 얻기
 
-전체 값을 얻는 방법은 다음과 같은 4가지 형태가 있습니다:
+전체 값을 얻는 방법은 다음과 같이 4가지 형태가 있습니다[^at-or-asterisk]:
+
+[^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+
+    > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
 
 - `${변수이름[@]}`: 인덱스가 들어갈 자리에 `@`
 - `${변수이름[*]}`: 인덱스가 들어갈 자리에 `*`
@@ -513,10 +517,10 @@ ASDF[2]= # 빈 문자열 대입
 ```sh
 ASDF=(123 456 789)
 echo "Count:" ${#ASDF[@]}
-echo "Get all:" "${ASDF[@]}"
+echo "Get all:" ${ASDF[@]}
 ASDF[1]=
 echo "Count:" ${#ASDF[@]}
-echo "Get all:" "${ASDF[@]}"
+echo "Get all:" ${ASDF[@]}
 ```
 
 출력 결과:
