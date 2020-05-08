@@ -29,21 +29,45 @@ category: etc
 
 ## 사용 방법
 
-1. {% include figure.html %}
-   
-   ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
-   
-   {% include figcaption.html %}**테스트**{% include figcaption.html end=true %}
+{% include figure.html %}
 
-   {% include figure.html end=true %}
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
 
-2. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
+{% include figcaption.html %}**'Select image'** 버튼을 누릅니다.{% include figcaption.html end=true %}
 
-3. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
+{% include figure.html end=true %}
 
-4. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
+{% include figure.html %}
 
-5. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
+
+{% include figcaption.html %}굽는데 사용할 이미지 파일(ISO, IMG, ...)을 선택합니다.{% include figcaption.html end=true %}
+
+{% include figure.html end=true %}
+
+{% include figure.html %}
+
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
+
+{% include figcaption.html %}**'Select target'** 버튼을 누릅니다.{% include figcaption.html end=true %}
+
+{% include figure.html end=true %}
+
+{% include figure.html %}
+
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
+
+{% include figcaption.html %}이미지를 설치할 SD 카드 또는 USB를 선택합니다.{% include figcaption.html end=true %}
+
+{% include figure.html end=true %}
+
+{% include figure.html %}
+
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
+
+{% include figcaption.html %}**'Flash!'** 버튼을 눌러 굽기를 시작합니다.{% include figcaption.html end=true %}
+
+{% include figure.html end=true %}
 
 ## 대안
 
