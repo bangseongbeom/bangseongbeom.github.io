@@ -29,7 +29,13 @@ category: etc
 
 ## 사용 방법
 
+{% include figure.html %}
+
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
+
+{% include figure.html figcaption=true %}**테스트**{% include figure.html endfigcaption=true %}
+
+{% include figure.html end=true %}
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
 
