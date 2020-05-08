@@ -29,19 +29,21 @@ category: etc
 
 ## 사용 방법
 
-{% include figure.html %} ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
+1. {% include figure.html %}
+   
+   ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
+   
+   {% include figcaption.html %}**테스트**{% include figcaption.html end=true %}
 
-{% include figcaption.html %}**테스트**{% include figcaption.html end=true %}
+   {% include figure.html end=true %}
 
-{% include figure.html end=true %}
+2. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
+3. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
+4. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
-
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
+5. ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
 
 ## 대안
 
