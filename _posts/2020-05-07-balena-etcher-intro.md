@@ -9,11 +9,11 @@ category: etc
 
 ## 장점
 
-매우 단순한 UI를 가지고 있어 누구나 쉽게 사용할 수 있습니다.
+- 매우 단순한 UI를 가지고 있어 누구나 쉽게 사용할 수 있습니다.
 
 ## 단점
 
-용량이 너무 큽니다. ([일렉트론](https://www.electronjs.org/)을 기반으로 하기 때문입니다[^electron])
+- 용량이 너무 큽니다. ([일렉트론](https://www.electronjs.org/)을 기반으로 하기 때문입니다[^electron]. 일렉트론은 내부적으로 [크롬 브라우저](https://www.google.com/chrome/)를 포함하고 있습니다)
 
 [^electron]: [balenaEtcher](https://www.balena.io/etcher/)
 
