@@ -129,7 +129,12 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
+figure {
+  margin: 1em 0;
+}
+
 figcaption {
+  margin: 0.5em 0;
   text-align: center;
 }
 
