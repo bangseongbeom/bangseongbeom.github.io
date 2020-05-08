@@ -102,7 +102,7 @@ echo ${ASDF[2]}
 
 `echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 내용은 잠시 뒤에 알아보겠습니다.
 
-{%include endnote.html %}
+{%include note.html end=true %}
 
 ## 전체 값 얻기
 
