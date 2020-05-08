@@ -1,1 +1,9 @@
+{% if include.figcaption != true and include.end != true %}
 <figure markdown="1">
+{% elsif include.figcaption and include.end != true %}
+<figcaption markdown="span">
+{% elsif include.figcaption and include.end %}
+</figcaption>
+{% else %}
+</figure>
+{% endif %}
