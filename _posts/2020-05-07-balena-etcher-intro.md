@@ -3,7 +3,7 @@ title: 발레나에처(balenaEtcher) 소개
 category: etc
 ---
 
-[발레나에처]\(balenaEtcher)는 간단하게 SD 카드나 USB에 OS 이미지를 구울 수 있는 유틸리티 프로그램입니다.
+[발레나에처]\(balenaEtcher)는 간단하게 SD 카드나 USB에 운영 체제 이미지를 구울 수 있는 유틸리티 프로그램입니다.
 
 [발레나에처]: https://www.balena.io/etcher/
 
