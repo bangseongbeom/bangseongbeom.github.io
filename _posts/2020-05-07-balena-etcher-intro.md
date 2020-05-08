@@ -33,7 +33,7 @@ category: etc
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
 
-{% include figure.html figcaption=true %}**테스트**{% include figure.html endfigcaption=true %}
+{% include figcaption.html %}**테스트**{% include figcaption.html end=true %}
 
 {% include figure.html end=true %}
 
