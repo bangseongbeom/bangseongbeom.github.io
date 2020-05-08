@@ -69,6 +69,18 @@ category: etc
 
 {% include figure.html end=true %}
 
+{% include note.html %}
+
+{% include figure.html %}
+
+![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-6.png)
+
+{% include figcaption.html %}SD 카드 또는 USB의 용량이 너무 클 경우, [발레나에처]는 사용자가 **자료 백업 용과 같은 중요한 드라이브**에 이미지를 구우려 하는 것이 아닌지 경고합니다. 정말 이미지를 굽기 위한 드라이브가 맞다면 **'Continue'** 버튼을 눌러 굽기를 시작합시다.{% include figcaption.html end=true %}
+
+{% include figure.html end=true %}
+
+{% include note.html end=true %}
+
 ## 대안
 
 - [루퍼스](https://rufus.ie/)(Rufus): 매우 적은 용량을 차지합니다. 한국어도 지원합니다. 단순한 UI를 가지고 있지만, 미숙련 사용자에게는 [발레나에처]에 비해 조금 어려울 수 있습니다.
