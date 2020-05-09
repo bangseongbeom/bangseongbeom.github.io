@@ -27,93 +27,83 @@ category: machine-learning
 
 ## 넘파이
 
-[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **직접** 언급합니다[^import-conventions-throughout-numpy].
+[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **직접** 언급합니다.
 
 {% include example.html %}
 
-```py
-import numpy as np
-```
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+
+> The following import conventions are used throughout the NumPy source and documentation:
+>
+> ```py
+> import numpy as np
+> ```
 
 {% include example.html end=true %}
 
 ## 맷플롯립
 
-[넘파이] 공식 문서와 소스 코드에서 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **직접** 언급합니다[^import-conventions-throughout-numpy].
+[넘파이] 공식 문서와 소스 코드에서 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **직접** 언급합니다.
 
 [맷플롯립]: https://matplotlib.org/
 
 {% include example.html %}
 
-```py
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-```
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+
+> The following import conventions are used throughout the NumPy source and documentation:
+>
+> ```py
+> import matplotlib as mpl
+> import matplotlib.pyplot as plt
+> ```
 
 {% include example.html end=true %}
 
-[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 직접 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다[^mlab-ticker-pdfpages-figure].
-
-[^mlab-ticker-pdfpages-figure]: [How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
-
-    > ```py
-    > import matplotlib.mlab as mlab
-    > import matplotlib.ticker as ticker
-    > ```
-    >
-    > ```py
-    > from matplotlib.backends.backend_pdf import PdfPages
-    > ```
-    >
-    > ```py
-    > from matplotlib.figure import Figure
-    > ```
+[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 직접 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다.
 
 {% include example.html %}
 
-경우에 따라 모듈 자체를 `import as`로 가져옵니다:
+[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html):
 
-```py
-import matplotlib.mlab as mlab
-import matplotlib.ticker as ticker
-```
-
-{% include example.html end=true %}
-
-{% include example.html %}
-
-경우에 따라 함수나 클래스를 `from import`로 가져옵니다:
-
-```py
-from matplotlib.backends.backend_pdf import PdfPages
-from matplotlib.figure import Figure
-```
+> ```py
+> import matplotlib.mlab as mlab
+> import matplotlib.ticker as ticker
+> ```
+>
+> ...
+>
+> ```py
+> from matplotlib.backends.backend_pdf import PdfPages
+> ```
+>
+> ...
+>
+> ```py
+> from matplotlib.figure import Figure
+> ```
 
 {% include example.html end=true %}
 
 ## 사이파이
 
-[사이파이]\(SciPy)의 경우 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy][^imported-separately].
+[사이파이]\(SciPy)의 경우 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy].
 
 [사이파이]: https://scipy.org/
 
 [^do-not-abbreviate-scipy]: [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
 
     > Do not abbreviate scipy. There is no motivating use case to abbreviate it in the real world, so we avoid it in the documentation to avoid confusion.
-    
-[^imported-separately]: [Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization)
-
-    > SciPy sub-packages need to be imported separately, for example:
-
-    > ```py
-    > >>> from scipy import linalg, optimize
-    > ```
 
 {% include example.html %}
 
-```py
-from scipy import linalg, optimize
-```
+[Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization):
+
+> SciPy sub-packages need to be imported separately, for example:
+
+> ```py
+> >>> from scipy import linalg, optimize
+> ```
 
 {% include example.html end=true %}
 
@@ -283,11 +273,17 @@ import tensorflow_datasets as tfds
 
 [파이토치]: https://pytorch.org/
 
-[Start Locally - PyTorch](https://pytorch.org/get-started/locally/)
+{% include example.html %}
+
+[Start Locally - PyTorch](https://pytorch.org/get-started/locally/):
 
 > ```py
 > import torch
 > ```
+
+{% include example.html end=true %}
+
+{% include example.html %}
 
 [Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html):
 
@@ -299,9 +295,13 @@ import tensorflow_datasets as tfds
 > from torch.nn.parallel import DistributedDataParallel as DDP
 > ```
 
+{% include example.html end=true %}
+
 ## 케라스
 
 [케라스]\(Keras)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다.
+
+{% include example.html %}
 
 [The Functional API - Keras](https://keras.io/guides/functional_api/):
 
@@ -310,11 +310,17 @@ import tensorflow_datasets as tfds
 > from tensorflow.keras import layers
 > ```
 
-[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/)
+{% include example.html end=true %}
+
+{% include example.html %}
+
+[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/):
 
 > ```py
 > outputs = keras.layers.Dense(1)(inputs)
 > ```
+
+{% include example.html end=true %}
 
 ## 참고
 
