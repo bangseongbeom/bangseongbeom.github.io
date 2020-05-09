@@ -100,7 +100,7 @@ category: machine-learning
 [Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization):
 
 > SciPy sub-packages need to be imported separately, for example:
-
+>
 > ```py
 > >>> from scipy import linalg, optimize
 > ```
