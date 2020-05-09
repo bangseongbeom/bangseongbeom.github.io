@@ -9,7 +9,7 @@ category: machine-learning
 
 대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오거나, 드물게 (특히 모듈 이름이 짧을 때) `import`를 통해 직접 모듈을 불러오고는 합니다.
 
-이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 `import as` 문을 자주 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지에 대해 언급합니다[^import-conventions-throughout-numpy].
+이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지에 대해 언급합니다[^import-conventions-throughout-numpy].
 
 [넘파이]: https://numpy.org/
 
@@ -22,6 +22,8 @@ category: machine-learning
     > import matplotlib as mpl
     > import matplotlib.pyplot as plt
     > ```
+
+반드시 `import as`를 사용할 필요는 없습니다. 하지만 관습적으로 쓰이는 약칭을 존중한다면, 다른 사람이 나의 코드를 볼 때 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 됩니다.
 
 ## 넘파이
 
