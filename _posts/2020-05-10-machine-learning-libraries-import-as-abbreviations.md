@@ -104,7 +104,6 @@ from matplotlib.figure import Figure
     > SciPy sub-packages need to be imported separately, for example:
 
     > ```py
-    > >>>
     > >>> from scipy import linalg, optimize
     > ```
 
