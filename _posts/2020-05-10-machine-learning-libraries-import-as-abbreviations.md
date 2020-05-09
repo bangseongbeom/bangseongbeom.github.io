@@ -52,7 +52,7 @@ import matplotlib.pyplot as plt
 
 {% include example.html end=true %}
 
-[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 직접 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈자체의 이름을 `as`로 가져오거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져오는 것으로 보입니다[^mlab-ticker-pdfpages-figure].
+[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 직접 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다[^mlab-ticker-pdfpages-figure].
 
 [^mlab-ticker-pdfpages-figure]: [How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
 
@@ -119,7 +119,7 @@ from scipy import linalg, optimize
 
 ## 판다스
 
-[판다스]\(pandas)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여쓰는 것으로 보입니다[^code-in-examples].
+[판다스]\(pandas)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다[^code-in-examples].
 
 [판다스]: https://pandas.pydata.org/
 
@@ -144,7 +144,7 @@ import pandas as pd
 
 ## 사이킷런
 
-[사이킷런]\(scikit-learn)의 경우 직접적으로 언급하지는 않으나, 공식 문서와 예시를 살펴보면 `import as`를 사용하는 것 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다[^print-changed-only][^plot-spectral-coclustering][^tutorial].
+[사이킷런]\(scikit-learn)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다[^print-changed-only][^plot-spectral-coclustering][^tutorial].
 
 [사이킷런]: https://scikit-learn.org/
 
@@ -195,7 +195,7 @@ from sklearn.datasets import make_biclusters
 
 ## 대스크
 
-[대스크]\(Dask)의 경우 직접적으로 언급하지는 않으나, `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다[^dask-dask].
+[대스크]\(Dask)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다[^dask-dask].
 
 [대스크]: https://dask.org/
 
@@ -252,15 +252,69 @@ from dask.distributed import wait
 
 ## 텐서플로
 
-`tf`
+[탠서플로]\(TensorFlow)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다[^tensorflow-quickstart]. `tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다[^tensorflow-datasets]. 
+
+[탠서플로]: https://www.tensorflow.org/
+
+[^tensorflow-quickstart]: [TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner)
+
+    > ```py
+    > import tensorflow as tf
+    > ```
+
+[^tensorflow-datasets]: [TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview)
+
+    > ```py
+    > import tensorflow_datasets as tfds
+    > ```
+
+{% include example.html %}
+
+```py
+import tensorflow as tf
+import tensorflow_datasets as tfds
+```
+
+{% include example.html end=true %}
 
 ## 파이토치
 
-`torch`
+[파이토치]\(PyTorch)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import torch`를 주로 사용합니다. 하위 모듈이나 함수, 클래스의 경우 이름이 짧으면 그대로 쓰고 이름이 길면 줄여 쓰는 경향이 있습니다.
+
+[파이토치]: https://pytorch.org/
+
+[Start Locally - PyTorch](https://pytorch.org/get-started/locally/)
+
+> ```py
+> import torch
+> ```
+
+[Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html):
+
+> ```py
+> import torch.distributed as dist
+> import torch.multiprocessing as mp
+> import torch.nn as nn
+> import torch.optim as optim
+> from torch.nn.parallel import DistributedDataParallel as DDP
+> ```
 
 ## 케라스
 
-`keras`, `layers`
+[케라스]\(Keras)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다.
+
+[The Functional API - Keras](https://keras.io/guides/functional_api/):
+
+> ```py
+> from tensorflow import keras
+> from tensorflow.keras import layers
+> ```
+
+[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/)
+
+> ```py
+> outputs = keras.layers.Dense(1)(inputs)
+> ```
 
 ## 참고
 
