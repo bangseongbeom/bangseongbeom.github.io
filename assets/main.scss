@@ -694,6 +694,11 @@ pre.highlight {
   margin-bottom: 0;
 }
 
+pre,
+pre.highlight {
+  margin: 1em 0;
+}
+
 .social-media-list {
   li + li {
     padding: 0;
