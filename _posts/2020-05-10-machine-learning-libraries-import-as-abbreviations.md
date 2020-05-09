@@ -87,7 +87,7 @@ category: machine-learning
 
 ## 사이파이
 
-[사이파이]\(SciPy)의 경우 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy].
+[사이파이]\(SciPy)의 경우 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈의 경우 모듈 이름을 `import`합니다.
 
 [사이파이]: https://scipy.org/
 
@@ -109,161 +109,123 @@ category: machine-learning
 
 ## 판다스
 
-[판다스]\(pandas)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다[^code-in-examples].
+[판다스]\(pandas)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다.
 
 [판다스]: https://pandas.pydata.org/
 
-[^code-in-examples]: [pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples)
-
-    > Code in examples is assumed to always start with these two lines which are not shown:
-    >
-    > ```py
-    > import numpy as np
-    > import pandas as pd
-    > ```
-    >
-    > Any other module used in the examples must be explicitly imported, one per line (as recommended in PEP 8#imports) and avoiding aliases.
-
 {% include example.html %}
 
-```py
-import pandas as pd
-```
+[pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples):
+
+> Code in examples is assumed to always start with these two lines which are not shown:
+>
+> ```py
+> import numpy as np
+> import pandas as pd
+> ```
 
 {% include example.html end=true %}
 
 ## 사이킷런
 
-[사이킷런]\(scikit-learn)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다[^print-changed-only][^plot-spectral-coclustering][^tutorial].
+[사이킷런]\(scikit-learn)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다.
 
 [사이킷런]: https://scikit-learn.org/
 
-[^print-changed-only]: [Compact estimator representations - scikit-learn](https://scikit-learn.org/stable/auto_examples/plot_changed_only_pprint_parameter.html)
-
-    > ```py
-    > from sklearn.linear_model import LogisticRegression
-    > from sklearn import set_config
-    > ```
-
-
-[^plot-spectral-coclustering]: [A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html)
-
-    > ```py
-    > from sklearn.datasets import make_biclusters
-    > from sklearn.cluster import SpectralCoclustering
-    > from sklearn.metrics import consensus_score
-    > ```
-
-[^tutorial]: [An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html)
-
-    > ```py
-    > >>> from sklearn import datasets
-    > >>> from sklearn import svm
-    > ```
-
 {% include example.html %}
 
-경우에 따라 모듈 자체를 `from import`로 가져옵니다:
+[A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html):
 
-```py
-from sklearn import datasets
-from sklearn import svm
-```
+> ```py
+> from sklearn.datasets import make_biclusters
+> from sklearn.cluster import SpectralCoclustering
+> from sklearn.metrics import consensus_score
+> ```
 
 {% include example.html end=true %}
 
 {% include example.html %}
 
-경우에 따라 함수와 클래스를 `from import`로 가져옵니다:
+[An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html):
 
-```py
-from sklearn.linear_model import LogisticRegression
-from sklearn.datasets import make_biclusters
-```
+> ```py
+> >>> from sklearn import datasets
+> >>> from sklearn import svm
+> ```
 
 {% include example.html end=true %}
 
 ## 대스크
 
-[대스크]\(Dask)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다[^dask-dask].
+[대스크]\(Dask)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다.
 
 [대스크]: https://dask.org/
 
-[^dask-dask]: [Dask - Dask](https://docs.dask.org/en/latest/)
-
-    > ```py
-    > import dask.dataframe as dd
-    > ```
-    >
-    > ...
-    >
-    > ```py
-    > import dask.array as da
-    > ```
-    >
-    > ...
-    > 
-    > ```py
-    > import dask.bag as db
-    > ```
-
 {% include example.html %}
 
-```py
-import dask.dataframe as dd
-import dask.array as da
-import dask.bag as db
-```
+[Dask - Dask](https://docs.dask.org/en/latest/):
+
+> ```py
+> import dask.dataframe as dd
+> ```
+>
+> ...
+>
+> ```py
+> import dask.array as da
+> ```
+>
+> ...
+> 
+> ```py
+> import dask.bag as db
+> ```
 
 {% include example.html end=true %}
 
-그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다[^dask-futures].
-
-[^dask-futures]: [Futures - Dask](https://docs.dask.org/en/latest/futures.html)
-    
-    > ```py
-    > from dask.distributed import Client
-    > ```
-    >
-    > ...
-    >
-    > ```py
-    > from dask.distributed import wait
-    > ```
+그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다.
 
 {% include example.html %}
 
-```py
-from dask.distributed import Client
-from dask.distributed import wait
-```
+[Futures - Dask](https://docs.dask.org/en/latest/futures.html):
+    
+> ```py
+> from dask.distributed import Client
+> ```
+>
+> ...
+>
+> ```py
+> from dask.distributed import wait
+> ```
 
 {% include example.html end=true %}
 
 ## 텐서플로
 
-[탠서플로]\(TensorFlow)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다[^tensorflow-quickstart]. `tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다[^tensorflow-datasets]. 
+[탠서플로]\(TensorFlow)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다.
 
 [탠서플로]: https://www.tensorflow.org/
 
-[^tensorflow-quickstart]: [TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner)
+{% include example.html %}
 
-    > ```py
-    > import tensorflow as tf
-    > ```
+[TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner):
 
-[^tensorflow-datasets]: [TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview)
+> ```py
+> import tensorflow as tf
+> ```
 
-    > ```py
-    > import tensorflow_datasets as tfds
-    > ```
+{% include example.html end=true %}
+
+`tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다.
 
 {% include example.html %}
 
-```py
-import tensorflow as tf
-import tensorflow_datasets as tfds
-```
+[TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview):
+
+> ```py
+> import tensorflow_datasets as tfds
+> ```
 
 {% include example.html end=true %}
 
