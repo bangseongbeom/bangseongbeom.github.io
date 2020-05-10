@@ -7,7 +7,7 @@ category: machine-learning
 
 ---
 
-대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오거나, 드물게 (특히 모듈 이름이 짧을 때) `import`를 통해 직접 모듈을 불러오고는 합니다. 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 무척 드룹니다.
+대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오거나, 드물게 (특히 모듈 이름이 짧을 때) `import`를 통해 직접 모듈을 불러오고는 합니다. 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 무척 드뭅니다.
 
 이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 관습적으로 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`에 대해 직접 언급합니다[^import-conventions-throughout-numpy].
 
