@@ -31,7 +31,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -49,7 +49,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -64,7 +64,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html):
+[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
 
 > ```py
 > import matplotlib.mlab as mlab
@@ -97,7 +97,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization):
+[Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization)
 
 > SciPy sub-packages need to be imported separately, for example:
 >
@@ -115,7 +115,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples):
+[pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples)
 
 > Code in examples is assumed to always start with these two lines which are not shown:
 >
@@ -134,7 +134,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html):
+[A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html)
 
 > ```py
 > from sklearn.datasets import make_biclusters
@@ -146,7 +146,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html):
+[An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html)
 
 > ```py
 > >>> from sklearn import datasets
@@ -163,7 +163,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Dask - Dask](https://docs.dask.org/en/latest/):
+[Dask - Dask](https://docs.dask.org/en/latest/)
 
 > ```py
 > import dask.dataframe as dd
@@ -187,7 +187,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Futures - Dask](https://docs.dask.org/en/latest/futures.html):
+[Futures - Dask](https://docs.dask.org/en/latest/futures.html)
     
 > ```py
 > from dask.distributed import Client
@@ -209,7 +209,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner):
+[TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner)
 
 > ```py
 > import tensorflow as tf
@@ -221,7 +221,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview):
+[TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview)
 
 > ```py
 > import tensorflow_datasets as tfds
@@ -237,7 +237,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Start Locally - PyTorch](https://pytorch.org/get-started/locally/):
+[Start Locally - PyTorch](https://pytorch.org/get-started/locally/)
 
 > ```py
 > import torch
@@ -247,7 +247,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html):
+[Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html)
 
 > ```py
 > import torch.distributed as dist
@@ -265,7 +265,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[The Functional API - Keras](https://keras.io/guides/functional_api/):
+[The Functional API - Keras](https://keras.io/guides/functional_api/)
 
 > ```py
 > from tensorflow import keras
@@ -276,7 +276,7 @@ category: machine-learning
 
 {% include example.html %}
 
-[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/):
+[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/)
 
 > ```py
 > outputs = keras.layers.Dense(1)(inputs)
