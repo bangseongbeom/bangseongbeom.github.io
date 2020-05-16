@@ -7,7 +7,7 @@ category: machine-learning
 
 ---
 
-대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오거나, 드물게 (특히 모듈 이름이 짧을 때) `import`를 통해 직접 모듈을 불러오고는 합니다. 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 무척 드뭅니다.
+대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오는 경우가 대부분이며, 모듈 이름이 짧거나 명확성을 더하고 싶다면 `import`를 통해 직접 모듈을 불러옵니다. 각종 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 드뭅니다.
 
 이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 관습적으로 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`에 대해 직접 언급합니다[^import-conventions-throughout-numpy].
 
@@ -23,7 +23,16 @@ category: machine-learning
     > import matplotlib.pyplot as plt
     > ```
 
-반드시 `import as`를 사용할 필요는 없습니다. 하지만 관습적으로 쓰이는 약칭을 존중한다면, 다른 사람이 나의 코드를 볼 때 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 됩니다. 그래서 정리했습니다.
+`as`를 어떻게 사용할 것인지는 전적으로 코드 작성자의 선택입니다. 하지만 관습적으로 쓰이는 약칭을 존중한다면, 다른 사람이 나의 코드를 볼 때 내 코드의 `import`들이 어떻게 되어있는지 굳이 확인해보지 않아도 됩니다. 기계 학습 관련 라이브러리 중 하나인 [판다스]\(pandas)는 문서의 모든 예시 코드에서 `import pandas as pd` 코드가 삽입되어 있다고 가정합니다[^code-assumed-pandas]. 때문에 `pd`가 무엇의 약칭인지 일일이 확인할 필요가 없습니다.
+
+[^code-assumed-pandas]: [pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples)
+
+    > Code in examples is assumed to always start with these two lines which are not shown:
+    >
+    > ```py
+    > import numpy as np
+    > import pandas as pd
+    > ```
 
 ## 넘파이
 
@@ -106,6 +115,14 @@ category: machine-learning
 > ```
 
 {% include example.html end=true %}
+
+{% include note.html %}
+
+[사이파이] 버전 0.15.0 전에는 `import scipy as sp`를 통해 `scipy` 모듈 자체도 `sp`라는 약칭을 사용했습니다. 
+
+참고: [DOC: remove `import scipy as sp` abbreviation here and there](https://github.com/scipy/scipy/pull/3933)
+
+{% include note.html end=true %}
 
 ## 판다스
 
