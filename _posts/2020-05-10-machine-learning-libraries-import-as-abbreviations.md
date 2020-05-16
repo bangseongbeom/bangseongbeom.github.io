@@ -96,7 +96,7 @@ category: machine-learning
 
 ## 사이파이
 
-[사이파이]\(SciPy)의 경우 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈의 경우 모듈 이름을 `import`합니다.
+[사이파이]\(SciPy)의 경우 `scipy` 모듈에 대해 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈의 경우 `from import`를 사용합니다.
 
 [사이파이]: https://scipy.org/
 
@@ -118,7 +118,7 @@ category: machine-learning
 
 {% include note.html %}
 
-[사이파이] 버전 0.15.0 전에는 `import scipy as sp`를 통해 `scipy` 모듈 자체도 `sp`라는 약칭을 사용했습니다. 
+[사이파이] 버전 0.15.0 전에는 `scipy` 모듈 자체도 `sp`라는 약칭을 사용했습니다. 
 
 참고: [DOC: remove `import scipy as sp` abbreviation here and there](https://github.com/scipy/scipy/pull/3933)
 
