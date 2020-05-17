@@ -140,10 +140,11 @@ category: machine-learning
 
 관련 문서:
 
-- [DOC: numpy attributes in scipy namespace - GitHub](https://github.com/scipy/scipy/pull/79)
-- [Relationship between SciPy and NumPy - Stack Overflow](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)
-- [DOC: remove `import scipy as sp` abbreviation here and there - GitHub](https://github.com/scipy/scipy/pull/3933)
 - [MAINT: Deprecate NumPy functions in SciPy root - GitHub](https://github.com/scipy/scipy/pull/10290)
+- [DOC: numpy attributes in scipy namespace - GitHub](https://github.com/scipy/scipy/pull/79)
+- [DOC: remove `import scipy as sp` abbreviation here and there - GitHub](https://github.com/scipy/scipy/pull/3933)
+- [Put numpy namespace in scipy for backward compatibility... - GitHub](https://github.com/scipy/scipy/commit/c25e735216dd1969ed09d24fcca9eaafe1dc8405)
+- [Relationship between SciPy and NumPy - Stack Overflow](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)
 
 {% include note.html end=true %}
 
