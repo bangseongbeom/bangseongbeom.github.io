@@ -126,7 +126,7 @@ category: machine-learning
 
 {% include note.html %}
 
-지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 `import`할 수 있었습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용한 것으로 보입니다[^top-level-scipy].
+지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 직접 `import`하고 했습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용하기도 했던 것으로 보입니다[^top-level-scipy].
 
 [^api-scipy]: [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html)
 
