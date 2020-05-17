@@ -23,7 +23,7 @@ category: machine-learning
     > import matplotlib.pyplot as plt
     > ```
 
-[^digest-vol-19-issue-44]: [Re: Numpy-discussion Digest, Vol 19, Issue 44](http://numpy-discussion.10968.n7.nabble.com/Re-Numpy-discussion-Digest-Vol-19-Issue-44-tt10095.html): 2008년 [넘파이] 메일링 리스트에서 진행된 `import as` 표준화 논의
+[^digest-vol-19-issue-44]: [Re: Numpy-discussion Digest, Vol 19, Issue 44](http://numpy-discussion.10968.n7.nabble.com/Re-Numpy-discussion-Digest-Vol-19-Issue-44-tt10095.html): 2008년 메일링 리스트에서 진행된 `import as` 표준화 논의
 
 `import as`를 어떻게 할 것인지는 전적으로 코드 작성자의 선택입니다. 하지만 관습적으로 쓰이는 약칭을 사용한다면, 다른 사람이 나의 코드를 볼 때 내 코드의 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 된다는 장점이 있습니다. 기계 학습 관련 라이브러리 중 하나인 [판다스]\(pandas)는 문서의 모든 예시 코드에서 `import pandas as pd` 코드가 삽입되어 있다고 가정합니다[^code-assumed-pandas]. 때문에 `pd`가 무엇의 약칭인지 일일이 확인할 필요가 없습니다.
 
