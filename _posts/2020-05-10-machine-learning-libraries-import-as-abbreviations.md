@@ -143,6 +143,7 @@ category: machine-learning
 - [DOC: numpy attributes in scipy namespace - GitHub](https://github.com/scipy/scipy/pull/79)
 - [Relationship between SciPy and NumPy - Stack Overflow](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)
 - [DOC: remove `import scipy as sp` abbreviation here and there - GitHub](https://github.com/scipy/scipy/pull/3933)
+- [MAINT: Deprecate NumPy functions in SciPy root - GitHub](https://github.com/scipy/scipy/pull/10290)
 
 {% include note.html end=true %}
 
