@@ -3,7 +3,7 @@ title: 넘파이 vs 사이파이
 category: machine-learning
 ---
 
-[넘파이]\(NumPy)와 [사이파이]\(SciPy)의 역할이 다른데도 둘 다 FFT와 선형대수 알고리즘을 제공하는 이유에 대해 알아봅니다.
+[넘파이]\(NumPy)와 [사이파이]\(SciPy)의 차이점에 대해 다룹니다.
 
 [넘파이]: https://numpy.org/
 
