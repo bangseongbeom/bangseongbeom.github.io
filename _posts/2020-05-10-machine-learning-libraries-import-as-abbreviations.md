@@ -126,24 +126,15 @@ category: machine-learning
 
 {% include note.html %}
 
-약간 차이가 있긴 하지만 `scipy` 모듈 자체에서는 예로부터 `numpy` 모듈에 포함된 함수를 그대로 제공해왔습니다[^top-level-scipy]. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용한 것으로 보입니다. (지금도 하위 호환성을 위해 `numpy` 대신 `scipy` 모듈 자체를 사용할 수 있습니다[^api-scipy])
+지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 `import`할 수 있었습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용한 것으로 보입니다[^top-level-scipy].
 
-그러나 알 수 없는 이유로 인해 `scipy` 모듈 대신 `numpy` 모듈을 직접 사용하는 것을 권장하기 시작했습니다. 이에 따라 약칭인 `sp` 또한 사용할 일이 없게 되었습니다.
+[^api-scipy]: [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html)
+
+    > These functions still exist for backwards compatibility, but should be imported from numpy directly.
 
 [^top-level-scipy]: [Basic functions in Numpy (and top-level scipy) - SciPy v0.9](https://docs.scipy.org/doc/scipy-0.9.0/reference/tutorial/basic.html)
 
     > To begin with, all of the Numpy functions have been subsumed into the scipy namespace so that all of those functions are available without additionally importing Numpy. In addition, the universal functions (addition, subtraction, division) have been altered to not raise exceptions if floating-point errors are encountered; instead, NaN’s and Inf’s are returned in the arrays. To assist in detection of these events, several functions (sp.isnan, sp.isfinite, sp.isinf) are available.
-
-[^api-scipy]: [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html)
-
-    > The scipy namespace itself only contains functions imported from numpy. These functions still exist for backwards compatibility, but should be imported from numpy directly.
-
-관련 문서:
-
-- [MAINT: Deprecate NumPy functions in SciPy root - GitHub](https://github.com/scipy/scipy/pull/10290)
-- [DOC: numpy attributes in scipy namespace - GitHub](https://github.com/scipy/scipy/pull/79)
-- [DOC: remove `import scipy as sp` abbreviation here and there - GitHub](https://github.com/scipy/scipy/pull/3933)
-- [Relationship between SciPy and NumPy - Stack Overflow](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)
 
 {% include note.html end=true %}
 
