@@ -36,7 +36,7 @@ category: machine-learning
 
 ## 넘파이
 
-[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **직접** 언급합니다.
+[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다.
 
 {% include example.html %}
 
@@ -52,7 +52,7 @@ category: machine-learning
 
 ## 맷플롯립
 
-[넘파이] 공식 문서와 소스 코드에서 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **직접** 언급합니다.
+[넘파이] 공식 문서와 소스 코드에서는 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **명시적으로** 언급합니다.
 
 [맷플롯립]: https://matplotlib.org/
 
@@ -96,7 +96,7 @@ category: machine-learning
 
 ## 사이파이
 
-[사이파이]\(SciPy)의 경우 `scipy` 모듈에 대해 약칭을 사용하지 않을 것을 **직접** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈의 경우 `from import`를 사용합니다.
+[사이파이]\(SciPy)의 경우 `scipy` 모듈에 대해 약칭을 사용하지 않을 것을 **명시적으로** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈에 대해 각각 `from import`를 사용합니다.
 
 [사이파이]: https://scipy.org/
 
@@ -115,6 +115,32 @@ category: machine-learning
 > ```
 
 {% include example.html end=true %}
+
+`scipy.io` 모듈은 파이썬 내장 패키지인 `io`와 충돌하므로 `import scipy.io as spio`처럼 약칭을 사용합니다.
+
+{% include example.html %}
+
+[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy)
+
+> This form of importing submodules is preferred for all submodules except scipy.io (because io is also the name of a module in the Python stdlib):
+>
+> ```py
+> from scipy import interpolate
+> from scipy import integrate
+> import scipy.io as spio
+> ```
+
+{% include example.html end=true %}
+
+`scipy.sparse.linalg` 모듈같이 한 층 더 깊이 존재하는 모듈이라면 `from scipy.sparse import linalg`처럼 합니다.
+
+[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy)
+
+> ```py
+> # second form
+> from scipy.stats import distributions
+> distributions.lomax(...)
+> ```
 
 {% include note.html %}
 
