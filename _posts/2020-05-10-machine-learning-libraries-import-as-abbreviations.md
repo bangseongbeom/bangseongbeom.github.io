@@ -126,9 +126,9 @@ category: machine-learning
 
 {% include note.html %}
 
-[사이파이]의 옛 버전에서는 `scipy` 모듈의 하위 모듈이 아니라 `scipy` 모듈 자체를 사용할 수 있었습니다. `scipy` 모듈은 `numpy` 모듈의 기능을 그대로 제공하되, [사이파이]에 맞게 몇 가지 기능을 강화했습니다[^top-level-scipy] (지금도 하위 호환성을 위해 `scipy` 모듈 자체를 사용할 수는 있습니다[^api-scipy]).
+약간 차이가 있긴 하지만 `scipy` 모듈 자체에서는 예로부터 `numpy` 모듈에 포함된 함수를 그대로 제공해왔습니다[^top-level-scipy]. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용한 것으로 보입니다. (지금도 하위 호환성을 위해 `numpy` 대신 `scipy` 모듈 자체를 사용할 수 있습니다[^api-scipy])
 
-당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용한 것으로 보입니다. 그러나 알 수 없는 이유로 인해 `scipy` 모듈 대신 `numpy` 모듈을 직접 사용하게 되었고, 이에 따라 약칭인 `sp` 또한 사용할 일이 없게 되었습니다.
+그러나 알 수 없는 이유로 인해 `scipy` 모듈 대신 `numpy` 모듈을 직접 사용하는 것을 권장하기 시작했습니다. 이에 따라 약칭인 `sp` 또한 사용할 일이 없게 되었습니다.
 
 [^top-level-scipy]: [Basic functions in Numpy (and top-level scipy) - SciPy v0.9](https://docs.scipy.org/doc/scipy-0.9.0/reference/tutorial/basic.html)
 
