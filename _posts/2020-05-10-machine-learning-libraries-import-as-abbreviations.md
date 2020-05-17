@@ -9,7 +9,7 @@ category: machine-learning
 
 대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오는 경우가 대부분이며, 모듈 이름이 짧거나 명확성을 더하고 싶다면 `import`를 통해 직접 모듈을 불러옵니다. 각종 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 드뭅니다.
 
-이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 관습적으로 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지 대해 직접 언급합니다[^import-conventions-throughout-numpy]. 이와 관련된 논의 또한 오래 전부터 존재해왔습니다[^digest-vol-19-issue-44].
+이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 관습적으로 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지 대해 명시적으로 언급합니다[^import-conventions-throughout-numpy]. 이와 관련된 논의 또한 오래 전부터 존재해왔습니다[^digest-vol-19-issue-44].
 
 [넘파이]: https://numpy.org/
 
@@ -63,7 +63,7 @@ category: machine-learning
 > import matplotlib.pyplot as plt
 > ```
 
-[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 직접 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다.
+[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 명시적으로 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다.
 
 [How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
 
@@ -148,7 +148,7 @@ category: machine-learning
 
 ## 판다스
 
-[판다스]\(pandas)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다.
+[판다스]\(pandas)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다.
 
 [판다스]: https://pandas.pydata.org/
 
@@ -163,7 +163,7 @@ category: machine-learning
 
 ## 사이킷런
 
-[사이킷런]\(scikit-learn)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다.
+[사이킷런]\(scikit-learn)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다.
 
 [사이킷런]: https://scikit-learn.org/
 
@@ -184,7 +184,7 @@ category: machine-learning
 
 ## 대스크
 
-[대스크]\(Dask)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다.
+[대스크]\(Dask)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다.
 
 [대스크]: https://dask.org/
 
@@ -222,7 +222,7 @@ category: machine-learning
 
 ## 텐서플로
 
-[탠서플로]\(TensorFlow)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다.
+[탠서플로]\(TensorFlow)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다.
 
 [탠서플로]: https://www.tensorflow.org/
 
@@ -242,7 +242,7 @@ category: machine-learning
 
 ## 파이토치
 
-[파이토치]\(PyTorch)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `import torch`를 주로 사용합니다. 하위 모듈이나 함수, 클래스의 경우 이름이 짧으면 그대로 쓰고 이름이 길면 줄여 쓰는 경향이 있습니다.
+[파이토치]\(PyTorch)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import torch`를 주로 사용합니다. 하위 모듈이나 함수, 클래스의 경우 이름이 짧으면 그대로 쓰고 이름이 길면 줄여 쓰는 경향이 있습니다.
 
 [파이토치]: https://pytorch.org/
 
@@ -264,7 +264,7 @@ category: machine-learning
 
 ## 케라스
 
-[케라스]\(Keras)의 경우 직접적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다.
+[케라스]\(Keras)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다.
 
 [The Functional API - Keras](https://keras.io/guides/functional_api/)
 
