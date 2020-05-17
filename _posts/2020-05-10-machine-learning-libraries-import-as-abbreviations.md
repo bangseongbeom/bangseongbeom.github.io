@@ -3,7 +3,7 @@ title: 기계 학습 라이브러리들의 'import as' 약칭
 category: machine-learning
 ---
 
-`numpy`를 `np`로 줄여쓰는 것을 아시나요? 기계 학습과 관련된 파이썬 라이브러리들의 `import as` 약칭을 정리했습니다.
+`numpy`를 `np`로 줄여쓰는 것을 아시나요?
 
 ---
 
