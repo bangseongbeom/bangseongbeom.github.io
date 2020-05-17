@@ -138,7 +138,7 @@ category: machine-learning
 
     > The scipy namespace itself only contains functions imported from numpy. These functions still exist for backwards compatibility, but should be imported from numpy directly.
 
-참고:
+관련 문서:
 
 - [DOC: numpy attributes in scipy namespace - GitHub](https://github.com/scipy/scipy/pull/79)
 - [Relationship between SciPy and NumPy - Stack Overflow](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)
