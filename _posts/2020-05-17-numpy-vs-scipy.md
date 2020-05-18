@@ -11,7 +11,7 @@ category: machine-learning
 
 ## 요약
 
-|| 주요 역할 | FFT, 선형대수 알고리즘 | FFT, 선형대수 알고리즘의 포트란 의존성 |
+|| 주요 역할 | FFT, 선형대수 알고리즘 | 알고리즘의 포트란 의존성 |
 |---|---|---|---|
 | [넘파이] | 행렬 및 관련 기초 연산 | ⚠️ 하위 호환성을 위해 부분적인 FFT, 선형대수 알고리즘 지원 | ❌ 포트란에 의존하지 않음 |
 | [사이파이] | 수학, 과학 알고리즘 | ✔️ 완전한 기능을 가진 FFT, 선형대수 알고리즘 지원 | ✔️ FFT, 선형대수뿐만 아니라 많은 알고리즘이 포트란에 의존 |
@@ -40,7 +40,7 @@ FFT, 선형대수 알고리즘이 필요하다면 특수한 경우가 아닌 이
 
 ## 알고리즘의 포트란 의존성
 
-[넘파이]에서 제공하는 FFT와 선형대수 알고리즘의 또다른 특징은 포트란에 의존하지 않는다는 것입니다. 이와 반대로 [사이파이]에서 제공하는 많은 알고리즘은 포트란에 강력히 의존하고 있으며, 이는 FFT와 선형대수 역시 마찬가지입니다. [사이파이]에서 선형대수 알고리즘을 제공하는 `scipy.linalg` 모듈은 포트란의 [LAPACK](http://www.netlib.org/lapack/)을 파이썬에서 사용할 수 있게끔 감싸놓은 것에 지나지 않습니다[^wrapping-of-fortran-lapack-scipy].
+[넘파이]에서 제공하는 FFT와 선형대수 알고리즘의 또다른 특징은 포트란에 의존하지 않는다는 것입니다. 이와 반대로 [사이파이]에서 제공하는 많은 알고리즘은 포트란에 강력히 의존하고 있으며, 이는 FFT와 선형대수 역시 마찬가지입니다. [사이파이]에서 선형대수 알고리즘을 제공하는 `scipy.linalg` 모듈은 포트란의 [LAPACK](http://www.netlib.org/lapack/)을 파이썬에서 사용할 수 있게끔 감싸놓은 것입니다[^wrapping-of-fortran-lapack-scipy].
 
 [^wrapping-of-fortran-lapack-scipy]: [Frequently Asked Questions - SciPy](https://www.scipy.org/scipylib/faq.html#why-both-numpy-linalg-and-scipy-linalg-what-s-the-difference)
 
