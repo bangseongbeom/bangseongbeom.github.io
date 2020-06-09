@@ -1,6 +1,6 @@
 ---
 title: 셀레늄 가이드
-category: python
+category: web
 ---
 
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE
