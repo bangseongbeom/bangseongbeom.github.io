@@ -7,7 +7,17 @@ category: web
 
 ## 설치
 
-셀레늄 IDE는 크롬 확장 기능 또는 파이어폭스 플러그인으로 제공됩니다. [셀레늄 IDE 공식 홈페이지](https://www.selenium.dev/selenium-ide/)에서 플러그인을 설치하세요.
+크롬 확장 기능 또는 파이어폭스 플러그인으로 셀레늄 IDE를 사용할 수 있습니다. [셀레늄 IDE 공식 홈페이지](https://www.selenium.dev/selenium-ide/)에서 플러그인을 설치하세요.
+
+{% include note.html %}
+
+이 글에서 소개하는 셀레늄 IDE는 버전 3입니다. 버전 4는 현재 개발 중이며, 브라우저 없이 독립 실행 가능하도록 [일렉트론](https://www.electronjs.org/)(Electron) 기반으로 구현되고 있습니다[^electron].
+
+[^electron]: [Electron - Selenium IDE](https://github.com/SeleniumHQ/selenium-ide#electron)
+
+    > The move to Electron is a work in progress. We will post updates as progress is made. If you're looking for Selenium IDE as a browser extension then check out the v3 branch.
+
+{% include note.html end=true %}
 
 ## 주요 기능
 
