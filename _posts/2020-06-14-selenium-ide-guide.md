@@ -5,7 +5,7 @@ category: web
 
 [셀레늄 IDE](https://www.selenium.dev/selenium-ide/)(Selenium IDE)는 사용자가 웹 브라우저에서 수행한 동작을 기록하고, 이를 다시 재현합니다.
 
-![](/assets/2020-06-14-selenium-ide-intro/duckduckgo.gif)
+![](/assets/2020-06-14-selenium-ide-guide/duckduckgo.gif)
 
 ## 설치
 
@@ -23,11 +23,11 @@ category: web
 
 ## 기록
 
-![](/assets/2020-06-14-selenium-ide-intro/record-a-new-test-in-a-new-project.png)
+![](/assets/2020-06-14-selenium-ide-guide/record-a-new-test-in-a-new-project.png)
 
 셀레늄 IDE를 실행한 뒤 곧바로 'Record a new test in a new project'를 클릭해 기록을 시작할 수 있습니다.
 
-![](/assets/2020-06-14-selenium-ide-intro/start-recording.png)
+![](/assets/2020-06-14-selenium-ide-guide/start-recording.png)
 
 또는 'Start recording'을 눌러 기록을 시작할 수도 있습니다.
 
@@ -35,7 +35,7 @@ category: web
 
 ### 용어 설명: 프로젝트
 
-![](/assets/2020-06-14-selenium-ide-intro/project-name-2.png)
+![](/assets/2020-06-14-selenium-ide-guide/project-name-2.png)
 
 셀레늄 IDE는 프로젝트 단위로 파일을 저장하거나 불러옵니다. 이때 사용할 프로젝트 이름을 미리 설정해야 합니다.
 
@@ -43,7 +43,7 @@ category: web
 
 ### 용어 설명: 베이스 URL
 
-![](/assets/2020-06-14-selenium-ide-intro/base-url-2.png)
+![](/assets/2020-06-14-selenium-ide-guide/base-url-2.png)
 
 베이스 URL(base URL)은 기록을 처음 실행할 때 시작할 웹 사이트의 URL입니다.
 
@@ -51,7 +51,7 @@ category: web
 
 ### 기록을 위한 새 창
 
-![](/assets/2020-06-14-selenium-ide-intro/selenium-ide-is-recording.png)
+![](/assets/2020-06-14-selenium-ide-guide/selenium-ide-is-recording.png)
 
 기록이 시작되면 새로운 웹 브라우저 창이 열립니다. 기록 중이라는 메시지가 브라우저 오른쪽 아래에 나옵니다. 이제 이 브라우저에서 기록하고자 하는 동작을 수행하면 됩니다.
 
@@ -63,7 +63,7 @@ category: web
 
 ## 실행
 
-![](/assets/2020-06-14-selenium-ide-intro/run-current-test.gif)
+![](/assets/2020-06-14-selenium-ide-guide/run-current-test.gif)
 
 'Run current test' 버튼을 눌러 기록한 명령어들을 실행합니다. 새로운 웹 브라우저가 열리며 명령어에 따라 순차적으로 동작합니다.
 
@@ -81,13 +81,13 @@ category: web
 
 ### 저장되지 않음 표시
 
-![](/assets/2020-06-14-selenium-ide-intro/not-saved.png)
+![](/assets/2020-06-14-selenium-ide-guide/not-saved.png)
 
 프로젝트, 테스트, 테스트 스위트 이름 뒤에 '\*'이 붙어있을 때가 있습니다. 이는 변경된 내용이 아직 저장되지 않았음을 의미합니다.
 
 ## 테스트/테스트 스위트 목록
 
-![](/assets/2020-06-14-selenium-ide-intro/test-area.png)
+![](/assets/2020-06-14-selenium-ide-guide/test-area.png)
 
 아래 화살표 버튼을 눌러 테스트와 테스트 스위트 목록을 전환할 수 있습니다. (이외에도 'Executing'이라는 목록이 있습니다. 실행 중인 테스트를 보여줍니다.)
 
@@ -95,7 +95,7 @@ category: web
 
 ### 용어 설명: 테스트
 
-![](/assets/2020-06-14-selenium-ide-intro/tests.png)
+![](/assets/2020-06-14-selenium-ide-guide/tests.png)
 
 테스트(test)는 여러 **명령어**들을 순서대로 나열해놓은 것입니다. 하나의 **프로젝트**에 여러 테스트가 존재할 수 있습니다.
 
@@ -107,7 +107,7 @@ category: web
 
 ### 용어 설명: 테스트 스위트
 
-![](/assets/2020-06-14-selenium-ide-intro/test-suites.png)
+![](/assets/2020-06-14-selenium-ide-guide/test-suites.png)
 
 테스트 스위트(test suite)는 여러 테스트의 집합입니다. 테스트 스위트를 이용해 테스트를 목적에 따라 분류할 수 있습니다.
 
@@ -123,7 +123,7 @@ category: web
 
 ### 테스트, 테스트 스위트 추가
 
-![](/assets/2020-06-14-selenium-ide-intro/add-new-test.png)
+![](/assets/2020-06-14-selenium-ide-guide/add-new-test.png)
 
 테스트 목록인 상태에서 '+' 버튼을 눌러 테스트를 추가할 수 있습니다. 테스트 스위트 역시 마찬가지입니다.
 
@@ -131,15 +131,15 @@ category: web
 
 ### 검색
 
-![](/assets/2020-06-14-selenium-ide-intro/search-tests.png)
+![](/assets/2020-06-14-selenium-ide-guide/search-tests.png)
 
 검색어를 입력해 테스트를 찾을 수 있습니다.
 
 ### 이름 바꾸기, 복제, 삭제
 
-![](/assets/2020-06-14-selenium-ide-intro/test-options-1.png)
+![](/assets/2020-06-14-selenium-ide-guide/test-options-1.png)
 
-![](/assets/2020-06-14-selenium-ide-intro/test-options-2.png)
+![](/assets/2020-06-14-selenium-ide-guide/test-options-2.png)
 
 '...'을 눌러 이름을 바꾸거나 테스트 또는 테스트 스위트를 복제, 삭제할 수 있습니다.
 
@@ -149,11 +149,11 @@ category: web
 
 ### 내보내기
 
-![](/assets/2020-06-14-selenium-ide-intro/export-1.png)
+![](/assets/2020-06-14-selenium-ide-guide/export-1.png)
 
-![](/assets/2020-06-14-selenium-ide-intro/export-2.png)
+![](/assets/2020-06-14-selenium-ide-guide/export-2.png)
 
-![](/assets/2020-06-14-selenium-ide-intro/export-3.png)
+![](/assets/2020-06-14-selenium-ide-guide/export-3.png)
 
 내보내기는 특정 테스트 혹은 테스트 스위트를 프로그래밍 언어로 변환할 수 있는 기능입니다. 자바의 J유닛(JUnit), 파이썬의 파이테스트(pytest)와 같은 테스트 프레임워크 기반의 코드가 생성됩니다.
 
@@ -172,7 +172,7 @@ category: web
 
 ## 실행 및 관련 설정
 
-![](/assets/2020-06-14-selenium-ide-intro/run-area.png)
+![](/assets/2020-06-14-selenium-ide-guide/run-area.png)
 
 {% include note.html %}
 
@@ -182,7 +182,7 @@ category: web
 
 ### 전체 실행
 
-![](/assets/2020-06-14-selenium-ide-intro/run-all-tests.png)
+![](/assets/2020-06-14-selenium-ide-guide/run-all-tests.png)
 
 좌측에 테스트 목록을 보이게 한 상태에서 'Run all tests' 버튼을 눌러 모든 테스트를 실행합니다.
 
@@ -190,25 +190,25 @@ category: web
 
 ### 현재 테스트 실행
 
-![](/assets/2020-06-14-selenium-ide-intro/run-current-test.png)
+![](/assets/2020-06-14-selenium-ide-guide/run-current-test.png)
 
 'Run current test' 버튼을 눌러 현재 활성화한 테스트를 실행할 수 있습니다.
 
 ### 한 줄씩 실행
 
-![](/assets/2020-06-14-selenium-ide-intro/step-over-current-command.png)
+![](/assets/2020-06-14-selenium-ide-guide/step-over-current-command.png)
 
 'Step over current command' 버튼을 눌러 테스트를 한 줄씩 실행할 수 있습니다.
 
 ### 테스트 실행 속도 조절
 
-![](/assets/2020-06-14-selenium-ide-intro/test-execution-speed.png)
+![](/assets/2020-06-14-selenium-ide-guide/test-execution-speed.png)
 
 'Test execution speed' 버튼을 눌러 테스트의 실행 속도를 조절할 수 있습니다.
 
 ## 명령어
 
-![](/assets/2020-06-14-selenium-ide-intro/command-area.png)
+![](/assets/2020-06-14-selenium-ide-guide/command-area.png)
 
 셀레늄 IDE는 조건문이나 반복문 같이 프로그래밍 언어에서 지원할 법한 명령어도 제공합니다. 이러한 명령어는 웹 브라우저의 사용을 기록하는 방식으로 만들 수는 없고, 대신 직접 명령어를 추가해야 합니다.
 
@@ -220,7 +220,7 @@ category: web
 
 ### 중단점
 
-![](/assets/2020-06-14-selenium-ide-intro/breakpoints.png)
+![](/assets/2020-06-14-selenium-ide-guide/breakpoints.png)
 
 셀레늄 IDE는 테스트 실행 도중 특정 명령어에서 일시정지할 수 있는 기능을 제공하는데, 이를 중단점(breakpoint)이라 합니다.
 
@@ -230,13 +230,13 @@ category: web
 
 ### 중단점 비활성화
 
-![](/assets/2020-06-14-selenium-ide-intro/disable-breakpoints.png)
+![](/assets/2020-06-14-selenium-ide-guide/disable-breakpoints.png)
 
 'Disable breakpoints'는 모든 중단점을 비활성화합니다. 중단점을 만나도 테스트가 일시정지되지 않게 됩니다.
 
 ### 예외 발생 시 정지
 
-![](/assets/2020-06-14-selenium-ide-intro/pause-on-exceptions.png)
+![](/assets/2020-06-14-selenium-ide-guide/pause-on-exceptions.png)
 
 웹 사이트의 변경으로 인해 클릭해야 할 버튼이 없어진다거나 하는 문제가 생길 수 있습니다. 이를 가리켜 예외라 합니다.
 
@@ -274,19 +274,19 @@ category: web
 
 ### 주석
 
-![](/assets/2020-06-14-selenium-ide-intro/enable-disable-command.png)
+![](/assets/2020-06-14-selenium-ide-guide/enable-disable-command.png)
 
 'Enable/Disable this command' 버튼을 누르거나 명령어 이름 앞에 `//`를 붙여 명령어를 비활성화할 수 있습니다. 비활성화한 명령어는 실행되지 않습니다.
 
 ### 타깃
 
-![](/assets/2020-06-14-selenium-ide-intro/targets.png)
+![](/assets/2020-06-14-selenium-ide-guide/targets.png)
 
 타깃(target)은 명령어가 동작하는데 필요한 `<button>`이나 `<input>`같은 HTML 엘리먼트를 의미합니다.
 
 ### 다중 타깃
 
-![](/assets/2020-06-14-selenium-ide-intro/multiple-targets.png)
+![](/assets/2020-06-14-selenium-ide-guide/multiple-targets.png)
 
 웹 사이트는 시간이 지남에 따라 내용이 달라지는 경우가 많습니다. [구글 뉴스](https://news.google.com/)의 경우, 실시간 정보를 반영하기 위해 짧은 시간을 주기로 계속 그 내용이 바뀝니다. 이외에도 다양한 이유로 내용이 변화합니다.
 
@@ -300,19 +300,19 @@ category: web
 
 ### 타깃 선택
 
-![](/assets/2020-06-14-selenium-ide-intro/select-target-in-page.png)
+![](/assets/2020-06-14-selenium-ide-guide/select-target-in-page.png)
 
 'Select target in page' 버튼을 눌러 현재 페이지에서 다른 타깃을 선택할 수 있습니다. 이 버튼은 페이지 내의 다른 타깃을 선택하는 기능일 뿐입니다. 앞서 설명한 다중 타깃과는 무관합니다.
 
 ## 로그
 
-![](/assets/2020-06-14-selenium-ide-intro/log.png)
+![](/assets/2020-06-14-selenium-ide-guide/log.png)
 
 로그 탭에서는 테스트 중 명령어의 실행 시간이나 테스트의 성공 여부를 확인할 수 있습니다.
 
 ## 레퍼런스
 
-![](/assets/2020-06-14-selenium-ide-intro/reference.png)
+![](/assets/2020-06-14-selenium-ide-guide/reference.png)
 
 레퍼런스 탭은 선택한 명령어의 사용 방법을 안내합니다. 모든 명령어의 사용 방법을 확인하려면 [Commands - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/api/commands)를 참고하세요.
 
