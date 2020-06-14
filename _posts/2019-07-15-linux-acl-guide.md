@@ -1,5 +1,5 @@
 ---
-title: 리눅스 ACL
+title: 리눅스 ACL 가이드
 category: linux
 redirect_from: /linux-acl.html
 ---
