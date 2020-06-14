@@ -1,5 +1,5 @@
 ---
-title: 셀레늄 IDE 가이드
+title: 셀레늄 IDE
 category: web
 ---
 
