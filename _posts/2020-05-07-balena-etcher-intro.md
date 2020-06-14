@@ -1,5 +1,5 @@
 ---
-title: 발레나에처(balenaEtcher) 소개
+title: 발레나에처 소개
 category: etc
 ---
 
