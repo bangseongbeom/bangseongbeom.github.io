@@ -274,7 +274,7 @@ category: web
 
 각종 제어문에서는 조건을 검사하기 위해 자바스크립트 표현식을 요구합니다[^javascript-control-flow].
 
-[^javascript-control-flow]: (Control Flow - Selenium IDE)[https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#javascript-expressions]
+[^javascript-control-flow]: [Control Flow - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#javascript-expressions)
 
     > Conditions in your application are checked by using JavaScript expressions.
 
