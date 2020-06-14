@@ -71,6 +71,8 @@ category: web
 
 'Save project' 버튼을 눌러 프로젝트를 저장합니다.
 
+{% include note.html %}
+
 웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[^why-location-not-remembered].
 
 [^why-location-not-remembered]: [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
@@ -78,6 +80,8 @@ category: web
     > All of these questions are part of the same problem -- as a browser extension Selenium IDE does not have access to the file system. The only way to offer "save" functionality is through downloading the file. This issue will be resolved when the IDE moves to a native application. This will give the IDE premier filesystem access, which will enable it to offer a polished "save" experience.
 
     > If you want to stay updated, you can follow along with issue 363.
+
+{% include note.html end=true %}
 
 ### 저장되지 않음 표시
 
@@ -89,9 +93,9 @@ category: web
 
 ![](/assets/2020-06-14-selenium-ide-guide/test-area.png)
 
-아래 화살표 버튼을 눌러 테스트와 테스트 스위트 목록을 전환할 수 있습니다. (이외에도 'Executing'이라는 목록이 있습니다. 실행 중인 테스트를 보여줍니다.)
+아래 화살표 버튼을 눌러 테스트와 테스트 스위트 목록을 전환할 수 있습니다. (이외에도 'Executing'이라는 목록이 있습니다. 이 목록은 현재 실행 중인 테스트를 보여줍니다.)
 
-테스트에 관한 설정은 테스트 목록에서, 테스트 스위트에 관한 설정은 테스트 스위트 목록에서만 가능합니다. 테스트 스위트 목록인 상태에서는 테스트를 생성할 수 없습니다. 그 반대도 마찬가지입니다.
+**테스트에 관한 설정은 테스트 목록에서, 테스트 스위트에 관한 설정은 테스트 스위트 목록에서만 가능합니다.** 테스트 스위트 목록인 상태에서는 테스트를 생성할 수 없습니다. 그 반대도 마찬가지입니다.
 
 ### 용어 설명: 테스트
 
@@ -145,7 +149,13 @@ category: web
 
 ### 테스트 스위트에 테스트 포함시키기
 
-테스트 스위트 목록인 상태에서 '⋮' 버튼을 클릭한 뒤, 'Add tests'를 눌러 테스트 스위트에 테스트를 포함시킬 수 있습니다. (테스트를 **생성**하는 것은 아닙니다)
+테스트 스위트 목록인 상태에서 '⋮' 버튼을 클릭한 뒤, 'Add tests'를 눌러 테스트 스위트에 테스트를 포함시킬 수 있습니다.
+
+{% include note.html %}
+
+이 작업이 테스트를 **생성**하는 것은 아닙니다. 테스트를 생성하기 위해서는 반드시 **테스트 목록인 상태**에서 '+' 버튼을 클릭해 테스트를 생성해야 합니다.
+
+{% include note.html end=true %}
 
 ### 내보내기
 
