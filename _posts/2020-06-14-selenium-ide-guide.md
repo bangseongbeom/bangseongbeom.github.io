@@ -55,7 +55,7 @@ category: web
 
 기록이 시작되면 새로운 웹 브라우저 창이 열립니다. 기록 중이라는 메시지가 브라우저 오른쪽 아래에 나옵니다. 이제 이 브라우저에서 기록하고자 하는 동작을 수행하면 됩니다.
 
-각 동작은 **명령어**로 기록됩니다.
+사용자가 행하는 동작은 **명령어**로 기록됩니다.
 
 ### 용어 설명: 명령어
 
@@ -65,15 +65,21 @@ category: web
 
 ![](/assets/2020-06-14-selenium-ide-intro/run-current-test.gif)
 
-'Run current test' 버튼을 눌러 테스트를 실행합니다. 새로운 웹 브라우저가 열리며 테스트에 존재하는 명령어들을 순차적으로 실행합니다.
+'Run current test' 버튼을 눌러 기록한 명령어들을 실행합니다. 새로운 웹 브라우저가 열리며 명령어에 따라 순차적으로 동작합니다.
 
 ## 저장
 
 'Save project' 버튼을 눌러 프로젝트를 저장합니다.
 
-웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[].
+웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[^why-location-not-remembered].
 
-### 저장되지 않음
+[^why-location-not-remembered]: [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
+
+    > All of these questions are part of the same problem -- as a browser extension Selenium IDE does not have access to the file system. The only way to offer "save" functionality is through downloading the file. This issue will be resolved when the IDE moves to a native application. This will give the IDE premier filesystem access, which will enable it to offer a polished "save" experience.
+
+    > If you want to stay updated, you can follow along with issue 363.
+
+### 저장되지 않음 표시
 
 ![](/assets/2020-06-14-selenium-ide-intro/not-saved.png)
 
