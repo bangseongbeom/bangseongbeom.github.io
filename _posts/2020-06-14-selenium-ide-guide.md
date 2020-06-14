@@ -78,7 +78,7 @@ category: web
 [^why-location-not-remembered]: [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
 
     > All of these questions are part of the same problem -- as a browser extension Selenium IDE does not have access to the file system. The only way to offer "save" functionality is through downloading the file. This issue will be resolved when the IDE moves to a native application. This will give the IDE premier filesystem access, which will enable it to offer a polished "save" experience.
-
+    >
     > If you want to stay updated, you can follow along with issue 363.
 
 {% include note.html end=true %}
