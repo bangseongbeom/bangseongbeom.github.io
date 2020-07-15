@@ -86,7 +86,7 @@ category: machine-learning
 
 ## 사이파이
 
-[사이파이]\(SciPy)의 경우 `scipy` 모듈에 대해 약칭을 사용하지 않을 것을 **명시적으로** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈에 대해 각각 `from import`를 사용합니다.
+[사이파이]\(SciPy)의 경우 `scipy` 모듈에 대해 약칭을 사용하지 않을 것을 **명시적으로** 권고합니다[^do-not-abbreviate-scipy]. 하위 모듈에 대해 각각 `from import`를 사용합니다:
 
 [사이파이]: https://scipy.org/
 
@@ -94,7 +94,7 @@ category: machine-learning
 
     > Do not abbreviate scipy. There is no motivating use case to abbreviate it in the real world, so we avoid it in the documentation to avoid confusion.
 
-[Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization)
+[Introduction - SciPy](https://docs.scipy.org/doc/scipy/reference/tutorial/general.html#scipy-organization):
 
 > SciPy sub-packages need to be imported separately, for example:
 >
@@ -102,7 +102,7 @@ category: machine-learning
 > >>> from scipy import linalg, optimize
 > ```
 
-`scipy.io` 모듈은 파이썬 내장 패키지인 `io`와 충돌하므로 `import scipy.io as spio`처럼 약칭을 사용합니다.
+다만 `scipy.io` 모듈은 파이썬 내장 패키지인 `io`와 충돌하기에, `import scipy.io as spio`처럼 약칭을 사용하는 것으로 보입니다:
 
 [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy):
 
@@ -114,7 +114,7 @@ category: machine-learning
 > import scipy.io as spio
 > ```
 
-`scipy.sparse.linalg` 모듈같이 한 층 더 깊이 존재하는 모듈이라면 `from scipy.sparse import linalg`처럼 합니다.
+`scipy.sparse.linalg` 모듈같이 한 층 더 깊이 존재하는 모듈이라면 `from scipy.sparse import linalg`처럼 합니다:
 
 [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy):
 
@@ -140,7 +140,7 @@ category: machine-learning
 
 ## 판다스
 
-[판다스]\(pandas)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다.
+[판다스]\(pandas)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `pandas` 모듈을 `pd`라고 줄여씁니다:
 
 [판다스]: https://pandas.pydata.org/
 
@@ -155,11 +155,11 @@ category: machine-learning
 
 ## 사이킷런
 
-[사이킷런]\(scikit-learn)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다.
+[사이킷런]\(scikit-learn)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import as` 대신 `from import`로 모듈, 함수, 클래스를 적절하게 불러옵니다:
 
 [사이킷런]: https://scikit-learn.org/
 
-[A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html)
+[A demo of the Spectral Co-Clustering algorithm - scikit-learn](https://scikit-learn.org/stable/auto_examples/bicluster/plot_spectral_coclustering.html):
 
 > ```py
 > from sklearn.datasets import make_biclusters
@@ -167,7 +167,7 @@ category: machine-learning
 > from sklearn.metrics import consensus_score
 > ```
 
-[An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html)
+[An introduction to machine learning with scikit-learn - scikit-learn](https://scikit-learn.org/stable/tutorial/basic/tutorial.html):
 
 > ```py
 > >>> from sklearn import datasets
@@ -176,7 +176,7 @@ category: machine-learning
 
 ## 대스크
 
-[대스크]\(Dask)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다.
+[대스크]\(Dask)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `dask.dataframe` 모듈을 `dd`로, `dask.array` 모듈을 `da`로, `dask.bag` 모듈을 `db`로 줄여씁니다:
 
 [대스크]: https://dask.org/
 
@@ -198,7 +198,7 @@ category: machine-learning
 > import dask.bag as db
 > ```
 
-그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다.
+그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다:
 
 [Futures - Dask](https://docs.dask.org/en/latest/futures.html):
     
@@ -226,7 +226,7 @@ category: machine-learning
 
 `tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다:
 
-[TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview)
+[TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview):
 
 > ```py
 > import tensorflow_datasets as tfds
