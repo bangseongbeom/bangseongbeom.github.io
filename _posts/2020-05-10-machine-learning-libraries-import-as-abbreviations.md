@@ -40,13 +40,17 @@ category: machine-learning
 
 [넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다.
 
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
+{% include figure.html %}
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
 > ```py
 > import numpy as np
 > ```
+
+{% include figcation.html %}[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions){% include figcation.html end=true %}
+
+{% include figure.html end=true %}
 
 ## 맷플롯립
 
