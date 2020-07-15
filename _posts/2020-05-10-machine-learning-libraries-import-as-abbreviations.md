@@ -79,9 +79,9 @@ category: machine-learning
 
 </figure>
 
-[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 명시적으로 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다.
+[맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 명시적으로 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다:
 
-[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
+<figure markdown="block">
 
 > ```py
 > import matplotlib.mlab as mlab
@@ -99,6 +99,14 @@ category: machine-learning
 > ```py
 > from matplotlib.figure import Figure
 > ```
+
+<figcaption markdown="span">
+
+[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
+
+</figcaption>
+
+</figure>
 
 ## 사이파이
 
