@@ -40,7 +40,7 @@ category: machine-learning
 
 [넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다.
 
-{% include figure.html %}
+<figure markdown="block">
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -48,13 +48,9 @@ category: machine-learning
 > import numpy as np
 > ```
 
-{% include figcaption.html %}
+<figcaption markdown="span">[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)</figcaption>
 
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
-
-{% include figcaption.html end=true %}
-
-{% include figure.html end=true %}
+</figure>
 
 ## 맷플롯립
 
