@@ -40,7 +40,7 @@ category: machine-learning
 
 [넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다:
 
-<figure markdown="block">
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -48,21 +48,13 @@ category: machine-learning
 > import numpy as np
 > ```
 
-<figcaption markdown="span">
-
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
-
-</figcaption>
-
-</figure>
-
 ## 맷플롯립
 
 [넘파이] 공식 문서와 소스 코드에서는 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **명시적으로** 언급합니다:
 
 [맷플롯립]: https://matplotlib.org/
 
-<figure markdown="block">
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -71,17 +63,9 @@ category: machine-learning
 > import matplotlib.pyplot as plt
 > ```
 
-<figcaption markdown="span">
-
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
-
-</figcaption>
-
-</figure>
-
 [맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 명시적으로 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다:
 
-<figure markdown="block">
+[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html):
 
 > ```py
 > import matplotlib.mlab as mlab
@@ -99,14 +83,6 @@ category: machine-learning
 > ```py
 > from matplotlib.figure import Figure
 > ```
-
-<figcaption markdown="span">
-
-[How-to - Matplotlib](https://matplotlib.org/faq/howto_faq.html)
-
-</figcaption>
-
-</figure>
 
 ## 사이파이
 
@@ -128,7 +104,7 @@ category: machine-learning
 
 `scipy.io` 모듈은 파이썬 내장 패키지인 `io`와 충돌하므로 `import scipy.io as spio`처럼 약칭을 사용합니다.
 
-[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy)
+[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy):
 
 > This form of importing submodules is preferred for all submodules except scipy.io (because io is also the name of a module in the Python stdlib):
 >
@@ -140,7 +116,7 @@ category: machine-learning
 
 `scipy.sparse.linalg` 모듈같이 한 층 더 깊이 존재하는 모듈이라면 `from scipy.sparse import linalg`처럼 합니다.
 
-[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy)
+[SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html#guidelines-for-importing-functions-from-scipy):
 
 > ```py
 > # second form
@@ -168,7 +144,7 @@ category: machine-learning
 
 [판다스]: https://pandas.pydata.org/
 
-[pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples)
+[pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples):
 
 > Code in examples is assumed to always start with these two lines which are not shown:
 >
@@ -204,7 +180,7 @@ category: machine-learning
 
 [대스크]: https://dask.org/
 
-[Dask - Dask](https://docs.dask.org/en/latest/)
+[Dask - Dask](https://docs.dask.org/en/latest/):
 
 > ```py
 > import dask.dataframe as dd
@@ -224,7 +200,7 @@ category: machine-learning
 
 그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다.
 
-[Futures - Dask](https://docs.dask.org/en/latest/futures.html)
+[Futures - Dask](https://docs.dask.org/en/latest/futures.html):
     
 > ```py
 > from dask.distributed import Client
@@ -238,17 +214,17 @@ category: machine-learning
 
 ## 텐서플로
 
-[탠서플로]\(TensorFlow)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다.
+[탠서플로]\(TensorFlow)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `tensorflow` 모듈을 `tf`로 줄여씁니다:
 
 [탠서플로]: https://www.tensorflow.org/
 
-[TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner)
+[TensorFlow 2 quickstart for beginners - TensorFlow](https://www.tensorflow.org/tutorials/quickstart/beginner):
 
 > ```py
 > import tensorflow as tf
 > ```
 
-`tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다.
+`tensorflow_datasets` 모듈의 경우 `tfds`로 줄여씁니다:
 
 [TensorFlow Datasets - TensorFlow](https://www.tensorflow.org/datasets/overview)
 
@@ -258,17 +234,17 @@ category: machine-learning
 
 ## 파이토치
 
-[파이토치]\(PyTorch)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import torch`를 주로 사용합니다. 하위 모듈이나 함수, 클래스의 경우 이름이 짧으면 그대로 쓰고 이름이 길면 줄여 쓰는 경향이 있습니다.
+[파이토치]\(PyTorch)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `import torch`를 주로 사용합니다. 하위 모듈이나 함수, 클래스의 경우 이름이 짧으면 그대로 쓰고 이름이 길면 줄여 쓰는 경향이 있습니다:
 
 [파이토치]: https://pytorch.org/
 
-[Start Locally - PyTorch](https://pytorch.org/get-started/locally/)
+[Start Locally - PyTorch](https://pytorch.org/get-started/locally/):
 
 > ```py
 > import torch
 > ```
 
-[Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html)
+[Distributed Data Parallel - PyTorch](https://pytorch.org/docs/stable/notes/ddp.html):
 
 > ```py
 > import torch.distributed as dist
@@ -280,16 +256,16 @@ category: machine-learning
 
 ## 케라스
 
-[케라스]\(Keras)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다.
+[케라스]\(Keras)의 경우 명시적으로 언급하지는 않으나, 공식 문서에서는 `keras`는 `keras` 그대로 사용합니다. `keras.layers`의 경우 `layers`로 줄여쓰거나 `keras.layers` 그대로 사용합니다:
 
-[The Functional API - Keras](https://keras.io/guides/functional_api/)
+[The Functional API - Keras](https://keras.io/guides/functional_api/):
 
 > ```py
 > from tensorflow import keras
 > from tensorflow.keras import layers
 > ```
 
-[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/)
+[Serialization and saving - Keras](https://keras.io/guides/serialization_and_saving/):
 
 > ```py
 > outputs = keras.layers.Dense(1)(inputs)
