@@ -38,7 +38,7 @@ category: machine-learning
 
 ## 넘파이
 
-[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다.
+[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다:
 
 <figure markdown="block">
 
@@ -58,11 +58,11 @@ category: machine-learning
 
 ## 맷플롯립
 
-[넘파이] 공식 문서와 소스 코드에서는 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **명시적으로** 언급합니다.
+[넘파이] 공식 문서와 소스 코드에서는 [맷플롯립]\(Matplotlib)의 `matplotlib` 모듈을 `mpl`, `matplotlib.pyplot` 모듈을 `plt`으로 줄여쓸 것이라 **명시적으로** 언급합니다:
 
 [맷플롯립]: https://matplotlib.org/
 
-[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
+<figure markdown="block">
 
 > The following import conventions are used throughout the NumPy source and documentation:
 >
@@ -70,6 +70,14 @@ category: machine-learning
 > import matplotlib as mpl
 > import matplotlib.pyplot as plt
 > ```
+
+<figcaption markdown="span">
+
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
+
+</figcaption>
+
+</figure>
 
 [맷플롯립]의 다른 하위 모듈에 대한 약칭에 대해서는 명시적으로 언급하고 있지 않습니다. 공식 문서를 살펴보면 모듈 자체의 이름을 사용하거나, 아니면 모듈에서 사용할 함수나 클래스를 하나씩 `from import`로 가져옵니다.
 
