@@ -3,13 +3,13 @@ title: 기계 학습 라이브러리들의 'import as' 약칭
 category: machine-learning
 ---
 
-`numpy`를 `np`로 줄여쓰는 것을 아시나요? 기계 학습과 관련된 파이썬 라이브러리들의 `import as` 약칭을 정리했습니다.
+`numpy`를 `np`로 줄여쓰는 것처럼, 다양한 기계 학습 라이브러리의 약칭을 정리했습니다.
 
 ---
 
-대부분의 파이썬 라이브러리에서는 `import as`를 사용하지 않습니다. `from import`를 통해 특정 함수나 클래스를 불러오는 경우가 대부분이며, 모듈 이름이 짧거나 명확성을 더하고 싶다면 `import`를 통해 직접 모듈을 불러옵니다. 각종 문서나 예시를 읽어봐도 `import as`를 쓰는 경우는 드뭅니다.
+수학이나 통계, 기계 학습과 관련된 파이썬 환경에서는, 라이브러리의 모듈 전체를 한꺼번에 `import`하는 것을 선호합니다. 가져올 함수는 많은데 이것들을 하나 하나 `import`하는 건 여간 귀찮은 일이 아닙니다.
 
-이와 달리 수학이나 통계, 기계 학습과 관련된 라이브러리들은 문서나 예시에서 관습적으로 `import as`를 사용하는 것을 확인할 수 있습니다. 아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지 대해 명시적으로 언급합니다[^import-conventions-throughout-numpy]. 이와 관련된 논의 또한 오래 전부터 존재해왔습니다[^digest-vol-19-issue-44].
+아예 [넘파이]\(NumPy)는 공식 문서에서 `import as`를 어떻게 할 것인지 대해 명시적으로 언급합니다[^import-conventions-throughout-numpy]. 이와 관련된 논의 또한 오래 전부터 존재해왔습니다[^digest-vol-19-issue-44].
 
 [넘파이]: https://numpy.org/
 
@@ -25,7 +25,7 @@ category: machine-learning
 
 [^digest-vol-19-issue-44]: [Re: Numpy-discussion Digest, Vol 19, Issue 44](http://numpy-discussion.10968.n7.nabble.com/Re-Numpy-discussion-Digest-Vol-19-Issue-44-tt10095.html): 2008년 메일링 리스트에서 진행된 `import as` 표준화 논의
 
-`import as`를 어떻게 할 것인지는 전적으로 코드 작성자의 선택입니다. 하지만 관습적으로 쓰이는 약칭을 사용한다면, 다른 사람이 나의 코드를 볼 때 내 코드의 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 된다는 장점이 있습니다. 기계 학습 관련 라이브러리 중 하나인 [판다스]\(pandas)는 문서의 모든 예시 코드에서 `import pandas as pd` 코드가 삽입되어 있다고 가정합니다[^code-assumed-pandas]. 때문에 `pd`가 무엇의 약칭인지 일일이 확인할 필요가 없습니다.
+`import as`를 어떻게 할 것인지는 전적으로 **코드 작성자의 선택**입니다. 하지만 관습적으로 쓰이는 약칭을 사용한다면, 다른 사람이 나의 코드를 볼 때 내 코드의 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 된다는 장점이 있습니다. 기계 학습 관련 라이브러리 중 하나인 [판다스]\(pandas)는 문서의 모든 예시 코드에서 `import pandas as pd` 코드가 삽입되어 있다고 가정합니다[^code-assumed-pandas]. 때문에 `pd`가 무엇의 약칭인지 일일이 확인할 필요가 없습니다.
 
 [^code-assumed-pandas]: [pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples)
 
