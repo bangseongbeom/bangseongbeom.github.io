@@ -48,7 +48,11 @@ category: machine-learning
 > import numpy as np
 > ```
 
-{% include figcaption.html %}[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions){% include figcaption.html end=true %}
+{% include figcaption.html %}
+
+[A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions)
+
+{% include figcaption.html end=true %}
 
 {% include figure.html end=true %}
 
