@@ -177,15 +177,12 @@ button {
   display: inline;
   padding: 0;
   margin: 0;
-  color: inherit;
+  color: mediumblue;
   word-wrap: break-word;
   overflow-wrap: break-word;
   background: none;
   outline: 0 solid silver;
   font: inherit;
-  font-weight: bold;
-  text-decoration: underline;
-  text-decoration-color: lightgray;
   transition: outline 0.125s;
 }
 
