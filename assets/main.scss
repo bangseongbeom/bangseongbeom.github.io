@@ -472,6 +472,9 @@ blockquote {
   border-radius: 0;
   max-width: none;
   box-sizing: border-box;
+}
+
+.site-header nav > [role~="menubar"] {
   border-bottom: thin solid black;
 }
 
@@ -507,8 +510,6 @@ blockquote {
   font-size: smaller;
   line-height: 1.5;
   margin: auto;
-  padding: 12px;
-  max-width: calc(#{$content-width} - 12px - 12px);
 }
 
 .site-nav > * {
