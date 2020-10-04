@@ -107,7 +107,7 @@ header nav li {
 .post-content h4,
 .post-content h5,
 .post-content h6 {
-  font-size: unset;
+  font-size: revert;
 }
 
 h1,
