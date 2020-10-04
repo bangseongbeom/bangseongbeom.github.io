@@ -159,7 +159,7 @@ button {
   font: inherit;
   text-decoration: none;
   transition: outline 0.125s;
-  border-bottom: thin solid gray;
+  border-bottom: thin solid darkgray;
 }
 
 a.active,
@@ -210,7 +210,8 @@ label {
   min-width: 1.5em;
   height: auto;
   text-align: center;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom-color: black;
   background: none;
   font-size: inherit;
   font-weight: normal;
