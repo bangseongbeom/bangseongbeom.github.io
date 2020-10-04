@@ -146,62 +146,53 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
-h1 {
-  counter-reset: section-h2;
-}
+// h1 {
+//   counter-reset: section-h2;
+// }
 
-h2 {
-  counter-increment: section-h2;
-  counter-reset: section-h3;
-}
+// h2 {
+//   counter-increment: section-h2;
+//   counter-reset: section-h3;
+// }
 
-h2::before {
-  content: counter(section-h2) "." " ";
-}
+// h2::before {
+//   content: counter(section-h2) "." " ";
+// }
 
-h3 {
-  counter-increment: section-h3;
-  counter-reset: section-h4;
-}
+// h3 {
+//   counter-increment: section-h3;
+//   counter-reset: section-h4;
+// }
 
-h3::before {
-  content: counter(section-h2) "." counter(section-h3) "." " ";
-}
+// h3::before {
+//   content: counter(section-h2) "." counter(section-h3) "." " ";
+// }
 
-h4 {
-  counter-increment: section-h4;
-  counter-reset: section-h5;
-}
+// h4 {
+//   counter-increment: section-h4;
+//   counter-reset: section-h5;
+// }
 
-h4::before {
-  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." " ";
-}
+// h4::before {
+//   content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." " ";
+// }
 
-h5 {
-  counter-increment: section-h5;
-  counter-reset: section-h6;
-}
+// h5 {
+//   counter-increment: section-h5;
+//   counter-reset: section-h6;
+// }
 
-h5::before {
-  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." " ";
-}
+// h5::before {
+//   content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." " ";
+// }
 
-h6 {
-  counter-increment: section-h6;
-}
+// h6 {
+//   counter-increment: section-h6;
+// }
 
-h6::before {
-  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." counter(section-h6) "." " ";
-}
-
-h1::before,
-h2::before,
-h3::before,
-h4::before,
-h5::before,
-h6::before {
-  user-select: text;
-}
+// h6::before {
+//   content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." counter(section-h6) "." " ";
+// }
 
 figure {
   margin: 1em 0;
@@ -803,12 +794,14 @@ pre.highlight {
 
 .footnote::before {
   content: "[";
-  user-select: text;
+  padding: 0 0.125em;
+  margin: 0 0.125em;
 }
 
 .footnote::after {
   content: "]";
-  user-select: text;
+  padding: 0 0.125em;
+  margin: 0 0.125em;
 }
 
 hr {
