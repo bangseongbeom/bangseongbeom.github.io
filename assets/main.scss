@@ -14,7 +14,7 @@ $brand-color: black;
 $content-width: 720px;
 
 $on-palm: 480px;
-$on-laptop: 980px;
+$on-laptop: $content-width;
 
 $on-medium: $on-palm !default;
 $on-large: $on-laptop !default;
