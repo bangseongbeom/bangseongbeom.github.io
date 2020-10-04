@@ -101,6 +101,15 @@ header nav li {
 //   white-space: pre-line;
 // }
 
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  font-size: unset;
+}
+
 h1,
 h2,
 h3,
