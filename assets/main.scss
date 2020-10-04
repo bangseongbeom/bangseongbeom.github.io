@@ -132,15 +132,37 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
-h1::before,
-h2::before,
-h3::before,
-h4::before,
-h5::before,
+h1::before {
+  counter-reset: section-h2;
+}
+
+h2::before {
+  content: counter(section-h2) "." " ";
+  counter-increment: section-h2;
+  counter-reset: section-h3;
+}
+
+h3::before {
+  content: counter(section-h2) "." counter(section-h3) "." " ";
+  counter-increment: section-h3;
+  counter-reset: section-h4;
+}
+
+h4::before {
+  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." " ";
+  counter-increment: section-h4;
+  counter-reset: section-h5;
+}
+
+h5::before {
+  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." " ";
+  counter-increment: section-h5;
+  counter-reset: section-h6;
+}
+
 h6::before {
-  content: counters(section, ".") "." " ";
-  counter-reset: section;
-  counter-increment: section;
+  content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." counter(section-h6) "." " ";
+  counter-increment: section-h6;
 }
 
 figure {
