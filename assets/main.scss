@@ -192,7 +192,15 @@ h6 {
 
 h6::before {
   content: counter(section-h2) "." counter(section-h3) "." counter(section-h4) "." counter(section-h5) "." counter(section-h6) "." " ";
+}
 
+h1::before,
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+  user-select: text;
 }
 
 figure {
@@ -794,21 +802,17 @@ pre.highlight {
 }
 
 .footnote {
-  padding: 0 0.125em;
-  margin: 0 0.125em;
 }
 
-// .footnote::before {
-//   content: "[";
-//   -webkit-user-select: text;
-//   user-select: text;
-// }
+.footnote::before {
+  content: "[";
+  user-select: text;
+}
 
-// .footnote::after {
-//   content: "]";
-//   -webkit-user-select: text;
-//   user-select: text;
-// }
+.footnote::after {
+  content: "]";
+  user-select: text;
+}
 
 hr {
   margin: $spacing-unit auto;
