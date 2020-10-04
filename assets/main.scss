@@ -935,12 +935,9 @@ hr {
   content: "💡" " ";
 }
 
-.material-icons {
+a.material-icons {
   display: inline-block;
   vertical-align: middle;
-}
-
-a.material-icons {
   border-bottom: none;
-  color: darkgray;
+  color: gray;
 }
