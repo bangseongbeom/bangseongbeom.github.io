@@ -779,17 +779,17 @@ pre.highlight {
   padding: 1em 0;
 }
 
-.footnote::before {
-  content: "[";
-  -webkit-user-select: text;
-  user-select: text;
-}
+// .footnote::before {
+//   content: "[";
+//   -webkit-user-select: text;
+//   user-select: text;
+// }
 
-.footnote::after {
-  content: "]";
-  -webkit-user-select: text;
-  user-select: text;
-}
+// .footnote::after {
+//   content: "]";
+//   -webkit-user-select: text;
+//   user-select: text;
+// }
 
 hr {
   margin: $spacing-unit auto;
