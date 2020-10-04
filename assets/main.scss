@@ -462,7 +462,6 @@ blockquote {
 
 .site-header {
   border-bottom: none;
-//   box-shadow: 0 0 4px 2px gainsboro;
   border-top: none;
   min-height: auto;
 }
@@ -475,11 +474,6 @@ blockquote {
   box-sizing: border-box;
   padding: 12px;
   margin: auto;
-}
-
-.site-header nav > [role~="menubar"] {
-  padding-bottom: 4px;
-  border-bottom: thin solid black;
 }
 
 .site-title {
