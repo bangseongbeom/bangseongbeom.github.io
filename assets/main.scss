@@ -324,6 +324,7 @@ summary:hover {
 }
 
 a:hover {
+  text-decoration: none;
   border-bottom-color: black;
   border-bottom-width: medium;
 }
@@ -346,6 +347,7 @@ summary:focus {
 }
 
 a:focus {
+  text-decoration: none;
   border-bottom-color: black;
   border-bottom-width: medium;
 }
