@@ -177,9 +177,9 @@ button {
   background: none;
   outline: 0 solid silver;
   font: inherit;
-  text-decoration: underline;
-  text-decoration-color: darkgray;
+  text-decoration: none;
   transition: outline 0.125s;
+  border-bottom: thin solid darkgray;
 }
 
 a.active,
