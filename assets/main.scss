@@ -936,8 +936,9 @@ hr {
 }
 
 a.material-icons {
-  display: inline;
+  display: inline-block;
   border-bottom: none;
   color: gray;
   font-size: smaller;
+  padding: 0.25em;
 }
