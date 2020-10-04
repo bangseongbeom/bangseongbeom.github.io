@@ -234,6 +234,11 @@ button {
   border-bottom: thin solid darkgray;
 }
 
+a > code,
+button > code {
+  border-bottom: inherit;
+}
+
 a.active,
 a.active:visited,
 button.active,
