@@ -132,7 +132,7 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
-html {
+:root {
   counter-reset: section;
 }
 
