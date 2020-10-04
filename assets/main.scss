@@ -101,24 +101,14 @@ header nav li {
 //   white-space: pre-line;
 // }
 
-.post-content h2 {
-  font-size: 1.75rem;
-}
-
-.post-content h3 {
-  font-size: 1.5rem;
-}
-
-.post-content h4 {
-  font-size: 1.25rem;
-}
-
-.post-content h5 {
-  font-size: 1.125rem;
-}
-
-.post-content h6 {
-  font-size: 1.0625rem;
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6
+{
+  font-size: initial;
 }
 
 h1,
