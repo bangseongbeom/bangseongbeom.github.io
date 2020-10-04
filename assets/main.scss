@@ -793,13 +793,13 @@ pre.highlight {
 }
 
 .footnote::before {
-  content: "[";
+  content: "";
   padding: 0 0.125em;
   margin: 0 0.125em;
 }
 
 .footnote::after {
-  content: "]";
+  content: "";
   padding: 0 0.125em;
   margin: 0 0.125em;
 }
