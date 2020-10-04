@@ -21,6 +21,16 @@ $on-large: $on-laptop !default;
 
 @import "minima";
 
+.material-icons {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+a.material-icons {
+  border-bottom: none;
+  color: darkgray;
+}
+
 ::selection {
   color: white;
   background-color: $text-color;
