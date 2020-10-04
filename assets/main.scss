@@ -132,10 +132,6 @@ h6:first-child {
   margin-top: $spacing-unit / 2;
 }
 
-:root {
-  counter-reset: section;
-}
-
 h1::before,
 h2::before,
 h3::before,
@@ -143,6 +139,7 @@ h4::before,
 h5::before,
 h6::before {
   content: counters(section, ".") "." " ";
+  counter-reset: section;
   counter-increment: section;
 }
 
