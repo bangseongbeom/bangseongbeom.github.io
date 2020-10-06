@@ -788,15 +788,11 @@ pre.highlight {
 }
 
 .footnote::before {
-  content: "";
-  padding: 0 0.125em;
-  margin: 0 0.125em;
+  content: "[";
 }
 
 .footnote::after {
-  content: "";
-  padding: 0 0.125em;
-  margin: 0 0.125em;
+  content: "]";
 }
 
 hr {
