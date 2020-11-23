@@ -221,8 +221,8 @@ button {
   outline: 0 solid silver;
   font: inherit;
   text-decoration: underline;
-  text-decoration: underline gray;
-  text-underline-offset: 0.125em;
+  text-decoration: underline dashed gray;
+  text-underline-offset: 0.25em;
   transition: outline 0.125s;
 }
 
