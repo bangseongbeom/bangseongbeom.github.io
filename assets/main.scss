@@ -220,10 +220,9 @@ button {
   background: none;
   outline: 0 solid silver;
   font: inherit;
-  text-decoration: gray;
-  text-decoration: underline 1px gray;
-  text-underline-offset: 0.25em;
+  text-decoration: none;
   transition: outline 0.125s;
+  border-bottom: thin solid gray;
 }
 
 a.active,
