@@ -26,6 +26,24 @@ $on-large: $on-laptop !default;
   background-color: $text-color;
 }
 
+/**
+* @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
+ */
+:root:lang(ja),
+[lang|=ja],
+:root:lang(ko),
+[lang|=ko] {
+  text-underline-position: under right;
+}
+
+/**
+* @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
+ */
+:root:lang(zh),
+[lang|=zh] {
+  text-underline-position: under left;
+}
+
 body {
   display: block;
   color: $text-color;
@@ -231,7 +249,7 @@ button {
   font: inherit;
   text-decoration: none;
   transition: outline 0.125s;
-  border-bottom: thin solid darkgray;
+  text-decoration-thickness
 }
 
 a.active,
