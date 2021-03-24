@@ -29,20 +29,20 @@ $on-large: $on-laptop !default;
 /**
  * @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
  */
-:root:lang(ja),
-[lang|=ja],
-:root:lang(ko),
-[lang|=ko] {
-  text-underline-position: under right;
-}
+// :root:lang(ja),
+// [lang|=ja],
+// :root:lang(ko),
+// [lang|=ko] {
+//   text-underline-position: under right;
+// }
 
 /**
  * @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
  */
-:root:lang(zh),
-[lang|=zh] {
-  text-underline-position: under left;
-}
+// :root:lang(zh),
+// [lang|=zh] {
+//   text-underline-position: under left;
+// }
 
 body {
   display: block;
