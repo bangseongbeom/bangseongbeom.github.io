@@ -3,7 +3,7 @@
 ---
 
 $base-font-family: "Noto Sans KR", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Malgun Gothic", "Dotum", sans-serif;
-$base-line-height: 1.75;
+$base-line-height: 2;
 
 $spacing-unit: 32px;
 
@@ -25,24 +25,6 @@ $on-large: $on-laptop !default;
   color: white;
   background-color: $text-color;
 }
-
-/**
- * @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
- */
-// :root:lang(ja),
-// [lang|=ja],
-// :root:lang(ko),
-// [lang|=ko] {
-//   text-underline-position: under right;
-// }
-
-/**
- * @see {@link https://www.w3.org/TR/css-text-decor-4/#text-underline-position-property}
- */
-// :root:lang(zh),
-// [lang|=zh] {
-//   text-underline-position: under left;
-// }
 
 body {
   display: block;
@@ -249,7 +231,7 @@ button {
   font: inherit;
   text-decoration: none;
   transition: outline 0.125s;
-  text-decoration-thickness
+  border-bottom: thin solid darkgray;
 }
 
 a.active,
