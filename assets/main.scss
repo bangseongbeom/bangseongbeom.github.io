@@ -716,6 +716,10 @@ blockquote {
   margin-bottom: $spacing-unit * 0.25;
 }
 
+.post-list p {
+  margin: 0;
+}
+
 h2.footer-heading {
   margin-top: $spacing-unit / 2;
 }
