@@ -62,11 +62,11 @@ p {
   margin: 2em 0;
 }
 
-:first-child {
+p:first-child {
   margin-top: 0;
 }
 
-:last-child {
+p:last-child {
   margin-bottom: 0;
 }
 
