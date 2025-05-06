@@ -48,7 +48,6 @@ permalink: /:title:output_ext
 
 disqus:
   shortname: bangseongbeom
-# staticman: true
 
 github_username: bangseongbeom
 rss: rss
