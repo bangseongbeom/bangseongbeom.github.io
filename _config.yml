@@ -39,6 +39,7 @@ plugins:
 
 defaults:
   - scope:
+      path: ""
       type: posts
     values:
       author: 방성범 (Bang Seongbeom)
