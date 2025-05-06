@@ -17,6 +17,7 @@ gem "minima", "~> 2.5"
 group :jekyll_plugins do
   gem "jekyll-default-layout", "~> 0.1.5"
   gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-github-metadata", "~> 2.16", ">= 2.16.1"
   gem "jekyll-optional-front-matter", "~> 0.3.2"
   gem "jekyll-readme-index", "~> 0.3.0"
   gem "jekyll-redirect-from", "~> 0.16.0"

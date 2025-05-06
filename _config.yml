@@ -29,6 +29,7 @@ theme: minima
 plugins:
   - jekyll-default-layout
   - jekyll-feed
+  - jekyll-github-metadata
   - jekyll-optional-front-matter
   - jekyll-readme-index
   - jekyll-redirect-from
