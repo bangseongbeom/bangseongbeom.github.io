@@ -32,6 +32,13 @@ PostCSS는 Sass의 [함수](https://sass-lang.com/documentation/at-rules/functio
 PostCSS는 Sass에 비해 덜 유명합니다. 덜 유명한 도구를 사용한다는 말은 도구에 대한 숙련자가 적다는 말과 같습니다. 이로 인해 문제 상황에 대한 해결책을 찾기 어려울 수도 있습니다.
 
 <figure>
-<img src="/assets/2019-07-17-postcss-better-than-sass/tools-section-overview.png" alt="Sass의 인기를 100%로 봤을 때, PostCSS의 인기는 84%">
-<figcaption><a href="https://2019.stateofcss.com/technologies/pre-post-processors/#tools-section-overview">The State of CSS Survey 2019 전처리기 순위</a></figcaption>
+
+![Sass의 인기를 100%로 봤을 때, PostCSS의 인기는 84%](/assets/2019-07-17-postcss-better-than-sass/tools-section-overview.png)
+
+<figcaption>
+
+[The State of CSS Survey 2019 전처리기 순위](https://2019.stateofcss.com/technologies/pre-post-processors/#tools-section-overview)
+
+</figcaption>
+
 </figure>

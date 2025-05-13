@@ -9,8 +9,15 @@ redirect_from: /posts/python-double-sharp-comments.html
 [idle]: https://docs.python.org/3/library/idle.html
 
 <figure>
-<img src="/assets/2018-11-22-python-double-sharp-comments/comment-out-region.png" alt="IDLE에서 'Format' > 'Comment Out Region'">
-<figcaption>IDLE의 'Comment Out Region' 메뉴 항목</figcaption>
+
+![IDLE에서 'Format' > 'Comment Out Region'](/assets/2018-11-22-python-double-sharp-comments/comment-out-region.png)
+
+<figcaption>
+
+IDLE의 'Comment Out Region' 메뉴 항목
+
+</figcaption>
+
 </figure>
 
 샤프가 한 개냐 두 개냐에 따라 무언가 달라지는 것 같지는 않습니다. 다 똑같은 주석일텐데 말이죠. 파이썬 공식 문서를 찾아보아도, 샤프 두 개와 관련된 말은 나오지 않습니다.
