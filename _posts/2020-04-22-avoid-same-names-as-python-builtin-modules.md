@@ -21,8 +21,6 @@ redirect_from:
 
 하지만 이 현상에는 한 가지 주의해야 할 점이 있습니다. **타인이 작성한 코드(내장 모듈, 외부 라이브러리)가 내장 모듈을 `import`했을 때, 그 파일 안에 있는 `import`에도 이 현상이 적용됩니다.** 우리 코드가 아님에도 내장 모듈과 동일한 이름의 파이썬 파일을 불러오게 되는 것이죠.
 
-{% include example.html %}
-
 실험해봅시다.
 
 먼저 아무 내용도 없는 `enum.py`를 만듭니다:
@@ -54,8 +52,6 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 [`re`] 내장 모듈에는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **여기서 `import enum`은 [`enum`] 내장 모듈을 불러오지 않습니다. 앞에서 만든 아무 내용도 없는 `enum.py`를 불러옵니다.** `enum.py`에는 '당연히' `IntFlag`가 없습니다. 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
 
-{% include example.html end=true %}
-
 {% include note.html %}
 
 파이썬 파일을 불러오는 절차에 대한 자세한 내용은 [<sys.path, PYTHONPATH>](/sys-path-pythonpath.html)를 참고하세요.
@@ -78,8 +74,6 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 방법은 디렉터리를 만들어 작업하는 것입니다. 디렉터리 안에 있는 파이썬 파일을 불러오기 위해서는 불러올 파일 이름 앞에 디렉터리 이름을 붙여주어야 합니다. 이렇게 할 경우 파일 이름이 내장 모듈을 덮어씌우게 되는 지에 대한 여부는 해당 디렉터리의 이름에 대해서만 찾아보면 됩니다.
 
-{% include example.html %}
-
 `mypackage/empty.py`를 만듭니다:
 
 ```py
@@ -96,8 +90,6 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 이제 
 
-{% include example.html end=true %}
-
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
 디렉터리를 만드는 식으로 할 때 한 가지 주의해야 할 점이 있습니다. `import`는 처음 `python3` 명령어를 통해 실행된 파일을 기준으로 다른 파이썬 파일을 찾습니다. 이로 인해 **파이썬 파일 실행 시 해당 파일을 직접 실행하면 `import` 문에 문제가 발생합니다.** 해당 디렉터리 안에 들어와 있는 상태에서, 그 디렉터리와 같은 이름으로 된 디렉터리를 찾으려 하기 때문입니다.
@@ -107,8 +99,6 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 [^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
 
     > For a package, the same effect can be achieved by including a `__main__.py` module, the contents of which will be executed when the module is run with `-m`.
-
-{% include example.html %}
 
 `mypackage/__main__.py`를 만듭니다 (내용은 상관 없음):
 
@@ -123,5 +113,3 @@ python3 mypackage
 ```
 
 디렉터리 안에 있는 `__main__.py` 실행되는 것을 확인하실 수 있습니다. 
-
-{% include example.html end=true %}

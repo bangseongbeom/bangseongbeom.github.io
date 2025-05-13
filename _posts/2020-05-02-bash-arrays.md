@@ -22,25 +22,15 @@ redirect_from: /shell-arrays.html
     > name=(value1 value2 … )
     > ```
 
-{% include example.html %}
-
 ```sh
 ASDF=(100 200 Hello)
 ```
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 **공백을 포함한 문자열**은 [배시]의 문법 상 큰따옴표나 작은따옴표로 묶어야 합니다:
 
 ```sh
 ASDF=("H e l l o" 'w o r l d')
 ```
-
-{% include example.html end=true %}
-
-{% include example.html invalid=true %}
 
 다른 프로그래밍 언어와 달리, 배시에서는 `=` 좌우에 띄어쓰기가 있으면 안 됩니다:
 
@@ -54,8 +44,6 @@ ASDF = (100 200 Hello) # 잘못됨!
 -bash: syntax error near unexpected token `('
 ```
 
-{% include example.html end=true %}
-
 ## 값 얻기, 인덱스
 
 배열로부터 값을 하나 얻기 위해서는 `${변수이름[인덱스]}` 형태를 사용합니다.
@@ -65,8 +53,6 @@ ASDF = (100 200 Hello) # 잘못됨!
 [^starts-at-zero]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Indexing starts at zero.
-
-{% include example.html %}
 
 다음은 배열에 `100`, `200`, `300`을 넣은 뒤 순서대로 출력하는 코드입니다:
 
@@ -85,8 +71,6 @@ echo ${ASDF[2]}
 200
 300
 ```
-
-{% include example.html end=true %}
 
 ### [특이한 성질] 중괄호가 필요한 이유
 
@@ -151,18 +135,12 @@ ASDF[1]="B   B"
 
     > each value is of the form `[subscript]=string`.
 
-{% include example.html %}
-
 다음은 배열에 `100`, `200`, `300`을 넣은 뒤, `100`을 `99999`로 **변경**하는 코드입니다:
 
 ```sh
 ASDF=(100 200 300)
 ASDF[0]=99999
 ```
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 다음은 `Hello`라는 값 하나만 들어간 배열을 만든 뒤, 여기에 `Linus`와 `Torvalds`를 **추가**하는 코드입니다:
 
@@ -172,18 +150,12 @@ ASDF[1]=Linus
 ASDF[2]=Torvalds
 ```
 
-{% include example.html end=true %}
-
-{% include example.html %}
-
 **공백을 포함한 문자열**은 [배시]의 문법 상 큰따옴표나 작은따옴표로 묶어야 합니다:
 
 ```sh
 ASDF[0]="Brian Fox"
 ASDF[1]='Stephen Bourne'
 ```
-
-{% include example.html end=true %}
 
 ## [특이한 성질] 암시적 배열 생성
 
@@ -219,16 +191,12 @@ asdf[2] = "Hello"
 
     > nor any requirement that members be indexed or assigned contiguously.
 
-{% include example.html %}
-
 다음은 인덱스 12345에 `99999`를 추가하는 코드입니다:
 
 ```sh
 ASDF=(100 200 300)
 ASDF[12345]=99999
 ```
-
-{% include example.html end=true %}
 
 ## [특이한 성질] 인덱스 명시 배열 생성
 
@@ -238,13 +206,9 @@ ASDF[12345]=99999
 
     > where each value is of the form [subscript]=string. ... if the optional subscript is supplied, that index is assigned to;
 
-{% include example.html %}
-
 ```sh
 ASDF=([10]=100 [0]=200 [2]=300)
 ```
-
-{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -280,8 +244,6 @@ Bye
 
 `배열이름+=(값1 값2 값3)` 형태로 배열에 값을 추가합니다.
 
-{% include example.html %}
-
 다음은 배열을 생성한 뒤 배열 끝에 값을 추가하는 코드입니다:
 
 ```sh
@@ -292,15 +254,11 @@ ASDF+=(456 789)
 
 `123`과 `456`, `789`를 추가했습니다.
 
-{% include example.html end=true %}
-
-{% include example.html invalid=true %}
-
 **단 하나의 값**을 추가한다고 해도 반드시 괄호를 붙여야 합니다. 다음 코드를 보세요:
 
 ```sh
 ASDF=(Alpha Beta Theta Gamma)
-ASDF+=123
+ASDF+=123 # 잘못됨!
 
 echo ${ASDF[0]}
 ```
@@ -315,13 +273,9 @@ Alpha123
 
 `ASDF[0]`에 존재하는 `Alpha`와 `123`이 붙어 `Alpha123`이라는 결과가 나왔습니다.
 
-{% include example.html end=true %}
-
 ## 배열 합치기
 
 `${ASDF[@]}`를 응용해 두 개의 배열을 하나로 합치는(결합하는) 데 사용할 수도 있습니다.
-
-{% include example.html %}
 
 ```sh
 AAA=(123 456 789)
@@ -338,8 +292,6 @@ echo ${CCC[@]}
 123 456 789 1 4 7
 ```
 
-{% include example.html end=true %}
-
 앞서 말씀드렸듯 **배열의 값이 공백을 포함할 수도 있다면** `${변수이름[@]}` 대신 큰따옴표가 들어간 `"${변수이름[@]}"`를 사용해야 합니다. 그렇지 않을 경우 여러 공백을 하나로 묶는 배시의 성질로 인해 공백이 모두 무시되며 여러 가지 예기치 않은 결과가 일어날 수 있습니다.
 
 {% include note.html %}
@@ -348,17 +300,15 @@ echo ${CCC[@]}
 
 {% include note.html end=true %}
 
-{% include example.html invalid=true %}
-
 다음은 배열의 값이 공백을 포함함에도 불구하고 `${변수이름[@]}`을 사용한 잘못된 코드입니다:
 
 ```sh
 AAA=("1   1" "2   2")
 BBB=("b   b" "B   B")
 
-CCC=(${AAA[@]} ${BBB[@]})
+CCC=(${AAA[@]} ${BBB[@]}) # 잘못됨!
 
-echo ${CCC[@]}
+echo ${CCC[@]} # 잘못됨!
 ```
 
 출력 결과:
@@ -368,10 +318,6 @@ echo ${CCC[@]}
 ```
 
 여러 공백을 하나로 묶는 배시의 성질로 인해 공백이 모두 무시된 것을 확인할 수 있습니다.
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 다음은 공백을 포함하는 값을 가진 배열에 대해, 제대로 `"${변수이름[@]}"`을 사용한 코드입니다:
 
@@ -392,8 +338,6 @@ echo "${CCC[@]}"
 
 예상 대로 공백이 출력됨을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ## 배열 크기 얻기
 
 `${#변수이름[@]}` (`변수이름` 앞에 `#`이 있습니다) 형태로 배열에 들어 있는 값의 개수를 구합니다[^length-of-array].
@@ -401,8 +345,6 @@ echo "${CCC[@]}"
 [^length-of-array]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > ${#name[subscript]} expands to the length of ${name[subscript]}. If subscript is ‘@’ or ‘*’, the expansion is the number of elements in the array.
-
-{% include example.html %}
 
 ```sh
 ASDF=(123 456 789)
@@ -419,11 +361,7 @@ echo ${#ZXCV[@]}
 7
 ```
 
-{% include example.html end=true %}
-
 배열의 크기는 시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이 **아닙니다.** 순전히 배열에 들어 있는 값의 개수를 구합니다.
-
-{% include example.html %}
 
 ```sh
 ASDF=(123 456 [100]=789)
@@ -438,8 +376,6 @@ echo ${#ASDF[@]}
 ```
 
 시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이었다면 `100`을 출력해야 합니다. `3`을 출력하는 것으로 보아 배열에 들어있는 값의 개수를 구한다는 것을 알 수 있습니다. 
-
-{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -472,8 +408,6 @@ echo ${#ASDF[2]}
 
     > It is possible to obtain the keys (indices) of an array as well as the values. ${!name[@]} and ${!name[*]} expand to the indices assigned in array variable name. The treatment when in double quotes is similar to the expansion of the special parameters ‘@’ and ‘*’ within double quotes.
 
-{% include example.html %}
-
 ```sh
 ASDF=(123 456 789 [777]=TripleSeven)
 echo ${!ASDF[@]}
@@ -485,13 +419,9 @@ echo ${!ASDF[@]}
 0 1 2 777
 ```
 
-{% include example.html end=true %}
-
 ## 배열 순회
 
 `for` 명령어를 통해 배열의 값 하나 하나에 동일한 연산을 수행할 수 있습니다. 값을 대량으로 변경하거나 모든 값을 출력할 때 사용합니다.
-
-{% include example.html %}
 
 ```sh
 ASDF=(111 222 333)
@@ -509,8 +439,6 @@ done
 333
 ```
 
-{% include example.html end=true %}
-
 {% include note.html %}
 
 `for` 명령어에 관한 자세한 내용은...
@@ -525,8 +453,6 @@ done
 
     > The unset builtin is used to destroy arrays. `unset name[subscript]` destroys the array element at index subscript. Negative subscripts to indexed arrays are interpreted as described above. Unsetting the last element of an array variable does not unset the variable. `unset name`, where name is an array, removes the entire array.
 
-{% include example.html %}
-
 다음 코드는 배열의 값을 하나 제거합니다:
 
 ```sh
@@ -534,18 +460,12 @@ A[5]=123
 unset A[5]
 ```
 
-{% include example.html end=true %}
-
-{% include example.html %}
-
 다음 코드는 배열 전체를 제거합니다:
 
 ```sh
 A=(123 456 789)
 unset A
 ```
-
-{% include example.html end=true %}
 
 ### 값 제거 vs 빈 문자열 대입
 
@@ -555,18 +475,12 @@ unset A
 
     > The null string is a valid value.
 
-{% include example.html %}
-
 ```sh
 ASDF=(123 456 789)
 ASDF[2]= # 빈 문자열 대입
 ```
 
-{% include example.html end=true %}
-
 그러므로 빈 문자열을 대입하는 것은 배열에 있는 값을 **제거**하는 게 아니라 그저 빈 문자열로 덮어쓸 뿐입니다.
-
-{% include example.html %}
 
 ```sh
 ASDF=(123 456 789)
@@ -588,8 +502,6 @@ Get all: 123  789
 
 값이 제거되지 않고 그대로 남아있는 것을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ## 음수 인덱스
 
 `ASDF[-1]`과 같이 인덱스 자리에 음수를 사용하면 배열이 가진 마지막 인덱스에서부터 거꾸로 접근합니다. `ASDF[-1]`이 마지막 인덱스입니다[^negative-number].
@@ -597,8 +509,6 @@ Get all: 123  789
 [^negative-number]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > When assigning to an indexed array, if name is subscripted by a negative number, that number is interpreted as relative to one greater than the maximum index of name, so negative indices count back from the end of the array, and an index of -1 references the last element.
-
-{% include example.html %}
 
 ```sh
 ASDF=(100 200 300)
@@ -614,10 +524,6 @@ echo ${ASDF[-3]} # ASDF[0]과 같음
 200
 100
 ```
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 음수 인덱스는 가장 마지막 인덱스부터 거꾸로 접근하기 때문에, 값이 들어있지 않은 인덱스는 아무런 값도 출력하지 않습니다.
 
@@ -641,8 +547,6 @@ echo ${ASDF[-3]} # ASDF[7]과 같음
 
 보시는 바와 같이 `${ASDF[-2]}`, `${ASDF[-3]}`은 아무 것도 출력되지 않은 것을 확인할 수 있습니다. 
 
-{% include example.html end=true %}
-
 ## [특이한 성질] 배열 이름 자체로 접근
 
 배시에서는 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 **배열의 첫 번째 값처럼 취급합니다[^without-a-subscript].** `ASDF=100`을 `ASDF[0]=100`처럼 처리한다는 소리죠.
@@ -663,8 +567,6 @@ echo ${ASDF[-3]} # ASDF[7]과 같음
 
 `declare` 명령어와 `-a` 옵션을 통해 특정 변수를 배열로 선언할 수 있습니다. 이를 **명시적 선언**이라 합니다. `-a`는 "A"rray의 "A"에서 따왔습니다.
 
-{% include example.html %}
-
 ```sh
 declare -a ASDF
 ```
@@ -673,8 +575,6 @@ declare -a ASDF
 # 선언과 동시에 초기화도 가능
 declare -a QWER=(100 200 300)
 ```
-
-{% include example.html end=true %}
 
 {% include note.html %}
 
@@ -732,12 +632,10 @@ declare -A 변수이름=([키]=값 [키]=값 [키]=값)
 
 키를 지정하지 않으면 오류가 발생합니다.
 
-{% include example.html invalid=true %}
-
 다음은 연관 배열을 생성하면서 키를 명시하지 않는 잘못된 코드입니다:
 
 ```sh
-declare -A ASDF=(123 456 789)
+declare -A ASDF=(123 456 789) # 잘못됨!
 ```
 
 출력 결과:
@@ -750,13 +648,9 @@ declare -A ASDF=(123 456 789)
 
 예상대로 오류가 발생한 것을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ### 키에는 순서가 없다
 
 인덱스 배열의 인덱스와 달리, 연관 배열의 키에는 **순서가 없습니다.** 그렇기 때문에 전체 값을 얻을 때에도 어떤 순서로 얻게 될지 알 수 없습니다.
-
-{% include example.html %}
 
 다음은 연관 배열의 키에 순서가 없음을 확인하는 코드입니다:
 
@@ -772,8 +666,6 @@ echo ${ASDF[@]}
 ```
 
 연관 배열의 키에는 순서가 없으므로 출력 결과는 실행 환경마다 다를 수 있습니다.
-
-{% include example.html end=true %}
 
 ## 2차원 배열
 

@@ -16,8 +16,6 @@ redirect_from:
 
     > A simple command is a sequence of optional variable assignments followed by blank-separated words and redirections, ...
 
-{% include example.html %}
-
 `asdf.sh`를 만듭니다:
 
 ```sh
@@ -32,8 +30,6 @@ ABC=123 bash asdf.sh
 
 `123`이 출력되는 것을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ## 유효 범위
 
 이렇게 선언한 환경 변수는 실행 대상 프로그램 내에서만 유효합니다[^current-shell]. 다음 명령어에서는 이전 명령어와 함께 선언한 환경 변수를 사용할 수 없습니다.
@@ -42,8 +38,6 @@ ABC=123 bash asdf.sh
 
     > If no command name results, the variable assignments affect the current shell environment.
     
-{% include example.html %}
-
 `asdf.sh`를 만듭니다:
 
 ```sh
@@ -68,8 +62,6 @@ echo $ABC
 
 아무 것도 출력되지 않습니다.
 
-{% include example.html end=true %}
-
 ## 주의: 명령어 내에서 환경 변수 사용 불가능
 
 명령어 텍스트 내에서는 함께 선언한 환경 변수를 사용할 수 없습니다. `ABC=123`이라는 환경 변수 선언과 함께 `echo $ABC`를 실행한다고 해서 `$ABC`가 `123`으로 해석되지 않습니다. 함께 선언한 환경 변수는 우선 내부적으로 보관한 뒤, 실행 대상 프로그램을 실행할 때가 되서야 환경 변수를 추가되는 식으로 동작하기 때문입니다[^environment-executed]. 즉 '환경 변수 보관' → '환경 변수 해석' → '대상 프로그램 실행' 순으로 진행합니다.
@@ -81,8 +73,6 @@ echo $ABC
     >
     > ... the variables are added to the environment of the executed command ...
 
-{% include example.html %}
-
 다음 명령어를 실행합니다:
 
 ```sh
@@ -90,10 +80,6 @@ ABC=456 echo $ABC
 ```
 
 위의 명령어는 아무 것도 출력하지 않습니다. `ABC` 환경 변수의 할당은 `$ABC`에 대한 해석이 완료된 후에야 진행하기 때문입니다.
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 환경 변수 할당 이후에 명령어를 실행하고 싶다면 다음과 같이 해야 합니다:
 
@@ -103,8 +89,6 @@ ABC=456 bash -c 'echo $ABC'
 
 앞의 예시와 달리 `$ABC`가 바로 해석되지 않고, 그저 `bash` 프로그램을 실행하면서 `'echo $ABC'`라는 문자열을 함께 전달합니다. `bash`에 `ABC` 환경 변수가 전달되므로 `bash`는 `echo $ABC`를 실행하면서 `ABC`의 값인 456을 출력합니다.
 
-{% include example.html end=true %}
-
 ## 주의: 실행 대상 없이 환경 변수만 선언
 
 별다른 실행 대상 프로그램 없이 환경 변수만을 선언할 경우, 즉 `ABC=123 bash asdf.sh`가 아니라 `ABC=123`만 입력할 경우, 이 환경 변수는 해당 실행 대상에서만 유효한 게 아니라 현재 셸 환경 **전체**에서 유효하게 됩니다[^current-shell-environment-executed].
@@ -112,8 +96,6 @@ ABC=456 bash -c 'echo $ABC'
 [^current-shell-environment-executed]: [bash(1) - Linux manual page](http://man7.org/linux/man-pages/man1/bash.1.html#SIMPLE_COMMAND_EXPANSION)
 
     > If no command name results, the variable assignments affect the current shell environment.  Otherwise, the variables are added to the environment of the executed command and do not affect the current shell environment.
-
-{% include example.html %}
 
 `asdf.sh`를 만듭니다:
 
@@ -153,8 +135,6 @@ echo $ABC
 
 `123`이 출력됩니다. `ABC`가 셸 환경 전체에서 유효하도록 선언되었으므로, `ABC`를 출력할 수 있습니다.
 
-{% include example.html end=true %}
-
 ### 유효 범위와 제어 연산자
 
 `;`, `&&`, `||`같은 제어 연산자로 인해 여러 부분 명령어로 나뉘어질 수 있는 경우, 환경 변수는 각 부분 명령어(매뉴얼에서는 단순 명령어라고 합니다)에만 적용됩니다[^simple-command-variables]. 
@@ -166,8 +146,6 @@ echo $ABC
     > When a simple command is executed, ...
     >
     > ... the variables are added to the environment of the executed command ...
-
-{% include example.html %}
 
 아래 두 명령어는 서로 다른 명령어입니다:
 
@@ -184,8 +162,6 @@ ABCDEF=123; echo $ABCDEF
 첫 번째 명령어와 달리 두 번째 명령어는 `;`이라는 제어 연산자로 분리되어 있습니다. 이로 인해 셸은 `ABCDEF=123`과 `echo $ABCDEF`를 각각 별개의 명령으로 바라봅니다. `ABCDEF=123`의 경우 별다른 실행 대상 프로그램 없이 환경 변수만을 선언한 것이므로, 이 환경 변수는 셸 환경 전체에서 유효하게 됩니다. 그러므로 다음 명령인 `echo $ABCDEF`에서도 `ABCDEF`를 출력할 수 있습니다.
 
 `ABCDEF`는 이후에도 계속 유효하니, `echo $ABCDEF`를 실행하면 또다시 `123`을 출력합니다.
-
-{% include example.html end=true %}
 
 {% include note.html %}
 

@@ -13,8 +13,6 @@ category: python
 
 [`sys.path`]는 디렉터리의 경로들이 기록된 문자열 리스트입니다. 이 리스트에 경로를 추가하면 해당 경로에 있는 파이썬 파일을 `import` 문으로 불러올 수 있습니다.
 
-{% include example.html %}
-
 먼저 아무 파이썬 파일을 하나 만듭시다. 내용은 상관 없습니다. 이 예시에서는 `/opt/common.py`에 만들겠습니다:
 
 ```py
@@ -30,8 +28,6 @@ import common
 ```
 
 예시에서 `sys.path.append("/opt")`를 통해 `/opt` 디렉터리를 추가했습니다. 이로 인해 `/opt/common.py`를 `import`할 수 있게 됩니다.
-
-{% include example.html end=true %}
 
 ## `sys.path`의 기본값
 
@@ -51,8 +47,6 @@ import common
 
     > (or the current directory when no file is specified)
 
-{% include example.html %}
-
 먼저 테스트 용 파일을 만듭니다. 여기서는 `/home/ubuntu`에 `example.py`라는 이름으로 만들겠습니다:
 
 ```py
@@ -67,10 +61,6 @@ print(sys.path)
 ```
 
 리스트의 첫 번째 값으로 `'/home/ubuntu'`가 들어있는 것을 확인할 수 있습니다.
-
-{% include example.html end=true %}
-
-{% include example.html %}
 
 `python3`을 실행해 파이썬 인터프리터에서 다음 내용을 입력합니다:
 
@@ -87,8 +77,6 @@ print(sys.path)
 
 앞의 예시와 달리 빈 문자열인 `''`이 리스트 맨 앞에 존재하는 것을 확인할 수 있습니다. 빈 문자열은 유효한 상대 경로로, 현재 디렉터리를 의미합니다.
 
-{% include example.html end=true %}
-  
 ### `PYTHONPATH` 환경 변수
 
 [`PYTHONPATH`] 환경 변수에 경로를 추가하면, 파이썬은 이 경로들을 [`sys.path`]에 추가해줍니다.
@@ -100,8 +88,6 @@ print(sys.path)
 [^pythonpath-format]: [PYTHONPATH - Python Setup and Usage](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
 
     > The format is the same as the shell’s PATH: one or more directory pathnames separated by os.pathsep (e.g. colons on Unix or semicolons on Windows).
-
-{% include example.html %}
 
 테스트 용 파일을 하나 만듭니다:
 
@@ -124,8 +110,6 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 `'/foo'`, `'/bar'`가 추가된 것을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ### 기타 기본 경로
 
 이외에도 [`sys.path`]에는 파이썬에 포함된 여러 내장 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^installation-dependent].
@@ -133,8 +117,6 @@ PYTHONPATH=/foo:/bar python3 example.py
 [^installation-dependent]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The installation-dependent default.
-
-{% include example.html %}
 
 테스트 용 파일을 하나 만듭니다:
 
@@ -151,8 +133,6 @@ print(sys.path)
 ```
 
 `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등 내장 모듈을 위한 여러 경로들을 확인할 수 있습니다.
-
-{% include example.html end=true %}
 
 {% include note.html %}
 

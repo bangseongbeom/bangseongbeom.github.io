@@ -11,8 +11,6 @@ category: linux
 
 `source`와 `.`은 파일을 실행하는 명령어입니다. 좀 이상하게 생기긴 했지만 `.`도 엄연한 하나의 명령어입니다.
 
-{% include example.html %}
-
 다음과 같이 셸 스크립트 파일을 만듭니다. 여기서는 `asdf.sh`라는 이름으로 만들겠습니다:
 
 ```sh
@@ -27,8 +25,6 @@ source asdf.sh
 ```
 
 `source`와 `.` 모두 `asdf.sh`를 실행합니다. `Hello`가 두 번 출력되는 것을 확인할 수 있습니다.
-
-{% include example.html end=true %}
 
 ## `source` vs `bash`
 
@@ -61,8 +57,6 @@ bash asdf.h
 
 `bash`: 스크립트 안에서 선언한 환경 변수는 스크립트 바깥에서 접근할 수 없으며 스크립트가 끝나면 그대로 소멸합니다. 스크립트 바깥에서의 접근을 원한다면 `export` 명령어를 통해야 합니다.
 
-{% include example.html %}
-
 먼저 `asdf.sh` 파일을 만듭니다:
 
 ```sh
@@ -90,15 +84,11 @@ source asdf.sh: 123
 
 `bash`는 `123`이 출력되지 않은 반면, `source`는 `123`이 출력되었습니다. 여기서 우리는 `bash`로 인해 실행한 `asdf.sh`의 경우, 실행이 끝나면 더 이상 변수가 유효하지 않음을 확인할 수 있습니다.
 
-{% include example.html end=true %}
-
 ### `cd`로 인한 경로 유지
 
 `source`: 스크립트 안에서 `cd`를 실행한 결과가 그대로 유지됩니다.
 
 `bash`: 스크립트 안에서의 `cd`는 스크립트 안에서 유지되지만, 스크립트 바깥에서는 유지되지 않습니다.
-
-{% include example.html %}
 
 먼저 `asdf.sh` 파일을 만듭니다. 이 예시에서는 `/home/ubuntu`에 만들겠습니다. ([`pwd`](https://linux.die.net/man/1/pwd)는 현재 작업 디렉터리를 출력하는 명령어입니다):
 
@@ -131,8 +121,6 @@ In file 2: /home
 ```
 
 `bash asdf.sh`는 스크립트 파일 내부의 현재 작업 디렉터리를 바꾸었지만, 스크립트 파일 바깥은 연향을 받지 않았습니다. 반면, `source`는 스크립트 파일 바깥에서도 현재 작업 디렉터리에 영향을 주었습니다.
-
-{% include example.html end=true %}
 
 ### 요약
 
