@@ -29,55 +29,79 @@ category: etc
 
 ## 사용 방법
 
-{% include figure.html %}
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
 
-{% include figcaption.html %}**'Select image'** 버튼을 누릅니다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+**'Select image'** 버튼을 누릅니다.
 
-{% include figure.html %}
+</figcaption>
+
+</figure>
+
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
 
-{% include figcaption.html %}굽는데 사용할 이미지 파일(ISO, IMG, ...)을 선택합니다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+굽는데 사용할 이미지 파일(ISO, IMG, ...)을 선택합니다.
 
-{% include figure.html %}
+</figcaption>
+
+</figure>
+
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
 
-{% include figcaption.html %}**'Select target'** 버튼을 누릅니다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+**'Select target'** 버튼을 누릅니다.
 
-{% include figure.html %}
+</figcaption>
+
+</figure>
+
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
 
-{% include figcaption.html %}이미지를 설치할 SD 카드 또는 USB를 선택합니다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+이미지를 설치할 SD 카드 또는 USB를 선택합니다.
 
-{% include figure.html %}
+</figcaption>
+
+</figure>
+
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
 
-{% include figcaption.html %}**'Flash!'** 버튼을 눌러 굽기를 시작합니다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+**'Flash!'** 버튼을 눌러 굽기를 시작합니다.
+
+</figcaption>
+
+</figure>
 
 {% include note.html %}
 
-{% include figure.html %}
+<figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-6.png)
 
-{% include figcaption.html %}SD 카드 또는 USB의 용량이 너무 클 경우, [발레나에처]는 사용자가 **자료 백업 용과 같은 중요한 드라이브**에 이미지를 구우려 하는 것이 아닌지 경고합니다. 정말 이미지를 굽기 위한 드라이브가 맞다면 **'Continue'** 버튼을 눌러 굽기를 시작합시다.{% include figcaption.html end=true %}
+<figcaption>
 
-{% include figure.html end=true %}
+SD 카드 또는 USB의 용량이 너무 클 경우, [발레나에처]는 사용자가 **자료 백업 용과 같은 중요한 드라이브**에 이미지를 구우려 하는 것이 아닌지 경고합니다. 정말 이미지를 굽기 위한 드라이브가 맞다면 **'Continue'** 버튼을 눌러 굽기를 시작합시다.
+
+</figcaption>
+
+</figure>
 
 {% include note.html end=true %}
 
