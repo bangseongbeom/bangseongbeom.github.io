@@ -28,16 +28,10 @@ description: 개발자 방성범의 기술 블로그
 # Build settings
 theme: minima
 plugins:
-  - jekyll-default-layout
   - jekyll-feed
-  - jekyll-github-metadata
-  - jekyll-optional-front-matter
-  - jekyll-readme-index
   - jekyll-redirect-from
-  - jekyll-relative-links
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-titles-from-headings
 
 defaults:
   - scope:
