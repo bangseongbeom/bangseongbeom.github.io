@@ -26,7 +26,6 @@ email: bangseongbeom@hotmail.com
 description: 개발자 방성범의 기술 블로그
 
 # Build settings
-theme: minima
 plugins:
   - jekyll-feed
   - jekyll-redirect-from
