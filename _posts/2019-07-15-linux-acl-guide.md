@@ -1,8 +1,9 @@
 ---
-title: 리눅스 ACL 가이드
 category: linux
 redirect_from: /linux-acl.html
 ---
+
+# 리눅스 ACL 가이드
 
 사용자 하나와 그룹 하나에게만 권한을 줄 수 있는 파일 퍼미션을 확장하여, 여러 명의 사용자와 그룹에게 접근 권한을 줄 수 있는 ACL(Access Control List)에 대해 알아봅니다.
 

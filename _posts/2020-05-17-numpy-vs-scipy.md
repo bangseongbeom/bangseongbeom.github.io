@@ -1,7 +1,8 @@
 ---
-title: 넘파이 vs 사이파이
 category: machine-learning
 ---
+
+# 넘파이 vs 사이파이
 
 [넘파이]\(NumPy)와 [사이파이]\(SciPy)의 차이점에 대해 다룹니다.
 

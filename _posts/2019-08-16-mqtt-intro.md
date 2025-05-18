@@ -1,7 +1,8 @@
 ---
-title: MQTT 소개
 category: iot
 ---
+
+# MQTT 소개
 
 MQTT의 필요성과 특징에 대해 소개합니다.
 

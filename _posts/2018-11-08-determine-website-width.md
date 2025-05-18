@@ -1,10 +1,11 @@
 ---
-title: 웹 사이트 너비 정하기
 category: web
 redirect_from:
     - /posts/website-width.html
     - /website-width.html
 ---
+
+# 웹 사이트 너비 정하기
 
 웹 사이트의 너비에 대한 절대적인 기준은 없습니다. 그래도 마음대로 정하는 것보다는, 모바일에서 데스크톱 전용 웹 페이지를 렌더링할 때 사용되는 너비인 980px을 권장합니다.
 

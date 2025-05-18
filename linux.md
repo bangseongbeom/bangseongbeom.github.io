@@ -1,5 +1,6 @@
 ---
 layout: category
-title: 리눅스
 category: linux
 ---
+
+# 리눅스

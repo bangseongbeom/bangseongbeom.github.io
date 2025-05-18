@@ -1,5 +1,6 @@
 ---
 layout: category
-title: 기타
 category: etc
 ---
+
+# 기타

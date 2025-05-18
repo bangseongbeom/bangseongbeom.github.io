@@ -1,8 +1,9 @@
 ---
-title: 스프링의 단점과 대안
 category: java
 redirect_from: /posts/spring-downsides-alternatives.html
 ---
+
+# 스프링의 단점과 대안
 
 [스프링(Spring Framework, Spring Boot, …)][spring]은 강력하지만 그만큼 배워야 할 것이 많은 복잡한 프레임워크입니다. 자바를 써야 하지만 스프링은 부담된다면, 대안으로 [드롭위자드(Dropwizard)][dropwizard]를 사용해보세요.
 
