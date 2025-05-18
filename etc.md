@@ -1,6 +1,3 @@
----
-layout: category
-category: etc
----
-
 # 기타
+
+- [발레나에처 소개](/balena-etcher-intro.html)
