@@ -4,14 +4,14 @@ import { select } from "hast-util-select";
 import { toHtml } from "hast-util-to-html";
 import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import {
-  basename,
-  dirname,
-  extname,
-  isAbsolute,
-  join,
-  parse,
-  relative,
-  sep,
+    basename,
+    dirname,
+    extname,
+    isAbsolute,
+    join,
+    parse,
+    relative,
+    sep,
 } from "node:path";
 import { pathToFileURL } from "node:url";
 import { rehype } from "rehype";
@@ -56,7 +56,9 @@ const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
  * @param {{ suffix?: string }} param0
  */
 function rehypeRelativeLinks({ suffix } = {}) {
-  /** @type {(tree: import("hast").Root) => undefined} */
+  /**
+   * @param {import("hast").Root} tree
+   */
   return (tree) =>
     visit(tree, "element", (node) => {
       if ("href" in node.properties) {
@@ -73,7 +75,10 @@ function rehypeRelativeLinks({ suffix } = {}) {
 }
 
 function rehypeInferContentMeta() {
-  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  /**
+   * @param {import("hast").Root} tree
+   * @param {VFile} file
+   */
   return (tree, file) =>
     visit(tree, "element", (node) => {
       if (node.tagName == "time" && node.properties.id == "published") {
@@ -227,7 +232,10 @@ let rehypePresetMeta = {
 };
 
 function rehypeJsonLdMeta() {
-  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  /**
+   * @param {import("hast").Root} tree
+   * @param {VFile} file
+   */
   return (tree, file) =>
     visit(tree, "element", (node) => {
       if (node.tagName == "head") {
@@ -281,10 +289,16 @@ let markdownProcessor = unified()
   .use(unifiedInferGitMeta)
   .use(rehypeInferContentMeta)
   .use(rehypePresetDocument)
-  .use(() => /** @type {(tree: import("hast").Root) => undefined} */ (tree) => {
-    visit(tree, "element", (node) => {
-      if (node.tagName == "body") node.properties.className = ["markdown-body"];
-    });
+  .use(() => {
+    /**
+     * @param {import("hast").Root} tree
+     */
+    return (tree) => {
+      visit(tree, "element", (node) => {
+        if (node.tagName == "body")
+          node.properties.className = ["markdown-body"];
+      });
+    };
   })
   .use(rehypePresetMeta)
   .use(rehypeJsonLdMeta)
@@ -292,7 +306,10 @@ let markdownProcessor = unified()
   .use(rehypeStringify);
 
 function rehypeRedirectDocument() {
-  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  /**
+   * @param {import("hast").Root} tree
+   * @param {VFile} file
+   */
   return (tree, file) =>
     visit(tree, "element", (node) => {
       if (node.tagName == "head") {
@@ -339,7 +356,7 @@ let redirectProcessor = rehype()
   .use(rehypePresetMeta)
   .use(rehypeFormat);
 
-/** @type {import("vfile").VFile[]} */
+/** @type {VFile[]} */
 let latestFiles = [];
 
 /** @type {import("vfile").Data[]} */
@@ -373,22 +390,27 @@ await Promise.all(
 
       latestFiles.push(file);
       latestFiles = latestFiles
-        .toSorted((a, b) => {
-          let aPublished = a.data.meta?.published;
-          let bPublished = b.data.meta?.published;
-          return (
-            (bPublished
-              ? typeof bPublished == "string"
-                ? Date.parse(bPublished)
-                : bPublished.getTime()
-              : 0) -
-            (aPublished
-              ? typeof aPublished == "string"
-                ? Date.parse(aPublished)
-                : aPublished.getTime()
-              : 0)
-          );
-        })
+        .toSorted(
+          /**
+           * @param {VFile} a
+           * @param {VFile} b
+           */ (a, b) => {
+            let aPublished = a.data.meta?.published;
+            let bPublished = b.data.meta?.published;
+            return (
+              (bPublished
+                ? typeof bPublished == "string"
+                  ? Date.parse(bPublished)
+                  : bPublished.getTime()
+                : 0) -
+              (aPublished
+                ? typeof aPublished == "string"
+                  ? Date.parse(aPublished)
+                  : aPublished.getTime()
+                : 0)
+            );
+          }
+        )
         .slice(0, 10);
       dataList.push(file.data);
 
