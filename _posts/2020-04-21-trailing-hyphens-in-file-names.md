@@ -1,6 +1,6 @@
 ---
 category: linux
-redirect_from:
+redirectFrom:
   - /hyphen-files.html
   - /file-name-trailing-hyphens.html
 ---
@@ -11,7 +11,8 @@ redirect_from:
 
 리눅스 매뉴얼에서 `/etc/shadow-`이 백업 용도로 사용된다는 사실을 확인할 수 있습니다[^shadow].
 
-[^shadow]: [SHADOW(5) - man7.org](http://man7.org/linux/man-pages/man5/shadow.5.html#FILES)
+[^shadow]:
+    [SHADOW(5) - man7.org](http://man7.org/linux/man-pages/man5/shadow.5.html#FILES)
 
     > /etc/shadow-
     > Backup file for /etc/shadow.

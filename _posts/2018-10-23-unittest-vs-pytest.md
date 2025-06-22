@@ -1,6 +1,6 @@
 ---
 category: python
-redirect_from: /posts/unittest-vs-pytest.html
+redirectFrom: /posts/unittest-vs-pytest.html
 ---
 
 # unittest vs pytest
@@ -8,7 +8,6 @@ redirect_from: /posts/unittest-vs-pytest.html
 유명한 파이썬 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와 [pytest(파이테스트)][pytest]의 장단점을 비교합니다. pytest의 독특한 테스트 방식이 별로라면 unittest를, 간결하고 아름다운 테스트가 중요하다면 pytest를 사용하세요.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
-
 [pytest]: https://docs.pytest.org/en/latest/
 
 ## 비교에서 제외한 프레임워크
@@ -17,9 +16,8 @@ redirect_from: /posts/unittest-vs-pytest.html
 
 [nose]: https://nose.readthedocs.io/en/latest/
 
-[^maintenance-mode]:
-    <https://nose.readthedocs.io/en/latest/#note-to-users>
-    
+[^maintenance-mode]: <https://nose.readthedocs.io/en/latest/#note-to-users>
+
     > Nose has been in maintenance mode for the past several years and will likely cease without a new person/team to take over maintainership. New projects should consider using Nose2, py.test, or just plain unittest/unittest2.
 
 [doctest(독테스트)][doctest]: 파이썬의 독스트링(docstring)에 있는 샘플 코드만을 테스트하기위한 특수 목적의 프레임워크입니다. 이 글에서는 일반 목적의 테스팅 프레임워크만을 비교하려 하므로 비교 대상에서 제외합니다.
@@ -30,8 +28,7 @@ redirect_from: /posts/unittest-vs-pytest.html
 
 **unittest: 파이썬 내부 테스트[^python-internal-test], [Django(장고)][django]에서 사용합니다.**
 
-[^python-internal-test]:
-    <https://docs.python.org/3/library/test.html>
+[^python-internal-test]: <https://docs.python.org/3/library/test.html>
 
     > The test package contains all regression tests for Python ...
 
@@ -42,9 +39,7 @@ redirect_from: /posts/unittest-vs-pytest.html
 **pytest: [Flask(플라스크)][flask], [Requests(리퀘스트)][requests], [pip]에서 사용합니다.**
 
 [flask]: http://flask.pocoo.org/
-
 [requests]: http://docs.python-requests.org/en/master/
-
 [pip]: https://pip.pypa.io/en/stable/
 
 두 프레임워크 모두 권위 있는 프로젝트에서 쓰입니다. 다만 pytest가 더 널리 쓰이는 것으로 보입니다.
@@ -59,15 +54,13 @@ unittest는 자바의 [JUnit(J유닛)][junit]이라는 테스팅 프레임워크
 
 [junit]: https://junit.org/junit5/
 
-[^strong-influence]:
-    <https://docs.python.org/3/library/unittest.html>
+[^strong-influence]: <https://docs.python.org/3/library/unittest.html>
 
     > The unittest unit testing framework was originally inspired by JUnit ...
 
 몇몇 파이썬 개발자들은 클래스보다는 함수 위주로 개발하는 것을 선호합니다. 파이썬 표준 라이브러리 역시 클래스 방식과 함수 방식을 둘 다 지원하는 경우가 많습니다. [`json.JSONEncoder`][json-jsonencoder]와 [`json.dumps()`][json-dumps]처럼 말입니다. unittest가 클래스 위주의 테스트만 지원하는 것은 합리적이지 못하다고 느껴질 수 있습니다.
 
 [json-jsonencoder]: https://docs.python.org/3/library/json.html#json.JSONEncoder
-
 [json-dumps]: https://docs.python.org/3/library/json.html#json.dumps
 
 다음은 똑같은 테스트를 unittest와 pytest로 작성한 것입니다:
@@ -111,13 +104,12 @@ pytest: 권장되는 방식인 언더스코어로 단어를 구분합니다. `as
 
 [^consistency]:
     <https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>
-    
+
     > ... Consistency with this style guide is important. Consistency within a project is more important. ...
 
 왜 unittest가 처음부터 언더스코어를 사용하지 않았는가에 대해서도 잘못되었다라고 말하기 어렵습니다. unittest는 PyUnit(파이유닛)이라는 이름으로 1999년 시작된 프로젝트인 반면[^pyunit-history], 파이썬 스타일 가이드는 2001년 처음 만들어졌으니까요.
 
-[^pyunit-history]:
-    <http://pyunit.sourceforge.net/>
+[^pyunit-history]: <http://pyunit.sourceforge.net/>
 
     > In production use on many sites since the first release in late 1999
 
@@ -134,7 +126,7 @@ pytest 공식 문서에서는 이러한 픽스처 사용 방식이 다음과 같
 > pytest 픽스처는 고전적인 xUnit 스타일의 setUp/tearDown과 같은 함수를 극적으로 개선하였습니다:
 >
 > - 픽스처는 명시적인 이름을 가지며 테스트 함수에서의 선언을 통해 이를 활성화시킬 수 있습니다.
-> - 픽스처는 모듈화된 방식으로 구현되어 있습니다. 각 픽스처 이름은 트리거 함수를 호출하고, 또 그 픽스처 역시 다른 픽스처를 사용할 수 있습니다. 
+> - 픽스처는 모듈화된 방식으로 구현되어 있습니다. 각 픽스처 이름은 트리거 함수를 호출하고, 또 그 픽스처 역시 다른 픽스처를 사용할 수 있습니다.
 > - 픽스처 관리를 통해 단순한 유닛 테스트부터 복잡한 기능 테스트에 이르기까지 테스트 규모를 확장할 수 있습니다. 환경 설정이나 컴포넌트 설정에 따라 매개변수화된 픽스처를 정의하는 것도 가능합니다. 픽스처를 함수, 모듈, 또는 전체 테스트 세션 영역에 걸쳐 재사용할 수 있도록 돕기도 합니다.
 
 ## pytest의 단점: 기존 파이썬 흐름과 다른 픽스처
@@ -148,7 +140,6 @@ pytest의 픽스처는 파이썬에서 쓰이는 일반적인 코드의 흐름�
 사람이 아닌 기계가 픽스처를 이해해야 한다면 문제는 더욱 복잡해집니다. [Pylint(파이린트)][pylint]를 예로 들어봅시다. Pylint는 파이썬 코드를 분석해 문제가 될만한 부분을 찾아 경고 메시지를 출력해주는 도구입니다. 일반적으로, 바깥 영역에 선언된 이름과 동일한 이름으로 무언가를 선언하는 것은 위험할 수 있습니다. 이런 경우에 대해 Pylint는 [redefined-outer-name (W0621)][w0621]이라는 경고 메시지를 출력합니다.
 
 [pylint]: https://www.pylint.org/
-
 [w0621]: https://pylint.readthedocs.io/en/latest/technical_reference/features.html
 
 pytest에서는 픽스처를 사용하기 위해 바깥의 함수 이름과 동일한 이름으로 테스트 함수의 매개 변수를 선언해야 합니다. 하지만 Pylint는 pytest의 픽스처 문법을 이해하지 못하므로 앞서 말했던 경고 메시지를 출력할 것입니다.
@@ -162,7 +153,6 @@ pytest: `assert` 다음에 나오는 검증식이 어떤 의미를 가지는지 
 언어에서 기본적으로 제공하는 [assert 문(`assert 1 == 2`)][assert-statement]을 그대로 사용하는 것 대신 테스팅 프레임워크가 추가적으로 지원하는 [assert 메서드(`assertEqual(1, 2)`)][assert-method]를 사용해야 하는 이유는, 테스트 실패 시 좀 더 정확한 실패 메시지를 얻기 위함입니다.
 
 [assert-statement]: https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
-
 [assert-method]: https://docs.python.org/3/library/unittest.html#assert-methods
 
 assert 문은 `assert` 다음에 나오는 표현식의 성공/실패 여부만 확인할 수 있습니다. 우리는 `1 == 2`가 같음을 비교하는 것이고 `1 > 2`가 대소를 비교하는 것이라는 걸 알지만 assert 문은 알지 못합니다. assert 실패 메시지에 표현식의 의도를 담기 위해서는, 앞서 말한 assert 메서드와 같은 추가적인 방법을 통해야 합니다.
@@ -208,7 +198,6 @@ pytest: 다양한 고급 기능을 가집니다:
 - 병렬 테스트: 테스트를 병렬적으로 수행할 수 있도록 합니다. 하나의 테스트가 끝나지 않아도 다른 테스트를 수행할 수 있어 테스트 시간이 단축됩니다. [pytest-xdist]를 참고하세요.
 
 [parametrize]: https://docs.pytest.org/en/latest/parametrize.html
-
 [pytest-xdist]: https://github.com/pytest-dev/pytest-xdist
 
 ## 결론: 이럴 때 사용하세요

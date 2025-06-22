@@ -1,6 +1,6 @@
 ---
 category: python
-redirect_from: /posts/python-double-sharp-comments.html
+redirectFrom: /posts/python-double-sharp-comments.html
 ---
 
 # 파이썬 더블 샤프(##) 주석
@@ -28,10 +28,10 @@ IDLE의 'Comment Out Region' 메뉴 항목
 이러한 것을 [코딩 관습(Coding conventions)](https://en.wikipedia.org/wiki/Coding_conventions)이라고 합니다. 파이썬 입장에서는 (코드가 실행될 때는) 아무런 차이가 없는데도 불구하고, 사람이 코드를 읽을 때 도움을 주기 위해서 또는 일관성을 위해서 어떤 특정한 코드의 형태만을 고집하거나 다르게 취급하는 것을 말합니다.
 
 [pep-20]: https://www.python.org/dev/peps/pep-0020/
-
 [tim-peters]: https://en.wikipedia.org/wiki/Tim_Peters_(software_engineer)
 
-[^single-vs-double]: <https://mail.python.org/pipermail/python-list/2002-October/143369.html>
+[^single-vs-double]:
+    <https://mail.python.org/pipermail/python-list/2002-October/143369.html>
 
     I introduced two conventions of this nature in the early days of the Emacs Python mode: ## was used by the comment-region command to "comment out" a contiguous block of code.
 

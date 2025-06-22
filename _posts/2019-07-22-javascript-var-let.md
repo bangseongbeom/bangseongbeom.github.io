@@ -1,6 +1,6 @@
 ---
 category: web
-redirect_from: /difference-var-let.html
+redirectFrom: /difference-var-let.html
 ---
 
 # 자바스크립트 var, let 차이점
@@ -9,15 +9,14 @@ redirect_from: /difference-var-let.html
 
 ## 요약 정리
 
-| 성질 | `var` | `let` |
-|---|---|---|
-| 스코프 | 가장 가까운 `function` 내부 | 가장 가까운 중괄호 내부 |
-| 호이스팅 | 호이스팅됨 | 호이스팅되지 않음 |
-| IE 지원 | 모든 버전 | [IE11](https://en.wikipedia.org/wiki/Internet_Explorer_11) (버그 존재[^caniuse-let]) |
+| 성질     | `var`                       | `let`                                                                                |
+| -------- | --------------------------- | ------------------------------------------------------------------------------------ |
+| 스코프   | 가장 가까운 `function` 내부 | 가장 가까운 중괄호 내부                                                              |
+| 호이스팅 | 호이스팅됨                  | 호이스팅되지 않음                                                                    |
+| IE 지원  | 모든 버전                   | [IE11](https://en.wikipedia.org/wiki/Internet_Explorer_11) (버그 존재[^caniuse-let]) |
 
-[^caniuse-let]:
-    <https://caniuse.com/#feat=let>
-    
+[^caniuse-let]: <https://caniuse.com/#feat=let>
+
     > let variables are not bound separately to each iteration of for loops
 
 ## 스코프
@@ -79,7 +78,8 @@ console.log(i); // 출력: 3
 ```js
 var functions = [];
 
-for (var i = 0; i < 3; i++) { // var 사용
+for (var i = 0; i < 3; i++) {
+  // var 사용
   functions.push(function () {
     console.log(i);
   });
@@ -97,7 +97,8 @@ functions[2](); // 출력: 3
 ```js
 var functions = [];
 
-for (let i = 0; i < 3; i++) { // let 사용
+for (let i = 0; i < 3; i++) {
+  // let 사용
   functions.push(function () {
     console.log(i);
   });
@@ -118,7 +119,7 @@ functions[2](); // 출력: 2
 
 [^create-per-iteration-environment]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-createperiterationenvironment>
-    
+
     1.d. 새 루프 스코프(전문 용어로 Lexical Environment)를 생성하고, 1.e. `let` 또는 `const`로 선언된 변수들에 대하여, 1.e.iii. 이전 루프 스코프로부터 변수를 받아온 뒤, 1.e.v. 새 루프 스코프에 넣습니다.
 
 `let`의 이 특수한 작용은 오직 `for` 문의 초기식 안에서만 일어납니다. 다음 코드는 `i`가 하나만 존재하므로 `var`와 똑같이 `3 3 3`이 출력됩니다:
@@ -127,7 +128,8 @@ functions[2](); // 출력: 2
 var functions = [];
 
 let i = 0; // for 문 바깥에서 let 사용
-for (; i < 3; i++) { // 초기식을 비워 둠
+for (; i < 3; i++) {
+  // 초기식을 비워 둠
   functions.push(function () {
     console.log(i);
   });
@@ -148,7 +150,7 @@ functions[2](); // 출력: 3
 
 **`let`:** 호이스팅이 일어나지 않습니다. `let` 선언 이전에 `let`으로 선언된 변수를 사용하는 것은 불가능합니다.
 
-**`var`:** 호이스팅이 일어납니다. `var` 선언 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다.  
+**`var`:** 호이스팅이 일어납니다. `var` 선언 전에도 스코프 안이라면(함수 안이라면) `var`로 선언된 변수를 사용할 수 있습니다.
 
 ### 호이스팅 예제
 
@@ -192,9 +194,9 @@ console.log(varVariable); // 출력: 456
 
 [^avoid-painful-order]:
     <https://twitter.com/brendaneich/status/33403701100154880>
-    
+
     자바스크립트의 제작자 Brendan Eich의 트윗
-    
+
     > function declaration hoisting is for mutual recursion & generally to avoid painful bottom-up ML-like order
 
 함수 호이스팅이 없다면 다음 코드는 제대로 동작하지 않을 것입니다:
@@ -210,14 +212,14 @@ function b() {}
 
 [^implementation-artifact]:
     <https://twitter.com/brendaneich/status/562313394431078400>
-    
+
     자바스크립트의 제작자 Brendan Eich의 트윗
-    
+
     > A bit more history: `var` hoisting was an implementation artifact. `function` hoisting was better motivated: ...
 
 ## IE 지원
 
-IE10(인터넷 익스플로러 10) 이하는 `let`을 지원하지 않습니다. IE11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 치명적인 문제[^caniuse-let]가 있습니다. 
+IE10(인터넷 익스플로러 10) 이하는 `let`을 지원하지 않습니다. IE11에서 `let`을 지원하기는 하지만, `for` 문에서 루프를 돌 때마다 변수가 만들어지지 않는 치명적인 문제[^caniuse-let]가 있습니다.
 
 IE에서 `let`을 제대로 사용하기 위해서는 `let`을 `var`로 바꿔주는 변환기가 필요합니다. 유명한 변환기로 [바벨(Babel)](https://babeljs.io/)이 있습니다. [온라인에서 직접 변환해보세요.](https://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=GYewTgBAFANgpgFwgSwgXggBgNwogHggEYcUBqMgSggG8AoCCYAVwDsBjBZEViABzDJWCKNXqNG7HgGcQ8AHQwQAcyjJK2BhAC-dLQKEiNdXUA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.5.5&externalPlugins=)
 

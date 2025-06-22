@@ -1,6 +1,6 @@
 ---
 category: python
-redirect_from:
+redirectFrom:
   - /avoid-python-builtin-module-names.html
 ---
 
@@ -12,7 +12,8 @@ redirect_from:
 
 파이썬에는 내장 모듈과 동일한 이름의 파이썬 파일이 존재할 경우 이를 `import`로 불러올 때 내장 모듈 대신 동일한 이름의 파일을 불러오는 현상이 있습니다[^ahead]. 현재 디렉터리에 `enum.py`라는 파일이 존재한다면, `import enum`이라는 코드를 실행했을 경우 [`enum`] 내장 모듈을 불러오는 것이 아니라 현재 디렉터리의 `enum.py`를 불러오게 되는 것이죠.
 
-[^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^ahead]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The directory containing the script being run is placed at the beginning of the search path, ahead of the standard library path.
 
@@ -89,7 +90,7 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 `mypackage` 디렉터리 안에 있는 `empty.py`를 불러오기 위해, `empty` 앞에 `mypackage`를 붙여주었습니다.
 
-이제 
+이제
 
 ### `__main__.py`를 통한 디렉터리 자체 실행
 
@@ -97,7 +98,8 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 
 대신 디렉터리 '자체'를 실행하도록 하여 이 문제를 해결할 수 있습니다. 디렉터리 안에 `__main__.py` 파일을 만들면 디렉터리 자체를 실행하려 할 때 `__main__.py`가 실행됩니다[^package-main].
 
-[^package-main]: [https://docs.python.org/3/library/__main__.html](__main__ — Top-level script environment - The Python Standard Library)
+[^package-main]:
+    [https://docs.python.org/3/library/__main__.html](**main** — Top-level script environment - The Python Standard Library)
 
     > For a package, the same effect can be achieved by including a `__main__.py` module, the contents of which will be executed when the module is run with `-m`.
 
@@ -113,4 +115,4 @@ import mypackage.empty  # mypackage를 앞에 붙여 empty 불러오기
 python3 mypackage
 ```
 
-디렉터리 안에 있는 `__main__.py` 실행되는 것을 확인하실 수 있습니다. 
+디렉터리 안에 있는 `__main__.py` 실행되는 것을 확인하실 수 있습니다.

@@ -1,6 +1,6 @@
 ---
 category: linux
-redirect_from: /linux-acl.html
+redirectFrom: /linux-acl.html
 ---
 
 # 리눅스 ACL 가이드
@@ -9,11 +9,11 @@ redirect_from: /linux-acl.html
 
 ## 파일 퍼미션 vs ACL
 
-| | 파일 퍼미션 | ACL |
-|---|---|---|
-| 관련 명령어 | `chmod`, `umask` | `getfacl`, `setfacl` |
+|                | 파일 퍼미션                     | ACL                    |
+| -------------- | ------------------------------- | ---------------------- |
+| 관련 명령어    | `chmod`, `umask`                | `getfacl`, `setfacl`   |
 | 권한 지정 대상 | 사용자 하나, 그룹 하나(`chmod`) | 사용자 여렷, 그룹 여럿 |
-| 기본값 권한 | 계정 로그인 시 적용(`umask`) | 폴더 별로 적용 |
+| 기본값 권한    | 계정 로그인 시 적용(`umask`)    | 폴더 별로 적용         |
 
 - [`chmod`](https://linux.die.net/man/1/chmod)를 이용해 권한을 결정하는 기존 파일 퍼미션의 경우 **사용자 하나와 그룹 하나**만 읽기, 쓰기, 실행 권한을 가질 수 있습니다. ACL을 이용하면 추가적으로 **여러 명의 사용자와 그룹**도 읽기, 쓰기, 실행 권한을 가질 수 있습니다.
 - ACL은 '기본값 ACL'이라는 기능을 통해 마치 **`umask`를 폴더 별로 적용**하는 듯한 효과를 만들 수 있습니다.
@@ -78,21 +78,19 @@ ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**
 
 기존 파일 시스템을 완전히 무시하고 순수하게 ACL만을 이용해 권한을 설정하면 좋겠지만[^pure-acl], 리눅스 파일 퍼미션만을 지원하는 오래된 프로그램들에 대한 호환성을 유지하는 것도 필요합니다[^compat].
 
-[^pure-acl]:
-    <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
-    
+[^pure-acl]: <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
+
     > Barring compatibility, the alternatives of ACLs replacing file permission bits (Pure ACLs and On Demand) would be the most elegant way of enhancing DAC for UNIX systems. By abandoning file permission bits, however, these schemes have been rendered incompatible with existing systems. Thus, they are not considered for a POSIX-compliant UNIX system DAC scheme.
-  
-[^compat]:
-    <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
-    
+
+[^compat]: <https://fas.org/irp/nsa/rainbow/tg020-a.htm>
+
     > The relationship between the ACL and the file permission bits is important to existing programs in order to maintain compatibility.
 
 그래서 ACL은 파일 퍼미션과의 호환성을 유지하기 위해 파일 퍼미션과 **매핑** 관계를 형성합니다. 파일 퍼미션이 변경되면 관련된 ACL도 변경되며, ACL이 변경되면 그에 따른 파일 퍼미션 역시 변경됩니다. 기존 파일 퍼미션도 ACL 정보로 표시되며, ACL 명령어로 제어할 수 있습니다[^mapping].
 
 [^mapping]:
     <https://www.usenix.org/legacy/publications/library/proceedings/usenix03/tech/freenix03/full_papers/gruenbacher/gruenbacher_html/main.html>
-    
+
     > When an application changes any of the owner, group, or other class permissions (e.g., via the chmod command), the corresponding ACL entry changes as well. Likewise, when an application changes the permissions of an ACL entry that maps to one of the user classes, the permissions of the class change.
 
 ### `user::<권한>`
@@ -123,9 +121,8 @@ ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**
 
 앞서 말씀드렸듯 ACL은 기존 리눅스 파일 퍼미션과의 호환성을 확보하는 것이 중요합니다. 특히 파일 퍼미션에서 `chmod 000 my-test-file`과 같이 모든 권한을 제거하는 명령을 실행한다면, 소유자와 소유 그룹이 아닌 사용자와 그룹에게 부여한 권한 역시 모두 제거되도록 하는 호환성이 확보되어야 합니다[^chmod-compat].
 
-[^chmod-compat]:
-    <https://fas.org/irp/nsa/rainbow/tg020-a.htm#HDR6%202%2024>
-    
+[^chmod-compat]: <https://fas.org/irp/nsa/rainbow/tg020-a.htm#HDR6%202%2024>
+
     > ... use of chmod("object" 0) should continue to work, denying subsequent opens to an object.
 
 이를 위해 ACL은 소유자와 소유 그룹이 아닌 사용자와 그룹에게 부여한 권한이 기존 파일 퍼미션(소유자, 소유 그룹, 기타 사용자)에 **의존**하도록 하여 호환성을 유지합니다.
@@ -138,7 +135,7 @@ ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**
 
 다만 여기서 문제점이 발생합니다. 기존 파일 퍼미션은 소유자, 소유 그룹, 기타 사용자로 세 개의 권한이 존재하는데, **셋 중 어느 권한에 의존**해야 까요?
 
-**소유자 권한에 의존:** 추가적인 ACL 항목이 소유자 권한에 의존할 수는 없습니다. ACL을 지원하지 않으면서 '소유자 전용' 파일이나 디렉터리를 만드는 프로그램들이 제대로 권한을 제한할 수 없기 때문입니다. 사용자 항목, 그룹 항목이 소유자 권한에 의존한다고 합시다. 이때 아무리 파일 퍼미션을 통해 `chmod 700`, `chmod 755`를 통하여 소유자 전용으로 바꾸어봤자 다른 사람들도 ACL 항목에 명시되어 있다면 접근이 가능합니다. 
+**소유자 권한에 의존:** 추가적인 ACL 항목이 소유자 권한에 의존할 수는 없습니다. ACL을 지원하지 않으면서 '소유자 전용' 파일이나 디렉터리를 만드는 프로그램들이 제대로 권한을 제한할 수 없기 때문입니다. 사용자 항목, 그룹 항목이 소유자 권한에 의존한다고 합시다. 이때 아무리 파일 퍼미션을 통해 `chmod 700`, `chmod 755`를 통하여 소유자 전용으로 바꾸어봤자 다른 사람들도 ACL 항목에 명시되어 있다면 접근이 가능합니다.
 
 **다른 사용자 권한에 의존:** 그렇다고 다른 사용자 권한에 의존하는 것도 위험합니다. 사용자와 그룹 타입이 다른 사용자 권한에 의존한다면, 사용자와 그룹 타입이 원활히 동작하기 위해 다른 사용자 권한을 가급적 넓게 열어두어야 합니다. 다른 사용자 권한을 넓게 열어두는 것은 보안 문제를 일으킬 수 있습니다.
 
@@ -146,7 +143,7 @@ ACL에서는 특정한 대상에게 권한을 주는 것을 하나의 **항목**
 
 [^preferred-masking-field]:
     <https://fas.org/irp/nsa/rainbow/tg020-a.htm#HDR6.7%203%2031>
-    
+
     > The file group class permission bits are the preferred masking field, even though they encourage permissive default access by the owning group. This choice must be made because the use of the file owner class would cause compatibility problems in programs which attempt to establish "owner-only" access, whereas the designation of the file other class could leave objects open to attack were an ACL removed or never present. An additional option of masking user entries with the file owner class permission bits and group entries with the file group class permission bits has the same disadvantages as masking against only the file owner class. When masking against the file group class, the permissions indicate the least upper bound of the permissions allowed for the ACL entries and the user and other fields retain their previous semantics.
 
 ### 마스크 타입의 도입
@@ -157,28 +154,28 @@ ACL에서는 이 문제를 해결하기 위해, 파일 퍼미션의 소유 그�
 
 [^virtue-of-the-mask-entry]:
     <https://www.usenix.org/legacy/publications/library/proceedings/usenix03/tech/freenix03/full_papers/gruenbacher/gruenbacher_html/main.html>
-    
+
     > This problem is solved by the virtue of the mask entry. With minimal ACLs, the group class permissions map to the owning group entry permissions. With extended ACLs, the group class permissions map to the mask entry permissions, whereas the owning group entry still defines the owning group permissions. The mapping of the group class permissions is no longer constant.
 
-| | 파일 퍼미션 매핑 대상 | 파일 퍼미션 매핑 권한 |
-|---|---|---|
-| `user::<권한>` | 소유자 | 소유자의 권한 |
-| `group::<권한>` | 소유 그룹 | |
-| `mask::<권한>` | | 소유 그룹의 권한 |
-| `other::<권한>` | 기타 사용자 | 기타 사용자의 권한 |
+|                 | 파일 퍼미션 매핑 대상 | 파일 퍼미션 매핑 권한 |
+| --------------- | --------------------- | --------------------- |
+| `user::<권한>`  | 소유자                | 소유자의 권한         |
+| `group::<권한>` | 소유 그룹             |                       |
+| `mask::<권한>`  |                       | 소유 그룹의 권한      |
+| `other::<권한>` | 기타 사용자           | 기타 사용자의 권한    |
 
 **다만 ACL에서 사용자 타입 항목이나 그룹 타입 항목을 전혀 추가하지 않은 경우 (파일 퍼미션과 별다른 게 없는 경우) 마스크 타입은 만들어지지 않습니다[^extended-acls-contain-mask-entry]:**
 
-[^extended-acls-contain-mask-entry]: 
+[^extended-acls-contain-mask-entry]:
     <https://www.usenix.org/legacy/publications/library/proceedings/usenix03/tech/freenix03/full_papers/gruenbacher/gruenbacher_html/main.html>
-    
+
     > ACLs equivalent with the file mode permission bits are called minimal ACLs. They have three ACL entries. ACLs with more than the three entries are called extended ACLs. Extended ACLs also contain a mask entry and may contain any number of named user and named group entries.
 
-| | 파일 퍼미션 매핑 대상 | 파일 퍼미션 매핑 권한 |
-|---|---|---|
-| `user::<권한>` | 소유자 | 소유자의 권한 |
-| `group::<권한>` | 소유 그룹 | 소유 그룹의 권한 |
-| `other::<권한>` | 기타 사용자 | 기타 사용자의 권한 |
+|                 | 파일 퍼미션 매핑 대상 | 파일 퍼미션 매핑 권한 |
+| --------------- | --------------------- | --------------------- |
+| `user::<권한>`  | 소유자                | 소유자의 권한         |
+| `group::<권한>` | 소유 그룹             | 소유 그룹의 권한      |
+| `other::<권한>` | 기타 사용자           | 기타 사용자의 권한    |
 
 ## 기본값 ACL
 
@@ -188,14 +185,13 @@ ACL에서는 이 문제를 해결하기 위해, 파일 퍼미션의 소유 그�
 
 [^default-acl-affects-subdirs-and-files]:
     <https://linuxgazette.net/152/prestia.html>
-    
+
     > Directories can have a default ACL, which defines the access permissions that files under the directory inherit when they are created. A default ACL affects subdirectories as well as files.
 
 하위 디렉터리는 부모의 기본값 ACL로 인해 자신의 ACL을 결정지을 뿐만 아니라, 기본값 ACL 자체도 그대로 물려받습니다[^default-acl-inheritance].
 
-[^default-acl-inheritance]:
-    <https://linuxgazette.net/152/prestia.html>
-    
+[^default-acl-inheritance]: <https://linuxgazette.net/152/prestia.html>
+
     > Notice that "week1" will inherit the default ACL permissions of the parent directory "work":
 
 ### `default:<타입>:<사용자 또는 그룹 이름>:<권한>`
@@ -211,9 +207,9 @@ ACL에서는 이 문제를 해결하기 위해, 파일 퍼미션의 소유 그�
 
 [^touch-mode]:
     <https://www.usenix.org/legacy/publications/library/proceedings/usenix03/tech/freenix03/full_papers/gruenbacher/gruenbacher_html/main.html>
-    
+
     > Unless otherwise specified, the mkdir command uses a value of 0777 as the mode parameter to the mkdir system call, which it uses for creating the new directory.
-The touch command passes a mode value of 0666 to the kernel for creating the file.
+    > The touch command passes a mode value of 0666 to the kernel for creating the file.
 
 ## 기타
 
@@ -227,9 +223,8 @@ The touch command passes a mode value of 0666 to the kernel for creating the fil
 
 `setfacl`로 권한을 지정할 때 실행 권한을 뜻하는 `x` 대신 `X`를 쓸 수도 있습니다. 이는 **해당 대상이 디렉터리거나 이미 실행 권한이 있는 파일**에만 퍼미션을 줍니다. 실행 권한을 과도하게 주지 않고 꼭 필요한 대상에게만 주기에 유용한 기능입니다[^capital-x].
 
-[^capital-x]:
-    <https://linux.die.net/man/1/setfacl>
-    
+[^capital-x]: <https://linux.die.net/man/1/setfacl>
+
     > ... execute only if the file is a directory or already has execute permission for some user (X).
 
 ## 예제: 소스 코드 디렉터리에 기본값 ACL 주기

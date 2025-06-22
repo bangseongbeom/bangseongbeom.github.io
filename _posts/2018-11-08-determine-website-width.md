@@ -1,8 +1,8 @@
 ---
 category: web
-redirect_from:
-    - /posts/website-width.html
-    - /website-width.html
+redirectFrom:
+  - /posts/website-width.html
+  - /website-width.html
 ---
 
 # 웹 사이트 너비 정하기
@@ -39,9 +39,11 @@ redirect_from:
 구글 Developers 문서의 예시: 약 980px:
 
 <https://developers.google.com/web/fundamentals/design-and-ux/responsive/#set-the-viewport>
+
 > ... a desktop screen width (usually about 980px, though this varies across devices), ...
 
 CSS 표준 명세의 예시: 980-1024px:
 
 <https://drafts.csswg.org/css-device-adapt/#intro>
+
 > ... (typically 980-1024px).

@@ -1,6 +1,6 @@
 ---
 category: android
-redirect_from: /posts/now-kotlin.html
+redirectFrom: /posts/now-kotlin.html
 ---
 
 # 이제서야 코틀린을 도입하게 된 이유
@@ -9,25 +9,20 @@ redirect_from: /posts/now-kotlin.html
 
 ## 좋은 문법
 
- **코틀린은 자바 개발자들이 불편하게 여겨왔던 부분을 일찌감치 해결했습니다.** 자바 8에 추가된 람다와 `Optional`, 자바 10에 추가된 `var`는 자바에 도입되기 전부터 코틀린에서 지원하던 기능입니다. 심지어 자바에서는 아직 도입 논의 중이라[^data-class] [롬복(Lombok)][lombok]과 같은 외부 도구를 써야 하는 데이터 클래스 역시, 코틀린에서는 기본적으로 지원합니다.
+**코틀린은 자바 개발자들이 불편하게 여겨왔던 부분을 일찌감치 해결했습니다.** 자바 8에 추가된 람다와 `Optional`, 자바 10에 추가된 `var`는 자바에 도입되기 전부터 코틀린에서 지원하던 기능입니다. 심지어 자바에서는 아직 도입 논의 중이라[^data-class] [롬복(Lombok)][lombok]과 같은 외부 도구를 써야 하는 데이터 클래스 역시, 코틀린에서는 기본적으로 지원합니다.
 
-[^data-class]:
-    <http://cr.openjdk.java.net/~briangoetz/amber/datum.html>
+[^data-class]: <http://cr.openjdk.java.net/~briangoetz/amber/datum.html>
 
 [lombok]: https://projectlombok.org/
 
 **코틀린의 짧고 간결한 문법이야말로 자바와 대비되는 매력 포인트입니다.** 자바처럼 장황하지 않습니다. 자바에서는 `null` 안전성을 위해 [`Optional.map()`][optional-map], [`Optional.orElse()`][optional-orelse]처럼 메서드를 호출해야 하지만, 코틀린에서는 [`?.`][safe-call], [`?:`][elvis]같이 기호로 구현합니다[^nullable-vs-optional].
 
 [optional-map]: https://download.java.net/java/early_access/jdk11/docs/api/java.base/java/util/Optional.html#map(java.util.function.Function)
-
 [optional-orelse]: https://download.java.net/java/early_access/jdk11/docs/api/java.base/java/util/Optional.html#orElse(T)
-
 [safe-call]: https://kotlinlang.org/docs/reference/null-safety.html#safe-calls
-
 [elvis]: https://kotlinlang.org/docs/reference/null-safety.html#elvis-operator
 
-[^nullable-vs-optional]:
-    <https://medium.com/@fatihcoskun/kotlin-nullable-types-vs-java-optional-988c50853692>
+[^nullable-vs-optional]: <https://medium.com/@fatihcoskun/kotlin-nullable-types-vs-java-optional-988c50853692>
 
 **코틀린이 아무리 좋은 문법을 가지고 있더라도, 언어와 관련된 프레임워크와 도구들이 언어를 효과적으로 지원하는 것 역시 중요합니다.** 문법 강조도 제대로 되지 않고 기존 프레임워크도 마음대로 쓸 수 없다면 아무리 문법이 좋아봤자 쓰기 힘들 것입니다. 이처럼 우리는 언어를 선택함으로써 얻는 이익뿐만 아니라 잠재적인 문제점까지 함께 고려하는 것이 필요합니다. 그렇지 않으면 장점보다 단점이 더 커져버리게 됩니다.
 
@@ -36,7 +31,6 @@ redirect_from: /posts/now-kotlin.html
 코틀린은 [인텔리제이 아이디어(IntelliJ IDEA)][intellij-idea]를 개발한 [제트브레인(JetBrains)][jetbrains]에서 만들었습니다. 안드로이드 스튜디오는 인텔리제이 아이디어를 기반으로 합니다.
 
 [intellij-idea]: https://www.jetbrains.com/idea/
-
 [jetbrains]: https://www.jetbrains.com/
 
 자사에서 개발한 언어이니만큼, 인텔리제이 아이디어는 코틀린을 위한 문법 강조나 자동 완성 기능을 자바와 견줄 만한 정도로 강력하게 지원합니다. **즉, 안드로이드 스튜디오는 코틀린을 가장 완벽하게 지원하는 IDE입니다.**

@@ -1,6 +1,6 @@
 ---
 category: java
-redirect_from: /posts/spring-downsides-alternatives.html
+redirectFrom: /posts/spring-downsides-alternatives.html
 ---
 
 # 스프링의 단점과 대안
@@ -8,7 +8,6 @@ redirect_from: /posts/spring-downsides-alternatives.html
 [스프링(Spring Framework, Spring Boot, …)][spring]은 강력하지만 그만큼 배워야 할 것이 많은 복잡한 프레임워크입니다. 자바를 써야 하지만 스프링은 부담된다면, 대안으로 [드롭위자드(Dropwizard)][dropwizard]를 사용해보세요.
 
 [spring]: https://spring.io/
-
 [dropwizard]: https://www.dropwizard.io/
 
 ## 단점: 선택적으로 도입할 수 없는 복잡한 기술
@@ -17,15 +16,18 @@ redirect_from: /posts/spring-downsides-alternatives.html
 
 이러한 기술이 언제나 효과적이지는 않습니다. **제어의 역전은 객체 사이의 의존도를 떨어트린다는 장점이 있습니다.** 그러나 어느 정도 규모 있는 소프트웨어가 아닌 이상 의존성이 바뀔 일이 무척 적습니다. **정말 다른 객체에 의존하도록 해야 한다면, 그때 코드를 수정하면 됩니다.** 미래는 알 수 없습니다. 미래에 대해 과도하게 대응하는 것은 좋지 않습니다[^designing-too-far].
 
-[^designing-too-far]: <https://www.codesimplicity.com/post/designing-too-far-into-the-future/>
+[^designing-too-far]:
+    <https://www.codesimplicity.com/post/designing-too-far-into-the-future/>
 
     > A common mistake that developers make is designing too far into that unknown future, making too many assumptions about it.
 
 제어의 역전은 사실 그렇게 어려운 기술이 아닙니다. 프레임워크를 통하지 않고 수동으로 적용한다면 누구나 이해할 수 있습니다[^manual-di]. 하지만 프레임워크에서 제공하는 기술을 사용한다면 모두가 해당 기술에 대해 알고 있어야만 합니다.
 
-[^manual-di]: <http://misko.hevery.com/2009/01/14/when-to-use-dependency-injection/>
+[^manual-di]:
+    <http://misko.hevery.com/2009/01/14/when-to-use-dependency-injection/>
 
     > In favor of manual DI:
+    >
     > - Simple: Nothing to learn, no dependencies.
     > - No reflection magic: In IDE it is easy to find out who calls the constructors.
     > - Even developers who do not understand DI can follow and contribute to projects.
@@ -57,13 +59,15 @@ redirect_from: /posts/spring-downsides-alternatives.html
 
 유명한 도입 사례로는 에어비앤비(Airbnb)[^in-airbnb], 국내에서는 [채널io(Channel.io)][channelio]를 개발한 조이가 있습니다[^in-zoyi].
 
-[^in-airbnb]: <https://medium.com/airbnb-engineering/building-services-at-airbnb-part-1-c4c1d8fa811b>
+[^in-airbnb]:
+    <https://medium.com/airbnb-engineering/building-services-at-airbnb-part-1-c4c1d8fa811b>
 
     > At Airbnb, backend services are mostly written in Java using the Dropwizard web service framework, ...
 
 [channelio]: https://channel.io/
 
-[^in-zoyi]: <https://medium.com/@zoyi_product/dropwizard-asynchronous-hbase-b2b0cb3a0966>
+[^in-zoyi]:
+    <https://medium.com/@zoyi_product/dropwizard-asynchronous-hbase-b2b0cb3a0966>
 
     > 넘쳐나는 프레임워크들의 홍수 속에서 가볍고 안정적이며 구현이 편리한 프레임워크를 찾기란 쉽지 않았습니다만, 결국 Dropwizard라는 자바 프레임워크를 도입하기로 결정하게 됩니다. Dropwizard는 이미 잘 알려져 있는 Spring이나 Play 등과 같은 풀 스택 자바 프레임워크와는 다른, 경량 REST API 프레임워크입니다.
 

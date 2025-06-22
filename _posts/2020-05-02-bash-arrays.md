@@ -1,6 +1,6 @@
 ---
 category: linux
-redirect_from: /shell-arrays.html
+redirectFrom: /shell-arrays.html
 ---
 
 # 배시 배열
@@ -15,7 +15,8 @@ redirect_from: /shell-arrays.html
 
 `변수이름=(값1 값2 값3)` 형태로 배열을 생성합니다[^way-1]. **배열의 값을 띄어쓰기로 구분함에 주의하세요.**
 
-[^way-1]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^way-1]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Arrays are assigned to using compound assignments of the form
 
@@ -51,7 +52,8 @@ ASDF = (100 200 Hello) # 잘못됨!
 
 **인덱스**는 값이 배열의 어디에 위치해있는지를 가리키는 수입니다. 배열을 만들 때 나열한 순서대로 인덱스가 지정됩니다. 인덱스가 **0**이라면 **1번째** 값을, 인덱스가 **1**이라면 **2번째** 값을 의미합니다. (인덱스는 1이 아니라 **0부터 시작**합니다[^starts-at-zero])
 
-[^starts-at-zero]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^starts-at-zero]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Indexing starts at zero.
 
@@ -79,7 +81,8 @@ echo ${ASDF[2]}
 
 그 이유는 대괄호가 특별한 값으로 먼저 취급되기 때문입니다[^braces-are-required]. 대괄호 없이 `$ASDF[2]`처럼 한다면 배시는 `$ASDF`와 `[2]`로 나누어 인식합니다.
 
-[^braces-are-required]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^braces-are-required]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > The braces are required to avoid conflicts with the shell’s filename expansion operators.
 
@@ -93,9 +96,10 @@ echo ${ASDF[2]}
 
 전체 값을 얻는 방법은 다음과 같이 4가지 형태가 있습니다[^at-or-asterisk]:
 
-[^at-or-asterisk]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^at-or-asterisk]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
-    > If the subscript is ‘@’ or ‘*’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[*]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
+    > If the subscript is ‘@’ or ‘_’, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, ${name[_]} expands to a single word with the value of each array member separated by the first character of the IFS variable, and ${name[@]} expands each element of name to a separate word. When there are no array members, ${name[@]} expands to nothing.
 
 - `${변수이름[@]}`: 인덱스가 들어갈 자리에 `@`
 - `${변수이름[*]}`: 인덱스가 들어갈 자리에 `*`
@@ -111,12 +115,12 @@ ASDF[1]="B   B"
 
 각 형태 별로 다양한 결과를 보입니다:
 
-| 명령어 | 중간 결과 | 출력 | 공백 | 위험성 | 특징 |
-|---|---|---|---|---|---|
-| `echo ${ASDF[@]}` | `echo A A B   B` | `A A B B` | 무시됨 | ⚠️ 존재 | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
-| `echo ${ASDF[*]}` | `echo A A B   B` | `A A B B` | 무시됨 | ⚠️ 존재 | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
-| `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 보존됨 | 없음 | 각 값을 개별적인 문자열로서 취급 |
-| `echo "${ASDF[*]}"` | `echo "A A B   B"` | `A A B   B` | 보존됨 | ⚠️ 존재 | 배열에 존재하는 모든 값을 하나의 문자열로서 취급 |
+| 명령어              | 중간 결과            | 출력        | 공백   | 위험성  | 특징                                                             |
+| ------------------- | -------------------- | ----------- | ------ | ------- | ---------------------------------------------------------------- |
+| `echo ${ASDF[@]}`   | `echo A A B   B`     | `A A B B`   | 무시됨 | ⚠️ 존재 | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
+| `echo ${ASDF[*]}`   | `echo A A B   B`     | `A A B B`   | 무시됨 | ⚠️ 존재 | 하나의 값에서 공백으로 구분된 각 부분을 개별적인 문자열로서 취급 |
+| `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 보존됨 | 없음    | 각 값을 개별적인 문자열로서 취급                                 |
+| `echo "${ASDF[*]}"` | `echo "A A B   B"`   | `A A B   B` | 보존됨 | ⚠️ 존재 | 배열에 존재하는 모든 값을 하나의 문자열로서 취급                 |
 
 {% include note.html %}
 
@@ -132,7 +136,8 @@ ASDF[1]="B   B"
 
 `변수이름[인덱스]=값` 형태로 특정 인덱스에 존재하는 값을 변경합니다. 인덱스에 값이 존재하지 않는다면 새 값을 추가합니다[^way-2].
 
-[^way-2]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^way-2]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > each value is of the form `[subscript]=string`.
 
@@ -162,7 +167,8 @@ ASDF[1]='Stephen Bourne'
 
 다른 프로그래밍 언어와 달리 [배시]는 배열이 존재하지 않아도 해당 변수에 값을 추가할 수 있습니다. **변수가 배열이 아니라면 배시는 이를 배열로 만듭니다[^created-automatically].**
 
-[^created-automatically]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^created-automatically]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > An indexed array is created automatically if any variable is assigned to using the syntax
     >
@@ -188,7 +194,8 @@ asdf[2] = "Hello"
 
 배시는 다른 몇몇 프로그래밍 언어와 달리 배열에 값을 추가할 때 인덱스 0부터 연속적으로 값을 채워나가지 않아도 됩니다[^nor-contiguously]. 인덱스 0, 인덱스 1, 인덱스 2같이 연속적으로 채우지 않고 인덱스 0, 인덱스 5, 인덱스 123같이 불연속적으로 채울 수도 있습니다.
 
-[^nor-contiguously]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^nor-contiguously]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > nor any requirement that members be indexed or assigned contiguously.
 
@@ -203,7 +210,8 @@ ASDF[12345]=99999
 
 배열을 생성할 때 `배열이름=([인덱스]=값 [인덱스]=값)` 형태로 인덱스를 지정하여 생성하는 것도 가능합니다[^subscript-is-supplied].
 
-[^subscript-is-supplied]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^subscript-is-supplied]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > where each value is of the form [subscript]=string. ... if the optional subscript is supplied, that index is assigned to;
 
@@ -264,7 +272,7 @@ ASDF+=123 # 잘못됨!
 echo ${ASDF[0]}
 ```
 
-배시의 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 배열의 첫 번째 값처럼 해석하는 성질로 인해 `ASDF+=123`은 `ASDF[0]+=123`같이 해석됩니다. `+=`을 배열이 아닌 변수에 사용하면 문자열을 붙이는 방식으로 동작합니다. 
+배시의 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 배열의 첫 번째 값처럼 해석하는 성질로 인해 `ASDF+=123`은 `ASDF[0]+=123`같이 해석됩니다. `+=`을 배열이 아닌 변수에 사용하면 문자열을 붙이는 방식으로 동작합니다.
 
 실행 결과:
 
@@ -343,9 +351,10 @@ echo "${CCC[@]}"
 
 `${#변수이름[@]}` (`변수이름` 앞에 `#`이 있습니다) 형태로 배열에 들어 있는 값의 개수를 구합니다[^length-of-array].
 
-[^length-of-array]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^length-of-array]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
-    > ${#name[subscript]} expands to the length of ${name[subscript]}. If subscript is ‘@’ or ‘*’, the expansion is the number of elements in the array.
+    > ${#name[subscript]} expands to the length of ${name[subscript]}. If subscript is ‘@’ or ‘\*’, the expansion is the number of elements in the array.
 
 ```sh
 ASDF=(123 456 789)
@@ -376,7 +385,7 @@ echo ${#ASDF[@]}
 3
 ```
 
-시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이었다면 `100`을 출력해야 합니다. `3`을 출력하는 것으로 보아 배열에 들어있는 값의 개수를 구한다는 것을 알 수 있습니다. 
+시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이었다면 `100`을 출력해야 합니다. `3`을 출력하는 것으로 보아 배열에 들어있는 값의 개수를 구한다는 것을 알 수 있습니다.
 
 {% include note.html %}
 
@@ -405,9 +414,10 @@ echo ${#ASDF[2]}
 
 `${!변수이름[@]}` (`변수이름` 앞에 `!`가 있습니다) 형태로 배열이 가진 전체 인덱스 목록을 얻을 수 있습니다[^obtain-the-keys].
 
-[^obtain-the-keys]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^obtain-the-keys]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
-    > It is possible to obtain the keys (indices) of an array as well as the values. ${!name[@]} and ${!name[*]} expand to the indices assigned in array variable name. The treatment when in double quotes is similar to the expansion of the special parameters ‘@’ and ‘*’ within double quotes.
+    > It is possible to obtain the keys (indices) of an array as well as the values. ${!name[@]} and ${!name[*]} expand to the indices assigned in array variable name. The treatment when in double quotes is similar to the expansion of the special parameters ‘@’ and ‘\*’ within double quotes.
 
 ```sh
 ASDF=(123 456 789 [777]=TripleSeven)
@@ -450,7 +460,8 @@ done
 
 `unset` 명령어를 통해 배열의 값을 제거할 수 있습니다. `unset 변수이름[0]`, `unset 변수이름[1]` 형태입니다. `unset 변수이름` 형태로 배열 전체를 제거할 수도 있습니다[^unset].
 
-[^unset]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^unset]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > The unset builtin is used to destroy arrays. `unset name[subscript]` destroys the array element at index subscript. Negative subscripts to indexed arrays are interpreted as described above. Unsetting the last element of an array variable does not unset the variable. `unset name`, where name is an array, removes the entire array.
 
@@ -472,7 +483,8 @@ unset A
 
 배시는 배열에 빈 문자열(길이가 0인 문자열)이 들어가는 것을 정상적인 값의 설정으로 취급합니다[^null-string].
 
-[^null-string]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^null-string]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > The null string is a valid value.
 
@@ -507,7 +519,8 @@ Get all: 123  789
 
 `ASDF[-1]`과 같이 인덱스 자리에 음수를 사용하면 배열이 가진 마지막 인덱스에서부터 거꾸로 접근합니다. `ASDF[-1]`이 마지막 인덱스입니다[^negative-number].
 
-[^negative-number]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^negative-number]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > When assigning to an indexed array, if name is subscripted by a negative number, that number is interpreted as relative to one greater than the maximum index of name, so negative indices count back from the end of the array, and an index of -1 references the last element.
 
@@ -546,20 +559,21 @@ echo ${ASDF[-3]} # ASDF[7]과 같음
 
 ```
 
-보시는 바와 같이 `${ASDF[-2]}`, `${ASDF[-3]}`은 아무 것도 출력되지 않은 것을 확인할 수 있습니다. 
+보시는 바와 같이 `${ASDF[-2]}`, `${ASDF[-3]}`은 아무 것도 출력되지 않은 것을 확인할 수 있습니다.
 
 ## [특이한 성질] 배열 이름 자체로 접근
 
 배시에서는 인덱스 없이 배열 이름만으로 배열에 접근하려 하면 **배열의 첫 번째 값처럼 취급합니다[^without-a-subscript].** `ASDF=100`을 `ASDF[0]=100`처럼 처리한다는 소리죠.
 
-[^without-a-subscript]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^without-a-subscript]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Referencing an array variable without a subscript is equivalent to referencing with a subscript of 0.
 
-| 입력 코드 | 처리 코드 |
-|---|---|
-| `ASDF=100` | `ASDF[0]=100` |
-| `echo ${ASDF}` | `echo ${ASDF[0]}` |
+| 입력 코드                   | 처리 코드                      |
+| --------------------------- | ------------------------------ |
+| `ASDF=100`                  | `ASDF[0]=100`                  |
+| `echo ${ASDF}`              | `echo ${ASDF[0]}`              |
 | `ASDF=100`<br>`ASDF[1]=200` | `ASDF[0]=100`<br>`ASDF[1]=200` |
 
 배열의 값을 수정할 때, 배열의 값을 출력할 때 모두 적용됩니다. 심지어는 배열이 아직 생성되지 않았을 때의 값 또한 배열의 첫 번째 값처럼 취급합니다.
@@ -581,7 +595,8 @@ declare -a QWER=(100 200 300)
 
 명시적으로 배열을 선언하면 컴퓨터로 하여금 해당 변수를 최적화할 수 있는 여지를 줍니다. 이로 인해 속도가 향상될 수도 있습니다[^may-speed-up].
 
-[^may-speed-up]: [Arrays - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/arrays.html)
+[^may-speed-up]:
+    [Arrays - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/arrays.html)
 
     > Adding a superfluous declare -a statement to an array declaration may speed up execution of subsequent operations on the array.
 
@@ -591,7 +606,8 @@ declare -a QWER=(100 200 300)
 
 2009년 출시된 배시 4.0부터 **연관 배열**(associative array)이라는 새로운 문법이 추가되었습니다[^new-goodies].
 
-[^new-goodies]: [Bash, version 4 - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/bashver4.html)
+[^new-goodies]:
+    [Bash, version 4 - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/bashver4.html)
 
     > Chet Ramey announced Version 4 of Bash on the 20th of February, 2009.
     > Among the new goodies:
@@ -606,10 +622,10 @@ declare -a QWER=(100 200 300)
 
 연관 배열의 기본적인 동작 방식은 인덱스 배열과 매우 유사합니다. 다음은 인덱스 배열과 연관 배열에서 제공하는 기능을 비교하는 표입니다:
 
-|| 변경 | 얻기 | 전체 얻기 | 배열 크기 | 제거 |
-|---|---|---|---|---|
-| **인덱스 배열** | `ASDF[3]=Hello` | `${ASDF[3]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[3]` |
-| **연관 배열** | `ASDF[greeting]=Hello` | `${ASDF[greeting]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[greeting]` |
+|                 | 변경                   | 얻기                | 전체 얻기    | 배열 크기     | 제거                   |
+| --------------- | ---------------------- | ------------------- | ------------ | ------------- | ---------------------- |
+| **인덱스 배열** | `ASDF[3]=Hello`        | `${ASDF[3]}`        | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[3]`        |
+| **연관 배열**   | `ASDF[greeting]=Hello` | `${ASDF[greeting]}` | `${ASDF[@]}` | `${#ASDF[@]}` | `unset ASDF[greeting]` |
 
 다만 연관 배열은 인덱스 배열과는 다른 두 가지 차이점이 존재합니다:
 
@@ -617,7 +633,8 @@ declare -a QWER=(100 200 300)
 
 연관 배열과 인덱스 배열에는 한 가지 중요한 차이점이 있습니다. 명시적 선언을 해도 되고 안 해도 되는 인덱스 배열과 달리, 연관 배열을 사용하기 위해서는 반드시 **명시적으로 선언**해야만 합니다[^the-subscript-is-required]. 다음과 같이 선언합니다:
 
-[^the-subscript-is-required]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^the-subscript-is-required]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > When assigning to an associative array, the subscript is required.
 
@@ -672,7 +689,8 @@ echo ${ASDF[@]}
 
 배시는 공식적으로 1차원 배열만을 지원합니다[^one-dimensional]. 2차원 배열을 위한 문법은 제공하지 않습니다.
 
-[^one-dimensional]: [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
+[^one-dimensional]:
+    [Arrays - Bash Reference Manual](https://www.gnu.org/software/bash/manual/html_node/Arrays.html)
 
     > Bash provides one-dimensional indexed and associative array variables.
 
