@@ -1,5 +1,5 @@
 ---
-redirect_from: /categories/web.html
+redirectFrom: [/categories/web.html]
 ---
 
 # 웹

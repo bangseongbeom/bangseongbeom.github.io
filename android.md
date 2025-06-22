@@ -1,5 +1,5 @@
 ---
-redirect_from: /categories/android.html
+redirectFrom: [/categories/android.html]
 ---
 
 # 안드로이드

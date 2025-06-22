@@ -1,5 +1,5 @@
 ---
-redirect_from: /categories/java.html
+redirectFrom: [/categories/java.html]
 ---
 
 # 자바

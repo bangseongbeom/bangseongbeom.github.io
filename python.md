@@ -1,5 +1,5 @@
 ---
-redirect_from: /categories/python.html
+redirectFrom: [/categories/python.html]
 ---
 
 # 파이썬
