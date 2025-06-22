@@ -93,8 +93,7 @@ let rssItems = [];
 
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
-    let srcExtName = extname(src);
-    if (srcExtName == ".md") {
+    if (extname(src) == ".md") {
       let dest = join(
         DEST_ROOT,
         dirname(relative(SRC_ROOT, src)),
@@ -114,15 +113,15 @@ await Promise.all(
       ).toString();
 
       let markdownContent = await readFile(src, { encoding: "utf8" });
-      /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string | string[]; }; content: string; }} */
+      /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string[]; }; content: string; }} */
       let file = matter(markdownContent);
-      let originalContent = await marked.parse(file.content);
+      let input = await marked.parse(file.content);
 
       let encoder = new TextEncoder();
       let decoder = new TextDecoder();
-      let content = "";
+      let output = "";
       let rewriter = new HTMLRewriter((outputChunk) => {
-        content += decoder.decode(outputChunk);
+        output += decoder.decode(outputChunk);
       });
 
       rewriter.on("a[href]", {
@@ -200,7 +199,7 @@ await Promise.all(
       }
 
       try {
-        await rewriter.write(encoder.encode(originalContent));
+        await rewriter.write(encoder.encode(input));
         await rewriter.end();
       } finally {
         rewriter.free();
@@ -252,6 +251,20 @@ await Promise.all(
               : ""}
             <link rel="canonical" href="${escape(canonical)}" />
             <link
+              rel="icon"
+              href="${escape(new URL("favicon.ico", BASE).toString())}"
+              sizes="32x32"
+            />
+            <link
+              rel="icon"
+              href="${escape(new URL("icon.svg", BASE).toString())}"
+              type="image/svg+xml"
+            />
+            <link
+              rel="apple-touch-icon"
+              href="${escape(new URL("apple-touch-icon.png", BASE).toString())}"
+            />
+            <link
               rel="alternate"
               type="application/rss+xml"
               href="${escape(new URL("feed.xml", BASE).toString())}"
@@ -283,7 +296,7 @@ await Promise.all(
             </style>
           </head>
           <body>
-            ${content}
+            ${output}
           </body>
         </html> `;
       await mkdir(dirname(dest), { recursive: true });
@@ -305,7 +318,7 @@ await Promise.all(
         description,
         pubDate: datePublished,
         guid: canonical,
-        content,
+        content: output,
       });
       rssItems = rssItems
         .toSorted(
@@ -314,12 +327,10 @@ await Promise.all(
         .slice(0, 10);
 
       if (file.data.redirectFrom) {
-        for (let redirectFrom of Array.isArray(file.data.redirectFrom)
-          ? file.data.redirectFrom
-          : [file.data.redirectFrom]) {
-          let path = isAbsolute(redirectFrom)
-            ? join(DEST_ROOT, redirectFrom)
-            : join(dest, "..", redirectFrom);
+        for (let redirectFromPath of file.data.redirectFrom) {
+          let path = isAbsolute(redirectFromPath)
+            ? join(DEST_ROOT, redirectFromPath)
+            : join(dest, "..", redirectFromPath);
           let data = /* HTML */ `<!DOCTYPE html>
             <html>
               <head>
@@ -331,6 +342,22 @@ await Promise.all(
                 />
                 <meta name="robots" content="noindex" />
                 <link rel="canonical" href="${escape(canonical)}" />
+                <link
+                  rel="icon"
+                  href="${escape(new URL("favicon.ico", BASE).toString())}"
+                  sizes="32x32"
+                />
+                <link
+                  rel="icon"
+                  href="${escape(new URL("icon.svg", BASE).toString())}"
+                  type="image/svg+xml"
+                />
+                <link
+                  rel="apple-touch-icon"
+                  href="${escape(
+                    new URL("apple-touch-icon.png", BASE).toString(),
+                  )}"
+                />
               </head>
               <body>
                 <a href="${escape(canonical)}">${escape(canonical)}</a>
@@ -342,7 +369,9 @@ await Promise.all(
           await writeFile(path, data);
         }
       }
-    } else if ([".jpg", ".jpeg", ".png", ".gif", ".ico"].includes(srcExtName)) {
+    } else if (
+      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg"].includes(extname(src))
+    ) {
       let dest = join(DEST_ROOT, relative(SRC_ROOT, src));
       await mkdir(dirname(dest), { recursive: true });
       await copyFile(src, dest);
@@ -379,10 +408,9 @@ let articlesContent = articles
   .join("");
 
 await Promise.all(
-  (await globby(join(DEST_ROOT, "**"))).map(async (src) => {
-    let srcExtName = extname(src);
-    if (srcExtName == ".html") {
-      let input = await readFile(src, { encoding: "utf8" });
+  (await globby(join(DEST_ROOT, "**"))).map(async (path) => {
+    if (extname(path) == ".html") {
+      let input = await readFile(path, { encoding: "utf8" });
 
       let encoder = new TextEncoder();
       let decoder = new TextDecoder();
@@ -404,12 +432,12 @@ await Promise.all(
         rewriter.free();
       }
 
-      await writeFile(src, output);
+      await writeFile(path, output);
     }
   }),
 );
 
-let sitemapPath = join(DEST_ROOT, "sitemap.xml");
+let sitemapFile = join(DEST_ROOT, "sitemap.xml");
 let sitemapData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
@@ -423,13 +451,13 @@ ${sitemapURLs
   .join("")}
 </urlset>
 `;
-await writeFile(sitemapPath, sitemapData);
+await writeFile(sitemapFile, sitemapData);
 
-let robotsPath = join(DEST_ROOT, "robots.txt");
+let robotsFile = join(DEST_ROOT, "robots.txt");
 let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
-await writeFile(robotsPath, robotsData);
+await writeFile(robotsFile, robotsData);
 
-let rssPath = join(DEST_ROOT, "feed.xml");
+let rssFile = join(DEST_ROOT, "feed.xml");
 let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
@@ -458,4 +486,4 @@ let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
   </channel>
 </rss>
 `;
-await writeFile(rssPath, rssData);
+await writeFile(rssFile, rssData);
