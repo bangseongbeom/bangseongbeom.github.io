@@ -82,6 +82,9 @@ marked.use(
   }),
 );
 
+/** @type {{ title: string, description?: string | null, datePublished?: Date | null, dateModified?: Date | null }[]} */
+let articles = [];
+
 /** @type {{ loc: string, lastmod?: string | null }[]} */
 let sitemapURLs = [];
 
@@ -89,7 +92,7 @@ let sitemapURLs = [];
 let rssItems = [];
 
 await Promise.all(
-  (await globby("**", { gitignore: true })).map(async (src) => {
+  (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
     let srcExtName = extname(src);
     if (srcExtName == ".md") {
       let dest = join(
@@ -111,25 +114,36 @@ await Promise.all(
       ).toString();
 
       // read file
-      let srcData = await readFile(src, { encoding: "utf8" });
+      let markdownContent = await readFile(src, { encoding: "utf8" });
       /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string | string[]; }; content: string; }} */
-      let file = matter(srcData);
-      let oldContent = await marked.parse(file.content);
+      let file = matter(markdownContent);
+      let originalContent = await marked.parse(file.content);
 
       let encoder = new TextEncoder();
       let decoder = new TextDecoder();
-      let newContent = "";
+      let content = "";
       let rewriter = new HTMLRewriter((outputChunk) => {
-        newContent += decoder.decode(outputChunk);
+        content += decoder.decode(outputChunk);
       });
 
       // extract description from <p> if it exists
       let description = file.data.description;
-      rewriter.on("p", {
-        text(text) {
-          if (!description) description = text.text;
-        },
-      });
+      if (!description) {
+        let end = false;
+        rewriter.on("p", {
+          element(element) {
+            element.onEndTag(() => {
+              end = true;
+            });
+          },
+
+          text(text) {
+            if (end) return;
+            if (!description) description = "";
+            description += text.text;
+          },
+        });
+      }
 
       // resolve relative links
       rewriter.on("a[href]", {
@@ -193,7 +207,7 @@ await Promise.all(
       }
 
       try {
-        await rewriter.write(encoder.encode(oldContent));
+        await rewriter.write(encoder.encode(originalContent));
         await rewriter.end();
       } finally {
         rewriter.free();
@@ -214,7 +228,7 @@ await Promise.all(
         if (committerDate) dateModified = new Date(committerDate);
       }
 
-      let destData = /* HTML */ `<!DOCTYPE html>
+      let data = /* HTML */ `<!DOCTYPE html>
         <html lang="en" prefix="og: https://ogp.me/ns#">
           <head>
             <meta charset="utf-8" />
@@ -281,11 +295,19 @@ await Promise.all(
             </style>
           </head>
           <body>
-            ${newContent}
+            ${content}
           </body>
         </html> `;
       await mkdir(dirname(dest), { recursive: true });
-      await writeFile(dest, destData);
+      await writeFile(dest, data);
+
+      // add to articles
+      articles.push({
+        title,
+        description,
+        datePublished,
+        dateModified,
+      });
 
       // add to sitemap
       sitemapURLs.push({
@@ -300,7 +322,7 @@ await Promise.all(
         description,
         pubDate: datePublished,
         guid: canonical,
-        content: newContent,
+        content,
       });
       rssItems = rssItems
         .toSorted(
@@ -313,10 +335,10 @@ await Promise.all(
         for (let redirectFrom of Array.isArray(file.data.redirectFrom)
           ? file.data.redirectFrom
           : [file.data.redirectFrom]) {
-          let redirectFromDest = isAbsolute(redirectFrom)
+          let path = isAbsolute(redirectFrom)
             ? join(DEST_ROOT, redirectFrom)
             : join(dest, "..", redirectFrom);
-          let redirectFromData = /* HTML */ `<!DOCTYPE html>
+          let data = /* HTML */ `<!DOCTYPE html>
             <html>
               <head>
                 <meta charset="utf-8" />
@@ -332,10 +354,10 @@ await Promise.all(
                 <a href="${escape(canonical)}">${escape(canonical)}</a>
               </body>
             </html> `;
-          await mkdir(dirname(redirectFromDest), {
+          await mkdir(dirname(path), {
             recursive: true,
           });
-          await writeFile(redirectFromDest, redirectFromData);
+          await writeFile(path, data);
         }
       }
     } else if ([".jpg", ".jpeg", ".png", ".gif", ".ico"].includes(srcExtName)) {
@@ -347,9 +369,67 @@ await Promise.all(
   }),
 );
 
+// transform x-articles
+let articlesContent = articles
+  .toSorted(
+    (a, b) =>
+      (b.dateModified?.getTime() ?? 0) - (a.dateModified?.getTime() ?? 0),
+  )
+  .map(
+    ({ title, description, datePublished, dateModified }) =>
+      /* HTML */ `<article>
+        <h1>${escape(title)}</h1>
+        ${description ? /* HTML */ `<p>${escape(description)}</p>` : ""}
+        ${datePublished
+          ? /* HTML */ `<time
+              datetime="${escape(datePublished.toISOString())}"
+              class="date-published"
+              >${escape(datePublished.toUTCString())}</time
+            >`
+          : ""}
+        ${dateModified
+          ? /* HTML */ `<time
+              datetime="${escape(dateModified.toISOString())}"
+              class="date-modified"
+              >${escape(dateModified.toUTCString())}</time
+            >`
+          : ""}
+      </article>`,
+  )
+  .join("");
+await Promise.all(
+  (await globby(join(DEST_ROOT, "**"))).map(async (src) => {
+    let srcExtName = extname(src);
+    if (srcExtName == ".html") {
+      let input = await readFile(src, { encoding: "utf8" });
+
+      let encoder = new TextEncoder();
+      let decoder = new TextDecoder();
+      let output = "";
+      let rewriter = new HTMLRewriter((outputChunk) => {
+        output += decoder.decode(outputChunk);
+      });
+
+      rewriter.on('[is="x-articles"]', {
+        element(element) {
+          element.setInnerContent(articlesContent, { html: true });
+        },
+      });
+
+      try {
+        await rewriter.write(encoder.encode(input));
+        await rewriter.end();
+      } finally {
+        rewriter.free();
+      }
+
+      await writeFile(src, output);
+    }
+  }),
+);
+
 // write sitemap
-let sitemapPath = "sitemap.xml";
-let sitemapDest = join(DEST_ROOT, sitemapPath);
+let sitemapPath = join(DEST_ROOT, "sitemap.xml");
 let sitemapData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
@@ -363,17 +443,15 @@ ${sitemapURLs
   .join("")}
 </urlset>
 `;
-await writeFile(sitemapDest, sitemapData);
+await writeFile(sitemapPath, sitemapData);
 
 // write robots.txt
-let robotstxtPath = "robots.txt";
-let robotstxtDest = join(DEST_ROOT, robotstxtPath);
-let robotstxtData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
-await writeFile(robotstxtDest, robotstxtData);
+let robotsPath = join(DEST_ROOT, "robots.txt");
+let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
+await writeFile(robotsPath, robotsData);
 
 // write RSS feed
-let rssPath = "feed.xml";
-let rssDest = join(DEST_ROOT, rssPath);
+let rssPath = join(DEST_ROOT, "feed.xml");
 let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
@@ -402,4 +480,4 @@ let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
   </channel>
 </rss>
 `;
-await writeFile(rssDest, rssData);
+await writeFile(rssPath, rssData);
