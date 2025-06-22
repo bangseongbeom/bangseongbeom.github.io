@@ -8,10 +8,12 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { escape } from "@std/html/entities";
-import fm from "front-matter";
-import { marked, Marked } from "marked";
+import * as cheerio from "cheerio";
+import matter from "gray-matter";
+import { marked } from "marked";
+import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
-import markedPlaintify from "marked-plaintify";
+import { gfmHeadingId } from "marked-gfm-heading-id";
 import markedShiki from "marked-shiki";
 import child_process from "node:child_process";
 import fs from "node:fs/promises";
@@ -20,16 +22,21 @@ import url from "node:url";
 import { promisify } from "node:util";
 import { createHighlighter } from "shiki";
 
-// https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
-const execFile = promisify(child_process.execFile);
+const TITLE = "방성범 블로그";
+const DESCRIPTION = "개발자 방성범의 기술 블로그";
+const BASE = "https://www.bangseongbeom.com/";
+const AUTHOR = "방성범 (Bang Seongbeom)";
+const EMAIL = "bangseongbeom@gmail.com";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-const currentTime = new Date();
+const BUILD_DATE = new Date().toISOString();
 
+marked.use(gfmHeadingId());
+marked.use(markedAlert());
 marked.use(markedFootnote({ description: "각주", refMarkers: true }));
-const highlighter = await createHighlighter({
+let highlighter = await createHighlighter({
   langs: ["c", "py", "sh", "http", "yaml", "html"],
   themes: ["github-light-default"],
 });
@@ -64,21 +71,13 @@ marked.use(
   }),
 );
 
-marked.use({
-  renderer: {
-    codespan(code) {
-      return /* HTML */ `<code class="hljs">${escape(code.text)}</code>`;
-    },
-  },
-});
-
 /** @type {{ loc: string, lastmod?: string }[]} */
-const sitemapURLs = [];
+let sitemapURLs = [];
 
 /** @type {{ title: string, link: string, description?: string, pubDate: Date, guid: string, content: string }[]} */
 let rssItems = [];
 
-const dirents = await fs.readdir(SRC_ROOT, {
+let dirents = await fs.readdir(SRC_ROOT, {
   withFileTypes: true,
   recursive: true,
 });
@@ -100,36 +99,76 @@ await Promise.all(
       (dirent) => !(dirent.name.startsWith(".") || dirent.name.startsWith("_")),
     )
     .map(async ({ parentPath, name }) => {
-      const extname = path.extname(name);
+      let extname = path.extname(name);
       if (extname == ".md") {
-        // Read file.
-        const src = path.join(parentPath, name);
-        const input = await fs.readFile(src, { encoding: "utf8" });
-        /** @typedef {{ title?: string, date?: Date, redirectFrom?: string | string[] }} Attributes */
-        /** @type {{ attributes: Attributes, body: string }} */
-        // @ts-ignore
-        const { attributes, body } = fm(input);
-        const content = await marked.parse(body);
-        const description = (
-          await new Marked().use(markedPlaintify()).parse(body)
-        ).split("\n")[0];
-
-        // Write to file.
-        const relativeParentPath = path.relative(SRC_ROOT, parentPath);
-        const dest = path.join(
+        let src = path.join(parentPath, name);
+        let dest = path.join(
           DEST_ROOT,
-          relativeParentPath,
+          path.relative(SRC_ROOT, parentPath),
           name == "README.md" ? "index.html" : `${path.parse(name).name}.html`,
         );
-        const canonicalPath = url.pathToFileURL(
-          path.resolve(
-            "/",
-            relativeParentPath,
-            path.parse(dest).name == "index" ? "/" : path.parse(name).name,
-          ),
-        ).pathname;
-        const canonicalURL = "https://www.bangseongbeom.com" + canonicalPath;
-        const dateModified = (
+        let canonical = new URL(
+          url
+            .pathToFileURL(
+              path.join(
+                path.sep,
+                path.relative(SRC_ROOT, parentPath),
+                name == "README.md" ? path.sep : path.parse(name).name,
+              ),
+            )
+            .pathname.substring(1),
+          BASE,
+        ).toString();
+
+        // read file
+        let input = await fs.readFile(src, { encoding: "utf8" });
+        /** @typedef {{ title?: string, description?: string; date?: Date, redirectFrom?: string | string[] }} Attributes */
+        /** @type {{ data: Attributes, content: string }} */
+        let file = matter(input);
+        let content = await marked.parse(file.content);
+        let $ = cheerio.load(content, null, false);
+
+        // resolve relative links
+        $("a").each(() => {
+          let href = $(this).prop("href");
+          if (!href) return;
+
+          let absoluteHRef = new URL(href, canonical);
+          if (absoluteHRef.origin == new URL(BASE).origin) {
+            if (absoluteHRef.pathname.endsWith("/README.md")) {
+              absoluteHRef.pathname = absoluteHRef.pathname.slice(
+                0,
+                -"README.md".length,
+              );
+              href = absoluteHRef.toString();
+            } else if (absoluteHRef.pathname.endsWith(".md")) {
+              absoluteHRef.pathname = absoluteHRef.pathname.slice(
+                0,
+                -".md".length,
+              );
+              href = absoluteHRef.toString();
+            }
+          }
+
+          $(this).prop("href", href);
+        });
+
+        // extract title from first h1 if it exists
+        let title = file.data.title ?? $("h1").prop("innerText");
+        if (!title) throw new Error("title is not found");
+
+        let description = file.data.description;
+
+        // extract date from <time id="date"> if it exists
+        let date =
+          file.data.date ??
+          ($("time#date").prop("dateTime")
+            ? new Date($("time#date").prop("dateTime"))
+            : null);
+
+        // write to file
+        let execFile = promisify(child_process.execFile);
+        let dateModified = (
           await execFile("git", [
             "log",
             "--max-count=1",
@@ -138,29 +177,39 @@ await Promise.all(
             src,
           ])
         ).stdout.trim();
-        const output = /* HTML */ `<!DOCTYPE html>
+        content = $.html();
+        let output = /* HTML */ `<!DOCTYPE html>
           <html lang="ko" prefix="og: https://ogp.me/ns#">
             <head>
               <meta charset="utf-8" />
-              <title>${escape(attributes.title ?? "")}</title>
-              <meta name="author" content="방성범 (Bang Seongbeom)" />
-              <meta name="description" content="${escape(description)}" />
+              <title>${escape(title)}</title>
+              <meta name="author" content="${escape(AUTHOR)}" />
+              ${description
+                ? /* HTML */ `<meta
+                    name="description"
+                    content="${escape(description)}"
+                  />`
+                : ""}
               <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1"
               />
-              <meta
-                property="og:title"
-                content="${escape(attributes.title ?? "")}"
-              />
+              <meta property="og:title" content="${escape(title)}" />
               <meta property="og:type" content="article" />
-              <meta property="og:url" content="${escape(canonicalURL)}" />
-              <meta property="og:image" content="" />
-              <meta
-                property="og:description"
-                content="${escape(description)}"
+              <meta property="og:url" content="${escape(canonical)}" />
+              <meta property="og:image" content="FIXME" />
+              ${description
+                ? /* HTML */ `<meta
+                    property="og:description"
+                    content="${escape(description)}"
+                  />`
+                : ""}
+              <link rel="canonical" href="${escape(canonical)}" />
+              <link
+                rel="alternate"
+                type="application/rss+xml"
+                href="/feed.xml"
               />
-              <link rel="canonical" href="${escape(canonicalURL)}" />
               <script type="application/ld+json">
                 ${escape(
                   JSON.stringify({
@@ -168,15 +217,13 @@ await Promise.all(
                     "@type": "BlogPosting",
                     author: {
                       "@type": "Person",
-                      name: "방성범 (Bang Seongbeom)",
+                      name: AUTHOR,
                     },
                     dateModified:
-                      dateModified == ""
-                        ? currentTime.toISOString()
-                        : dateModified,
-                    datePublished: attributes.date?.toISOString() ?? "",
-                    headline: attributes.title,
-                    image: "",
+                      dateModified == "" ? BUILD_DATE : dateModified,
+                    datePublished: date?.toISOString() ?? "",
+                    headline: title,
+                    image: ["FIXME"],
                   }),
                 )}
               </script>
@@ -194,38 +241,25 @@ await Promise.all(
               </style>
             </head>
             <body>
-              <h1>${escape(attributes.title ?? "")}</h1>
-              <dl>
-                <dt>저자:</dt>
-                <dd>방성범 (Bang Seongbeom)</dd>
-                <dt>작성일:</dt>
-                <dd>
-                  <time
-                    datetime="${escape(attributes.date?.toISOString() ?? "")}"
-                    >${escape(attributes.date?.toISOString() ?? "")}</time
-                  >
-                </dd>
-              </dl>
               ${content}
             </body>
           </html> `;
         await fs.mkdir(path.dirname(dest), { recursive: true });
         await fs.writeFile(dest, output);
 
-        // Add to sitemap.
+        // add to sitemap
         sitemapURLs.push({
-          loc: canonicalURL,
-          lastmod: attributes.date?.toISOString(),
+          loc: canonical,
+          lastmod: date?.toISOString(),
         });
 
-        // Add to RSS feed.
-        if (attributes.date) {
+        // add to RSS feed
+        if (date) {
           rssItems.push({
-            title: attributes.title ?? "",
-            link: canonicalURL,
-            description,
-            pubDate: attributes.date,
-            guid: canonicalURL,
+            title,
+            link: canonical,
+            pubDate: date,
+            guid: canonical,
             content,
           });
           rssItems = rssItems
@@ -233,30 +267,28 @@ await Promise.all(
             .slice(0, 10);
         }
 
-        // Write to redirect file.
-        if (attributes.redirectFrom) {
-          for (const redirectFrom of Array.isArray(attributes.redirectFrom)
-            ? attributes.redirectFrom
-            : [attributes.redirectFrom]) {
-            const destRedirectFrom = path.isAbsolute(redirectFrom)
+        // write to redirect file
+        if (file.data.redirectFrom) {
+          for (let redirectFrom of Array.isArray(file.data.redirectFrom)
+            ? file.data.redirectFrom
+            : [file.data.redirectFrom]) {
+            let destRedirectFrom = path.isAbsolute(redirectFrom)
               ? path.join(DEST_ROOT, redirectFrom)
               : path.join(dest, "..", redirectFrom);
-            const output = /* HTML */ `<!DOCTYPE html>
+            let output = /* HTML */ `<!DOCTYPE html>
               <html>
                 <head>
                   <meta charset="utf-8" />
-                  <title>${escape(attributes?.title ?? "")}</title>
+                  <title>${escape(title)}</title>
                   <meta
                     http-equiv="refresh"
-                    content="0; URL=${escape(canonicalPath)}"
+                    content="0; URL=${escape(canonical)}"
                   />
                   <meta name="robots" content="noindex" />
-                  <link rel="canonical" href="${escape(canonicalURL)}" />
+                  <link rel="canonical" href="${escape(canonical)}" />
                 </head>
                 <body>
-                  <a href="${escape(canonicalPath)}"
-                    >${escape(canonicalPath)}</a
-                  >
+                  <a href="${escape(canonical)}">${escape(canonical)}</a>
                 </body>
               </html> `;
             await fs.mkdir(path.dirname(destRedirectFrom), {
@@ -266,19 +298,23 @@ await Promise.all(
           }
         }
       } else if ([".jpg", ".jpeg", ".png", ".gif", ".ico"].includes(extname)) {
-        // Copy file.
-        const src = path.join(parentPath, name);
-        const relativeParentPath = path.relative(SRC_ROOT, parentPath);
-        const dest = path.join(DEST_ROOT, relativeParentPath, name);
+        // copy file
+        let src = path.join(parentPath, name);
+        let dest = path.join(
+          DEST_ROOT,
+          path.relative(SRC_ROOT, parentPath),
+          name,
+        );
         await fs.mkdir(path.dirname(dest), { recursive: true });
         await fs.copyFile(src, dest);
       }
     }),
 );
 
-// Write sitemap.
-const sitemapDest = path.join(DEST_ROOT, "sitemap.xml");
-const sitemapOutput = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+// write sitemap
+let sitemapPath = "sitemap.xml";
+let sitemapDest = path.join(DEST_ROOT, sitemapPath);
+let sitemapData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
   .map(
@@ -291,46 +327,42 @@ ${sitemapURLs
   .join("")}
 </urlset>
 `;
-await fs.writeFile(sitemapDest, sitemapOutput);
+await fs.writeFile(sitemapDest, sitemapData);
 
-// Write robots.txt.
-const sitemap =
-  "https://www.bangseongbeom.com" +
-  url.pathToFileURL(path.resolve("/", path.relative(DEST_ROOT, sitemapDest)))
-    .pathname;
-await fs.writeFile(
-  path.join(path.dirname(sitemapDest), "robots.txt"),
-  `Sitemap: ${sitemap}`,
-);
+// write robots.txt
+let robotsPath = "robots.txt";
+let robotsDest = path.join(DEST_ROOT, robotsPath);
+let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
+await fs.writeFile(robotsDest, robotsData);
 
-// Write RSS feed.
-const lastBuildDate = (
+// write RSS feed
+let execFile = promisify(child_process.execFile);
+let lastBuildDate = (
   await execFile("git", ["log", "--max-count=1", "--pretty=tformat:%cI"])
 ).stdout.trim();
-const rssDest = path.join(DEST_ROOT, "feed.xml");
-const rssOutput = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+let rssPath = "feed.xml";
+let rssDest = path.join(DEST_ROOT, rssPath);
+let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
-    <title>방성범 블로그</title>
-    <link>https://www.bangseongbeom.com/</link>
-    <description>개발자 방성범의 기술 블로그</description>
+    <title>${escape(TITLE)}</title>
+    <link>${escape(BASE)}</link>
+    <description>${escape(DESCRIPTION)}</description>
     <language>ko</language>
-    <lastBuildDate>${escape(
-      new Date(lastBuildDate).toUTCString(),
-    )}</lastBuildDate>
+    <lastBuildDate>${escape(new Date(lastBuildDate).toUTCString())}</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
-    <managingEditor>bangseongbeom@gmail.com (방성범 (Bang Seongbeom))</managingEditor>
-    <webMaster>bangseongbeom@gmail.com (방성범 (Bang Seongbeom))</webMaster>
-    <atom:link href="https://www.bangseongbeom.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <managingEditor>${escape(EMAIL)} (${escape(AUTHOR)})</managingEditor>
+    <webMaster>${escape(EMAIL)} (${escape(AUTHOR)})</webMaster>
+    <atom:link href="${escape(new URL("feed.xml", BASE).toString())}" rel="self" type="application/rss+xml" />
     ${rssItems
       .map(
         (item) => /* XML */ `<item>
       <title>${escape(item.title)}</title>
          <link>${escape(item.link)}</link>
-      <description>${escape(item.description)}</description>
+      <description>${escape(item.description ?? item.content)}</description>
       <pubDate>${escape(item.pubDate?.toUTCString() ?? "")}</pubDate>
       <guid>${escape(item.guid)}</guid>
-      <content:encoded>${escape(item.content)}</content:encoded>
+      ${item.description ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
     </item>
     `,
       )
@@ -338,4 +370,4 @@ const rssOutput = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
   </channel>
 </rss>
 `;
-await fs.writeFile(rssDest, rssOutput);
+await fs.writeFile(rssDest, rssData);
