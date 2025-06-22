@@ -4,14 +4,14 @@ import { select } from "hast-util-select";
 import { toHtml } from "hast-util-to-html";
 import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import {
-    basename,
-    dirname,
-    extname,
-    isAbsolute,
-    join,
-    parse,
-    relative,
-    sep,
+  basename,
+  dirname,
+  extname,
+  isAbsolute,
+  join,
+  parse,
+  relative,
+  sep,
 } from "node:path";
 import { pathToFileURL } from "node:url";
 import { rehype } from "rehype";
@@ -285,7 +285,7 @@ let markdownProcessor = unified()
   .use(rehypeGithubImage)
   .use(rehypeRelativeLinks)
   .use(rehypeInferTitleMeta)
-  .use(rehypeInferDescriptionMeta, { selector: "p" })
+  .use(rehypeInferDescriptionMeta)
   .use(unifiedInferGitMeta)
   .use(rehypeInferContentMeta)
   .use(rehypePresetDocument)
