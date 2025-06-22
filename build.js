@@ -1,21 +1,6 @@
-import {
-  transformerMetaHighlight,
-  transformerMetaWordHighlight,
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from "@shikijs/transformers";
 import { escape } from "@std/html/entities";
 import { globby } from "globby";
-import matter from "gray-matter";
 import { HTMLRewriter } from "html-rewriter-wasm";
-import { marked } from "marked";
-import markedAlert from "marked-alert";
-import markedFootnote from "marked-footnote";
-import { gfmHeadingId } from "marked-gfm-heading-id";
-import markedShiki from "marked-shiki";
 import { fail } from "node:assert";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
@@ -31,7 +16,22 @@ import {
 } from "node:path";
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import { createHighlighter } from "shiki";
+import rehypeGithubAlert from "rehype-github-alert";
+import rehypeGithubDir from "rehype-github-dir";
+import rehypeGithubEmoji from "rehype-github-emoji";
+import rehypeGithubHeading from "rehype-github-heading";
+import rehypeGithubImage from "rehype-github-image";
+import rehypeGithubLink from "rehype-github-link";
+import rehypeRaw from "rehype-raw";
+import rehypeStarryNight from "rehype-starry-night";
+import rehypeStringify from "rehype-stringify";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { read } from "to-vfile";
+import { unified } from "unified";
+import { matter } from "vfile-matter";
 
 const execFile = promisify(child_process.execFile);
 
@@ -44,51 +44,29 @@ const BASE = "https://www.bangseongbeom.com/";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-marked.use(gfmHeadingId());
-marked.use(markedAlert());
-marked.use(markedFootnote({ description: "각주" }));
-let highlighter = await createHighlighter({
-  langs: ["c", "py", "sh", "http", "yaml", "html"],
-  themes: ["github-light-default"],
-});
-marked.use(
-  markedShiki({
-    highlight(code, lang, props) {
-      return highlighter.codeToHtml(code, {
-        lang,
-        theme: "github-light-default",
-        meta: { __raw: props.join(" ") }, // required by `transformerMeta*`
-        transformers: [
-          transformerNotationDiff({
-            matchAlgorithm: "v3",
-          }),
-          transformerNotationHighlight({
-            matchAlgorithm: "v3",
-          }),
-          transformerNotationWordHighlight({
-            matchAlgorithm: "v3",
-          }),
-          transformerNotationFocus({
-            matchAlgorithm: "v3",
-          }),
-          transformerNotationErrorLevel({
-            matchAlgorithm: "v3",
-          }),
-          transformerMetaHighlight(),
-          transformerMetaWordHighlight(),
-        ],
-      });
-    },
-  }),
-);
+const processor = await unified()
+  .use(remarkParse)
+  .use(remarkFrontmatter)
+  .use(() => (_, file) => matter(file))
+  .use(remarkGfm)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
+  .use(rehypeGithubAlert)
+  .use(rehypeGithubDir)
+  .use(rehypeGithubEmoji)
+  .use(rehypeGithubHeading)
+  .use(rehypeStarryNight)
+  .use(rehypeGithubImage)
+  .use(rehypeGithubLink)
+  .use(rehypeStringify);
 
-/** @type {{ title: string, description?: string, datePublished?: Date, dateModified?: Date }[]} */
+/** @type {{ title: string, description?: string, datePublished?: string, dateModified?: string }[]} */
 let articles = [];
 
-/** @type {{ loc: string, lastmod?: Date }[]} */
+/** @type {{ loc: string, lastmod?: string }[]} */
 let sitemapURLs = [];
 
-/** @type {{ title: string, link: string, description?: string, pubDate?: Date, guid: string, content: string }[]} */
+/** @type {{ title: string, link: string, description?: string, pubDate?: string, guid: string, content: string }[]} */
 let rssItems = [];
 
 await Promise.all(
@@ -112,10 +90,7 @@ await Promise.all(
         BASE,
       ).toString();
 
-      let markdownContent = await readFile(src, { encoding: "utf8" });
-      /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string[]; }; content: string; }} */
-      let file = matter(markdownContent);
-      let input = await marked.parse(file.content);
+      let file = await processor.process(await read(src));
 
       let encoder = new TextEncoder();
       let decoder = new TextDecoder();
@@ -150,7 +125,7 @@ await Promise.all(
         },
       });
 
-      let title = file.data.title;
+      let title = file.data.matter?.title;
       if (!title) {
         rewriter.on("h1", {
           text(text) {
@@ -159,7 +134,7 @@ await Promise.all(
         });
       }
 
-      let description = file.data.description;
+      let description = file.data.matter?.description;
       if (!description) {
         let end = false;
         rewriter.on("p", {
@@ -176,36 +151,36 @@ await Promise.all(
         });
       }
 
-      let datePublished = file.data.datePublished;
+      let datePublished = file.data.matter?.datePublished;
       if (!datePublished) {
         rewriter.on("time#date-published", {
           element(element) {
             let dateTime = element.getAttribute("datetime");
             if (!dateTime) throw new Error("datetime not found");
-            datePublished = new Date(dateTime);
+            datePublished = dateTime;
           },
         });
       }
 
-      let dateModified = file.data.dateModified;
+      let dateModified = file.data.matter?.dateModified;
       if (!dateModified) {
         rewriter.on("time#date-modified", {
           element(element) {
             let dateTime = element.getAttribute("datetime");
             if (!dateTime) throw new Error("datetime not found");
-            if (!dateModified) dateModified = new Date(dateTime);
+            if (!dateModified) dateModified = dateTime;
           },
         });
       }
 
       try {
-        await rewriter.write(encoder.encode(input));
+        await rewriter.write(encoder.encode(String(file)));
         await rewriter.end();
       } finally {
         rewriter.free();
       }
 
-      if (!title) throw new Error();
+      if (!title) throw new Error("title not found");
 
       if (!dateModified) {
         let committerDate = (
@@ -217,7 +192,7 @@ await Promise.all(
             src,
           ])
         ).stdout.trim();
-        if (committerDate) dateModified = new Date(committerDate);
+        if (committerDate) dateModified = committerDate;
       }
 
       let data = /* HTML */ `<!DOCTYPE html>
@@ -235,7 +210,7 @@ await Promise.all(
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
-            
+            />
             <meta property="og:title" content="${escape(title)}" />
             <meta property="og:type" content="article" />
             <meta property="og:url" content="${escape(canonical)}" />
@@ -269,13 +244,7 @@ await Promise.all(
               type="application/rss+xml"
               href="${escape(new URL("feed.xml", BASE).toString())}"
             />
-            <link
-              rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css"
-              integrity="sha512-BrOPA520KmDMqieeM7XFe6a3u3Sb3F1JBaQnrIAmWg3EYrciJ+Qqe6ZcKCdfPv26rGcgTrJnZ/IdQEct8h3Zhw=="
-              crossorigin="anonymous"
-              referrerpolicy="no-referrer"
-            />
+            <link rel="stylesheet" href="/github-markdown.css" />
             <script type="application/ld+json">
               ${escape(
                 JSON.stringify(
@@ -286,8 +255,8 @@ await Promise.all(
                       "@type": "Person",
                       name: AUTHOR,
                     },
-                    dateModified: dateModified?.toISOString(),
-                    datePublished: datePublished?.toISOString(),
+                    dateModified,
+                    datePublished,
                     headline: title,
                     image: new URL("ogp.png", BASE).toString(),
                   }),
@@ -337,12 +306,14 @@ await Promise.all(
       });
       rssItems = rssItems
         .toSorted(
-          (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
+          (a, b) =>
+            (b.pubDate ? Date.parse(b.pubDate) : 0) -
+            (a.pubDate ? Date.parse(a.pubDate) : 0),
         )
         .slice(0, 10);
 
-      if (file.data.redirectFrom) {
-        for (let redirectFromPath of file.data.redirectFrom) {
+      if (file.data.matter?.redirectFrom) {
+        for (let redirectFromPath of file.data.matter?.redirectFrom) {
           let path = isAbsolute(redirectFromPath)
             ? join(DEST_ROOT, redirectFromPath)
             : join(dest, "..", redirectFromPath);
@@ -385,7 +356,7 @@ await Promise.all(
         }
       }
     } else if (
-      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg"].includes(extname(src))
+      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(extname(src))
     ) {
       let dest = join(DEST_ROOT, relative(SRC_ROOT, src));
       await mkdir(dirname(dest), { recursive: true });
@@ -397,7 +368,8 @@ await Promise.all(
 let articlesContent = articles
   .toSorted(
     (a, b) =>
-      (b.dateModified?.getTime() ?? 0) - (a.dateModified?.getTime() ?? 0),
+      (b.dateModified ? Date.parse(b.dateModified) : 0) -
+      (a.dateModified ? Date.parse(a.dateModified) : 0),
   )
   .map(
     ({ title, description, datePublished, dateModified }) =>
@@ -406,16 +378,16 @@ let articlesContent = articles
         ${description ? /* HTML */ `<p>${escape(description)}</p>` : ""}
         ${datePublished
           ? /* HTML */ `<time
-              datetime="${escape(datePublished.toISOString())}"
+              datetime="${escape(datePublished)}"
               class="date-published"
-              >${escape(datePublished.toUTCString())}</time
+              >${escape(datePublished)}</time
             >`
           : ""}
         ${dateModified
           ? /* HTML */ `<time
-              datetime="${escape(dateModified.toISOString())}"
+              datetime="${escape(dateModified)}"
               class="date-modified"
-              >${escape(dateModified.toUTCString())}</time
+              >${escape(dateModified)}</time
             >`
           : ""}
       </article>`,
@@ -464,7 +436,7 @@ ${sitemapURLs
   .map(
     ({ loc, lastmod }) => /* XML */ `<url>
   <loc>${escape(loc)}</loc>
-  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod.toISOString())}</lastmod>` : ""}
+  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod)}</lastmod>` : ""}
 </url>
 `,
   )
@@ -496,7 +468,7 @@ let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
       <title>${escape(item.title)}</title>
          <link>${escape(item.link)}</link>
       <description>${escape(item.description ?? item.content)}</description>
-      ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
+      ${item.pubDate ? /* XML*/ `<pubDate>${escape(new Date(item.pubDate).toUTCString())}</pubDate>` : ""}
       <guid>${escape(item.guid)}</guid>
       ${item.description ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
     </item>
