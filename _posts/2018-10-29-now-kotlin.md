@@ -1,6 +1,6 @@
 ---
 category: android
-redirectFrom: /posts/now-kotlin.html
+redirectFrom: [/posts/now-kotlin.html]
 ---
 
 # 이제서야 코틀린을 도입하게 된 이유

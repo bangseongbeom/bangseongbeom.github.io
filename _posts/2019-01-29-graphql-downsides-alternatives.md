@@ -1,6 +1,6 @@
 ---
 category: web
-redirectFrom: /posts/graphql-downsides-alternatives.html
+redirectFrom: [/posts/graphql-downsides-alternatives.html]
 ---
 
 # GraphQL의 단점과 대안

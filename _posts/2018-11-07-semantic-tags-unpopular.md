@@ -1,6 +1,6 @@
 ---
 category: web
-redirectFrom: /posts/semantic-tags-unpopular.html
+redirectFrom: [/posts/semantic-tags-unpopular.html]
 ---
 
 # 시맨틱 태그가 인기 없는 이유

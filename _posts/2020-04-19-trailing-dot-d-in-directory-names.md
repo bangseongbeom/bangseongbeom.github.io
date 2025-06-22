@@ -1,6 +1,6 @@
 ---
 category: linux
-redirectFrom: /dot-d-directories.html
+redirectFrom: [/dot-d-directories.html]
 ---
 
 # 디렉터리 이름 끝 '.d'

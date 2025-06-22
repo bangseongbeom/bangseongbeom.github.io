@@ -1,6 +1,6 @@
 ---
 category: java
-redirectFrom: /posts/spring-downsides-alternatives.html
+redirectFrom: [/posts/spring-downsides-alternatives.html]
 ---
 
 # 스프링의 단점과 대안

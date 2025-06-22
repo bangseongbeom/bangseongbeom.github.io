@@ -1,6 +1,6 @@
 ---
 category: linux
-redirectFrom: /shell-arrays.html
+redirectFrom: [/shell-arrays.html]
 ---
 
 # 배시 배열

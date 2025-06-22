@@ -1,6 +1,6 @@
 ---
 category: python
-redirectFrom: /posts/unittest-vs-pytest.html
+redirectFrom: [/posts/unittest-vs-pytest.html]
 ---
 
 # unittest vs pytest

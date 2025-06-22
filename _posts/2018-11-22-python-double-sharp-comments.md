@@ -1,6 +1,6 @@
 ---
 category: python
-redirectFrom: /posts/python-double-sharp-comments.html
+redirectFrom: [/posts/python-double-sharp-comments.html]
 ---
 
 # 파이썬 더블 샤프(##) 주석

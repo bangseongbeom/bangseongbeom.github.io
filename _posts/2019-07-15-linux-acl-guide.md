@@ -1,6 +1,6 @@
 ---
 category: linux
-redirectFrom: /linux-acl.html
+redirectFrom: [/linux-acl.html]
 ---
 
 # 리눅스 ACL 가이드

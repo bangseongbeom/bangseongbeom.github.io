@@ -1,6 +1,6 @@
 ---
 category: web
-redirectFrom: /difference-var-let.html
+redirectFrom: [/difference-var-let.html]
 ---
 
 # 자바스크립트 var, let 차이점
