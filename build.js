@@ -1,9 +1,9 @@
-import { escape } from "@std/html/entities";
 import { globby } from "globby";
-import { HTMLRewriter } from "html-rewriter-wasm";
+import { fromHtml } from "hast-util-from-html";
+import { select } from "hast-util-select";
+import { toHtml } from "hast-util-to-html";
 import { fail } from "node:assert";
-import child_process from "node:child_process";
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import {
   basename,
   dirname,
@@ -15,28 +15,37 @@ import {
   sep,
 } from "node:path";
 import { pathToFileURL } from "node:url";
-import { promisify } from "node:util";
+import { rehype } from "rehype";
+import rehypeDocument from "rehype-document";
+import rehypeFormat from "rehype-format";
 import rehypeGithubAlert from "rehype-github-alert";
 import rehypeGithubDir from "rehype-github-dir";
 import rehypeGithubEmoji from "rehype-github-emoji";
 import rehypeGithubHeading from "rehype-github-heading";
 import rehypeGithubImage from "rehype-github-image";
-import rehypeGithubLink from "rehype-github-link";
+import rehypeInferDescriptionMeta from "rehype-infer-description-meta";
+import rehypeInferTitleMeta from "rehype-infer-title-meta";
+import rehypeMeta from "rehype-meta";
 import rehypeRaw from "rehype-raw";
 import rehypeStarryNight from "rehype-starry-night";
 import rehypeStringify from "rehype-stringify";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import remarkGithubYamlMetadata from "remark-github-yaml-metadata";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { read } from "to-vfile";
 import { unified } from "unified";
+import unifiedInferGitMeta from "unified-infer-git-meta";
+import { visit } from "unist-util-visit";
+import { VFile } from "vfile";
 import { matter } from "vfile-matter";
-
-const execFile = promisify(child_process.execFile);
+import { rss } from "xast-util-feed";
+import { sitemap } from "xast-util-sitemap";
+import { toXml } from "xast-util-to-xml";
 
 const TITLE = "방성범 블로그";
-const DESCRIPTION = "개발자 방성범의 기술 블로그";
+export const DESCRIPTION = "개발자 방성범의 기술 블로그";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
@@ -44,10 +53,222 @@ const BASE = "https://www.bangseongbeom.com/";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-const processor = await unified()
+/**
+ * @param {{ suffix?: string }} param0
+ */
+function rehypeRelativeLinks({ suffix } = {}) {
+  /** @type {(tree: import("hast").Root) => undefined} */
+  return (tree) =>
+    visit(tree, "element", (node) => {
+      if ("href" in node.properties) {
+        let href = node.properties.href;
+        if (typeof href != "string") fail();
+        if (href.endsWith("/README.md")) {
+          node.properties.href =
+            href.slice(0, -"README.md".length) + (suffix ?? "");
+        } else if (href.endsWith(".md")) {
+          node.properties.href = href.slice(0, -".md".length) + (suffix ?? "");
+        }
+      }
+    });
+}
+
+function rehypeInferContentMeta() {
+  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  return (tree, file) =>
+    visit(tree, "element", (node) => {
+      if (node.tagName == "time" && node.properties.id == "published") {
+        let dateTime = node.properties.dateTime;
+        if (typeof dateTime != "string") fail();
+        if (!file.data.meta) file.data.meta = {};
+        file.data.meta.published = new Date(dateTime);
+      } else if (node.tagName == "time" && node.properties.id == "modified") {
+        let dateTime = node.properties.dateTime;
+        if (typeof dateTime != "string") fail();
+        if (!file.data.meta) file.data.meta = {};
+        file.data.meta.modified = new Date(dateTime);
+      }
+    });
+}
+
+/** @type {import("unified").Preset} */
+let rehypePresetDocument = {
+  plugins: [
+    [
+      rehypeDocument,
+      {
+        link: [
+          {
+            rel: "icon",
+            href: new URL("favicon.ico", BASE).toString(),
+            sizes: "32x32",
+          },
+          {
+            rel: "icon",
+            href: new URL("icon.svg", BASE).toString(),
+            type: "image/svg+xml",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: new URL("apple-touch-icon.png", BASE).toString(),
+          },
+          {
+            rel: "alternate",
+            type: "application/rss+xml",
+            href: new URL("feed.xml", BASE).toString(),
+          },
+        ],
+        meta: [{ content: "rehype-document", name: "generator" }],
+        css: "https://unpkg.com/@primer/css@^20.2.4/dist/primer.css",
+        style: /* CSS */ `.markdown-body {
+        max-width: 1012px;
+        margin-right: auto;
+        margin-left: auto;
+        padding: var(--base-size-32, 32px) !important;
+      }
+      
+      .markdown-body a {
+        text-decoration: underline;
+      }
+
+      .markdown-body .markdown-heading {
+        position: relative;
+      }
+
+      .markdown-body .markdown-heading .anchor {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
+
+        @media (pointer: coarse) {
+          opacity: 1;
+        }
+      }
+
+      .markdown-body .markdown-heading:hover .anchor {
+        opacity: 1;
+      }
+
+      .markdown-body .markdown-heading .anchor:focus {
+        opacity: 1;
+        border-radius: 6px;
+        outline: 2px solid var(--color-accent-emphasis);
+        outline-offset: -2px;
+      }
+
+      .markdown-body .markdown-heading .anchor .octicon {
+        color: var(--color-scale-gray-9);
+      }
+      
+      .markdown-body .markdown-alert {
+        padding: 0 1em;
+        border-left: 0.25em solid var(--color-border-default);
+      }
+
+      .markdown-body .markdown-alert .markdown-alert-title {
+          font-weight: var(--base-text-weight-medium, 500);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-note {
+        border-left-color: var(--color-accent-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-note .markdown-alert-title {
+        color: var(--color-accent-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-tip {
+        border-left-color: var(--color-success-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-tip .markdown-alert-title {
+        color: var(--color-success-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-important {
+        border-left-color: var(--color-done-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-important .markdown-alert-title {
+        color: var(--color-done-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-warning {
+        border-left-color: var(--color-attention-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-warning .markdown-alert-title {
+        color: var(--color-attention-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-caution {
+        border-left-color: var(--color-danger-fg);
+      }
+      
+      .markdown-body .markdown-alert.markdown-alert-caution .markdown-alert-title {
+        color: var(--color-danger-fg);
+      }`,
+      },
+    ],
+  ],
+};
+
+/** @type {import("unified").Preset} */
+let rehypePresetMeta = {
+  plugins: [
+    [
+      rehypeMeta,
+      {
+        og: true,
+        type: "article",
+        image: new URL("ogp.png", BASE).toString(),
+      },
+    ],
+  ],
+};
+
+function rehypeJsonLdMeta() {
+  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  return (tree, file) =>
+    visit(tree, "element", (node) => {
+      if (node.tagName == "head") {
+        node.children.push({
+          type: "element",
+          tagName: "script",
+          properties: {
+            type: "application/ld+json",
+          },
+          children: [
+            {
+              type: "text",
+              value: JSON.stringify(
+                /** @type {import("schema-dts").BlogPosting} */ ({
+                  "@context": "https://schema.org/",
+                  "@type": "BlogPosting",
+                  author: {
+                    "@type": "Person",
+                    name: file.data.meta?.author,
+                  },
+                  dateModified: file.data.meta?.modified,
+                  datePublished: file.data.meta?.published,
+                  headline: file.data.meta?.title,
+                  image: new URL("ogp.png", BASE).toString(),
+                })
+              ),
+            },
+          ],
+        });
+      }
+    });
+}
+
+let markdownProcessor = unified()
   .use(remarkParse)
   .use(remarkFrontmatter)
   .use(() => (_, file) => matter(file))
+  .use(remarkGithubYamlMetadata)
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
@@ -57,17 +278,88 @@ const processor = await unified()
   .use(rehypeGithubHeading)
   .use(rehypeStarryNight)
   .use(rehypeGithubImage)
-  .use(rehypeGithubLink)
+  .use(rehypeRelativeLinks)
+  .use(rehypeInferTitleMeta)
+  .use(rehypeInferDescriptionMeta, { selector: "p" })
+  .use(unifiedInferGitMeta)
+  .use(rehypeInferContentMeta)
+  .use(rehypePresetDocument)
+  .use(() => /** @type {(tree: import("hast").Root) => undefined} */ (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName == "body") node.properties.className = ["markdown-body"];
+    });
+  })
+  .use(rehypePresetMeta)
+  .use(rehypeJsonLdMeta)
+  .use(rehypeFormat)
   .use(rehypeStringify);
 
-/** @type {{ title: string, description?: string, datePublished?: string, dateModified?: string }[]} */
-let articles = [];
+function rehypeRedirectDocument() {
+  /** @type {(tree: import("hast").Root, file: import("vfile").VFile) => undefined} */
+  return (tree, file) =>
+    visit(tree, "element", (node) => {
+      if (node.tagName == "head") {
+        node.children.push({
+          type: "element",
+          tagName: "meta",
+          properties: {
+            name: "robots",
+            content: "noindex",
+          },
+          children: [],
+        });
 
-/** @type {{ loc: string, lastmod?: string }[]} */
-let sitemapURLs = [];
+        if (
+          !file.data.meta ||
+          !file.data.meta.origin ||
+          !file.data.meta.pathname
+        )
+          fail();
+        node.children.push({
+          type: "element",
+          tagName: "meta",
+          properties: {
+            httpEquiv: "refresh",
+            content: `0; URL=${file.data.meta.origin}${file.data.meta.pathname}`,
+          },
+          children: [],
+        });
+      } else if (node.tagName == "body") {
+        if (
+          !file.data.meta ||
+          !file.data.meta.origin ||
+          !file.data.meta.pathname
+        )
+          fail();
+        node.children.push({
+          type: "element",
+          tagName: "a",
+          properties: {
+            href: `${file.data.meta.origin}${file.data.meta.pathname}`,
+          },
+          children: [
+            {
+              type: "text",
+              value: `${file.data.meta.origin}${file.data.meta.pathname}`,
+            },
+          ],
+        });
+      }
+    });
+}
 
-/** @type {{ title: string, link: string, description?: string, pubDate?: string, guid: string, content: string }[]} */
-let rssItems = [];
+let redirectProcessor = rehype()
+  .data("settings", { fragment: true })
+  .use(rehypePresetDocument)
+  .use(rehypeRedirectDocument)
+  .use(rehypePresetMeta)
+  .use(rehypeFormat);
+
+/** @type {import("vfile").VFile[]} */
+let latestFiles = [];
+
+/** @type {import("vfile").Data[]} */
+let dataList = [];
 
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
@@ -77,405 +369,107 @@ await Promise.all(
         dirname(relative(SRC_ROOT, src)),
         basename(src) == "README.md"
           ? "index.html"
-          : `${parse(basename(src)).name}.html`,
+          : `${parse(basename(src)).name}.html`
       );
-      let canonical = new URL(
-        pathToFileURL(
+
+      let file = await read(src);
+      file.data.meta = {
+        origin: BASE.slice(0, -1),
+        pathname: pathToFileURL(
           join(
             sep,
             dirname(relative(SRC_ROOT, src)),
-            basename(src) == "README.md" ? sep : parse(basename(src)).name,
-          ),
-        ).pathname.substring(1),
-        BASE,
-      ).toString();
-
-      let file = await processor.process(await read(src));
-
-      let encoder = new TextEncoder();
-      let decoder = new TextDecoder();
-      let output = "";
-      let rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      rewriter.on("a[href]", {
-        element(element) {
-          let href = element.getAttribute("href");
-          if (!href) fail();
-
-          let absoluteHRef = new URL(href, canonical);
-          if (absoluteHRef.origin == new URL(BASE).origin) {
-            if (absoluteHRef.pathname.endsWith("/README.md")) {
-              absoluteHRef.pathname = absoluteHRef.pathname.slice(
-                0,
-                -"README.md".length,
-              );
-
-              element.setAttribute("href", absoluteHRef.toString());
-            } else if (absoluteHRef.pathname.endsWith(".md")) {
-              absoluteHRef.pathname = absoluteHRef.pathname.slice(
-                0,
-                -".md".length,
-              );
-
-              element.setAttribute("href", absoluteHRef.toString());
-            }
-          }
-        },
-      });
-
-      let title = file.data.matter?.title;
-      if (!title) {
-        rewriter.on("h1", {
-          text(text) {
-            if (!title) title = text.text;
-          },
-        });
-      }
-
-      let description = file.data.matter?.description;
-      if (!description) {
-        let end = false;
-        rewriter.on("p", {
-          element(element) {
-            element.onEndTag(() => {
-              end = true;
-            });
-          },
-          text(text) {
-            if (end) return;
-            if (!description) description = "";
-            description += text.text;
-          },
-        });
-      }
-
-      let datePublished = file.data.matter?.datePublished;
-      if (!datePublished) {
-        rewriter.on("time#date-published", {
-          element(element) {
-            let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime not found");
-            datePublished = dateTime;
-          },
-        });
-      }
-
-      let dateModified = file.data.matter?.dateModified;
-      if (!dateModified) {
-        rewriter.on("time#date-modified", {
-          element(element) {
-            let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime not found");
-            if (!dateModified) dateModified = dateTime;
-          },
-        });
-      }
-
-      try {
-        await rewriter.write(encoder.encode(String(file)));
-        await rewriter.end();
-      } finally {
-        rewriter.free();
-      }
-
-      if (!title) throw new Error("title not found");
-
-      if (!dateModified) {
-        let committerDate = (
-          await execFile("git", [
-            "log",
-            "--max-count=1",
-            "--pretty=tformat:%cI",
-            "--",
-            src,
-          ])
-        ).stdout.trim();
-        if (committerDate) dateModified = committerDate;
-      }
-
-      let data = /* HTML */ `<!DOCTYPE html>
-        <html lang="en" prefix="og: https://ogp.me/ns#">
-          <head>
-            <meta charset="utf-8" />
-            <title>${escape(title)}</title>
-            <meta name="author" content="${escape(AUTHOR)}" />
-            ${description
-              ? /* HTML */ `<meta
-                  name="description"
-                  content="${escape(description)}"
-                />`
-              : ""}
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <meta property="og:title" content="${escape(title)}" />
-            <meta property="og:type" content="article" />
-            <meta property="og:url" content="${escape(canonical)}" />
-            <meta
-              property="og:image"
-              content="${escape(new URL("ogp.png", BASE).toString())}"
-            />
-            ${description
-              ? /* HTML */ `<meta
-                  property="og:description"
-                  content="${escape(description)}"
-                />`
-              : ""}
-            <link rel="canonical" href="${escape(canonical)}" />
-            <link
-              rel="icon"
-              href="${escape(new URL("favicon.ico", BASE).toString())}"
-              sizes="32x32"
-            />
-            <link
-              rel="icon"
-              href="${escape(new URL("icon.svg", BASE).toString())}"
-              type="image/svg+xml"
-            />
-            <link
-              rel="apple-touch-icon"
-              href="${escape(new URL("apple-touch-icon.png", BASE).toString())}"
-            />
-            <link
-              rel="alternate"
-              type="application/rss+xml"
-              href="${escape(new URL("feed.xml", BASE).toString())}"
-            />
-            <link rel="stylesheet" href="/github-markdown.css" />
-            <script type="application/ld+json">
-              ${escape(
-                JSON.stringify(
-                  /** @type {import("schema-dts").BlogPosting} */ ({
-                    "@context": "https://schema.org/",
-                    "@type": "BlogPosting",
-                    author: {
-                      "@type": "Person",
-                      name: AUTHOR,
-                    },
-                    dateModified,
-                    datePublished,
-                    headline: title,
-                    image: new URL("ogp.png", BASE).toString(),
-                  }),
-                ),
-              )}
-            </script>
-            <style>
-              .markdown-body {
-                box-sizing: border-box;
-                min-width: 200px;
-                max-width: 980px;
-                margin: 0 auto;
-                padding: 45px;
-              }
-
-              @media (max-width: 767px) {
-                .markdown-body {
-                  padding: 15px;
-                }
-              }
-            </style>
-          </head>
-          <body class="markdown-body">
-            ${output}
-          </body>
-        </html>`;
+            basename(src) == "README.md" ? sep : parse(basename(src)).name
+          )
+        ).pathname,
+      };
+      file = await markdownProcessor.process(file);
       await mkdir(dirname(dest), { recursive: true });
-      await writeFile(dest, data);
+      await writeFile(dest, String(file));
 
-      articles.push({
-        title,
-        description,
-        datePublished,
-        dateModified,
-      });
-      sitemapURLs.push({
-        loc: canonical,
-        lastmod: datePublished,
-      });
-      rssItems.push({
-        title,
-        link: canonical,
-        description,
-        pubDate: datePublished,
-        guid: canonical,
-        content: output,
-      });
-      rssItems = rssItems
-        .toSorted(
-          (a, b) =>
-            (b.pubDate ? Date.parse(b.pubDate) : 0) -
-            (a.pubDate ? Date.parse(a.pubDate) : 0),
-        )
+      latestFiles.push(file);
+      latestFiles = latestFiles
+        .toSorted((a, b) => {
+          let aPublished = a.data.meta?.published;
+          let bPublished = b.data.meta?.published;
+          return (
+            (bPublished
+              ? typeof bPublished == "string"
+                ? Date.parse(bPublished)
+                : bPublished.getTime()
+              : 0) -
+            (aPublished
+              ? typeof aPublished == "string"
+                ? Date.parse(aPublished)
+                : aPublished.getTime()
+              : 0)
+          );
+        })
         .slice(0, 10);
+      dataList.push(file.data);
 
       if (file.data.matter?.redirectFrom) {
         for (let redirectFromPath of file.data.matter?.redirectFrom) {
-          let path = isAbsolute(redirectFromPath)
+          let redirectPath = isAbsolute(redirectFromPath)
             ? join(DEST_ROOT, redirectFromPath)
             : join(dest, "..", redirectFromPath);
-          let data = /* HTML */ `<!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8" />
-                <title>${escape(title)}</title>
-                <meta
-                  http-equiv="refresh"
-                  content="0; URL=${escape(canonical)}"
-                />
-                <meta name="robots" content="noindex" />
-                <link rel="canonical" href="${escape(canonical)}" />
-                <link
-                  rel="icon"
-                  href="${escape(new URL("favicon.ico", BASE).toString())}"
-                  sizes="32x32"
-                />
-                <link
-                  rel="icon"
-                  href="${escape(new URL("icon.svg", BASE).toString())}"
-                  type="image/svg+xml"
-                />
-                <link
-                  rel="apple-touch-icon"
-                  href="${escape(
-                    new URL("apple-touch-icon.png", BASE).toString(),
-                  )}"
-                />
-              </head>
-              <body>
-                <a href="${escape(canonical)}">${escape(canonical)}</a>
-              </body>
-            </html> `;
-          await mkdir(dirname(path), {
-            recursive: true,
-          });
-          await writeFile(path, data);
+          let redirectFile = new VFile({ data: file.data });
+          redirectFile = await redirectProcessor.process(redirectFile);
+          await mkdir(dirname(redirectPath), { recursive: true });
+          await writeFile(redirectPath, String(redirectFile));
         }
       }
     } else if (
-      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(extname(src))
+      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
+        extname(src)
+      )
     ) {
       let dest = join(DEST_ROOT, relative(SRC_ROOT, src));
       await mkdir(dirname(dest), { recursive: true });
       await copyFile(src, dest);
     }
-  }),
-);
-
-let articlesContent = articles
-  .toSorted(
-    (a, b) =>
-      (b.dateModified ? Date.parse(b.dateModified) : 0) -
-      (a.dateModified ? Date.parse(a.dateModified) : 0),
-  )
-  .map(
-    ({ title, description, datePublished, dateModified }) =>
-      /* HTML */ `<article>
-        <h1>${escape(title)}</h1>
-        ${description ? /* HTML */ `<p>${escape(description)}</p>` : ""}
-        ${datePublished
-          ? /* HTML */ `<time
-              datetime="${escape(datePublished)}"
-              class="date-published"
-              >${escape(datePublished)}</time
-            >`
-          : ""}
-        ${dateModified
-          ? /* HTML */ `<time
-              datetime="${escape(dateModified)}"
-              class="date-modified"
-              >${escape(dateModified)}</time
-            >`
-          : ""}
-      </article>`,
-  )
-  .join("");
-
-await Promise.all(
-  (await globby(join(DEST_ROOT, "**"))).map(async (path) => {
-    if (extname(path) == ".html") {
-      let input = await readFile(path, { encoding: "utf8" });
-
-      let encoder = new TextEncoder();
-      let decoder = new TextDecoder();
-      let output = "";
-      let rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      rewriter.on("section#articles", {
-        element(element) {
-          element.setInnerContent(
-            /* HTML */ `<h2>게시물</h2>` + articlesContent,
-            {
-              html: true,
-            },
-          );
-        },
-      });
-
-      try {
-        await rewriter.write(encoder.encode(input));
-        await rewriter.end();
-      } finally {
-        rewriter.free();
-      }
-
-      await writeFile(path, output);
-    }
-  }),
+  })
 );
 
 let sitemapFile = join(DEST_ROOT, "sitemap.xml");
-let sitemapData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapURLs
-  .map(
-    ({ loc, lastmod }) => /* XML */ `<url>
-  <loc>${escape(loc)}</loc>
-  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod)}</lastmod>` : ""}
-</url>
-`,
-  )
-  .join("")}
-</urlset>
-`;
-await writeFile(sitemapFile, sitemapData);
+let sitemapData = sitemap(
+  dataList.map((data) => {
+    if (!data.meta || !data.meta.origin || !data.meta.pathname) fail();
+    return {
+      url: data.meta.origin + data.meta.pathname,
+      modified: data.meta.modified,
+    };
+  })
+);
+await writeFile(sitemapFile, toXml(sitemapData));
 
 let robotsFile = join(DEST_ROOT, "robots.txt");
 let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
 await writeFile(robotsFile, robotsData);
 
 let rssFile = join(DEST_ROOT, "feed.xml");
-let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
-  <channel>
-    <title>${escape(TITLE)}</title>
-    <link>${escape(BASE)}</link>
-    <description>${escape(DESCRIPTION)}</description>
-    <language>en</language>
-    <docs>https://www.rssboard.org/rss-specification</docs>
-    <managingEditor>${escape(EMAIL)} (${escape(AUTHOR)})</managingEditor>
-    <webMaster>${escape(EMAIL)} (${escape(AUTHOR)})</webMaster>
-    <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
-    <atom:link href="${escape(new URL("feed.xml", BASE).toString())}" rel="self" type="application/rss+xml" />
-    ${rssItems
-      .map(
-        (item) => /* XML */ `<item>
-      <title>${escape(item.title)}</title>
-         <link>${escape(item.link)}</link>
-      <description>${escape(item.description ?? item.content)}</description>
-      ${item.pubDate ? /* XML*/ `<pubDate>${escape(new Date(item.pubDate).toUTCString())}</pubDate>` : ""}
-      <guid>${escape(item.guid)}</guid>
-      ${item.description ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
-    </item>
-    `,
-      )
-      .join("")}
-  </channel>
-</rss>
-`;
-await writeFile(rssFile, rssData);
+let rssData = rss(
+  {
+    title: TITLE,
+    url: BASE,
+    feedUrl: new URL("feed.xml", BASE).toString(),
+    description: DESCRIPTION,
+    lang: "en",
+    author: AUTHOR,
+  },
+  latestFiles.map((file) => {
+    let data = file.data;
+    if (!data.meta || !data.meta.origin || !data.meta.pathname) fail();
+    let body = select("body", fromHtml(String(file)));
+    if (!body) fail();
+    return {
+      title: data.meta.title,
+      descriptionHtml: toHtml(body.children),
+      url: data.meta.origin + data.meta.pathname,
+      published: data.meta.published,
+      modified: data.meta.modified,
+      tags: data.meta.tags,
+    };
+  })
+);
+await writeFile(rssFile, toXml(rssData));
