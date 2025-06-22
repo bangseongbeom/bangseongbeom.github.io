@@ -46,7 +46,7 @@ const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
 marked.use(gfmHeadingId());
 marked.use(markedAlert());
-marked.use(markedFootnote({ description: "각주", refMarkers: true }));
+marked.use(markedFootnote({ description: "각주" }));
 let highlighter = await createHighlighter({
   langs: ["c", "py", "sh", "http", "yaml", "html"],
   themes: ["github-light-default"],
@@ -181,7 +181,7 @@ await Promise.all(
         rewriter.on("time#date-published", {
           element(element) {
             let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime is not found");
+            if (!dateTime) throw new Error("datetime not found");
             datePublished = new Date(dateTime);
           },
         });
@@ -192,7 +192,7 @@ await Promise.all(
         rewriter.on("time#date-modified", {
           element(element) {
             let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime is not found");
+            if (!dateTime) throw new Error("datetime not found");
             if (!dateModified) dateModified = new Date(dateTime);
           },
         });
@@ -226,18 +226,16 @@ await Promise.all(
             <meta charset="utf-8" />
             <title>${escape(title)}</title>
             <meta name="author" content="${escape(AUTHOR)}" />
-            ${
-              description
-                ? /* HTML */ `<meta
-                    name="description"
-                    content="${escape(description)}"
-                  />`
-                : ""
-            }
+            ${description
+              ? /* HTML */ `<meta
+                  name="description"
+                  content="${escape(description)}"
+                />`
+              : ""}
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
-            />
+            
             <meta property="og:title" content="${escape(title)}" />
             <meta property="og:type" content="article" />
             <meta property="og:url" content="${escape(canonical)}" />
@@ -245,14 +243,12 @@ await Promise.all(
               property="og:image"
               content="${escape(new URL("ogp.png", BASE).toString())}"
             />
-            ${
-              description
-                ? /* HTML */ `<meta
-                    property="og:description"
-                    content="${escape(description)}"
-                  />`
-                : ""
-            }
+            ${description
+              ? /* HTML */ `<meta
+                  property="og:description"
+                  content="${escape(description)}"
+                />`
+              : ""}
             <link rel="canonical" href="${escape(canonical)}" />
             <link
               rel="icon"
@@ -273,6 +269,13 @@ await Promise.all(
               type="application/rss+xml"
               href="${escape(new URL("feed.xml", BASE).toString())}"
             />
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css"
+              integrity="sha512-BrOPA520KmDMqieeM7XFe6a3u3Sb3F1JBaQnrIAmWg3EYrciJ+Qqe6ZcKCdfPv26rGcgTrJnZ/IdQEct8h3Zhw=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"
+            />
             <script type="application/ld+json">
               ${escape(
                 JSON.stringify(
@@ -292,40 +295,23 @@ await Promise.all(
               )}
             </script>
             <style>
-              body {
-                line-height: 1.5;
-              }
-              body > * {
-                max-width: 40em;
+              .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
                 margin: 0 auto;
+                padding: 45px;
+              }
+
+              @media (max-width: 767px) {
+                .markdown-body {
+                  padding: 15px;
+                }
               }
             </style>
           </head>
-          <body>
-            <header>
-              <hgroup>
-                <h1>
-                  <a href="${escape(BASE)}">${escape(TITLE)}</a>
-                </h1>
-                <p>${escape(DESCRIPTION)}</p>
-              </hgroup>
-            </header>
-            <main>${output}</main>
-            <footer>
-              <address>
-                ${escape(AUTHOR)} &lt;<a href="mailto:${EMAIL}"
-                  >${escape(EMAIL)}</a
-                >&gt;
-              </address>
-              <p>
-                <a href="https://github.com/bangseongbeom">GitHub @bangseongbeom</a>
-              </p>
-              <p>
-                <a href="${escape(new URL("feed.xml", BASE).toString())}"
-                  >구독</a
-                >
-              </p>
-            </footer>
+          <body class="markdown-body">
+            ${output}
           </body>
         </html>`;
       await mkdir(dirname(dest), { recursive: true });
