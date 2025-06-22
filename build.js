@@ -120,7 +120,10 @@ let rehypePresetDocument = {
           },
         ],
         meta: [{ content: "rehype-document", name: "generator" }],
-        css: "https://unpkg.com/@primer/css@^20.2.4/dist/primer.css",
+        css: [
+          "https://unpkg.com/@primer/css@^20.2.4/dist/primer.css",
+          "https://esm.sh/@wooorm/starry-night@3/style/both.css",
+        ],
         style: /* CSS */ `.markdown-body {
         max-width: 1012px;
         margin-right: auto;
