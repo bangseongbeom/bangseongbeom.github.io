@@ -8,14 +8,15 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { escape } from "@std/html/entities";
-import * as cheerio from "cheerio";
 import { globby } from "globby";
 import matter from "gray-matter";
+import { HTMLRewriter } from "html-rewriter-wasm";
 import { marked } from "marked";
 import markedAlert from "marked-alert";
 import markedFootnote from "marked-footnote";
 import { gfmHeadingId } from "marked-gfm-heading-id";
 import markedShiki from "marked-shiki";
+import { fail } from "node:assert";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
@@ -31,6 +32,8 @@ import {
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import { createHighlighter } from "shiki";
+
+const execFile = promisify(child_process.execFile);
 
 const TITLE = "방성범 블로그";
 const DESCRIPTION = "개발자 방성범의 기술 블로그";
@@ -108,72 +111,110 @@ await Promise.all(
       ).toString();
 
       // read file
-      let input = await readFile(src, { encoding: "utf8" });
-      let file = matter(input);
-      /** @type {{ title?: string, description?: string; datePublished?: Date, dateModified?: Date, redirectFrom?: string | string[] }} */
-      let data = file.data;
-      let content = await marked.parse(file.content);
-      let $ = cheerio.load(content, null, false);
+      let srcData = await readFile(src, { encoding: "utf8" });
+      /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string | string[]; }; content: string; }} */
+      let file = matter(srcData);
+      let oldContent = await marked.parse(file.content);
+
+      let encoder = new TextEncoder();
+      let decoder = new TextDecoder();
+      let newContent = "";
+      let rewriter = new HTMLRewriter((outputChunk) => {
+        newContent += decoder.decode(outputChunk);
+      });
 
       // extract description from <p> if it exists
-      let description = data.description ?? $("p").first().text();
+      let description = file.data.description;
+      rewriter.on("p", {
+        text(text) {
+          if (!description) description = text.text;
+        },
+      });
 
       // resolve relative links
-      $("a").each(() => {
-        let href = $(this).prop("href");
-        if (!href) return;
+      rewriter.on("a[href]", {
+        element(element) {
+          let href = element.getAttribute("href");
+          if (!href) fail();
 
-        let absoluteHRef = new URL(href, canonical);
-        if (absoluteHRef.origin == new URL(BASE).origin) {
-          if (absoluteHRef.pathname.endsWith("/README.md")) {
-            absoluteHRef.pathname = absoluteHRef.pathname.slice(
-              0,
-              -"README.md".length,
-            );
-            href = absoluteHRef.toString();
-          } else if (absoluteHRef.pathname.endsWith(".md")) {
-            absoluteHRef.pathname = absoluteHRef.pathname.slice(
-              0,
-              -".md".length,
-            );
-            href = absoluteHRef.toString();
+          let absoluteHRef = new URL(href, canonical);
+          if (absoluteHRef.origin == new URL(BASE).origin) {
+            if (absoluteHRef.pathname.endsWith("/README.md")) {
+              absoluteHRef.pathname = absoluteHRef.pathname.slice(
+                0,
+                -"README.md".length,
+              );
+
+              element.setAttribute("href", absoluteHRef.toString());
+            } else if (absoluteHRef.pathname.endsWith(".md")) {
+              absoluteHRef.pathname = absoluteHRef.pathname.slice(
+                0,
+                -".md".length,
+              );
+
+              element.setAttribute("href", absoluteHRef.toString());
+            }
           }
-        }
-
-        $(this).prop("href", href);
+        },
       });
 
       // extract title from first h1 if it exists
-      let title = data.title ?? $("h1").first().text();
-      if (!title) throw new Error("title is not found");
+      let title = file.data.title;
+      if (!title) {
+        rewriter.on("h1", {
+          text(text) {
+            if (!title) title = text.text;
+          },
+        });
+      }
 
       // extract datePublished from frontmatter or <time> element
-      let datePublished =
-        data.datePublished ??
-        ($("time#date-published").prop("dateTime")
-          ? new Date($("time#date-published").prop("dateTime"))
-          : null);
+      let datePublished = file.data.datePublished;
+      if (!datePublished) {
+        rewriter.on("time#date-published", {
+          element(element) {
+            let dateTime = element.getAttribute("datetime");
+            if (!dateTime) throw new Error("datetime is not found");
+            datePublished = new Date(dateTime);
+          },
+        });
+      }
 
       // extract dateModified from frontmatter or <time> element
-      let execFile = promisify(child_process.execFile);
-      let committerDate = (
-        await execFile("git", [
-          "log",
-          "--max-count=1",
-          "--pretty=tformat:%cI",
-          "--",
-          src,
-        ])
-      ).stdout.trim();
-      let dateModified =
-        data.dateModified ??
-        ($("time#date-modified").prop("dateTime")
-          ? new Date($("time#date-modified").prop("dateTime"))
-          : null) ??
-        (committerDate ? new Date(committerDate) : null);
+      let dateModified = file.data.dateModified;
+      if (!dateModified) {
+        rewriter.on("time#date-modified", {
+          element(element) {
+            let dateTime = element.getAttribute("datetime");
+            if (!dateTime) throw new Error("datetime is not found");
+            if (!dateModified) dateModified = new Date(dateTime);
+          },
+        });
+      }
 
-      content = $.html();
-      let output = /* HTML */ `<!DOCTYPE html>
+      try {
+        await rewriter.write(encoder.encode(oldContent));
+        await rewriter.end();
+      } finally {
+        rewriter.free();
+      }
+
+      if (!title) throw new Error("title is not found");
+
+      if (!dateModified) {
+        let committerDate = (
+          await execFile("git", [
+            "log",
+            "--max-count=1",
+            "--pretty=tformat:%cI",
+            "--",
+            src,
+          ])
+        ).stdout.trim();
+        if (committerDate) dateModified = new Date(committerDate);
+      }
+
+      let destData = /* HTML */ `<!DOCTYPE html>
         <html lang="en" prefix="og: https://ogp.me/ns#">
           <head>
             <meta charset="utf-8" />
@@ -210,18 +251,20 @@ await Promise.all(
             />
             <script type="application/ld+json">
               ${escape(
-                JSON.stringify({
-                  "@context": "https://schema.org/",
-                  "@type": "BlogPosting",
-                  author: {
-                    "@type": "Person",
-                    name: AUTHOR,
-                  },
-                  dateModified: dateModified?.toISOString(),
-                  datePublished: datePublished?.toISOString(),
-                  headline: title,
-                  image: new URL("ogp.png", BASE),
-                }),
+                JSON.stringify(
+                  /** @type {import("schema-dts").BlogPosting} */ ({
+                    "@context": "https://schema.org/",
+                    "@type": "BlogPosting",
+                    author: {
+                      "@type": "Person",
+                      name: AUTHOR,
+                    },
+                    dateModified: dateModified?.toISOString(),
+                    datePublished: datePublished?.toISOString(),
+                    headline: title,
+                    image: new URL("ogp.png", BASE).toString(),
+                  }),
+                ),
               )}
             </script>
             <style>
@@ -238,11 +281,11 @@ await Promise.all(
             </style>
           </head>
           <body>
-            ${content}
+            ${newContent}
           </body>
         </html> `;
       await mkdir(dirname(dest), { recursive: true });
-      await writeFile(dest, output);
+      await writeFile(dest, destData);
 
       // add to sitemap
       sitemapURLs.push({
@@ -257,7 +300,7 @@ await Promise.all(
         description,
         pubDate: datePublished,
         guid: canonical,
-        content,
+        content: newContent,
       });
       rssItems = rssItems
         .toSorted(
@@ -266,14 +309,14 @@ await Promise.all(
         .slice(0, 10);
 
       // write to redirect file
-      if (data.redirectFrom) {
-        for (let redirectFrom of Array.isArray(data.redirectFrom)
-          ? data.redirectFrom
-          : [data.redirectFrom]) {
-          let destRedirectFrom = isAbsolute(redirectFrom)
+      if (file.data.redirectFrom) {
+        for (let redirectFrom of Array.isArray(file.data.redirectFrom)
+          ? file.data.redirectFrom
+          : [file.data.redirectFrom]) {
+          let redirectFromDest = isAbsolute(redirectFrom)
             ? join(DEST_ROOT, redirectFrom)
             : join(dest, "..", redirectFrom);
-          let output = /* HTML */ `<!DOCTYPE html>
+          let redirectFromData = /* HTML */ `<!DOCTYPE html>
             <html>
               <head>
                 <meta charset="utf-8" />
@@ -289,10 +332,10 @@ await Promise.all(
                 <a href="${escape(canonical)}">${escape(canonical)}</a>
               </body>
             </html> `;
-          await mkdir(dirname(destRedirectFrom), {
+          await mkdir(dirname(redirectFromDest), {
             recursive: true,
           });
-          await writeFile(destRedirectFrom, output);
+          await writeFile(redirectFromDest, redirectFromData);
         }
       }
     } else if ([".jpg", ".jpeg", ".png", ".gif", ".ico"].includes(srcExtName)) {
@@ -323,10 +366,10 @@ ${sitemapURLs
 await writeFile(sitemapDest, sitemapData);
 
 // write robots.txt
-let robotsPath = "robots.txt";
-let robotsDest = join(DEST_ROOT, robotsPath);
-let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
-await writeFile(robotsDest, robotsData);
+let robotstxtPath = "robots.txt";
+let robotstxtDest = join(DEST_ROOT, robotstxtPath);
+let robotstxtData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
+await writeFile(robotstxtDest, robotstxtData);
 
 // write RSS feed
 let rssPath = "feed.xml";
