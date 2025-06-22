@@ -41,8 +41,6 @@ const EMAIL = "bangseongbeom@gmail.com";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-const BUILD_DATE = new Date().toISOString();
-
 marked.use(gfmHeadingId());
 marked.use(markedAlert());
 marked.use(markedFootnote({ description: "각주", refMarkers: true }));
@@ -81,10 +79,10 @@ marked.use(
   }),
 );
 
-/** @type {{ loc: string, lastmod?: string }[]} */
+/** @type {{ loc: string, lastmod?: string | null }[]} */
 let sitemapURLs = [];
 
-/** @type {{ title: string, link: string, description?: string, pubDate: Date, guid: string, content: string }[]} */
+/** @type {{ title: string, link: string, description?: string | null, pubDate?: Date | null, guid: string, content: string }[]} */
 let rssItems = [];
 
 await Promise.all(
@@ -111,11 +109,14 @@ await Promise.all(
 
       // read file
       let input = await readFile(src, { encoding: "utf8" });
-      /** @typedef {{ title?: string, description?: string; date?: Date, redirectFrom?: string | string[] }} Attributes */
-      /** @type {{ data: Attributes, content: string }} */
       let file = matter(input);
+      /** @type {{ title?: string, description?: string; datePublished?: Date, dateModified?: Date, redirectFrom?: string | string[] }} */
+      let data = file.data;
       let content = await marked.parse(file.content);
       let $ = cheerio.load(content, null, false);
+
+      // extract description from <p> if it exists
+      let description = data.description ?? $("p").first().text();
 
       // resolve relative links
       $("a").each(() => {
@@ -143,21 +144,19 @@ await Promise.all(
       });
 
       // extract title from first h1 if it exists
-      let title = file.data.title ?? $("h1").prop("innerText");
+      let title = data.title ?? $("h1").first().text();
       if (!title) throw new Error("title is not found");
 
-      let description = file.data.description;
-
-      // extract date from <time id="date"> if it exists
-      let date =
-        file.data.date ??
-        ($("time#date").prop("dateTime")
-          ? new Date($("time#date").prop("dateTime"))
+      // extract datePublished from frontmatter or <time> element
+      let datePublished =
+        data.datePublished ??
+        ($("time#date-published").prop("dateTime")
+          ? new Date($("time#date-published").prop("dateTime"))
           : null);
 
-      // write to file
+      // extract dateModified from frontmatter or <time> element
       let execFile = promisify(child_process.execFile);
-      let dateModified = (
+      let committerDate = (
         await execFile("git", [
           "log",
           "--max-count=1",
@@ -166,9 +165,16 @@ await Promise.all(
           src,
         ])
       ).stdout.trim();
+      let dateModified =
+        data.dateModified ??
+        ($("time#date-modified").prop("dateTime")
+          ? new Date($("time#date-modified").prop("dateTime"))
+          : null) ??
+        (committerDate ? new Date(committerDate) : null);
+
       content = $.html();
       let output = /* HTML */ `<!DOCTYPE html>
-        <html lang="ko" prefix="og: https://ogp.me/ns#">
+        <html lang="en" prefix="og: https://ogp.me/ns#">
           <head>
             <meta charset="utf-8" />
             <title>${escape(title)}</title>
@@ -186,7 +192,10 @@ await Promise.all(
             <meta property="og:title" content="${escape(title)}" />
             <meta property="og:type" content="article" />
             <meta property="og:url" content="${escape(canonical)}" />
-            <meta property="og:image" content="FIXME" />
+            <meta
+              property="og:image"
+              content="${escape(new URL("ogp.png", BASE).toString())}"
+            />
             ${description
               ? /* HTML */ `<meta
                   property="og:description"
@@ -194,7 +203,11 @@ await Promise.all(
                 />`
               : ""}
             <link rel="canonical" href="${escape(canonical)}" />
-            <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+            <link
+              rel="alternate"
+              type="application/rss+xml"
+              href="${escape(new URL("feed.xml", BASE).toString())}"
+            />
             <script type="application/ld+json">
               ${escape(
                 JSON.stringify({
@@ -204,10 +217,10 @@ await Promise.all(
                     "@type": "Person",
                     name: AUTHOR,
                   },
-                  dateModified: dateModified == "" ? BUILD_DATE : dateModified,
-                  datePublished: date?.toISOString() ?? "",
+                  dateModified: dateModified?.toISOString(),
+                  datePublished: datePublished?.toISOString(),
                   headline: title,
-                  image: ["FIXME"],
+                  image: new URL("ogp.png", BASE),
                 }),
               )}
             </script>
@@ -234,28 +247,29 @@ await Promise.all(
       // add to sitemap
       sitemapURLs.push({
         loc: canonical,
-        lastmod: date?.toISOString(),
+        lastmod: datePublished?.toISOString(),
       });
 
       // add to RSS feed
-      if (date) {
-        rssItems.push({
-          title,
-          link: canonical,
-          pubDate: date,
-          guid: canonical,
-          content,
-        });
-        rssItems = rssItems
-          .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
-          .slice(0, 10);
-      }
+      rssItems.push({
+        title,
+        link: canonical,
+        description,
+        pubDate: datePublished,
+        guid: canonical,
+        content,
+      });
+      rssItems = rssItems
+        .toSorted(
+          (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
+        )
+        .slice(0, 10);
 
       // write to redirect file
-      if (file.data.redirectFrom) {
-        for (let redirectFrom of Array.isArray(file.data.redirectFrom)
-          ? file.data.redirectFrom
-          : [file.data.redirectFrom]) {
+      if (data.redirectFrom) {
+        for (let redirectFrom of Array.isArray(data.redirectFrom)
+          ? data.redirectFrom
+          : [data.redirectFrom]) {
           let destRedirectFrom = isAbsolute(redirectFrom)
             ? join(DEST_ROOT, redirectFrom)
             : join(dest, "..", redirectFrom);
@@ -315,10 +329,6 @@ let robotsData = `Sitemap: ${new URL("sitemap.xml", BASE)}`;
 await writeFile(robotsDest, robotsData);
 
 // write RSS feed
-let execFile = promisify(child_process.execFile);
-let lastBuildDate = (
-  await execFile("git", ["log", "--max-count=1", "--pretty=tformat:%cI"])
-).stdout.trim();
 let rssPath = "feed.xml";
 let rssDest = join(DEST_ROOT, rssPath);
 let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
@@ -327,11 +337,11 @@ let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
     <title>${escape(TITLE)}</title>
     <link>${escape(BASE)}</link>
     <description>${escape(DESCRIPTION)}</description>
-    <language>ko</language>
-    <lastBuildDate>${escape(new Date(lastBuildDate).toUTCString())}</lastBuildDate>
+    <language>en</language>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <managingEditor>${escape(EMAIL)} (${escape(AUTHOR)})</managingEditor>
     <webMaster>${escape(EMAIL)} (${escape(AUTHOR)})</webMaster>
+    <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
     <atom:link href="${escape(new URL("feed.xml", BASE).toString())}" rel="self" type="application/rss+xml" />
     ${rssItems
       .map(
@@ -339,7 +349,7 @@ let rssData = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
       <title>${escape(item.title)}</title>
          <link>${escape(item.link)}</link>
       <description>${escape(item.description ?? item.content)}</description>
-      <pubDate>${escape(item.pubDate?.toUTCString() ?? "")}</pubDate>
+      ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
       <guid>${escape(item.guid)}</guid>
       ${item.description ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
     </item>
