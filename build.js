@@ -47,7 +47,7 @@ import { toXml } from "xast-util-to-xml";
 const TITLE = "방성범 블로그";
 export const DESCRIPTION = "개발자 방성범의 기술 블로그";
 const AUTHOR = "방성범 (Bang Seongbeom)";
-const EMAIL = "bangseongbeom@gmail.com";
+// const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
@@ -62,7 +62,6 @@ function rehypeRelativeLinks({ suffix } = {}) {
     visit(tree, "element", (node) => {
       if ("href" in node.properties) {
         let href = node.properties.href;
-        if (typeof href != "string") fail();
         if (href.endsWith("/README.md")) {
           node.properties.href =
             href.slice(0, -"README.md".length) + (suffix ?? "");
@@ -79,12 +78,12 @@ function rehypeInferContentMeta() {
     visit(tree, "element", (node) => {
       if (node.tagName == "time" && node.properties.id == "published") {
         let dateTime = node.properties.dateTime;
-        if (typeof dateTime != "string") fail();
+        if (!dateTime) fail();
         if (!file.data.meta) file.data.meta = {};
         file.data.meta.published = new Date(dateTime);
       } else if (node.tagName == "time" && node.properties.id == "modified") {
         let dateTime = node.properties.dateTime;
-        if (typeof dateTime != "string") fail();
+        if (!dateTime) fail();
         if (!file.data.meta) file.data.meta = {};
         file.data.meta.modified = new Date(dateTime);
       }
