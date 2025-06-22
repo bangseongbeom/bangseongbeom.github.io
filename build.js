@@ -37,9 +37,9 @@ const execFile = promisify(child_process.execFile);
 
 const TITLE = "방성범 블로그";
 const DESCRIPTION = "개발자 방성범의 기술 블로그";
-const BASE = "https://www.bangseongbeom.com/";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
+const BASE = "https://www.bangseongbeom.com/";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
@@ -226,12 +226,14 @@ await Promise.all(
             <meta charset="utf-8" />
             <title>${escape(title)}</title>
             <meta name="author" content="${escape(AUTHOR)}" />
-            ${description
-              ? /* HTML */ `<meta
-                  name="description"
-                  content="${escape(description)}"
-                />`
-              : ""}
+            ${
+              description
+                ? /* HTML */ `<meta
+                    name="description"
+                    content="${escape(description)}"
+                  />`
+                : ""
+            }
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
@@ -243,12 +245,14 @@ await Promise.all(
               property="og:image"
               content="${escape(new URL("ogp.png", BASE).toString())}"
             />
-            ${description
-              ? /* HTML */ `<meta
-                  property="og:description"
-                  content="${escape(description)}"
-                />`
-              : ""}
+            ${
+              description
+                ? /* HTML */ `<meta
+                    property="og:description"
+                    content="${escape(description)}"
+                  />`
+                : ""
+            }
             <link rel="canonical" href="${escape(canonical)}" />
             <link
               rel="icon"
@@ -289,16 +293,41 @@ await Promise.all(
             </script>
             <style>
               body {
-                max-width: 40em;
-                margin: 8px auto;
                 line-height: 1.5;
+              }
+              body > * {
+                max-width: 40em;
+                margin: 0 auto;
               }
             </style>
           </head>
           <body>
-            ${output}
+            <header>
+              <hgroup>
+                <h1>
+                  <a href="${escape(BASE)}">${escape(TITLE)}</a>
+                </h1>
+                <p>${escape(DESCRIPTION)}</p>
+              </hgroup>
+            </header>
+            <main>${output}</main>
+            <footer>
+              <address>
+                ${escape(AUTHOR)} &lt;<a href="mailto:${EMAIL}"
+                  >${escape(EMAIL)}</a
+                >&gt;
+              </address>
+              <p>
+                <a href="https://github.com/bangseongbeom">GitHub @bangseongbeom</a>
+              </p>
+              <p>
+                <a href="${escape(new URL("feed.xml", BASE).toString())}"
+                  >구독</a
+                >
+              </p>
+            </footer>
           </body>
-        </html> `;
+        </html>`;
       await mkdir(dirname(dest), { recursive: true });
       await writeFile(dest, data);
 
@@ -419,9 +448,14 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
-      rewriter.on('[is="x-articles"]', {
+      rewriter.on("section#articles", {
         element(element) {
-          element.setInnerContent(articlesContent, { html: true });
+          element.setInnerContent(
+            /* HTML */ `<h2>게시물</h2>` + articlesContent,
+            {
+              html: true,
+            },
+          );
         },
       });
 
