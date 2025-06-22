@@ -2,7 +2,6 @@ import { globby } from "globby";
 import { fromHtml } from "hast-util-from-html";
 import { select } from "hast-util-select";
 import { toHtml } from "hast-util-to-html";
-import { fail } from "node:assert";
 import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import {
   basename,
@@ -61,6 +60,7 @@ function rehypeRelativeLinks({ suffix } = {}) {
   return (tree) =>
     visit(tree, "element", (node) => {
       if ("href" in node.properties) {
+        /** @type {string} */
         let href = node.properties.href;
         if (href.endsWith("/README.md")) {
           node.properties.href =
@@ -78,12 +78,10 @@ function rehypeInferContentMeta() {
     visit(tree, "element", (node) => {
       if (node.tagName == "time" && node.properties.id == "published") {
         let dateTime = node.properties.dateTime;
-        if (!dateTime) fail();
         if (!file.data.meta) file.data.meta = {};
         file.data.meta.published = new Date(dateTime);
       } else if (node.tagName == "time" && node.properties.id == "modified") {
         let dateTime = node.properties.dateTime;
-        if (!dateTime) fail();
         if (!file.data.meta) file.data.meta = {};
         file.data.meta.modified = new Date(dateTime);
       }
@@ -307,13 +305,6 @@ function rehypeRedirectDocument() {
           },
           children: [],
         });
-
-        if (
-          !file.data.meta ||
-          !file.data.meta.origin ||
-          !file.data.meta.pathname
-        )
-          fail();
         node.children.push({
           type: "element",
           tagName: "meta",
@@ -324,12 +315,6 @@ function rehypeRedirectDocument() {
           children: [],
         });
       } else if (node.tagName == "body") {
-        if (
-          !file.data.meta ||
-          !file.data.meta.origin ||
-          !file.data.meta.pathname
-        )
-          fail();
         node.children.push({
           type: "element",
           tagName: "a",
@@ -408,7 +393,7 @@ await Promise.all(
       dataList.push(file.data);
 
       if (file.data.matter?.redirectFrom) {
-        for (let redirectFromPath of file.data.matter?.redirectFrom) {
+        for (let redirectFromPath of file.data.matter.redirectFrom) {
           let redirectPath = isAbsolute(redirectFromPath)
             ? join(DEST_ROOT, redirectFromPath)
             : join(dest, "..", redirectFromPath);
@@ -433,7 +418,6 @@ await Promise.all(
 let sitemapFile = join(DEST_ROOT, "sitemap.xml");
 let sitemapData = sitemap(
   dataList.map((data) => {
-    if (!data.meta || !data.meta.origin || !data.meta.pathname) fail();
     return {
       url: data.meta.origin + data.meta.pathname,
       modified: data.meta.modified,
@@ -458,9 +442,7 @@ let rssData = rss(
   },
   latestFiles.map((file) => {
     let data = file.data;
-    if (!data.meta || !data.meta.origin || !data.meta.pathname) fail();
     let body = select("body", fromHtml(String(file)));
-    if (!body) fail();
     return {
       title: data.meta.title,
       descriptionHtml: toHtml(body.children),
