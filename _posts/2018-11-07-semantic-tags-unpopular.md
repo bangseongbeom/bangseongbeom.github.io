@@ -5,6 +5,8 @@ redirectFrom: [/posts/semantic-tags-unpopular.html]
 
 # 시맨틱 태그가 인기 없는 이유
 
+<time id="published" datetime="2018-11-07">2018. 11. 7.</time>
+
 시맨틱 태그가 더 널리 사용되게 하기 위해서는 시맨틱 태그에도 기본적인 CSS 스타일이 있어야 합니다.
 
 ## 시맨틱 태그

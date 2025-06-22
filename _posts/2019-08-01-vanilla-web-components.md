@@ -4,6 +4,8 @@ category: web
 
 # 바닐라 웹 컴포넌트 만드는 법
 
+<time id="published" datetime="2019-08-01">2019. 8. 1.</time>
+
 [제이쿼리(jQuery)](https://jquery.com/), [리액트(React)](https://reactjs.org/), [뷰.js(Vue.js)](https://vuejs.org/)같은 프레임워크 없이 웹 컴포넌트를 만드는 방법에 대해 알아봅니다.
 
 ---

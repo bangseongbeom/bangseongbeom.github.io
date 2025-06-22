@@ -4,6 +4,8 @@ category: machine-learning
 
 # 넘파이 vs 사이파이
 
+<time id="published" datetime="2020-05-17">2020. 5. 17.</time>
+
 [넘파이]\(NumPy)와 [사이파이]\(SciPy)의 차이점에 대해 다룹니다.
 
 [넘파이]: https://numpy.org/

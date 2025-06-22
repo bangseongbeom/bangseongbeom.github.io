@@ -4,6 +4,8 @@ category: web
 
 # Redux의 장점과 주의점
 
+<time id="published" datetime="2019-07-21">2019. 7. 21.</time>
+
 [Redux(리덕스)](https://redux.js.org/)를 쓰는 이유와 사용 시 주의할 점에 대해 살펴봅니다.
 
 ## 장점 1: 상태의 중앙화

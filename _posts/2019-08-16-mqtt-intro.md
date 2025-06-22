@@ -4,6 +4,8 @@ category: iot
 
 # MQTT 소개
 
+<time id="published" datetime="2019-08-16">2019. 8. 16.</time>
+
 MQTT의 필요성과 특징에 대해 소개합니다.
 
 ## MQTT의 필요성

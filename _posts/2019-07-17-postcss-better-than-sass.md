@@ -4,6 +4,8 @@ category: web
 
 # PostCSS가 Sass보다 좋은 이유
 
+<time id="published" datetime="2019-07-17">2019. 7. 17.</time>
+
 [Sass(사스)](https://sass-lang.com/)의 복잡한 문법이 필요 없다면, CSS의 표준 문법에 기반한 [PostCSS(포스트CSS)](https://postcss.org/)를 사용하는 것이 더 편리합니다.
 
 ## 여기서 말하는 PostCSS는 Preset Env

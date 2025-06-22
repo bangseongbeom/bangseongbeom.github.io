@@ -4,6 +4,8 @@ category: git
 
 # GitFlow가 안 좋은 이유
 
+<time id="published" datetime="2019-07-21">2019. 7. 21.</time>
+
 깃에서 가장 유명한 브랜칭 전략인 [GitFlow(깃플로)](https://danielkummer.github.io/git-flow-cheatsheet/)의 단점을 분석합니다.
 
 ## 단점 1: 불필요한 브랜치

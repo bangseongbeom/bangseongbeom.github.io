@@ -5,6 +5,8 @@ redirectFrom: [/posts/unittest-vs-pytest.html]
 
 # unittest vs pytest
 
+<time id="published" datetime="2018-10-23">2018. 10. 23.</time>
+
 유명한 파이썬 테스팅 프레임워크인 [unittest(유닛테스트)][unittest]와 [pytest(파이테스트)][pytest]의 장단점을 비교합니다. pytest의 독특한 테스트 방식이 별로라면 unittest를, 간결하고 아름다운 테스트가 중요하다면 pytest를 사용하세요.
 
 [unittest]: https://docs.python.org/3/library/unittest.html
