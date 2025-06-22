@@ -30,7 +30,6 @@ import rehypeStarryNight from "rehype-starry-night";
 import rehypeStringify from "rehype-stringify";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
-import remarkGithubYamlMetadata from "remark-github-yaml-metadata";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { read } from "to-vfile";
@@ -273,7 +272,6 @@ let markdownProcessor = unified()
   .use(remarkParse)
   .use(remarkFrontmatter)
   .use(() => (_, file) => matter(file))
-  .use(remarkGithubYamlMetadata)
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
