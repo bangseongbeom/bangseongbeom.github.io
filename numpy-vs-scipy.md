@@ -2,6 +2,10 @@
 category: machine-learning
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🧠 기계 학습](/machine-learning.md)
+
 # 넘파이 vs 사이파이
 
 <time id="published" datetime="2020-05-17">2020. 5. 17.</time>

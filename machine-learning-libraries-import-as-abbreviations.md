@@ -2,6 +2,10 @@
 category: machine-learning
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🧠 기계 학습](/machine-learning.md)
+
 # 기계 학습 라이브러리들의 'import as' 약칭
 
 <time id="published" datetime="2020-05-10">2020. 5. 10.</time>

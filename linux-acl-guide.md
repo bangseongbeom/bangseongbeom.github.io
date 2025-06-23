@@ -3,6 +3,10 @@ category: linux
 redirectFrom: [/linux-acl.html]
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🐧 리눅스](/linux.md)
+
 # 리눅스 ACL 가이드
 
 <time id="published" datetime="2019-07-15">2019. 7. 15.</time>

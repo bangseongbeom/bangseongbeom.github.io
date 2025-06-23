@@ -3,6 +3,10 @@ category: python
 redirectFrom: [/posts/unittest-vs-pytest.html]
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🐍 파이썬](/python.md)
+
 # unittest vs pytest
 
 <time id="published" datetime="2018-10-23">2018. 10. 23.</time>

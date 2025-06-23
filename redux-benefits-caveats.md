@@ -2,6 +2,10 @@
 category: web
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🌐 웹](/web.md)
+
 # Redux의 장점과 주의점
 
 <time id="published" datetime="2019-07-21">2019. 7. 21.</time>

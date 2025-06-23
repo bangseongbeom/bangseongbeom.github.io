@@ -5,6 +5,10 @@ redirectFrom:
   - /website-width.html
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🌐 웹](/web.md)
+
 # 웹 사이트 너비 정하기
 
 <time id="published" datetime="2018-11-08">2018. 11. 8.</time>

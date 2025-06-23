@@ -2,6 +2,10 @@
 category: linux
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🐧 리눅스](/linux.md)
+
 # source, . (점): 셸 스크립트 파일 실행
 
 <time id="published" datetime="2020-04-29">2020. 4. 29.</time>

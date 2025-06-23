@@ -2,6 +2,10 @@
 category: web
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🌐 웹](/web.md)
+
 # 바닐라 웹 컴포넌트 만드는 법
 
 <time id="published" datetime="2019-08-01">2019. 8. 1.</time>

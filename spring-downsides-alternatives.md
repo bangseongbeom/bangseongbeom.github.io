@@ -3,6 +3,10 @@ category: java
 redirectFrom: [/posts/spring-downsides-alternatives.html]
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[☕ 자바](/java.md)
+
 # 스프링의 단점과 대안
 
 <time id="published" datetime="2018-11-15">2018. 11. 15.</time>

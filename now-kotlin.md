@@ -3,6 +3,10 @@ category: android
 redirectFrom: [/posts/now-kotlin.html]
 ---
 
+[🏠 방성범 블로그](/README.md)
+
+[🤖 안드로이드](/android.md)
+
 # 이제서야 코틀린을 도입하게 된 이유
 
 <time id="published" datetime="2018-10-29">2018. 10. 29.</time>
