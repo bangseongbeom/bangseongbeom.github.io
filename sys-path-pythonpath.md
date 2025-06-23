@@ -141,11 +141,8 @@ print(sys.path)
 
 `'/usr/lib/python36.zip'`, `'/usr/lib/python3.6'`, `'/usr/lib/python3.6/lib-dynload'` 등 내장 모듈을 위한 여러 경로들을 확인할 수 있습니다.
 
-{% include note.html %}
-
-[`sys.path`]에는 디렉터리 경로뿐만 아니라 `'/usr/lib/python36.zip'`처럼 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
-
-{% include note.html end=true %}
+> [!NOTE]
+> [`sys.path`]에는 디렉터리 경로뿐만 아니라 `'/usr/lib/python36.zip'`처럼 압축 파일도 추가할 수 있습니다. 자세한 내용은 [`zipimport`](https://docs.python.org/3/library/zipimport.html) 모듈을 참고하세요.
 
 ## 주의: `sys.path`의 순서
 
@@ -173,8 +170,5 @@ print(sys.path)
 
     > This means that scripts in that directory will be loaded instead of modules of the same name in the library directory. This is an error unless the replacement is intended.
 
-{% include note.html %}
-
-내장 모듈을 덮어쓰는 현상으로 인해 발견하기 어려운 오류가 발생할 수 있습니다. 자세한 내용은 [<파이썬 내장 모듈과 동일한 이름 피하기>](/avoid-python-builtin-module-names.html)를 참고하세요.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 내장 모듈을 덮어쓰는 현상으로 인해 발견하기 어려운 오류가 발생할 수 있습니다. 자세한 내용은 [<파이썬 내장 모듈과 동일한 이름 피하기>](/avoid-python-builtin-module-names.html)를 참고하세요.

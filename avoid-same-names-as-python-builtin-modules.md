@@ -60,11 +60,8 @@ AttributeError: module 'enum' has no attribute 'IntFlag'
 
 [`re`] 내장 모듈에는 [`import enum`](https://github.com/python/cpython/blob/686d508c26fafb57dfe463c4f55b20013dad1441/Lib/re.py#L124)이란 코드가 있습니다. **여기서 `import enum`은 [`enum`] 내장 모듈을 불러오지 않습니다. 앞에서 만든 아무 내용도 없는 `enum.py`를 불러옵니다.** `enum.py`에는 '당연히' `IntFlag`가 없습니다. 때문에 이를 찾을 수 없다는 오류가 발생하게 되는 것이죠.
 
-{% include note.html %}
-
-파이썬 파일을 불러오는 절차에 대한 자세한 내용은 [<sys.path, PYTHONPATH>](/sys-path-pythonpath.html)를 참고하세요.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 파이썬 파일을 불러오는 절차에 대한 자세한 내용은 [<sys.path, PYTHONPATH>](/sys-path-pythonpath.html)를 참고하세요.
 
 ## 부정확한 오류 메시지
 

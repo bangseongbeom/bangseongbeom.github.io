@@ -96,8 +96,6 @@ category: etc
 
 </figure>
 
-{% include note.html %}
-
 <figure>
 
 ![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-6.png)
@@ -109,8 +107,6 @@ SD 카드 또는 USB의 용량이 너무 클 경우, [발레나에처]는 사용
 </figcaption>
 
 </figure>
-
-{% include note.html end=true %}
 
 ## 대안
 

@@ -131,9 +131,8 @@ category: machine-learning
 > distributions.lomax(...)
 > ```
 
-{% include note.html %}
-
-지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 직접 `import`하고 했습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용하기도 했던 것으로 보입니다[^top-level-scipy].
+> [!NOTE]
+> 지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 직접 `import`하고 했습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용하기도 했던 것으로 보입니다[^top-level-scipy].
 
 [^api-scipy]: [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html):
 
@@ -142,8 +141,6 @@ category: machine-learning
 [^top-level-scipy]: [Basic functions in Numpy (and top-level scipy) - SciPy v0.9](https://docs.scipy.org/doc/scipy-0.9.0/reference/tutorial/basic.html):
 
     > To begin with, all of the Numpy functions have been subsumed into the scipy namespace so that all of those functions are available without additionally importing Numpy. In addition, the universal functions (addition, subtraction, division) have been altered to not raise exceptions if floating-point errors are encountered; instead, NaN’s and Inf’s are returned in the arrays. To assist in detection of these events, several functions (sp.isnan, sp.isfinite, sp.isinf) are available.
-
-{% include note.html end=true %}
 
 ## 판다스
 

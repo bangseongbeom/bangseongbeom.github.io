@@ -18,15 +18,12 @@ category: web
 
 크롬 확장 기능 또는 파이어폭스 플러그인으로 셀레늄 IDE를 사용할 수 있습니다. [셀레늄 IDE 공식 홈페이지](https://www.selenium.dev/selenium-ide/)에서 플러그인을 설치하세요.
 
-{% include note.html %}
-
-이 글에서 소개하는 셀레늄 IDE는 버전 3입니다. 버전 4는 현재 개발 중이며, 브라우저 없이 독립 실행 가능하도록 [일렉트론](https://www.electronjs.org/)(Electron) 기반으로 구현되고 있습니다[^electron].
+> [!NOTE]
+> 이 글에서 소개하는 셀레늄 IDE는 버전 3입니다. 버전 4는 현재 개발 중이며, 브라우저 없이 독립 실행 가능하도록 [일렉트론](https://www.electronjs.org/)(Electron) 기반으로 구현되고 있습니다[^electron].
 
 [^electron]: [Electron - Selenium IDE](https://github.com/SeleniumHQ/selenium-ide#electron)
 
     > The move to Electron is a work in progress. We will post updates as progress is made. If you're looking for Selenium IDE as a browser extension then check out the v3 branch.
-
-{% include note.html end=true %}
 
 ## 기록
 
@@ -78,17 +75,14 @@ category: web
 
 'Save project' 버튼을 눌러 프로젝트를 저장합니다.
 
-{% include note.html %}
-
-웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[^why-location-not-remembered].
+> [!NOTE]
+> 웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[^why-location-not-remembered].
 
 [^why-location-not-remembered]: [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
 
     > All of these questions are part of the same problem -- as a browser extension Selenium IDE does not have access to the file system. The only way to offer "save" functionality is through downloading the file. This issue will be resolved when the IDE moves to a native application. This will give the IDE premier filesystem access, which will enable it to offer a polished "save" experience.
     >
     > If you want to stay updated, you can follow along with issue 363.
-
-{% include note.html end=true %}
 
 ### 저장되지 않음 표시
 
@@ -110,11 +104,8 @@ category: web
 
 테스트(test)는 여러 **명령어**들을 순서대로 나열해놓은 것입니다. 하나의 **프로젝트**에 여러 테스트가 존재할 수 있습니다.
 
-{% include note.html %}
-
-이것이 테스트라고 불리는 이유는, 이 용어가 [J유닛의 테스트](https://junit.org/junit5/docs/current/user-guide/#writing-tests-classes-and-methods)와 관련이 있기 때문으로 보입니다. 셀레늄 IDE는 작성한 테스트를 J유닛의 테스트로 내보낼 수 있는 기능을 제공하는데요(하단 참조), 이때 셀레늄 IDE의 테스트 하나는 J유닛의 테스트 하나로 변환됩니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 이것이 테스트라고 불리는 이유는, 이 용어가 [J유닛의 테스트](https://junit.org/junit5/docs/current/user-guide/#writing-tests-classes-and-methods)와 관련이 있기 때문으로 보입니다. 셀레늄 IDE는 작성한 테스트를 J유닛의 테스트로 내보낼 수 있는 기능을 제공하는데요(하단 참조), 이때 셀레늄 IDE의 테스트 하나는 J유닛의 테스트 하나로 변환됩니다.
 
 ### 용어 설명: 테스트 스위트
 
@@ -126,11 +117,8 @@ category: web
 
 **주의:** 하나의 테스트는 여러 테스트 스위트에 속할 수도 있고, 그 어떤 테스트 스위트에도 속하지 않을 수도 있습니다.
 
-{% include note.html %}
-
-앞서 언급한 테스트의 사례처럼, 이것을 테스트 스위트라 부르는 이유 역시 [J유닛의 테스트 스위트](https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner-test-suite)에서 따왔습니다. 셀레늄 IDE의 테스트 스위트 하나는 J유닛의 테스트 스위트 하나로 변환됩니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 앞서 언급한 테스트의 사례처럼, 이것을 테스트 스위트라 부르는 이유 역시 [J유닛의 테스트 스위트](https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner-test-suite)에서 따왔습니다. 셀레늄 IDE의 테스트 스위트 하나는 J유닛의 테스트 스위트 하나로 변환됩니다.
 
 ### 테스트, 테스트 스위트 추가
 
@@ -158,11 +146,8 @@ category: web
 
 테스트 스위트 목록인 상태에서 '⋮' 버튼을 클릭한 뒤, 'Add tests'를 눌러 테스트 스위트에 테스트를 포함시킬 수 있습니다.
 
-{% include note.html %}
-
-이 작업이 테스트를 **생성**하는 것은 아닙니다. 테스트를 생성하기 위해서는 반드시 **테스트 목록인 상태**에서 '+' 버튼을 클릭해 테스트를 생성해야 합니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 이 작업이 테스트를 **생성**하는 것은 아닙니다. 테스트를 생성하기 위해서는 반드시 **테스트 목록인 상태**에서 '+' 버튼을 클릭해 테스트를 생성해야 합니다.
 
 ### 내보내기
 
@@ -191,11 +176,8 @@ category: web
 
 ![](/assets/2020-06-14-selenium-ide-guide/run-area.png)
 
-{% include note.html %}
-
-여기서는 GUI로 실행하는 방법에 대해 다룹니다. CLI로 실행하는 방법은 이 글의 후반부에서 설명합니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> 여기서는 GUI로 실행하는 방법에 대해 다룹니다. CLI로 실행하는 방법은 이 글의 후반부에서 설명합니다.
 
 ### 전체 실행
 
@@ -229,11 +211,8 @@ category: web
 
 셀레늄 IDE는 조건문이나 반복문 같이 프로그래밍 언어에서 지원할 법한 명령어도 제공합니다. 이러한 명령어는 웹 브라우저의 사용을 기록하는 방식으로 만들 수는 없고, 대신 직접 명령어를 추가해야 합니다.
 
-{% include note.html %}
-
-[Commands - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/api/commands)에서 셀레늄 IDE가 제공하는 모든 명령어를 확인하세요.
-
-{% include note.html end=true %}
+> [!NOTE]
+> [Commands - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/api/commands)에서 셀레늄 IDE가 제공하는 모든 명령어를 확인하세요.
 
 ### 중단점
 
@@ -370,11 +349,8 @@ npm install --global selenium-side-runner
 
 실제로 사용해보기에 앞서 [`selenium-side-runner`]를 웹 브라우저와 연결하는 과정이 필요합니다. 이를 위해 각 웹 브라우저에 맞는 웹드라이버를 설치해야 합니다. 웹드라이버의 설치 방법은 수동으로 웹드라이버 파일을 다운로드받는 방법과, `npm install`을 통해 노드JS 패키지 형태로 다운로드받는 방법이 있습니다. [Installing a browser driver - Selenium IDE](https://www.seleniumhq.org/selenium-ide/docs/en/introduction/command-line-runner/#installing-a-browser-driver)를 참고하세요.
 
-{% include note.html %}
-
-`npm install`을 통해 노드JS 패키지 형태로 다운로드하는 경우 반드시 다운로드된 웹드라이버 **자체**가 속한 디렉터리를 `PATH` 환경 변수에 명시해야 합니다. 대부분의 웹드라이버 패키지는 `chromedriver`같이 웹드라이버 명령어를 제공하기도 합니다만, 이것들은 자바스크립트 코드를 통해 간접적으로 접근하는 명령어이기 때문에 [`selenium-side-runner`]가 인식하지 못합니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> `npm install`을 통해 노드JS 패키지 형태로 다운로드하는 경우 반드시 다운로드된 웹드라이버 **자체**가 속한 디렉터리를 `PATH` 환경 변수에 명시해야 합니다. 대부분의 웹드라이버 패키지는 `chromedriver`같이 웹드라이버 명령어를 제공하기도 합니다만, 이것들은 자바스크립트 코드를 통해 간접적으로 접근하는 명령어이기 때문에 [`selenium-side-runner`]가 인식하지 못합니다.
 
 준비가 끝났습니다. 셀레늄 IDE를 통해 작성한 `.side` 파일을 [`selenium-side-runner`]로 실행해봅시다.
 

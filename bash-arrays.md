@@ -92,11 +92,8 @@ echo ${ASDF[2]}
 
     > The braces are required to avoid conflicts with the shell’s filename expansion operators.
 
-{% include note.html %}
-
-`echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 내용은 잠시 뒤에 알아보겠습니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> `echo $ASDF[2]`처럼 한다고 해서 오류가 발생하지는 않습니다. 이는 배시에서 `$ASDF`같이 **배열 이름 자체에 접근**하는 것을 허용하고 있기 때문인데요, 자세한 내용은 잠시 뒤에 알아보겠습니다.
 
 ## 전체 값 얻기
 
@@ -128,11 +125,8 @@ ASDF[1]="B   B"
 | `echo "${ASDF[@]}"` | `echo "A A" "B   B"` | `A A B   B` | 보존됨 | 없음    | 각 값을 개별적인 문자열로서 취급                                 |
 | `echo "${ASDF[*]}"` | `echo "A A B   B"`   | `A A B   B` | 보존됨 | ⚠️ 존재 | 배열에 존재하는 모든 값을 하나의 문자열로서 취급                 |
 
-{% include note.html %}
-
-배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
-
-{% include note.html end=true %}
+> [!NOTE]
+> 배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
 
 **결론 1:** 배열의 값에 공백이 들어가지 않음을 보장할 수 있다면 `echo ${ASDF[@]}`나 `echo ${ASDF[*]}`을 사용해도 무방합니다.
 
@@ -225,35 +219,32 @@ ASDF[12345]=99999
 ASDF=([10]=100 [0]=200 [2]=300)
 ```
 
-{% include note.html %}
-
-`(값1 [인덱스]=값2 값3)`처럼 인덱스를 지정하는 것과 지정하지 않는 것을 혼용할 수도 있습니다.
-
-인덱스를 명시하지 않을 경우의 규칙은 언제나 **왼쪽보다 1 더 큰 인덱스**입니다. 다음 코드를 보세요:
-
-```sh
-# [3]=Global [4]=World
-ASDF=([10]=Welcome [2]=Hello Global World [50]=Bye)
-echo ${ASDF[10]}
-echo ${ASDF[2]}
-echo ${ASDF[3]}
-echo ${ASDF[4]}
-echo ${ASDF[50]}
-```
-
-`Global`은 `[2]=Hello`의 왼쪽에 있으므로 인덱스 3에 할당됩니다. `World`는 `Global`의 인덱스보다 1 더 큰 인덱스 4에 할당됩니다.
-
-실행 결과:
-
-```sh
-Welcome
-Hello
-Global
-World
-Bye
-```
-
-{% include note.html end=true %}
+> [!NOTE]
+> `(값1 [인덱스]=값2 값3)`처럼 인덱스를 지정하는 것과 지정하지 않는 것을 혼용할 수도 있습니다.
+>
+> 인덱스를 명시하지 않을 경우의 규칙은 언제나 **왼쪽보다 1 더 큰 인덱스**입니다. 다음 코드를 보세요:
+>
+> ```sh
+> # [3]=Global [4]=World
+> ASDF=([10]=Welcome [2]=Hello Global World [50]=Bye)
+> echo ${ASDF[10]}
+> echo ${ASDF[2]}
+> echo ${ASDF[3]}
+> echo ${ASDF[4]}
+> echo ${ASDF[50]}
+> ```
+>
+> `Global`은 `[2]=Hello`의 왼쪽에 있으므로 인덱스 3에 할당됩니다. `World`는 `Global`의 인덱스보다 1 더 큰 인덱스 4에 할당됩니다.
+>
+> 실행 결과:
+>
+> ```sh
+> Welcome
+> Hello
+> Global
+> World
+> Bye
+> ```
 
 ## 배열 끝 값 추가
 
@@ -309,11 +300,8 @@ echo ${CCC[@]}
 
 앞서 말씀드렸듯 **배열의 값이 공백을 포함할 수도 있다면** `${변수이름[@]}` 대신 큰따옴표가 들어간 `"${변수이름[@]}"`를 사용해야 합니다. 그렇지 않을 경우 여러 공백을 하나로 묶는 배시의 성질로 인해 공백이 모두 무시되며 여러 가지 예기치 않은 결과가 일어날 수 있습니다.
 
-{% include note.html %}
-
-배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
-
-{% include note.html end=true %}
+> [!NOTE]
+> 배시는 개별적으로 취급하는 문자열과 문자열 사이의 공백을 하나로 합치는 성질이 있습니다. 이 성질에 관해서는...
 
 다음은 배열의 값이 공백을 포함함에도 불구하고 `${변수이름[@]}`을 사용한 잘못된 코드입니다:
 
@@ -393,28 +381,25 @@ echo ${#ASDF[@]}
 
 시작 인덱스부터 마지막 인덱스까지의 길이를 구하는 것이었다면 `100`을 출력해야 합니다. `3`을 출력하는 것으로 보아 배열에 들어있는 값의 개수를 구한다는 것을 알 수 있습니다.
 
-{% include note.html %}
-
-`${#변수이름[1]}`과 같이 길이를 구할 때 `@` 대신 인덱스를 넣을 경우, 배열에 존재하는 값의 개수를 구하는 게 아니라 해당 값의 문자열 길이를 얻습니다:
-
-```sh
-ASDF=(Short LongLongLong "  ")
-echo ${#ASDF[0]}
-echo ${#ASDF[1]}
-echo ${#ASDF[2]}
-```
-
-실행 결과:
-
-```
-5
-12
-2
-```
-
-`Short`는 5글자, `LongLongLong`은 12글자, `"  "`은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
-
-{% include note.html end=true %}
+> [!NOTE]
+> `${#변수이름[1]}`과 같이 길이를 구할 때 `@` 대신 인덱스를 넣을 경우, 배열에 존재하는 값의 개수를 구하는 게 아니라 해당 값의 문자열 길이를 얻습니다:
+>
+> ```sh
+> ASDF=(Short LongLongLong "  ")
+> echo ${#ASDF[0]}
+> echo ${#ASDF[1]}
+> echo ${#ASDF[2]}
+> ```
+>
+> 실행 결과:
+>
+> ```
+> 5
+> 12
+> 2
+> ```
+>
+> `Short`는 5글자, `LongLongLong`은 12글자, `"  "`은 2글자이므로 각각 `5`, `12`, `2`가 출력되었습니다.
 
 ## 배열 전체 인덱스 얻기
 
@@ -456,11 +441,8 @@ done
 333
 ```
 
-{% include note.html %}
-
-`for` 명령어에 관한 자세한 내용은...
-
-{% include note.html end=true %}
+> [!NOTE]
+> `for` 명령어에 관한 자세한 내용은...
 
 ## 값 제거
 
@@ -597,16 +579,13 @@ declare -a ASDF
 declare -a QWER=(100 200 300)
 ```
 
-{% include note.html %}
-
-명시적으로 배열을 선언하면 컴퓨터로 하여금 해당 변수를 최적화할 수 있는 여지를 줍니다. 이로 인해 속도가 향상될 수도 있습니다[^may-speed-up].
+> [!NOTE]
+> 명시적으로 배열을 선언하면 컴퓨터로 하여금 해당 변수를 최적화할 수 있는 여지를 줍니다. 이로 인해 속도가 향상될 수도 있습니다[^may-speed-up].
 
 [^may-speed-up]:
     [Arrays - Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/arrays.html)
 
     > Adding a superfluous declare -a statement to an array declaration may speed up execution of subsequent operations on the array.
-
-{% include note.html end=true %}
 
 ## 연관 배열, 인덱스 배열, 키
 
