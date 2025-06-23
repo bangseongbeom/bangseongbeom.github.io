@@ -14,4 +14,5 @@ redirectFrom: [/categories/web.html]
 - [자바스크립트 var, let 차이점](/javascript-var-let.md)
 - [자바스크립트 클로저](/javascript-closures.md)
 - [바닐라 웹 컴포넌트 만드는 법](/vanilla-web-components.md)
+- [셀레늄 가이드](/selenium-guide.md)
 - [셀레늄 IDE 가이드](/selenium-ide-guide.md)
