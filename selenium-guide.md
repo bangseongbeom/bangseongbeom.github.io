@@ -8,6 +8,8 @@ category: web
 
 # 셀레늄 가이드
 
+<time id="published" datetime="2020-06-09">2020. 6. 9.</time>
+
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE
 
 || 인터페이스 | 학습 난이도 | 사람이 수행하는 동작 기록 | CLI | 변수, 함수, 제어문(`if`, `for`) 등 |
