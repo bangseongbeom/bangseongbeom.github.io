@@ -129,6 +129,7 @@ let rehypePresetDocument = {
         margin-right: auto;
         margin-left: auto;
         padding: var(--base-size-32, 32px) !important;
+        box-sizing: content-box;
       }
       
       .markdown-body a {
