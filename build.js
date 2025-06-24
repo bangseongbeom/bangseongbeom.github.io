@@ -133,6 +133,7 @@ let rehypePresetDocument = {
       
       .markdown-body a {
         text-decoration: underline;
+        text-underline-offset: 0.2em;
       }
 
       .markdown-body .markdown-heading {
