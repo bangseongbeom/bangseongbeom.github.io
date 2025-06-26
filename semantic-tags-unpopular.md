@@ -3,9 +3,7 @@ category: web
 redirectFrom: [/posts/semantic-tags-unpopular.html]
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🌐 웹](/web.md)
+[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
 
 # 시맨틱 태그가 인기 없는 이유
 

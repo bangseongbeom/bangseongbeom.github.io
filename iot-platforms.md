@@ -2,9 +2,7 @@
 category: iot
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🛜 IoT](/iot.md)
+[🏠 방성범 블로그](/README.md) > [🛜 IoT](/iot.md)
 
 # IoT 플랫폼 업체 비교
 

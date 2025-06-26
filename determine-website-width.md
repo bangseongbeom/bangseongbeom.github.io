@@ -5,9 +5,7 @@ redirectFrom:
   - /website-width.html
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🌐 웹](/web.md)
+[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
 
 # 웹 사이트 너비 정하기
 

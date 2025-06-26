@@ -2,9 +2,7 @@
 category: etc
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[📦 기타](/etc.md)
+[🏠 방성범 블로그](/README.md) > [📦 기타](/etc.md)
 
 # 발레나에처 소개
 

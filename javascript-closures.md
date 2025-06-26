@@ -2,9 +2,7 @@
 category: web
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🌐 웹](/web.md)
+[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
 
 # 자바스크립트 클로저
 

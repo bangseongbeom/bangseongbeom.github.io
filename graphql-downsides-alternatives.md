@@ -3,9 +3,7 @@ category: web
 redirectFrom: [/posts/graphql-downsides-alternatives.html]
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🌐 웹](/web.md)
+[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
 
 # GraphQL의 단점과 대안
 

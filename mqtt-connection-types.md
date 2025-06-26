@@ -2,9 +2,7 @@
 category: iot
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🛜 IoT](/iot.md)
+[🏠 방성범 블로그](/README.md) > [🛜 IoT](/iot.md)
 
 # MQTT 연결 방식
 

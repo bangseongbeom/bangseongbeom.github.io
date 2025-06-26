@@ -2,9 +2,7 @@
 category: linux
 ---
 
-[🏠 방성범 블로그](/README.md)
-
-[🐧 리눅스](/linux.md)
+[🏠 방성범 블로그](/README.md) > [🐧 리눅스](/linux.md)
 
 # source, . (점): 셸 스크립트 파일 실행
 
