@@ -5,6 +5,8 @@
     "start": "http-server _site"
   },
   "dependencies": {
+    "@primer/css": "^22.0.0",
+    "@wooorm/starry-night": "^3.8.0",
     "globby": "^14.1.0",
     "hast-util-from-html": "^2.0.3",
     "hast-util-select": "^6.0.4",

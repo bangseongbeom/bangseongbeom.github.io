@@ -13,7 +13,7 @@ import {
   relative,
   sep,
 } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { rehype } from "rehype";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
@@ -120,18 +120,15 @@ let rehypePresetDocument = {
           },
         ],
         meta: [{ content: "rehype-document", name: "generator" }],
-        css: [
-          "https://unpkg.com/@primer/css@^20.2.4/dist/primer.css",
-          "https://esm.sh/@wooorm/starry-night@3/style/both.css",
-        ],
+        css: ["/primer.css", "/both.css"],
         style: /* CSS */ `.markdown-body {
         max-width: 1012px;
         margin-right: auto;
         margin-left: auto;
-        padding: var(--base-size-32, 32px) !important;
+        padding: 32px !important;
         box-sizing: content-box;
       }
-      
+
       .markdown-body a {
         text-decoration: underline;
         text-underline-offset: 0.2em;
@@ -479,3 +476,13 @@ let rssData = rss(
   })
 );
 await writeFile(rssFile, toXml(rssData));
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/primer.css")),
+  join(DEST_ROOT, "primer.css")
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
+  join(DEST_ROOT, "both.css")
+);
