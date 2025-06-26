@@ -1,5 +1,4 @@
 ---
-category: linux
 redirectFrom: [/linux-acl.html]
 ---
 

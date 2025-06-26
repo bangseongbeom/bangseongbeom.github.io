@@ -1,5 +1,4 @@
 ---
-category: python
 redirectFrom: [/posts/unittest-vs-pytest.html]
 ---
 

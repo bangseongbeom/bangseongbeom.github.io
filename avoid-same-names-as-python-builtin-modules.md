@@ -1,5 +1,4 @@
 ---
-category: python
 redirectFrom:
   - /avoid-python-builtin-module-names.html
 ---

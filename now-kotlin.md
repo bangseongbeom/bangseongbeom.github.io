@@ -1,5 +1,4 @@
 ---
-category: android
 redirectFrom: [/posts/now-kotlin.html]
 ---
 

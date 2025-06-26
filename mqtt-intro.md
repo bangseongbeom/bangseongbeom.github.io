@@ -1,7 +1,3 @@
----
-category: iot
----
-
 [🏠 방성범 블로그](/README.md) > [🛜 IoT](/iot.md)
 
 # MQTT 소개

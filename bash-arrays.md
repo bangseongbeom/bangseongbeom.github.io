@@ -1,5 +1,4 @@
 ---
-category: linux
 redirectFrom: [/shell-arrays.html]
 ---
 

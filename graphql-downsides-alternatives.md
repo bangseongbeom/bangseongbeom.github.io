@@ -1,5 +1,4 @@
 ---
-category: web
 redirectFrom: [/posts/graphql-downsides-alternatives.html]
 ---
 

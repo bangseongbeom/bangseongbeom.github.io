@@ -1,5 +1,4 @@
 ---
-category: web
 redirectFrom: [/difference-var-let.html]
 ---
 

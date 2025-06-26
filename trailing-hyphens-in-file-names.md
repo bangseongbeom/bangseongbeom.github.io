@@ -1,5 +1,4 @@
 ---
-category: linux
 redirectFrom:
   - /hyphen-files.html
   - /file-name-trailing-hyphens.html

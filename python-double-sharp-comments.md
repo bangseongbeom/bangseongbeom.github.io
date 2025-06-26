@@ -1,5 +1,4 @@
 ---
-category: python
 redirectFrom: [/posts/python-double-sharp-comments.html]
 ---
 

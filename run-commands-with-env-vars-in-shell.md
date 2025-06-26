@@ -1,5 +1,4 @@
 ---
-category: linux
 redirectFrom:
   - /run-command-env-vars.html
   - /shell-command-env-vars.html

@@ -1,5 +1,4 @@
 ---
-category: java
 redirectFrom: [/posts/spring-downsides-alternatives.html]
 ---
 

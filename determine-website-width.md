@@ -1,5 +1,4 @@
 ---
-category: web
 redirectFrom:
   - /posts/website-width.html
   - /website-width.html

@@ -1,5 +1,4 @@
 ---
-category: web
 redirectFrom: [/posts/semantic-tags-unpopular.html]
 ---
 

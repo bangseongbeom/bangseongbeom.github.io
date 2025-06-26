@@ -1,5 +1,4 @@
 ---
-category: linux
 redirectFrom: [/dot-d-directories.html]
 ---
 

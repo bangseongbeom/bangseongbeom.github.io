@@ -1,7 +1,3 @@
----
-category: python
----
-
 [🏠 방성범 블로그](/README.md) > [🐍 파이썬](/python.md)
 
 # sys.path, PYTHONPATH: 파이썬 파일 탐색 경로
