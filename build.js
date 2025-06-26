@@ -295,8 +295,12 @@ let markdownProcessor = unified()
      */
     return (tree) => {
       visit(tree, "element", (node) => {
-        if (node.tagName == "body")
+        if (node.tagName == "body") {
           node.properties.className = ["markdown-body"];
+          node.properties.dataColorMode = "auto";
+          node.properties.dataLightTheme = "light";
+          node.properties.dataDarkTheme = "dark";
+        }
       });
     };
   })
