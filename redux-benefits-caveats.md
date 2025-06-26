@@ -43,7 +43,7 @@ Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나
 
 [^side-effects]:
     <https://redux.js.org/recipes/structuring-reducers/prerequisite-concepts#note-on-immutability-side-effects-and-mutation>
-    
+
     > Other side effects like generating unique IDs or timestamps in a reducer also make the code unpredictable and harder to debug and test.
 
 리듀서와 액션의 성질로 인해 다음과 같은 이점을 얻게 됩니다:
@@ -79,7 +79,7 @@ Redux는 상태를 변경하는 도중 **부수 효과(side effect)가 일어나
     > - Its React bindings prevent many unnecessary renders
     >
     > As you can see, context is not a replacement for Redux. Context won’t give you time traveling debugging, configurable middleware, or anything more than a way to get data from one place to another. If you want a tool to help you manage your state, then Redux is a great choice.
-    
+
 [^redux-not-dead-yet]:
     <https://blog.isquaredsoftware.com/2018/03/redux-not-dead-yet/#clearing-the-confusion-1>
 

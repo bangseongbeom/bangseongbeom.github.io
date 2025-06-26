@@ -41,7 +41,7 @@ sockfd = socket(PF_INET, SOCK_STREAM, 0);
 
 이 두 개념의 분리가 코드 내에서 더 명확하게 구분될 수 있도록, 같은 프로토콜일지라도 이것이 '주소 체계'를 지정하는 데 쓰이냐 '프로토콜'을 지정하는 데 쓰이냐에 따라 서로 다른 이름을 사용하게끔 했습니다:
 
-- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체처럼 소켓의 주소와 함께 '주소 체계'를 지정하기 위해서는 AF로 시작하는 이름(`AF_INET`, `AF_IPX`, …)를 사용해야 합니다. AF는 **A**ddress **F**amily의 줄임말입니다. 
+- [`sockaddr_in`](http://man7.org/linux/man-pages/man7/ip.7.html) 구조체처럼 소켓의 주소와 함께 '주소 체계'를 지정하기 위해서는 AF로 시작하는 이름(`AF_INET`, `AF_IPX`, …)를 사용해야 합니다. AF는 **A**ddress **F**amily의 줄임말입니다.
 
 - [`socket()`](http://man7.org/linux/man-pages/man2/socket.2.html) 함수처럼 실제 연결을 하기 위한 '프로토콜'을 지정하기 위해서는 PF로 시작하는 이름(`PF_INET`, `PF_IPX`, …)를 사용해야 합니다. PF는 **P**rotocol **F**amily의 줄임말입니다.
 
@@ -77,4 +77,4 @@ AF와 PF는 서로 아무런 차이가 없다는 것을 알았습니다. 그렇�
 
 반면, 리눅스 맨 페이지(와 BSD 맨 페이지)에서는 [모든 곳에 AF를 사용](http://man7.org/linux/man-pages/man2/socket.2.html#NOTES)하기를 권장합니다:
 
-> ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF_\* everywhere.**
+> ... already the BSD man page promises: "The protocol family generally is the same as the address family", and subsequent standards **use AF\_\* everywhere.**

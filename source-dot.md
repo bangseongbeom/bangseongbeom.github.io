@@ -131,10 +131,10 @@ In file 2: /home
 
 ### 요약
 
-|| 역할 | 사용 셸 | 환경 변수 유효성 | `cd`로 인한 경로 유지 |
-|---|---|---|---|---|
-| `source` | 스크립트 파일 실행 | **현재 셸** | ✔️ 파일 바깥에서 접근 가능 | ✔️ 파일 바깥에서 유지됨 |
-| `bash` | 스크립트 파일 실행 | **새로운 셸** | ❌ 파일 바깥에서 접근 불가 | ❌ 파일 바깥에서 유지 안 됨 |
+|          | 역할               | 사용 셸       | 환경 변수 유효성           | `cd`로 인한 경로 유지       |
+| -------- | ------------------ | ------------- | -------------------------- | --------------------------- |
+| `source` | 스크립트 파일 실행 | **현재 셸**   | ✔️ 파일 바깥에서 접근 가능 | ✔️ 파일 바깥에서 유지됨     |
+| `bash`   | 스크립트 파일 실행 | **새로운 셸** | ❌ 파일 바깥에서 접근 불가 | ❌ 파일 바깥에서 유지 안 됨 |
 
 ## `source` vs `.`
 
@@ -148,7 +148,8 @@ C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸�
 
 [fish 셸](https://fishshell.com/)의 개발자는 `.` 명령어에 대해 **다른 명령어와 혼동되고, 발견하기 어려우며, `.`이라는 명령어를 모르는 사람으로 하여금 `.`을 지칭하거나 소리내어 읽을 수 없다**는 문제가 있음을 지적했습니다. 이로 인해 아예 `.`을 폐기하고 `source`만을 지원하기로 했습니다[^fish-issuecomment].
 
-[^fish-issuecomment]: <https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318>
+[^fish-issuecomment]:
+    <https://github.com/fish-shell/fish-shell/issues/310#issuecomment-22645318>
 
     > I think fish simply shouldn't ever have `.`, considering it's confusing (with auto-cd), non-discoverable, and cryptic (if I would see it in code, without knowing about it, I simply couldn't say anything about it). But considering changing `.` to `source` would break lots of scripts, I decided to go with soft deprecation - the `.` command still works, ...
 
@@ -160,12 +161,14 @@ C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸�
 
 특이하게도 `.`는 `source`와 동일한 동작을 하지 않고 약간 차이가 있습니다. `source`와 반대 순서로 먼저 `PATH` 환경 변수를 찾고 그 다음 현재 작업 디렉터리에서 스크립트 파일을 찾습니다[^zsh-dot].
 
-[^zsh-source]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
+[^zsh-source]:
+    [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
 
     > source file [ arg ... ]
     > Same as ‘.’, except that the current directory is always searched and is always searched first, before directories in $path.
 
-[^zsh-dot]: [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
+[^zsh-dot]:
+    [17 Shell Builtin Commands - zsh](http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html)
 
     > . file [ arg ... ]
     > If file does not contain a slash, or if PATH_DIRS is set, the shell looks in the components of $path to find the directory containing file. Files in the current directory are not read unless ‘.’ appears somewhere in $path.
@@ -176,7 +179,7 @@ C 셸(csh)과 본 셸(sh)은 각각 1978년, 1979년 만들어진 오래된 셸�
 
 ## 참고
 
-- [Dot (command) - Wikipedia](https://en.wikipedia.org/wiki/Dot_(command))
+- [Dot (command) - Wikipedia](<https://en.wikipedia.org/wiki/Dot_(command)>)
 - [What is the difference between “source” and “.”? - Ask Ubuntu](https://askubuntu.com/questions/25488/what-is-the-difference-between-source-and): 관련 스택오버플로 질문
 - [Bash: using dot or “source” calling another script - what is difference? - Stack Overflow](https://stackoverflow.com/questions/20094271/bash-using-dot-or-source-calling-another-script-what-is-difference): 관련 스택오버플로 질문
 - [running script with “. ” and with “source ” - Unix & Linux](https://unix.stackexchange.com/questions/17815/running-script-with-and-with-source): 관련 스택오버플로 질문

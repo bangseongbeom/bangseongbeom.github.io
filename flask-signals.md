@@ -34,7 +34,7 @@ category: python
 [^signal-caveat]: <https://flask.palletsprojects.com/en/1.1.x/signals/>
 
     > However, there are differences in how they work. The core before_request() handler, for example, is executed in a specific order and is able to abort the request early by returning a response. In contrast all signal handlers are executed in undefined order and do not modify any data.
- 
+
 ## 설치
 
 시그널을 사용하기 위해서는 먼저 [**Blinker(블링커)**](https://pythonhosted.org/blinker/)라는 라이브러리를 설치해야 합니다. 용량 및 의존성 문제로 인해 이 라이브러리는 플라스크를 설치할 때 자동으로 함께 설치되지 않기 때문입니다.
@@ -80,7 +80,7 @@ sig.send("Paul")
 
 ```py
 # 1. 시그널 `import`
-from flask import request_started 
+from flask import request_started
 
 # 2. 시그널을 처리할 함수 만들기
 def when_request_started(sender):
@@ -92,15 +92,15 @@ request_started.connect(when_request_started)
 
 1. **시그널 `import`**
 
-    먼저 [`request_started`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_started)라는 시그널을 `import`로 가져옵니다. 이 시그널은 플라스크 내부에서 HTTP 요청이 처리되기 직전을 감지합니다. 이외에도 [`request_finished`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_finished), [`template_rendered`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.template_rendered) 등 [다양한 내장 시그널](https://flask.palletsprojects.com/en/1.1.x/api/#signals)이 있습니다.
-    
+   먼저 [`request_started`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_started)라는 시그널을 `import`로 가져옵니다. 이 시그널은 플라스크 내부에서 HTTP 요청이 처리되기 직전을 감지합니다. 이외에도 [`request_finished`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.request_finished), [`template_rendered`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.template_rendered) 등 [다양한 내장 시그널](https://flask.palletsprojects.com/en/1.1.x/api/#signals)이 있습니다.
+
 2. **시그널을 처리할 함수 만들기**
 
-    시그널을 처리할 함수를 만듭니다. 이때 시그널을 발생시킨 주체인 [`Flask`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask) 객체가 `sender`라는 매개변수로 들어옵니다. 만약 여러 플라스크 애플리케이션 객체를 사용하는 특수한 경우라면, 이 `sender`를 통해 앱 별로 필터링할 수 있습니다.
-    
+   시그널을 처리할 함수를 만듭니다. 이때 시그널을 발생시킨 주체인 [`Flask`](https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask) 객체가 `sender`라는 매개변수로 들어옵니다. 만약 여러 플라스크 애플리케이션 객체를 사용하는 특수한 경우라면, 이 `sender`를 통해 앱 별로 필터링할 수 있습니다.
+
 3. **함수 연결**
 
-    `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
+   `request_started` 시그널의 [`connect()`](https://pythonhosted.org/blinker/#blinker.base.Signal.connect) 메서드를 통해 시그널 처리 함수를 시그널과 연결합니다. 또는 [**`@connect_via`**](https://pythonhosted.org/blinker/#blinker.base.Signal.connect_via)를 통해 데커레이터 형태로 함수를 등록할 수도 있습니다. 두 메서드의 실질적인 역할은 같습니다.
 
 ## 고급 기능
 

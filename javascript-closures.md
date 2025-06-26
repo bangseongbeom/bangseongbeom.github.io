@@ -30,7 +30,7 @@ console.log(foo.bar); // 임의의 키 사용
 
 [^functioninitialize]:
     <http://www.ecma-international.org/ecma-262/6.0/#sec-functioninitialize>
-    
+
     > <p>6. Set the [[Environment]] internal slot of F to the value of Scope.</p>
     > <p>8. Set the [[ECMAScriptCode]] internal slot of F to Body.</p>
 
@@ -41,7 +41,8 @@ console.log(foo.bar); // 임의의 키 사용
 ```js
 function makeHelloFunction() {
   var message = "Hello"; // 참조할 수 없는 스코프의 변수
-  return function () { // 익명 함수 객체, 즉 클로저를 반환
+  return function () {
+    // 익명 함수 객체, 즉 클로저를 반환
     console.log(message);
   };
 }
@@ -72,7 +73,8 @@ hello(); // 참조할 수 없는 위치에 있는 message 변수 사용
 ```js
 function makeHelloFunction() {
   var message = "Hello"; // 참조할 수 없는 스코프의 변수
-  return function () { // 익명 함수 객체, 즉 클로저를 반환
+  return function () {
+    // 익명 함수 객체, 즉 클로저를 반환
     console.log(message);
   };
 }

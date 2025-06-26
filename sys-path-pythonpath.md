@@ -13,7 +13,6 @@ category: python
 `import` 문을 통해 다른 파이썬 파일을 불러올 때, 파이썬은 내부적으로 파일을 찾기 위해 [`sys.path`]와 [`PYTHONPATH`]에 있는 경로를 탐색합니다. 이 두 변수를 적절히 수정해 임의의 디렉터리에 있는 파이썬 파일을 손쉽게 불러올 수 있습니다.
 
 [`sys.path`]: https://docs.python.org/3/library/sys.html#sys.path
-
 [`PYTHONPATH`]: https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
 
 ## `sys.path`에 `append()`로 경로 추가
@@ -44,13 +43,15 @@ import common
 
 [`sys.path`]에는 가장 먼저 `.py` 파일이 속한 디렉터리의 절대 경로가 추가됩니다[^input-script].
 
-[^input-script]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^input-script]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The directory containing the input script
 
 특정 파이썬 파일을 실행하는 것 대신, **파이썬 인터프리터에서 직접 `print(sys.path)`를 실행**하면 인터프리터를 실행할 당시의 경로(현재 작업 디렉터리)가 [`sys.path`]에 추가됩니다[^current-directory].
- 
-[^current-directory]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+
+[^current-directory]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > (or the current directory when no file is specified)
 
@@ -92,7 +93,8 @@ print(sys.path)
 
 [`PYTHONPATH`]에는 [`sys.path`]에 추가할 여러 경로들이 들어갑니다. 리눅스에서는 `/foo:/bar`처럼 `:`로 두 경로를 구분하고, 윈도우에서는 `/foo;/bar`처럼 `;`로 두 경로를 구분합니다. (`PATH` 환경 변수와 동일한 방식)[^pythonpath-format]
 
-[^pythonpath-format]: [PYTHONPATH - Python Setup and Usage](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
+[^pythonpath-format]:
+    [PYTHONPATH - Python Setup and Usage](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
 
     > The format is the same as the shell’s PATH: one or more directory pathnames separated by os.pathsep (e.g. colons on Unix or semicolons on Windows).
 
@@ -121,7 +123,8 @@ PYTHONPATH=/foo:/bar python3 example.py
 
 이외에도 [`sys.path`]에는 파이썬에 포함된 여러 내장 모듈 등을 탐색하기 위한 기본 경로가 들어갑니다. 이 경로들은 운영 체제나 파이썬 버전에 따라 다릅니다[^installation-dependent].
 
-[^installation-dependent]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^installation-dependent]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The installation-dependent default.
 
@@ -148,13 +151,15 @@ print(sys.path)
 
 `import`는 [`sys.path`] 리스트에 들어있는 경로들을 탐색하며 불러올 파이썬 파일을 찾습니다. 리스트에 들어있는 맨 처음 경로부터 탐색을 시작합니다. 특정 경로에서 불러올 파일을 찾았다면 남은 경로를 더 찾아보지 않고 탐색을 중지합니다[^ahead].
 
-[^ahead]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^ahead]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > The directory containing the script being run is placed at the beginning of the search path, ahead of the standard library path.
 
 [`sys.path`]의 기본값은 이 문서에서 언급한 순서대로 추가됩니다[^order]:
 
-[^order]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^order]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > - The directory containing the input script (or the current directory when no file is specified).
     > - PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).
@@ -166,7 +171,8 @@ print(sys.path)
 
 만약 내장 모듈과 같은 이름으로 로컬 파일을 만들게 되면, 위의 순서로 인해 로컬 파일을 우선하여 불러옵니다[^error].
 
-[^error]: [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
+[^error]:
+    [The Module Search Path - The Python Tutorial](https://docs.python.org/3/tutorial/modules.html#the-module-search-path)
 
     > This means that scripts in that directory will be loaded instead of modules of the same name in the library directory. This is an error unless the replacement is intended.
 

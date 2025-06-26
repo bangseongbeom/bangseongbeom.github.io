@@ -22,17 +22,17 @@ category: web
 
 세 가지 방법이 있습니다. 요약하자면 다음과 같습니다:
 
-|| 구현 난이도 | 사용성 | 컴포넌트 중첩 |
-|---|---|---|---|
-| 함수 | 쉬움 | 경우에 따라 어려움 | 가능 |
-| `MutationObserver` | 어려움 | 쉬움 | 가능 |
-| 커스텀 엘리먼트 | 보통 | 쉬움 | 불가능 |
+|                    | 구현 난이도 | 사용성             | 컴포넌트 중첩 |
+| ------------------ | ----------- | ------------------ | ------------- |
+| 함수               | 쉬움        | 경우에 따라 어려움 | 가능          |
+| `MutationObserver` | 어려움      | 쉬움               | 가능          |
+| 커스텀 엘리먼트    | 보통        | 쉬움               | 불가능        |
 
-|| 성능 | IE 지원 |
-|---|---|---|
-| 함수 | 빠름 | 모든 버전 |
-| `MutationObserver` | 느림 | IE11 (폴리필 있음) |
-| 커스텀 엘리먼트 | 빠름 | 미지원 (폴리필 있음) |
+|                    | 성능 | IE 지원              |
+| ------------------ | ---- | -------------------- |
+| 함수               | 빠름 | 모든 버전            |
+| `MutationObserver` | 느림 | IE11 (폴리필 있음)   |
+| 커스텀 엘리먼트    | 빠름 | 미지원 (폴리필 있음) |
 
 ## 함수
 
@@ -43,12 +43,13 @@ category: web
 ```html
 <span class="random">Click me!</span>
 ```
+
 {: data-lang="html"}
 
 ```js
 function makeRandom(elements) {
   for (var element of elements) {
-    element.onclick = function() {
+    element.onclick = function () {
       element.textContent = Math.random();
     };
   }
@@ -56,6 +57,7 @@ function makeRandom(elements) {
 
 makeRandom(document.querySelectorAll(".random"));
 ```
+
 {: data-lang="js"}
 
 </div>
@@ -64,6 +66,7 @@ makeRandom(document.querySelectorAll(".random"));
 간단하게 구현할 수 있어 편리합니다. 그저 `makeRandom()`같은 함수 하나 만들고, 매개변수로 들어온 엘리먼트에 대해 필요한 기능을 추가하면 됩니다. 부트스트랩(Bootstrap)이나 시맨틱 UI(Semantic UI)에서도 웹 컴포넌트를 초기화할 때 이러한 방식을 사용합니다[^bootstrap-popovers] [^semantic-ui-dropdown].
 
 [^bootstrap-popovers]: <https://getbootstrap.com/docs/4.3/components/popovers/#example-enable-popovers-everywhere>
+
 [^semantic-ui-dropdown]: <https://semantic-ui.com/modules/dropdown.html#/usage>
 
 다만 함수를 실행하는 것을 잊지 말아야 합니다. 정적인 웹 페이지라면 특정 HTML `class`를 가진 모든 엘리먼트에 대해 한 번만 호출하면 되므로 그다지 어렵지 않지만, 동적으로 자바스크립트에서 HTML 엘리먼트를 생성하는 경우 상당히 번거롭습니다.
@@ -79,29 +82,33 @@ makeRandom(document.querySelectorAll(".random"));
 ```html
 <span class="random">Click me!</span>
 ```
+
 {: data-lang="html"}
 
 ```js
-for (let random of document.querySelectorAll(".random")) { // 변화 감지 이전
-  random.onclick = function() {
+for (let random of document.querySelectorAll(".random")) {
+  // 변화 감지 이전
+  random.onclick = function () {
     random.textContent = Math.random();
   };
 }
-new MutationObserver(function(mutations) {
+new MutationObserver(function (mutations) {
   for (let mutation of mutations) {
-    if (mutation.type == "attributes") { // 애트리뷰트의 변화
+    if (mutation.type == "attributes") {
+      // 애트리뷰트의 변화
       if (mutation.target.classList.contains("random")) {
-        mutation.target.onclick = function() {
+        mutation.target.onclick = function () {
           mutation.target.textContent = Math.random();
         };
       } else {
         mutation.target.onclick = null;
       }
-    } else if (mutation.type == "childList") { // 엘리먼트의 변화
+    } else if (mutation.type == "childList") {
+      // 엘리먼트의 변화
       for (let addedNode of mutation.addedNodes) {
         if (addedNode instanceof Element) {
           if (addedNode.classList.contains("random")) {
-            addedNode.onclick = function() {
+            addedNode.onclick = function () {
               addedNode.textContent = Math.random();
             };
           }
@@ -112,9 +119,10 @@ new MutationObserver(function(mutations) {
 }).observe(document, {
   attributeFilter: ["class"],
   childList: true,
-  subtree: true
+  subtree: true,
 });
 ```
+
 {: data-lang="js"}
 
 </div>
@@ -135,6 +143,7 @@ new MutationObserver(function(mutations) {
 ```html
 <x-random>Click me!</x-random>
 ```
+
 {: data-lang="html"}
 
 ```js
@@ -144,13 +153,14 @@ customElements.define(
     constructor() {
       super();
 
-      this.onclick = function() {
+      this.onclick = function () {
         this.textContent = Math.random();
       };
     }
   }
 );
 ```
+
 {: data-lang="js"}
 
 </div>

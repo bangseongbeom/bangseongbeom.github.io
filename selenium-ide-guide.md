@@ -21,7 +21,8 @@ category: web
 > [!NOTE]
 > 이 글에서 소개하는 셀레늄 IDE는 버전 3입니다. 버전 4는 현재 개발 중이며, 브라우저 없이 독립 실행 가능하도록 [일렉트론](https://www.electronjs.org/)(Electron) 기반으로 구현되고 있습니다[^electron].
 
-[^electron]: [Electron - Selenium IDE](https://github.com/SeleniumHQ/selenium-ide#electron)
+[^electron]:
+    [Electron - Selenium IDE](https://github.com/SeleniumHQ/selenium-ide#electron)
 
     > The move to Electron is a work in progress. We will post updates as progress is made. If you're looking for Selenium IDE as a browser extension then check out the v3 branch.
 
@@ -78,7 +79,8 @@ category: web
 > [!NOTE]
 > 웹 브라우저 환경에서는 그 특성 상 특정 파일의 경로에 직접적으로 파일을 쓰거나 읽을 수 없습니다. 반드시 '다른 이름으로 저장'이나 '열기'를 통해 사용자가 직접 읽거나 쓸 파일을 선택해야 합니다. 이러한 이유로 인해 셀레늄 IDE는 프로젝트를 저장할 때마다 매번 저장할 위치를 지정해야 하는 번거로움이 있습니다[^why-location-not-remembered].
 
-[^why-location-not-remembered]: [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
+[^why-location-not-remembered]:
+    [Why is the location I saved my SIDE project to not remembered? - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/faq#why-is-the-location-i-saved-my-side-project-to-not-remembered)
 
     > All of these questions are part of the same problem -- as a browser extension Selenium IDE does not have access to the file system. The only way to offer "save" functionality is through downloading the file. This issue will be resolved when the IDE moves to a native application. This will give the IDE premier filesystem access, which will enable it to offer a polished "save" experience.
     >
@@ -159,7 +161,7 @@ category: web
 
 내보내기는 특정 테스트 혹은 테스트 스위트를 프로그래밍 언어로 변환할 수 있는 기능입니다. 자바의 J유닛(JUnit), 파이썬의 파이테스트(pytest)와 같은 테스트 프레임워크 기반의 코드가 생성됩니다.
 
-현재 다음과 같은 언어 및 테스트 프레임워크를 지원합니다[^supported-exports]: 
+현재 다음과 같은 언어 및 테스트 프레임워크를 지원합니다[^supported-exports]:
 
 [^supported-exports]: [Code Export - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/code-export#supported-exports)
 
@@ -260,7 +262,8 @@ category: web
 
 각종 제어문에서는 조건을 검사하기 위해 자바스크립트 표현식을 요구합니다[^javascript-control-flow].
 
-[^javascript-control-flow]: [Control Flow - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#javascript-expressions)
+[^javascript-control-flow]:
+    [Control Flow - Selenium IDE](https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#javascript-expressions)
 
     > Conditions in your application are checked by using JavaScript expressions.
 
@@ -322,20 +325,20 @@ category: web
 
 요약하자면 다음과 같습니다:
 
-|| GUI | CLI | `.side` 파일 |
-|---|---|---|---|
-| 셀레늄 IDE | ✔️ 지원 | ❌ 미지원 | ✔️ 지원 |
-| [`selenium-side-runner`] | ❌ 미지원 | ✔️ 지원 | ✔️ 지원 |
+|                          | GUI       | CLI       | `.side` 파일 |
+| ------------------------ | --------- | --------- | ------------ |
+| 셀레늄 IDE               | ✔️ 지원   | ❌ 미지원 | ✔️ 지원      |
+| [`selenium-side-runner`] | ❌ 미지원 | ✔️ 지원   | ✔️ 지원      |
 
-|| 사람이 수행하는 동작 기록 | 테스트 편집 | 테스트 실행 |
-|---|---|---|---|
-| 셀레늄 IDE | ✔️ 지원 | ✔️ 지원 | ✔️ 지원 |
-| [`selenium-side-runner`] | ❌ 미지원 | ❌ 미지원 | ✔️ 지원 |
+|                          | 사람이 수행하는 동작 기록 | 테스트 편집 | 테스트 실행 |
+| ------------------------ | ------------------------- | ----------- | ----------- |
+| 셀레늄 IDE               | ✔️ 지원                   | ✔️ 지원     | ✔️ 지원     |
+| [`selenium-side-runner`] | ❌ 미지원                 | ❌ 미지원   | ✔️ 지원     |
 
-|| 지원 웹 브라우저 | 테스트 병렬 실행 |
-|---|---|---|
-| 셀레늄 IDE | 크롬(Chrome), 파이어폭스(Firefox) | ❌ 미지원 ([`selenium-side-runner`]에서 실행 시 병렬 실행되게끔 하는 설정만 변경 가능) |
-| [`selenium-side-runner`] | 크롬(Chrome), 에지(Edge), 파이어폭스(Firefox), 인터넷 익스플로러(Internet Explorer), 사파리(Safari) | ✔️ 지원 |
+|                          | 지원 웹 브라우저                                                                                    | 테스트 병렬 실행                                                                       |
+| ------------------------ | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 셀레늄 IDE               | 크롬(Chrome), 파이어폭스(Firefox)                                                                   | ❌ 미지원 ([`selenium-side-runner`]에서 실행 시 병렬 실행되게끔 하는 설정만 변경 가능) |
+| [`selenium-side-runner`] | 크롬(Chrome), 에지(Edge), 파이어폭스(Firefox), 인터넷 익스플로러(Internet Explorer), 사파리(Safari) | ✔️ 지원                                                                                |
 
 ---
 

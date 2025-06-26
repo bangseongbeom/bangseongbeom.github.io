@@ -20,7 +20,8 @@ category: machine-learning
 
 [넘파이]: https://numpy.org/
 
-[^import-conventions-throughout-numpy]: [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+[^import-conventions-throughout-numpy]:
+    [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
 
     > The following import conventions are used throughout the NumPy source and documentation:
     >
@@ -34,7 +35,8 @@ category: machine-learning
 
 `import as`를 어떻게 할 것인지는 전적으로 **코드 작성자의 선택**입니다. 하지만 관습적으로 쓰이는 약칭을 사용한다면, 다른 사람이 나의 코드를 볼 때 내 코드의 `import`가 어떻게 되어있는지 굳이 확인해보지 않아도 된다는 장점이 있습니다. 기계 학습 관련 라이브러리 중 하나인 [판다스]\(pandas)는 문서의 모든 예시 코드에서 `import pandas as pd` 코드가 삽입되어 있다고 가정합니다[^code-assumed-pandas]. 때문에 `pd`가 무엇의 약칭인지 일일이 확인할 필요가 없습니다.
 
-[^code-assumed-pandas]: [pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples):
+[^code-assumed-pandas]:
+    [pandas docstring guide - pandas](https://pandas.pydata.org/docs/development/contributing_docstring.html#conventions-for-the-examples):
 
     > Code in examples is assumed to always start with these two lines which are not shown:
     >
@@ -45,7 +47,7 @@ category: machine-learning
 
 ## 넘파이
 
-[넘파이]의 경우,  공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다:
+[넘파이]의 경우, 공식 문서와 소스 코드에서 `numpy` 모듈을 `np`로 줄여쓸 것이라 **명시적으로** 언급합니다:
 
 [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
 
@@ -97,7 +99,8 @@ category: machine-learning
 
 [사이파이]: https://scipy.org/
 
-[^do-not-abbreviate-scipy]: [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
+[^do-not-abbreviate-scipy]:
+    [A Guide to NumPy/SciPy Documentation - NumPy](https://numpy.org/doc/stable/docs/howto_document.html#import-conventions):
 
     > Do not abbreviate scipy. There is no motivating use case to abbreviate it in the real world, so we avoid it in the documentation to avoid confusion.
 
@@ -134,11 +137,13 @@ category: machine-learning
 > [!NOTE]
 > 지금은 더 이상 `scipy` 모듈 자체를 `import`하는 것을 권장하지 않지만[^api-scipy], 예전에는 `scipy`를 직접 `import`하고 했습니다. 당시에는 `scipy` 모듈 자체에 대해 `sp`라는 약칭을 사용하기도 했던 것으로 보입니다[^top-level-scipy].
 
-[^api-scipy]: [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html):
+[^api-scipy]:
+    [SciPy API - SciPy](https://docs.scipy.org/doc/scipy/reference/api.html):
 
     > These functions still exist for backwards compatibility, but should be imported from numpy directly.
 
-[^top-level-scipy]: [Basic functions in Numpy (and top-level scipy) - SciPy v0.9](https://docs.scipy.org/doc/scipy-0.9.0/reference/tutorial/basic.html):
+[^top-level-scipy]:
+    [Basic functions in Numpy (and top-level scipy) - SciPy v0.9](https://docs.scipy.org/doc/scipy-0.9.0/reference/tutorial/basic.html):
 
     > To begin with, all of the Numpy functions have been subsumed into the scipy namespace so that all of those functions are available without additionally importing Numpy. In addition, the universal functions (addition, subtraction, division) have been altered to not raise exceptions if floating-point errors are encountered; instead, NaN’s and Inf’s are returned in the arrays. To assist in detection of these events, several functions (sp.isnan, sp.isfinite, sp.isinf) are available.
 
@@ -197,7 +202,7 @@ category: machine-learning
 > ```
 >
 > ...
-> 
+>
 > ```py
 > import dask.bag as db
 > ```
@@ -205,7 +210,7 @@ category: machine-learning
 그 외 모듈의 경우 `from import`를 통해 함수나 클래스를 직접 가져오는 것으로 보입니다:
 
 [Futures - Dask](https://docs.dask.org/en/latest/futures.html):
-    
+
 > ```py
 > from dask.distributed import Client
 > ```
