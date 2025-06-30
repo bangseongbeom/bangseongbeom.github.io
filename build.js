@@ -59,15 +59,13 @@ function rehypeRelativeLinks({ suffix } = {}) {
    */
   return (tree) =>
     visit(tree, "element", (node) => {
-      if ("href" in node.properties) {
-        /** @type {string} */
-        let href = node.properties.href;
-        if (href.endsWith("/README.md")) {
-          node.properties.href =
-            href.slice(0, -"README.md".length) + (suffix ?? "");
-        } else if (href.endsWith(".md")) {
-          node.properties.href = href.slice(0, -".md".length) + (suffix ?? "");
-        }
+      let href = node.properties.href;
+      if (typeof href != "string") return;
+      if (href.endsWith("/README.md")) {
+        node.properties.href =
+          href.slice(0, -"README.md".length) + (suffix ?? "");
+      } else if (href.endsWith(".md")) {
+        node.properties.href = href.slice(0, -".md".length) + (suffix ?? "");
       }
     });
 }
@@ -392,27 +390,22 @@ await Promise.all(
 
       latestFiles.push(file);
       latestFiles = latestFiles
-        .toSorted(
-          /**
-           * @param {VFile} a
-           * @param {VFile} b
-           */ (a, b) => {
-            let aPublished = a.data.meta?.published;
-            let bPublished = b.data.meta?.published;
-            return (
-              (bPublished
-                ? typeof bPublished == "string"
-                  ? Date.parse(bPublished)
-                  : bPublished.getTime()
-                : 0) -
-              (aPublished
-                ? typeof aPublished == "string"
-                  ? Date.parse(aPublished)
-                  : aPublished.getTime()
-                : 0)
-            );
-          }
-        )
+        .toSorted((a, b) => {
+          let aPublished = a.data.meta?.published;
+          let bPublished = b.data.meta?.published;
+          return (
+            (bPublished
+              ? typeof bPublished == "string"
+                ? Date.parse(bPublished)
+                : bPublished.getTime()
+              : 0) -
+            (aPublished
+              ? typeof aPublished == "string"
+                ? Date.parse(aPublished)
+                : aPublished.getTime()
+              : 0)
+          );
+        })
         .slice(0, 10);
       dataList.push(file.data);
 
