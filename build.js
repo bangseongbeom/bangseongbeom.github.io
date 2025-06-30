@@ -22,7 +22,6 @@ import rehypeGithubDir from "rehype-github-dir";
 import rehypeGithubEmoji from "rehype-github-emoji";
 import rehypeGithubHeading from "rehype-github-heading";
 import rehypeGithubImage from "rehype-github-image";
-import rehypeInferDescriptionMeta from "rehype-infer-description-meta";
 import rehypeInferTitleMeta from "rehype-infer-title-meta";
 import rehypeMeta from "rehype-meta";
 import rehypeRaw from "rehype-raw";
@@ -285,7 +284,6 @@ let markdownProcessor = unified()
   .use(rehypeGithubImage)
   .use(rehypeRelativeLinks)
   .use(rehypeInferTitleMeta)
-  .use(rehypeInferDescriptionMeta)
   .use(unifiedInferGitMeta)
   .use(rehypeInferContentMeta)
   .use(rehypePresetDocument)
