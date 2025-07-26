@@ -2,7 +2,7 @@
 
 # 셀레늄 가이드
 
-<time id="published" datetime="2020-06-09">2020. 6. 9.</time>
+<time id="date-published" datetime="2020-06-09">2020. 6. 9.</time>
 
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE
 

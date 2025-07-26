@@ -6,7 +6,7 @@ redirectFrom: [/posts/graphql-downsides-alternatives.html]
 
 # GraphQL의 단점과 대안
 
-<time id="published" datetime="2019-01-29">2019. 1. 29.</time>
+<time id="date-published" datetime="2019-01-29">2019. 1. 29.</time>
 
 [GraphQL(그래프QL)](https://graphql.org/)은 서버 수정 없이 클라이언트가 원하는 쿼리를 날릴 수 있어 API를 설계하거나 변경하는 비용을 획기적으로 낮출 수 있습니다. 그러나 HTTP에서 제공하는 기존 인프라를 그대로 사용하지 못하고 GraphQL 스타일로 다시 재구현해야만 하는 부담이 있습니다.
 

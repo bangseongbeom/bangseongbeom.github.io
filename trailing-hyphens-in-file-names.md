@@ -8,7 +8,7 @@ redirectFrom:
 
 # 파일 이름 끝 하이픈
 
-<time id="published" datetime="2020-04-21">2020. 4. 21.</time>
+<time id="date-published" datetime="2020-04-21">2020. 4. 21.</time>
 
 리눅스에서 `/etc/group-`, `/etc/passwd-`, `/etc/shadow-`의 파일 이름 끝에 있는 하이픈(`-`)은 백업 파일을 의미합니다.
 

@@ -2,7 +2,7 @@
 
 # AF_INET vs PF_INET
 
-<time id="published" datetime="2019-11-08">2019. 11. 8.</time>
+<time id="date-published" datetime="2019-11-08">2019. 11. 8.</time>
 
 `192.168.0.1`같은 IP 주소 체계를 인터넷 프로토콜뿐만 아니라 다른 프로토콜에서도 사용할 수 있도록, IP 주소 체계를 지칭할 때는 `AF_INET`, IP 자체를 가리킬 때는 `PF_INET`을 사용하기로 했습니다.
 

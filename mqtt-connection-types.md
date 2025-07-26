@@ -2,7 +2,7 @@
 
 # MQTT 연결 방식
 
-<time id="published" datetime="2019-08-16">2019. 8. 16.</time>
+<time id="date-published" datetime="2019-08-16">2019. 8. 16.</time>
 
 MQTT의 TLS 보안 연결이나 웹소켓을 통한 연결 방식에 대해 소개합니다.
 

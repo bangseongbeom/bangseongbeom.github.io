@@ -2,7 +2,7 @@
 
 # 자바스크립트 클로저
 
-<time id="published" datetime="2019-07-27">2019. 7. 27.</time>
+<time id="date-published" datetime="2019-07-27">2019. 7. 27.</time>
 
 자바스크립트에서 클로저(closure)란 무엇인지, 그리고 클로저를 사용하는 이유에 대해 알아봅니다.
 
