@@ -490,6 +490,18 @@ await Promise.all(
                   href="${pathToFileURL(join(sep, relative(SRC_ROOT, src)))
                     .pathname}"
                   >⬇️ 마크다운</a
+                >,
+                <a
+                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(
+                    join(sep, relative(SRC_ROOT, src)),
+                  ).pathname}"
+                  >📄 GitHub</a
+                >,
+                <a
+                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(
+                    join(sep, relative(SRC_ROOT, src)),
+                  ).pathname}"
+                  >✏️ 편집</a
                 >
               </p>
               ${html}
