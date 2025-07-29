@@ -32,13 +32,9 @@
 
 직접 함수를 실행해 엘리먼트에 자바스크립트를 적용하는 방법입니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js">
-
 ```html
 <span class="random">Click me!</span>
 ```
-
-{: data-lang="html"}
 
 ```js
 function makeRandom(elements) {
@@ -51,11 +47,6 @@ function makeRandom(elements) {
 
 makeRandom(document.querySelectorAll(".random"));
 ```
-
-{: data-lang="js"}
-
-</div>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 간단하게 구현할 수 있어 편리합니다. 그저 `makeRandom()`같은 함수 하나 만들고, 매개변수로 들어온 엘리먼트에 대해 필요한 기능을 추가하면 됩니다. 부트스트랩(Bootstrap)이나 시맨틱 UI(Semantic UI)에서도 웹 컴포넌트를 초기화할 때 이러한 방식을 사용합니다[^bootstrap-popovers] [^semantic-ui-dropdown].
 
@@ -71,13 +62,9 @@ makeRandom(document.querySelectorAll(".random"));
 
 직접 함수를 실행하는 것 대신, [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)로 [`class`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class)나 [`data-*`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)같은 HTML 애트리뷰트의 변화를 감시합니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js" data-height="750">
-
 ```html
 <span class="random">Click me!</span>
 ```
-
-{: data-lang="html"}
 
 ```js
 for (let random of document.querySelectorAll(".random")) {
@@ -117,11 +104,6 @@ new MutationObserver(function (mutations) {
 });
 ```
 
-{: data-lang="js"}
-
-</div>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
 상당히 복잡합니다. `MutationObserver` 자체가 원체 복잡하기 때문입니다. 변화 감지 이전, 애트리뷰트의 변화(`attributeFilter`)와 엘리먼트의 변화(`childList`)를 개별적으로 다루어야 하기 때문에 코드가 무척 길어집니다.
 
 더불어 이 방법은 모든 엘리먼트의 추가/제거를 감시하므로, 반복적으로 다수의 엘리먼트를 추가하거나 제거하는 경우 성능 문제를 야기할 수 있습니다.
@@ -132,13 +114,9 @@ new MutationObserver(function (mutations) {
 
 [커스텀 엘리먼트](https://developers.google.com/web/fundamentals/web-components/customelements)를 만들어 웹 컴포넌트를 구현합니다:
 
-<div markdown="1" class="codepen" data-prefill data-theme-id="light" data-default-tab="js" data-height="450">
-
 ```html
 <x-random>Click me!</x-random>
 ```
-
-{: data-lang="html"}
 
 ```js
 customElements.define(
@@ -154,11 +132,6 @@ customElements.define(
   }
 );
 ```
-
-{: data-lang="js"}
-
-</div>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 코드 길이도 짧고 사용하기도 쉽습니다. 앞서 소개한 방식 중 가장 깔끔합니다.
 
