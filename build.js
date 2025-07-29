@@ -77,39 +77,12 @@ await Promise.all(
         },
       });
 
-      const encoder = new TextEncoder();
-      const decoder = new TextDecoder();
+      let encoder = new TextEncoder();
+      let decoder = new TextDecoder();
 
       let output = "";
-      const rewriter = new HTMLRewriter((outputChunk) => {
+      let rewriter = new HTMLRewriter((outputChunk) => {
         output += decoder.decode(outputChunk);
-      });
-
-      /** @type {string?} */
-      let codeScope;
-      let codeContent = "";
-      rewriter.on("code", {
-        element(element) {
-          let flag = element
-            .getAttribute("class")
-            ?.match(/language-(\w+)/)?.[1];
-          if (!flag) return;
-          codeScope = starryNight.flagToScope(flag) ?? null;
-          element.onEndTag((endTag) => {
-            if (!codeScope) return;
-            endTag.before(
-              toHtml(starryNight.highlight(codeContent, codeScope)),
-              { html: true },
-            );
-            codeScope = null;
-            codeContent = "";
-          });
-        },
-        text(text) {
-          if (!codeScope) return;
-          codeContent += text.text;
-          text.remove();
-        },
       });
 
       let heading = "";
@@ -243,6 +216,46 @@ await Promise.all(
             alertContent = "";
             alertType = null;
           });
+        },
+      });
+
+      try {
+        await rewriter.write(encoder.encode(html));
+        await rewriter.end();
+        html = output;
+      } finally {
+        rewriter.free();
+      }
+
+      output = "";
+      rewriter = new HTMLRewriter((outputChunk) => {
+        output += decoder.decode(outputChunk);
+      });
+
+      /** @type {string?} */
+      let codeScope;
+      let codeContent = "";
+      rewriter.on("code", {
+        element(element) {
+          let flag = element
+            .getAttribute("class")
+            ?.match(/language-(\w+)/)?.[1];
+          if (!flag) return;
+          codeScope = starryNight.flagToScope(flag) ?? null;
+          element.onEndTag((endTag) => {
+            if (!codeScope) return;
+            endTag.before(
+              toHtml(starryNight.highlight(codeContent, codeScope)),
+              { html: true },
+            );
+            codeScope = null;
+            codeContent = "";
+          });
+        },
+        text(text) {
+          if (!codeScope) return;
+          codeContent += text.text;
+          text.remove();
         },
       });
 
