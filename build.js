@@ -484,6 +484,13 @@ await Promise.all(
               data-light-theme="light"
               data-dark-theme="dark"
             >
+              <p>
+                <a
+                  href="${pathToFileURL(join(sep, relative(SRC_ROOT, src)))
+                    .pathname}"
+                  >⬇️ 마크다운</a
+                >
+              </p>
               ${html}
             </body>
           </html>`,
@@ -553,7 +560,7 @@ await Promise.all(
       }
     }
     if (
-      [".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
+      [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
         extname(src),
       )
     ) {
