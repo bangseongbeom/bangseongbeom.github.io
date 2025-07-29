@@ -323,6 +323,7 @@ await Promise.all(
         ).stdout
           .trim()
           .split("\n");
+        if (committerDates[0] == "") committerDates = [];
         if (committerDates.length) {
           if (!datePublished)
             datePublished = new Date(committerDates[committerDates.length - 1]);
