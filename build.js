@@ -375,21 +375,19 @@ await Promise.all(
               <link rel="stylesheet" href="/primer.css" />
               <link rel="stylesheet" href="/both.css" />
               <script type="application/ld+json">
-                ${escape(
-                  JSON.stringify(
-                    /** @type {import("schema-dts").BlogPosting} */ ({
-                      "@context": "https://schema.org/",
-                      "@type": "BlogPosting",
-                      author: {
-                        "@type": "Person",
-                        name: AUTHOR,
-                      },
-                      dateModified: dateModified?.toISOString(),
-                      datePublished: datePublished?.toISOString(),
-                      headline: title,
-                      image: new URL("ogp.png", BASE).toString(),
-                    }),
-                  ),
+                ${JSON.stringify(
+                  /** @type {import("schema-dts").BlogPosting} */ ({
+                    "@context": "https://schema.org/",
+                    "@type": "BlogPosting",
+                    author: {
+                      "@type": "Person",
+                      name: escape(AUTHOR),
+                    },
+                    dateModified: escape(dateModified?.toISOString()),
+                    datePublished: escape(datePublished?.toISOString()),
+                    headline: escape(title),
+                    image: escape(new URL("ogp.png", BASE).toString()),
+                  }),
                 )}
               </script>
               <style>
