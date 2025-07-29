@@ -301,6 +301,33 @@ await Promise.all(
         });
       }
 
+      rewriter.on(".markdown-heading:first-of-type", {
+        element(element) {
+          element.before(
+            /* HTML */ `<p>
+              <a
+                href="${pathToFileURL(join(sep, relative(SRC_ROOT, src)))
+                  .pathname}"
+                >⬇️ 마크다운</a
+              >,
+              <a
+                href="https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(
+                  join(sep, relative(SRC_ROOT, src)),
+                ).pathname}"
+                >📄 GitHub</a
+              >,
+              <a
+                href="https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(
+                  join(sep, relative(SRC_ROOT, src)),
+                ).pathname}"
+                >✏️ 편집</a
+              >
+            </p>`,
+            { html: true },
+          );
+        },
+      });
+
       try {
         await rewriter.write(encoder.encode(html));
         await rewriter.end();
@@ -485,25 +512,6 @@ await Promise.all(
               data-light-theme="light"
               data-dark-theme="dark"
             >
-              <p>
-                <a
-                  href="${pathToFileURL(join(sep, relative(SRC_ROOT, src)))
-                    .pathname}"
-                  >⬇️ 마크다운</a
-                >,
-                <a
-                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(
-                    join(sep, relative(SRC_ROOT, src)),
-                  ).pathname}"
-                  >📄 GitHub</a
-                >,
-                <a
-                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(
-                    join(sep, relative(SRC_ROOT, src)),
-                  ).pathname}"
-                  >✏️ 편집</a
-                >
-              </p>
               ${html}
             </body>
           </html>`,
