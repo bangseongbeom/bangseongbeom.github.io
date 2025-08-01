@@ -370,22 +370,6 @@ await Promise.all(
               />
               <link
                 rel="alternate"
-                type="text/markdown"
-                href="${escape(
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                )}"
-              />
-              <link
-                rel="alternate"
-                type="text/html"
-                href="${escape(
-                  `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                  }`,
-                )}"
-              />
-              <link
-                rel="alternate"
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
@@ -501,6 +485,30 @@ await Promise.all(
               data-light-theme="light"
               data-dark-theme="dark"
             >
+              <p>
+                <a
+                  href="${escape(
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+                  )}"
+                  >⬇️ 마크다운</a
+                >,
+                <a
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
+                  >📄 GitHub</a
+                >,
+                <a
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
+                  >✏️ 편집</a
+                >
+              </p>
               ${html}
             </body>
           </html>`,
