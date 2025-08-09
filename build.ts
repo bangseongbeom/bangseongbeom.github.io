@@ -401,6 +401,20 @@ await Promise.all(
                   image: escape(new URL("ogp.png", BASE).toString()),
                 } satisfies WithContext<BlogPosting>)}
               </script>
+              <!-- Google tag (gtag.js) -->
+              <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
+              ></script>
+              <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag() {
+                  dataLayer.push(arguments);
+                }
+                gtag("js", new Date());
+
+                gtag("config", "G-P5S28YZ348");
+              </script>
               <style>
                 .markdown-body {
                   max-width: 1012px;
