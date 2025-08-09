@@ -1,4 +1,4 @@
-[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
+[방성범 블로그](/README.md) > [웹](/web.md)
 
 # 바닐라 웹 컴포넌트 만드는 법
 
@@ -129,7 +129,7 @@ customElements.define(
         this.textContent = Math.random();
       };
     }
-  }
+  },
 );
 ```
 

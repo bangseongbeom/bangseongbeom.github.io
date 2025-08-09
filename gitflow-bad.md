@@ -1,4 +1,4 @@
-[🏠 방성범 블로그](/README.md) > [🔀 깃](/git.md)
+[방성범 블로그](/README.md) > [깃](/git.md)
 
 # GitFlow가 안 좋은 이유
 

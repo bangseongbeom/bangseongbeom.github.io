@@ -2,7 +2,7 @@
 redirectFrom: [/categories/java.html]
 ---
 
-[🏠 방성범 블로그](/README.md)
+[방성범 블로그](/README.md)
 
 # 자바
 

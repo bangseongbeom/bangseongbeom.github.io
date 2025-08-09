@@ -1,4 +1,4 @@
-[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
+[방성범 블로그](/README.md) > [웹](/web.md)
 
 # Redux의 장점과 주의점
 

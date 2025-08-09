@@ -1,4 +1,4 @@
-[🏠 방성범 블로그](/README.md) > [🌐 웹](/web.md)
+[방성범 블로그](/README.md) > [웹](/web.md)
 
 # 셀레늄 IDE 가이드
 

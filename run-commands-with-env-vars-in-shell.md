@@ -4,7 +4,7 @@ redirectFrom:
   - /shell-command-env-vars.html
 ---
 
-[🏠 방성범 블로그](/README.md) > [🐧 리눅스](/linux.md)
+[방성범 블로그](/README.md) > [리눅스](/linux.md)
 
 # 셸에서 환경 변수와 함께 명령어를 실행하는 법
 
