@@ -415,6 +415,22 @@ await Promise.all(
 
                 gtag("config", "G-P5S28YZ348");
               </script>
+              <script
+                src="https://giscus.app/client.js"
+                data-repo="bangseongbeom/bangseongbeom.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ=="
+                data-category="Comments"
+                data-category-id="DIC_kwDOBYE9uc4Ct9yc"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="preferred_color_scheme"
+                data-lang="ko"
+                crossorigin="anonymous"
+                async
+              ></script>
               <style>
                 .markdown-body {
                   max-width: 1012px;
@@ -537,6 +553,11 @@ await Promise.all(
                 >
               </p>
               ${html}
+              ${["/README.md", "/404.md"].includes(
+                pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+              )
+                ? ""
+                : /* HTML */ `<section id="comments" class="giscus"></section>`}
             </body>
           </html>`,
       );
