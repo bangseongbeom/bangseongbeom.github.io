@@ -500,7 +500,7 @@ await Promise.all(
                   href="${escape(
                     pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
                   )}"
-                  >⬇️ 마크다운</a
+                  >마크다운</a
                 >,
                 <a
                   href="${escape(
@@ -508,7 +508,7 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >📄 GitHub</a
+                  >GitHub</a
                 >,
                 <a
                   href="${escape(
@@ -516,7 +516,7 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >✏️ 편집</a
+                  >편집</a
                 >
               </p>
               ${html}
