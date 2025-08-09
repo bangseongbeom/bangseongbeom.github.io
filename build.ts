@@ -517,6 +517,9 @@ await Promise.all(
                     }`,
                   )}"
                   >편집</a
+                >,
+                <a href="${escape(new URL("feed.xml", BASE).toString())}"
+                  >RSS</a
                 >
               </p>
               ${html}
