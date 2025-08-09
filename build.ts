@@ -20,6 +20,7 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
+import type { BlogPosting, WithContext } from "schema-dts";
 
 const execFile = promisify(child_process.execFile);
 
@@ -34,11 +35,16 @@ const BASE = "https://www.bangseongbeom.com/";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-/** @type {{ loc: string, lastmod?: Date }[]} */
-let sitemapURLs = [];
+let sitemapURLs = [] as { loc: string; lastmod?: Date }[];
 
-/** @type {{ title: string, link: string, description: string, pubDate?: Date, guid: string, content?: string }[]} */
-let rssItems = [];
+let rssItems = [] as {
+  title: string;
+  link: string;
+  description: string;
+  pubDate?: Date;
+  guid: string;
+  content?: string;
+}[];
 
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
@@ -62,8 +68,16 @@ await Promise.all(
       ).toString();
 
       let input = await readFile(src, { encoding: "utf8" });
-      /** @type {{ data: { title?: string; description?: string; datePublished?: Date; dateModified?: Date; redirectFrom?: string[]; }; content: string; }} */
-      let file = matter(input);
+      let file = matter(input) as {
+        data: {
+          title?: string;
+          description?: string;
+          datePublished?: Date;
+          dateModified?: Date;
+          redirectFrom?: string[];
+        };
+        content: string;
+      };
       let html = markdownToHTML(file.content, {
         extension: {
           autolink: true,
@@ -138,8 +152,7 @@ await Promise.all(
       });
 
       let alertContent = "";
-      /** @type {string?} */
-      let alertType = null;
+      let alertType = null as string;
       let alertFirstText = true;
       rewriter.on("blockquote > p:first-child", {
         text(text) {
@@ -232,8 +245,7 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
-      /** @type {string?} */
-      let codeScope;
+      let codeScope: string | null;
       let codeContent = "";
       rewriter.on("code", {
         element(element) {
@@ -376,20 +388,18 @@ await Promise.all(
               <link rel="stylesheet" href="/primer.css" />
               <link rel="stylesheet" href="/both.css" />
               <script type="application/ld+json">
-                ${JSON.stringify(
-                  /** @type {import("schema-dts").BlogPosting} */ ({
-                    "@context": "https://schema.org/",
-                    "@type": "BlogPosting",
-                    author: {
-                      "@type": "Person",
-                      name: escape(AUTHOR),
-                    },
-                    dateModified: escape(dateModified?.toISOString()),
-                    datePublished: escape(datePublished?.toISOString()),
-                    headline: escape(title),
-                    image: escape(new URL("ogp.png", BASE).toString()),
-                  }),
-                )}
+                ${JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  author: {
+                    "@type": "Person",
+                    name: escape(AUTHOR),
+                  },
+                  dateModified: escape(dateModified?.toISOString()),
+                  datePublished: escape(datePublished?.toISOString()),
+                  headline: escape(title),
+                  image: escape(new URL("ogp.png", BASE).toString()),
+                } satisfies WithContext<BlogPosting>)}
               </script>
               <style>
                 .markdown-body {

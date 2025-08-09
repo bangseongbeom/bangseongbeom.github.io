@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.ts",
     "start": "http-server _site"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/escape-html": "^1.0.4",
+    "@types/node": "^24.2.0",
     "http-server": "^14.1.1",
     "prettier": "^3.6.2",
     "schema-dts": "^1.1.5"
