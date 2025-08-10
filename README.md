@@ -2,6 +2,8 @@
 
 # 방성범 블로그
 
+[GitHub](https://github.com/bangseongbeom/bangseongbeom.github.io), [RSS](https://www.bangseongbeom.com/feed.xml)
+
 개발자 방성범의 기술 블로그
 
 - [안드로이드](/android.md)
