@@ -356,6 +356,7 @@ await Promise.all(
                 name="viewport"
                 content="width=device-width, initial-scale=1"
               />
+              <meta name="color-scheme" content="light dark" />
               <meta property="og:title" content="${escape(title)}" />
               <meta property="og:type" content="article" />
               <meta property="og:url" content="${escape(canonical)}" />
@@ -401,7 +402,7 @@ await Promise.all(
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
-              <link rel="stylesheet" href="/primer.css" />
+              <link rel="stylesheet" href="/markdown.css" />
               <link rel="stylesheet" href="/both.css" />
               <script type="application/ld+json">
                 ${JSON.stringify({
@@ -447,100 +448,8 @@ await Promise.all(
                 crossorigin="anonymous"
                 async
               ></script>
-              <style>
-                .markdown-body {
-                  max-width: 1012px;
-                  margin-right: auto;
-                  margin-left: auto;
-                  padding: 32px;
-                  box-sizing: content-box;
-                }
-                .markdown-body a {
-                  text-decoration: underline;
-                  text-underline-offset: 0.2em;
-                }
-                .markdown-body .markdown-heading {
-                  position: relative;
-                }
-                .markdown-body .markdown-heading .anchor {
-                  opacity: 0;
-                  position: absolute;
-                  top: 0;
-                  padding-top: 4px;
-                  padding-bottom: 4px;
-                  @media (pointer: coarse) {
-                    opacity: 1;
-                  }
-                }
-                .markdown-body .markdown-heading:hover .anchor {
-                  opacity: 1;
-                }
-                .markdown-body .markdown-heading .anchor:focus {
-                  opacity: 1;
-                  border-radius: 6px;
-                  outline: 2px solid var(--color-accent-emphasis);
-                  outline-offset: -2px;
-                }
-                .markdown-body .markdown-heading .anchor .octicon {
-                  color: var(--color-scale-gray-9);
-                }
-                .markdown-body .markdown-alert {
-                  padding: 0 1em;
-                  border-left: 0.25em solid;
-                }
-                .markdown-body .markdown-alert .markdown-alert-title {
-                  display: flex;
-                  align-items: center;
-                  font-weight: var(--base-text-weight-medium, 500);
-                }
-                .markdown-body .markdown-alert.markdown-alert-note {
-                  border-left-color: var(--borderColor-accent-emphasis);
-                }
-                .markdown-body
-                  .markdown-alert.markdown-alert-note
-                  .markdown-alert-title {
-                  color: var(--fgColor-accent);
-                }
-                .markdown-body .markdown-alert.markdown-alert-tip {
-                  border-left-color: var(--borderColor-success-emphasis);
-                }
-                .markdown-body
-                  .markdown-alert.markdown-alert-tip
-                  .markdown-alert-title {
-                  color: var(--fgColor-success);
-                }
-                .markdown-body .markdown-alert.markdown-alert-important {
-                  border-left-color: var(--borderColor-done-emphasis);
-                }
-                .markdown-body
-                  .markdown-alert.markdown-alert-important
-                  .markdown-alert-title {
-                  color: var(--fgColor-done);
-                }
-                .markdown-body .markdown-alert.markdown-alert-warning {
-                  border-left-color: var(--borderColor-attention-emphasis);
-                }
-                .markdown-body
-                  .markdown-alert.markdown-alert-warning
-                  .markdown-alert-title {
-                  color: var(--fgColor-attention);
-                }
-                .markdown-body .markdown-alert.markdown-alert-caution {
-                  border-left-color: var(--borderColor-danger-emphasis);
-                }
-                .markdown-body
-                  .markdown-alert.markdown-alert-caution
-                  .markdown-alert-title {
-                  color: var(--fgColor-danger);
-                }
-              </style>
             </head>
-            <body
-              class="markdown-body"
-              data-color-mode="auto"
-              data-light-theme="light"
-              data-dark-theme="dark"
-            >
+            <body>
               ${html}
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
@@ -678,11 +587,6 @@ await writeFile(
   </channel>
 </rss>
 `,
-);
-
-await copyFile(
-  fileURLToPath(import.meta.resolve("@primer/css/dist/primer.css")),
-  join(DEST_ROOT, "primer.css"),
 );
 
 await copyFile(
