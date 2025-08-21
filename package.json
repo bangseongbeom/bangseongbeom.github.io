@@ -5,17 +5,18 @@
     "start": "http-server _site"
   },
   "dependencies": {
+    "@types/html-escaper": "^3.0.4",
     "@wooorm/starry-night": "^3.8.0",
     "comrak": "^0.4.2",
-    "escape-html": "^1.0.3",
+    "github-slugger": "^2.0.0",
     "globby": "^14.1.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.5",
+    "html-escaper": "^3.0.3",
     "html-rewriter-wasm": "^0.4.1"
   },
   "devDependencies": {
-    "@types/escape-html": "^1.0.4",
-    "@types/node": "^24.2.0",
+    "@types/node": "^24.3.0",
     "http-server": "^14.1.1",
     "prettier": "^3.6.2",
     "schema-dts": "^1.1.5"

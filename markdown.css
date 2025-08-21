@@ -3,7 +3,7 @@ body {
 }
 
 img {
-  max-width: 100%;
+  max-inline-size: 100%;
 }
 
 code {
@@ -12,6 +12,10 @@ code {
 
 pre {
   overflow: auto;
+}
+
+:target {
+  outline: solid;
 }
 
 table {
@@ -68,25 +72,25 @@ table > tfoot > tr > th {
 
   &.markdown-alert-important {
     border-color: light-dark(#8250df, #8957e5);
-  }
 
-  &.markdown-alert-important .markdown-alert-title {
-    color: light-dark(#8250df, #ab7df8);
+    .markdown-alert-title {
+      color: light-dark(#8250df, #ab7df8);
+    }
   }
 
   &.markdown-alert-warning {
     border-color: light-dark(#9a6700, #9e6a03);
-  }
 
-  &.markdown-alert-warning .markdown-alert-title {
-    color: light-dark(#9a6700, #d29922);
+    .markdown-alert-title {
+      color: light-dark(#9a6700, #d29922);
+    }
   }
 
   &.markdown-alert-caution {
     border-color: light-dark(#cf222e, #da3633);
-  }
 
-  &.markdown-alert-caution .markdown-alert-title {
-    color: light-dark(#cf222e, #f85149);
+    .markdown-alert-title {
+      color: light-dark(#cf222e, #f85149);
+    }
   }
 }
