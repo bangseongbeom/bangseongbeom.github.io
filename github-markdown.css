@@ -1,0 +1,126 @@
+.markdown-body {
+  max-width: 1012px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 32px;
+  box-sizing: content-box;
+}
+
+.markdown-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.markdown-heading {
+  position: relative;
+}
+
+.markdown-heading .heading-element:hover + .anchor {
+  opacity: 1;
+}
+
+.markdown-heading h1.heading-element + .anchor,
+.markdown-heading h2.heading-element + .anchor {
+  transform: translateY(calc(-50% - 0.3rem));
+}
+
+.markdown-heading .anchor {
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  margin: auto;
+  border-radius: var(--borderRadius-medium);
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+}
+
+.markdown-heading .anchor:hover {
+  opacity: 1;
+}
+
+.markdown-heading .anchor:focus {
+  outline: 2px solid var(--focus-outlineColor);
+  outline-offset: -2px;
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .markdown-heading .anchor {
+    opacity: 1;
+  }
+}
+
+.markdown-heading .anchor .octicon {
+  color: var(--fgColor-default);
+}
+
+summary > .markdown-heading {
+  display: inline-block;
+}
+
+.markdown-alert {
+  padding: var(--base-size-8) var(--base-size-16);
+  margin-bottom: var(--base-size-16);
+  color: inherit;
+  border-left: 0.25em solid var(--borderColor-default);
+}
+
+.markdown-alert > :first-child {
+  margin-top: 0;
+}
+
+.markdown-alert > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: var(--base-text-weight-medium, 500);
+  align-items: center;
+  line-height: 1;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--borderColor-accent-emphasis);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--fgColor-accent);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--borderColor-done-emphasis);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--fgColor-done);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--borderColor-attention-emphasis);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--fgColor-attention);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--borderColor-success-emphasis);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--fgColor-success);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--borderColor-danger-emphasis);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--fgColor-danger);
+}
