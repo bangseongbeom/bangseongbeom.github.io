@@ -100,6 +100,43 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
+      rewriter.on("h1", {
+        element(element) {
+          element.after(
+            /* HTML */ `<footer>
+              <p>
+                <a
+                  rel="alternate"
+                  type="text/markdown"
+                  href="${escape(
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+                  )}"
+                  >마크다운으로 보기</a
+                >,
+                <a
+                  rel="alternate"
+                  type="text/html"
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
+                  >GitHub에서 보기</a
+                >,
+                <a
+                  rel="alternate"
+                  type="application/rss+xml"
+                  href="${escape(new URL("feed.xml", BASE).toString())}"
+                  a
+                  >RSS</a
+                >
+              </p>
+            </footer>`,
+            { html: true },
+          );
+        },
+      });
+
       let alertText = "";
       let alertType = null as string;
       let alertFirstText = true;
@@ -272,43 +309,6 @@ await Promise.all(
           if (!codeScope) return;
           codeText += text.text;
           text.remove();
-        },
-      });
-
-      rewriter.on("h1", {
-        element(element) {
-          element.after(
-            /* HTML */ `<footer>
-              <p>
-                <a
-                  rel="alternate"
-                  type="text/markdown"
-                  href="${escape(
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                  )}"
-                  >마크다운으로 보기</a
-                >,
-                <a
-                  rel="alternate"
-                  type="text/html"
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  >GitHub에서 보기</a
-                >,
-                <a
-                  rel="alternate"
-                  type="application/rss+xml"
-                  href="${escape(new URL("feed.xml", BASE).toString())}"
-                  a
-                  >RSS</a
-                >
-              </p>
-            </footer>`,
-            { html: true },
-          );
         },
       });
 
