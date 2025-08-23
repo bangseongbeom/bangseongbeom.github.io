@@ -1,5 +1,3 @@
-![](icon.svg)
-
 # 방성범 블로그
 
 [GitHub](https://github.com/bangseongbeom/bangseongbeom.github.io), [RSS](https://www.bangseongbeom.com/feed.xml)
