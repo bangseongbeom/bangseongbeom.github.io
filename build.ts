@@ -148,6 +148,12 @@ await Promise.all(
         },
       });
 
+      rewriter.on(".anchor", {
+        element(element) {
+          element.remove();
+        },
+      });
+
       let alertText = "";
       let alertType = null as string;
       let alertFirstText = true;
