@@ -100,6 +100,17 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
+      rewriter.on("[href]", {
+        element(element) {
+          let href = element.getAttribute("href");
+          assert(typeof href == "string");
+          if (href.endsWith("/README.md"))
+            element.setAttribute("href", href.slice(0, -"README.md".length));
+          else if (href.endsWith(".md"))
+            element.setAttribute("href", href.slice(0, -".md".length));
+        },
+      });
+
       rewriter.on("h1", {
         element(element) {
           element.after(
@@ -309,17 +320,6 @@ await Promise.all(
           if (!codeScope) return;
           codeText += text.text;
           text.remove();
-        },
-      });
-
-      rewriter.on("[href]", {
-        element(element) {
-          let href = element.getAttribute("href");
-          assert(typeof href == "string");
-          if (href.endsWith("/README.md"))
-            element.setAttribute("href", href.slice(0, -"README.md".length));
-          else if (href.endsWith(".md"))
-            element.setAttribute("href", href.slice(0, -".md".length));
         },
       });
 
