@@ -1,3 +1,13 @@
+:root {
+  --borderRadius-medium: 0.375rem;
+}
+
+.container-lg {
+  max-width: 1012px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .markdown-body {
   padding: 32px;
   box-sizing: content-box;
@@ -34,6 +44,7 @@
   justify-content: center;
   align-items: center;
   transform: translateY(-50%);
+  padding-right: initial;
 }
 
 .markdown-heading .anchor:hover {
@@ -41,7 +52,7 @@
 }
 
 .markdown-heading .anchor:focus {
-  outline: 2px solid var(--focus-outlineColor);
+  outline: 2px solid var(--focus-outlineColor) !important;
   outline-offset: -2px;
   opacity: 1;
 }

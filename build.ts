@@ -21,7 +21,6 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import * as sass from "sass";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 const execFile = promisify(child_process.execFile);
@@ -465,9 +464,9 @@ await Promise.all(
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
-              <link rel="stylesheet" href="/primer.css" />
-              <link rel="stylesheet" href="/both.css" />
               <link rel="stylesheet" href="/github-markdown.css" />
+              <link rel="stylesheet" href="/github-markdown-extensions.css" />
+              <link rel="stylesheet" href="/both.css" />
               <script type="application/ld+json">
                 ${JSON.stringify({
                   "@context": "https://schema.org",
@@ -658,22 +657,10 @@ await writeFile(
 `,
 );
 
-const result = sass.compileString(
-  /* SCSS */ `@use '@primer/css/color-modes/themes/light.scss';
-@use '@primer/css/color-modes/themes/dark.scss';
-@use "@primer/css/primitives";
-@use "@primer/css/base";
-@use "@primer/css/layout";
-@use "@primer/css/markdown";
-@use "@primer/css/utilities";
-`,
-  {
-    loadPaths: ["node_modules"],
-    quietDeps: true,
-    style: "compressed",
-  },
+await copyFile(
+  fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
+  join(DEST_ROOT, "github-markdown.css"),
 );
-await writeFile(join(DEST_ROOT, "primer.css"), result.css);
 
 await copyFile(
   fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
