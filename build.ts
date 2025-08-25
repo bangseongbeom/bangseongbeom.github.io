@@ -449,7 +449,13 @@ await Promise.all(
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
-              <link rel="stylesheet" href="/primer.css" />
+              <link rel="stylesheet" href="/light.css" />
+              <link rel="stylesheet" href="/dark.css" />
+              <link rel="stylesheet" href="/primitives.css" />
+              <link rel="stylesheet" href="/base.css" />
+              <link rel="stylesheet" href="/layout.css" />
+              <link rel="stylesheet" href="/markdown.css" />
+              <link rel="stylesheet" href="/utilities.css" />
               <link rel="stylesheet" href="/both.css" />
               <link rel="stylesheet" href="/github-markdown.css" />
               <script type="application/ld+json">
@@ -643,8 +649,48 @@ await writeFile(
 );
 
 await copyFile(
-  fileURLToPath(import.meta.resolve("@primer/css/dist/primer.css")),
-  join(DEST_ROOT, "primer.css"),
+  fileURLToPath(
+    import.meta.resolve(
+      "@primer/primitives/dist/css/functional/themes/light.css",
+    ),
+  ),
+  join(DEST_ROOT, "light.css"),
+);
+
+await copyFile(
+  fileURLToPath(
+    import.meta.resolve(
+      "@primer/primitives/dist/css/functional/themes/dark.css",
+    ),
+  ),
+  join(DEST_ROOT, "dark.css"),
+);
+
+await copyFile(
+  fileURLToPath(
+    import.meta.resolve("@primer/primitives/dist/css/primitives.css"),
+  ),
+  join(DEST_ROOT, "primitives.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/base.css")),
+  join(DEST_ROOT, "base.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/layout.css")),
+  join(DEST_ROOT, "layout.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/markdown.css")),
+  join(DEST_ROOT, "markdown.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/utilities.css")),
+  join(DEST_ROOT, "utilities.css"),
 );
 
 await copyFile(
