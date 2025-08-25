@@ -1,6 +1,6 @@
 # 방성범 블로그
 
-개발자 방성범의 기술 블로그
+<span id="description">개발자 방성범의 기술 블로그</span>
 
 - [안드로이드](/android.md)
 - [기타](/etc.md)

@@ -338,6 +338,15 @@ await Promise.all(
         });
       }
 
+      let description = file.data.description;
+      if (!description) {
+        rewriter.on("#description", {
+          text(text) {
+            if (!description) description = text.text;
+          },
+        });
+      }
+
       let datePublished = file.data.datePublished;
       if (!datePublished) {
         rewriter.on("time#date-published", {
@@ -398,6 +407,9 @@ await Promise.all(
             <head>
               <meta charset="utf-8" />
               <title>${escape(title)}</title>
+              ${description
+                ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
+                : ""}
               <meta name="author" content="${escape(AUTHOR)}" />
               <meta
                 name="viewport"
@@ -406,11 +418,14 @@ await Promise.all(
               <meta name="color-scheme" content="light dark" />
               <meta property="og:title" content="${escape(title)}" />
               <meta property="og:type" content="article" />
-              <meta property="og:url" content="${escape(canonical)}" />
               <meta
                 property="og:image"
                 content="${escape(new URL("ogp.png", BASE).toString())}"
               />
+              <meta property="og:url" content="${escape(canonical)}" />
+              ${description
+                ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
+                : ""}
               <link rel="canonical" href="${escape(canonical)}" />
               <link
                 rel="icon"
