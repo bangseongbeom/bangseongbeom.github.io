@@ -449,14 +449,15 @@ await Promise.all(
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
-              <link rel="stylesheet" href="/base.css" />
-              <link rel="stylesheet" href="/utilities.css" />
               <link rel="stylesheet" href="/light.css" />
               <link rel="stylesheet" href="/dark.css" />
               <link rel="stylesheet" href="/primitives.css" />
+              <link rel="stylesheet" href="/base.css" />
+              <link rel="stylesheet" href="/layout.css" />
               <link rel="stylesheet" href="/markdown.css" />
-              <link rel="stylesheet" href="/github-markdown.css" />
+              <link rel="stylesheet" href="/utilities.css" />
               <link rel="stylesheet" href="/both.css" />
+              <link rel="stylesheet" href="/github-markdown.css" />
               <script type="application/ld+json">
                 ${JSON.stringify({
                   "@context": "https://schema.org",
@@ -503,7 +504,7 @@ await Promise.all(
               ></script>
             </head>
             <body
-              class="markdown-body"
+              class="markdown-body container-lg"
               data-color-mode="auto"
               data-light-theme="light"
               data-dark-theme="dark"
@@ -648,16 +649,6 @@ await writeFile(
 );
 
 await copyFile(
-  fileURLToPath(import.meta.resolve("@primer/css/dist/base.css")),
-  join(DEST_ROOT, "base.css"),
-);
-
-await copyFile(
-  fileURLToPath(import.meta.resolve("@primer/css/dist/utilities.css")),
-  join(DEST_ROOT, "utilities.css"),
-);
-
-await copyFile(
   fileURLToPath(
     import.meta.resolve(
       "@primer/primitives/dist/css/functional/themes/light.css",
@@ -683,8 +674,23 @@ await copyFile(
 );
 
 await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/base.css")),
+  join(DEST_ROOT, "base.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/layout.css")),
+  join(DEST_ROOT, "layout.css"),
+);
+
+await copyFile(
   fileURLToPath(import.meta.resolve("@primer/css/dist/markdown.css")),
   join(DEST_ROOT, "markdown.css"),
+);
+
+await copyFile(
+  fileURLToPath(import.meta.resolve("@primer/css/dist/utilities.css")),
+  join(DEST_ROOT, "utilities.css"),
 );
 
 await copyFile(
