@@ -135,6 +135,14 @@ await Promise.all(
                   >GitHub에서 보기</a
                 >,
                 <a
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
+                  >편집 제안</a
+                >,
+                <a
                   rel="alternate"
                   type="application/rss+xml"
                   href="${escape(new URL("feed.xml", BASE).toString())}"
