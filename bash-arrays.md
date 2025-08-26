@@ -2,7 +2,7 @@
 redirectFrom: [/shell-arrays.html]
 ---
 
-[방성범 블로그](/README.md) > [리눅스](/linux.md)
+[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
 
 # 배시 배열
 
