@@ -341,7 +341,7 @@ await Promise.all(
       if (!title) {
         rewriter.on("h1", {
           text(text) {
-            if (!title) title = text.text;
+            if (!title) title = unescape(text.text);
           },
         });
       }
@@ -350,7 +350,7 @@ await Promise.all(
       if (!description) {
         rewriter.on("#description", {
           text(text) {
-            if (!description) description = text.text;
+            if (!description) description = unescape(text.text);
           },
         });
       }
