@@ -8,9 +8,8 @@
   margin-left: auto;
 }
 
-.markdown-body {
+.p-5 {
   padding: 32px;
-  box-sizing: content-box;
 }
 
 .markdown-body a {

@@ -520,7 +520,7 @@ await Promise.all(
                 async
               ></script>
             </head>
-            <body class="markdown-body container-lg">
+            <body class="markdown-body p-5 container-lg">
               ${html}
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
