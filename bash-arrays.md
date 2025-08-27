@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/shell-arrays.html]
+redirect_from: [/shell-arrays.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [리눅스](/linux.md)

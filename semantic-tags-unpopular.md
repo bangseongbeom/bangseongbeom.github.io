@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/semantic-tags-unpopular.html]
+redirect_from: [/posts/semantic-tags-unpopular.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [웹](/web.md)

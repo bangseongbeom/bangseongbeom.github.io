@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/unittest-vs-pytest.html]
+redirect_from: [/posts/unittest-vs-pytest.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [파이썬](/python.md)

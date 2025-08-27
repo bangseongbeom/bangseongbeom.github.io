@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/now-kotlin.html]
+redirect_from: [/posts/now-kotlin.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [안드로이드](/android.md)

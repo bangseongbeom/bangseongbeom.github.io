@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/spring-downsides-alternatives.html]
+redirect_from: [/posts/spring-downsides-alternatives.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [자바](/java.md)

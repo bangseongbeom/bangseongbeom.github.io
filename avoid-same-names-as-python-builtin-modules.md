@@ -1,5 +1,5 @@
 ---
-redirectFrom:
+redirect_from:
   - /avoid-python-builtin-module-names.html
 ---
 

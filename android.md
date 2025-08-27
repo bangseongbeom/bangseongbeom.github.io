@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/categories/android.html]
+redirect_from: [/categories/android.html]
 ---
 
 [방성범 블로그](/README.md)

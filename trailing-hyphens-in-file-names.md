@@ -1,5 +1,5 @@
 ---
-redirectFrom:
+redirect_from:
   - /hyphen-files.html
   - /file-name-trailing-hyphens.html
 ---

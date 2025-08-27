@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/dot-d-directories.html]
+redirect_from: [/dot-d-directories.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [리눅스](/linux.md)

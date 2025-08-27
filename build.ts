@@ -73,9 +73,9 @@ await Promise.all(
         data: {
           title?: string;
           description?: string;
-          datePublished?: Date;
-          dateModified?: Date;
-          redirectFrom?: string[];
+          date_published?: Date;
+          date_modified?: Date;
+          redirect_from?: string[];
         };
         content: string;
       };
@@ -355,7 +355,7 @@ await Promise.all(
         });
       }
 
-      let datePublished = file.data.datePublished;
+      let datePublished = file.data.date_published;
       if (!datePublished) {
         rewriter.on("time#date-published", {
           element(element) {
@@ -366,7 +366,7 @@ await Promise.all(
         });
       }
 
-      let dateModified = file.data.dateModified;
+      let dateModified = file.data.date_modified;
       if (!dateModified) {
         rewriter.on("time#date-modified", {
           element(element) {
@@ -548,8 +548,8 @@ await Promise.all(
         )
         .slice(0, 10);
 
-      if (file.data.redirectFrom) {
-        for (let redirectFromPath of file.data.redirectFrom) {
+      if (file.data.redirect_from) {
+        for (let redirectFromPath of file.data.redirect_from) {
           let path = isAbsolute(redirectFromPath)
             ? join(DEST_ROOT, redirectFromPath)
             : join(dest, "..", redirectFromPath);

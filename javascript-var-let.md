@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/difference-var-let.html]
+redirect_from: [/difference-var-let.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [웹](/web.md)

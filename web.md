@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/categories/web.html]
+redirect_from: [/categories/web.html]
 ---
 
 [방성범 블로그](/README.md)

@@ -1,5 +1,5 @@
 ---
-redirectFrom:
+redirect_from:
   - /posts/website-width.html
   - /website-width.html
 ---

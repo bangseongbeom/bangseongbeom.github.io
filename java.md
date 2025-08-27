@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/categories/java.html]
+redirect_from: [/categories/java.html]
 ---
 
 [방성범 블로그](/README.md)

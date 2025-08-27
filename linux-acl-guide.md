@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/linux-acl.html]
+redirect_from: [/linux-acl.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [리눅스](/linux.md)

@@ -1,5 +1,5 @@
 ---
-redirectFrom:
+redirect_from:
   - /run-command-env-vars.html
   - /shell-command-env-vars.html
 ---

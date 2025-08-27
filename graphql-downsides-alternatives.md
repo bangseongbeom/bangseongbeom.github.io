@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/graphql-downsides-alternatives.html]
+redirect_from: [/posts/graphql-downsides-alternatives.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [웹](/web.md)

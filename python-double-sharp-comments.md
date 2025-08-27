@@ -1,5 +1,5 @@
 ---
-redirectFrom: [/posts/python-double-sharp-comments.html]
+redirect_from: [/posts/python-double-sharp-comments.html]
 ---
 
 [방성범 블로그](/README.md) ▸ [파이썬](/python.md)
