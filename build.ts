@@ -53,16 +53,14 @@ await Promise.all(
       let dest = join(
         DEST_ROOT,
         dirname(relative(SRC_ROOT, src)),
-        basename(src) == "README.md"
-          ? "index.html"
-          : `${parse(basename(src)).name}.html`,
+        basename(src) == "README.md" ? "index.html" : `${parse(src).name}.html`,
       );
       let canonical = new URL(
         pathToFileURL(
           join(
             sep,
             dirname(relative(SRC_ROOT, src)),
-            basename(src) == "README.md" ? sep : parse(basename(src)).name,
+            basename(src) == "README.md" ? sep : parse(src).name,
           ),
         ).pathname.substring(1),
         BASE,
