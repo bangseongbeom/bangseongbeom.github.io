@@ -2,8 +2,6 @@
 redirect_from: [/posts/graphql-downsides-alternatives.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [웹](/web.md)
-
 # GraphQL의 단점과 대안
 
 <time id="date-published" datetime="2019-01-29">2019. 1. 29.</time>

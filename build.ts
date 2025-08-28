@@ -407,6 +407,19 @@ await Promise.all(
         }
       }
 
+      let breadcrumb = /* HTML */ `<nav>
+        <p>
+          ${new URL(canonical).pathname
+            .split("/")
+            .map((segment, index) => {
+              if (segment == "" && index == 0)
+                return /* HTML */ `<a href="/">${escape(TITLE)}</a>`;
+              else return "";
+            })
+            .join("")}
+        </p>
+      </nav>`;
+
       await mkdir(dirname(dest), { recursive: true });
       await writeFile(
         dest,
@@ -521,7 +534,7 @@ await Promise.all(
               ></script>
             </head>
             <body class="markdown-body p-5 container-lg">
-              ${html}
+              ${breadcrumb} ${html}
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
               )

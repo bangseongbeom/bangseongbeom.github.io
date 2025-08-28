@@ -4,8 +4,6 @@ redirect_from:
   - /file-name-trailing-hyphens.html
 ---
 
-[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
-
 # 파일 이름 끝 하이픈
 
 <time id="date-published" datetime="2020-04-21">2020. 4. 21.</time>

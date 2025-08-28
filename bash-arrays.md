@@ -2,8 +2,6 @@
 redirect_from: [/shell-arrays.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
-
 # 배시 배열
 
 <time id="date-published" datetime="2020-05-02">2020. 5. 2.</time>

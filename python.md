@@ -2,8 +2,6 @@
 redirect_from: [/categories/python.html]
 ---
 
-[방성범 블로그](/README.md)
-
 # 파이썬
 
 - [unittest vs pytest](/unittest-vs-pytest.md)

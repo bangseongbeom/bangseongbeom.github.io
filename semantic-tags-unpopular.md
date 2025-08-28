@@ -2,8 +2,6 @@
 redirect_from: [/posts/semantic-tags-unpopular.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [웹](/web.md)
-
 # 시맨틱 태그가 인기 없는 이유
 
 <time id="date-published" datetime="2018-11-07">2018. 11. 7.</time>

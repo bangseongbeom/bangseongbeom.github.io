@@ -1,5 +1,3 @@
-[방성범 블로그](/README.md) ▸ [기타](/etc.md)
-
 # 발레나에처 소개
 
 <time id="date-published" datetime="2020-05-07">2020. 5. 7.</time>

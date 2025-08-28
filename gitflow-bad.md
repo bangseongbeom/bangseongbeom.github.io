@@ -1,5 +1,3 @@
-[방성범 블로그](/README.md) ▸ [깃](/git.md)
-
 # GitFlow가 안 좋은 이유
 
 <time id="date-published" datetime="2019-07-21">2019. 7. 21.</time>
