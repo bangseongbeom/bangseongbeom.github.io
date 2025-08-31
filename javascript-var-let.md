@@ -1,12 +1,10 @@
 ---
+categories: [web]
+date_published: 2019-07-22
 redirect_from: [/difference-var-let.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [웹](/web.md)
-
 # 자바스크립트 var, let 차이점
-
-<time id="date-published" datetime="2019-07-22">2019. 7. 22.</time>
 
 자바스크립트에서 변수를 선언할 때 사용하는 `var`, `let`, `const`의 차이와 스코프, 호이스팅에 대해 알아봅시다.
 

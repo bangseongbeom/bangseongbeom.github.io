@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [IoT](/iot.md)
+---
+categories: [iot]
+date_published: 2019-08-16
+---
 
 # MQTT 소개
-
-<time id="date-published" datetime="2019-08-16">2019. 8. 16.</time>
 
 MQTT의 필요성과 특징에 대해 소개합니다.
 

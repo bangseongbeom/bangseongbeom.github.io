@@ -1,13 +1,11 @@
 ---
+categories: [python]
+date_published: 2020-04-22
 redirect_from:
   - /avoid-python-builtin-module-names.html
 ---
 
-[방성범 블로그](/README.md) ▸ [파이썬](/python.md)
-
 # 파이썬 내장 모듈과 동일한 이름 피하기
-
-<time id="date-published" datetime="2020-04-22">2020. 4. 22.</time>
 
 내장 모듈과 동일한 이름으로 파이썬 파일을 만드는 것은 위험합니다. 파이썬에는 내장 모듈과 동일한 이름의 파이썬 파일이 존재할 경우 내장 모듈 대신 동일한 이름의 파일을 불러오는 현상이 있는데, 이 현상으로 인해 원인을 알기 어려운 오류가 발생할 수 있습니다.
 

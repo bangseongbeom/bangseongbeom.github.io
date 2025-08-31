@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [깃](/git.md)
+---
+categories: [git]
+date_published: 2019-07-19
+---
 
 # 다중 저장소 vs 단일 저장소
-
-<time id="date-published" datetime="2019-07-19">2019. 7. 19.</time>
 
 언제 다중 저장소(Multirepo(멀티레포))를 쓰고 언제 단일 저장소(Monorepo(모노레포))를 써야 하는 지에 대해 설명합니다.
 

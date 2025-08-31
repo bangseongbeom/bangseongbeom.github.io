@@ -1,12 +1,10 @@
 ---
+categories: [android]
+date_published: 2018-10-29
 redirect_from: [/posts/now-kotlin.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [안드로이드](/android.md)
-
 # 이제서야 코틀린을 도입하게 된 이유
-
-<time id="date-published" datetime="2018-10-29">2018. 10. 29.</time>
 
 코틀린의 좋은 문법, 그리고 안드로이드 스튜디오와 안드로이드 SDK의 훌륭한 코틀린 지원 기능으로 인해 코틀린을 선택하게 되었습니다. 이전에는 망설일 법한 부분도 있었지만, 이제는 아닙니다.
 

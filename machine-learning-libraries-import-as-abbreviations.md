@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [기계 학습](/machine-learning.md)
+---
+categories: [machine-learning]
+date_published: 2020-05-10
+---
 
 # 기계 학습 라이브러리들의 'import as' 약칭
-
-<time id="date-published" datetime="2020-05-10">2020. 5. 10.</time>
 
 `numpy`를 `np`로 줄여쓰는 것처럼, 다양한 기계 학습 라이브러리의 약칭을 정리했습니다.
 

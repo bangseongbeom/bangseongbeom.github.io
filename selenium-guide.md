@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [웹](/web.md)
+---
+categories: [web]
+date_published: 2020-06-09
+---
 
 # 셀레늄 가이드
-
-<time id="date-published" datetime="2020-06-09">2020. 6. 9.</time>
 
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE
 

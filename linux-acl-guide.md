@@ -1,12 +1,10 @@
 ---
+categories: [linux]
+date_published: 2019-07-15
 redirect_from: [/linux-acl.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
-
 # 리눅스 ACL 가이드
-
-<time id="date-published" datetime="2019-07-15">2019. 7. 15.</time>
 
 사용자 하나와 그룹 하나에게만 권한을 줄 수 있는 파일 퍼미션을 확장하여, 여러 명의 사용자와 그룹에게 접근 권한을 줄 수 있는 ACL(Access Control List)에 대해 알아봅니다.
 

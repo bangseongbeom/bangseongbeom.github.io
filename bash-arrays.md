@@ -1,12 +1,10 @@
 ---
+categories: [linux]
+date_published: 2020-05-02
 redirect_from: [/shell-arrays.html]
 ---
 
-[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
-
 # 배시 배열
-
-<time id="date-published" datetime="2020-05-02">2020. 5. 2.</time>
 
 배열을 통해 여러 값을 효과적으로 다룰 수 있습니다.
 

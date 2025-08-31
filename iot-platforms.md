@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [IoT](/iot.md)
+---
+categories: [iot]
+date_published: 2019-08-15
+---
 
 # IoT 플랫폼 업체 비교
-
-<time id="date-published" datetime="2019-08-15">2019. 8. 15.</time>
 
 홈 오토메이션이나 IoT 제품 개발을 위해 어떤 IoT 플랫폼을 사용해야 할까요? [Adafruit IO](https://io.adafruit.com/), [Blynk](https://blynk.io), [ThingSpeak](https://thingspeak.com/), [AWS IoT](https://aws.amazon.com/iot/) 등 여러 업체를 비교해보았습니다.
 

@@ -1,8 +1,9 @@
-[방성범 블로그](/README.md) ▸ [기타](/etc.md)
+---
+categories: [etc]
+date_published: 2020-05-07
+---
 
 # 발레나에처 소개
-
-<time id="date-published" datetime="2020-05-07">2020. 5. 7.</time>
 
 [발레나에처]\(balenaEtcher)는 간단하게 SD 카드나 USB에 운영 체제 이미지를 구울 수 있는 유틸리티 프로그램입니다.
 
