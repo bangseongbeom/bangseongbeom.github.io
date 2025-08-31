@@ -1,8 +1,7 @@
 ---
 categories: [python]
 date_published: 2020-04-22
-redirect_from:
-  - /avoid-python-builtin-module-names.html
+redirect_from: [/avoid-python-builtin-module-names.html]
 ---
 
 # 파이썬 내장 모듈과 동일한 이름 피하기

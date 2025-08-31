@@ -1,9 +1,7 @@
 ---
 categories: [linux]
 date_published: 2020-04-21
-redirect_from:
-  - /hyphen-files.html
-  - /file-name-trailing-hyphens.html
+redirect_from: [/hyphen-files.html, /file-name-trailing-hyphens.html]
 ---
 
 # 파일 이름 끝 하이픈

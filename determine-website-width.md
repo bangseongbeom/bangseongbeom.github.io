@@ -1,9 +1,7 @@
 ---
 categories: [web]
 date_published: 2018-11-08
-redirect_from:
-  - /posts/website-width.html
-  - /website-width.html
+redirect_from: [/posts/website-width.html, /website-width.html]
 ---
 
 # 웹 사이트 너비 정하기

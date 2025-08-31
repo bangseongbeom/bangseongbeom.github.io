@@ -1,9 +1,7 @@
 ---
 categories: [linux]
 date_published: 2020-04-25
-redirect_from:
-  - /run-command-env-vars.html
-  - /shell-command-env-vars.html
+redirect_from: [/run-command-env-vars.html, /shell-command-env-vars.html]
 ---
 
 # 셸에서 환경 변수와 함께 명령어를 실행하는 법
