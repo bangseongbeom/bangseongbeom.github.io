@@ -401,7 +401,7 @@ await Promise.all(
       };
       let categoryHTML = (file.data.categories ?? []).map(
         (category) =>
-          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a><p>`,
+          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a></p>`,
       );
 
       await mkdir(dirname(dest), { recursive: true });
