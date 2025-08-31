@@ -4,6 +4,8 @@ redirect_from:
   - /shell-command-env-vars.html
 ---
 
+[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
+
 # 셸에서 환경 변수와 함께 명령어를 실행하는 법
 
 <time id="date-published" datetime="2020-04-25">2020. 4. 25.</time>

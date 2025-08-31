@@ -2,6 +2,8 @@
 redirect_from: [/dot-d-directories.html]
 ---
 
+[방성범 블로그](/README.md) ▸ [리눅스](/linux.md)
+
 # 디렉터리 이름 끝 '.d'
 
 <time id="date-published" datetime="2020-04-19">2020. 4. 19.</time>

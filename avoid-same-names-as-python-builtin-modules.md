@@ -3,6 +3,8 @@ redirect_from:
   - /avoid-python-builtin-module-names.html
 ---
 
+[방성범 블로그](/README.md) ▸ [파이썬](/python.md)
+
 # 파이썬 내장 모듈과 동일한 이름 피하기
 
 <time id="date-published" datetime="2020-04-22">2020. 4. 22.</time>
