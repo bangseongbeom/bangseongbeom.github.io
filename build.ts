@@ -354,26 +354,8 @@ await Promise.all(
       }
 
       let datePublished = file.data.date_published;
-      if (!datePublished) {
-        rewriter.on("time#date-published", {
-          element(element) {
-            let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime not found");
-            datePublished = new Date(dateTime);
-          },
-        });
-      }
 
       let dateModified = file.data.date_modified;
-      if (!dateModified) {
-        rewriter.on("time#date-modified", {
-          element(element) {
-            let dateTime = element.getAttribute("datetime");
-            if (!dateTime) throw new Error("datetime not found");
-            if (!dateModified) dateModified = new Date(dateTime);
-          },
-        });
-      }
 
       try {
         await rewriter.write(encoder.encode(html));
