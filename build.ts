@@ -69,6 +69,7 @@ await Promise.all(
       let input = await readFile(src, { encoding: "utf8" });
       let file = matter(input) as {
         data: {
+          categories?: string[];
           title?: string;
           description?: string;
           date_published?: Date;
@@ -387,6 +388,22 @@ await Promise.all(
         }
       }
 
+      const CATEGORY_NAMES = {
+        android: "안드로이드",
+        etc: "기타",
+        git: "깃",
+        iot: "IoT",
+        java: "자바",
+        linux: "리눅스",
+        "machine-learning": "기계 학습",
+        python: "파이썬",
+        web: "웹",
+      };
+      let categoryHTML = (file.data.categories ?? []).map(
+        (category) =>
+          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a><p>`,
+      );
+
       await mkdir(dirname(dest), { recursive: true });
       await writeFile(
         dest,
@@ -501,6 +518,10 @@ await Promise.all(
               ></script>
             </head>
             <body class="markdown-body p-5 container-lg">
+              <nav>
+                <p><a href="/">${TITLE}</a></p>
+                ${categoryHTML}
+              </nav>
               ${html}
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
