@@ -42,6 +42,7 @@ let rssItems = [] as {
   title: string;
   link: string;
   description: string;
+  categories: string[];
   pubDate?: Date;
   guid: string;
   content?: string;
@@ -399,7 +400,8 @@ await Promise.all(
         python: "파이썬",
         web: "웹",
       };
-      let categoryHTML = (file.data.categories ?? []).map(
+      let categories = file.data.categories ?? [];
+      let categoryHTML = categories.map(
         (category) =>
           /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a></p>`,
       );
@@ -540,6 +542,7 @@ await Promise.all(
         title,
         link: canonical,
         description: html,
+        categories,
         pubDate: datePublished,
         guid: canonical,
       });
@@ -649,6 +652,7 @@ await writeFile(
       <title>${escape(item.title)}</title>
       <link>${escape(item.link)}</link>
       <description>${escape(item.description)}</description>
+      ${item.categories.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("\n")}
       ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
       <guid>${escape(item.guid)}</guid>
       ${item.content ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
