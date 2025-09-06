@@ -22,6 +22,7 @@ import {
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import type { BlogPosting, WithContext } from "schema-dts";
+import * as ts from "typescript";
 
 const execFile = promisify(child_process.execFile);
 
@@ -239,6 +240,65 @@ await Promise.all(
             alertText = "";
             alertType = null;
           });
+        },
+      });
+
+      try {
+        await rewriter.write(encoder.encode(html));
+        await rewriter.end();
+        html = output;
+      } finally {
+        rewriter.free();
+      }
+
+      output = "";
+      rewriter = new HTMLRewriter((outputChunk) => {
+        output += decoder.decode(outputChunk);
+      });
+
+      rewriter.on("pre", {
+        element(element) {
+          element.before(`<div class="highlight">`, { html: true });
+          element.after(`</div>`, { html: true });
+          element.after(
+            /* HTML */ `<div>
+              <clipboard-copy>
+                <button type="button">
+                  <svg
+                    aria-hidden="true"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    version="1.1"
+                    width="16"
+                    class="octicon octicon-copy js-clipboard-copy-icon"
+                  >
+                    <path
+                      d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+                    ></path>
+                    <path
+                      d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+                    ></path>
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    version="1.1"
+                    width="16"
+                    class="octicon octicon-check js-clipboard-check-icon color-fg-success"
+                    style="display: none;"
+                  >
+                    <path
+                      d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"
+                    ></path>
+                  </svg>
+                </button>
+              </clipboard-copy>
+            </div>`,
+            {
+              html: true,
+            },
+          );
         },
       });
 
@@ -488,6 +548,7 @@ await Promise.all(
                   image: escape(new URL("ogp.png", BASE).toString()),
                 } satisfies WithContext<BlogPosting>)}
               </script>
+              <script type="module" src="/clipboard-copy.js"></script>
               <!-- Google tag (gtag.js) -->
               <script
                 async
@@ -674,3 +735,11 @@ await copyFile(
   fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
   join(DEST_ROOT, "both.css"),
 );
+
+let output = ts.transpile(
+  await readFile(join(SRC_ROOT, "clipboard-copy.ts"), { encoding: "utf8" }),
+  {
+    target: ts.ScriptTarget.ESNext,
+  },
+);
+await writeFile(join(DEST_ROOT, "clipboard-copy.js"), output);
