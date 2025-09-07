@@ -15,10 +15,10 @@ customElements.define(
 
       let copyIcon = this.querySelector(
         ".js-clipboard-copy-icon",
-      ) as SVGAElement;
+      ) as SVGElement;
       let checkIcon = this.querySelector(
         ".js-clipboard-check-icon",
-      ) as SVGAElement;
+      ) as SVGElement;
       copyIcon.attributeStyleMap.set("display", "none");
       checkIcon.attributeStyleMap.delete("display");
       setTimeout(() => {

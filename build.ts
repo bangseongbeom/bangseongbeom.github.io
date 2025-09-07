@@ -736,10 +736,19 @@ await copyFile(
   join(DEST_ROOT, "both.css"),
 );
 
-let output = ts.transpile(
+let output = ts.transpileModule(
   await readFile(join(SRC_ROOT, "clipboard-copy.ts"), { encoding: "utf8" }),
   {
-    target: ts.ScriptTarget.ESNext,
+    compilerOptions: {
+      target: ts.ScriptTarget.ESNext,
+      sourceMap: true,
+    },
+    fileName: "clipboard-copy.ts",
   },
 );
-await writeFile(join(DEST_ROOT, "clipboard-copy.js"), output);
+await writeFile(join(DEST_ROOT, "clipboard-copy.js"), output.outputText);
+await writeFile(join(DEST_ROOT, "clipboard-copy.js.map"), output.sourceMapText);
+await copyFile(
+  join(SRC_ROOT, "clipboard-copy.ts"),
+  join(DEST_ROOT, "clipboard-copy.ts"),
+);
