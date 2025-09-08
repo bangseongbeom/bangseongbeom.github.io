@@ -542,8 +542,12 @@ await Promise.all(
                     "@type": "Person",
                     name: escape(AUTHOR),
                   },
-                  dateModified: escape(dateModified?.toISOString()),
-                  datePublished: escape(datePublished?.toISOString()),
+                  dateModified: dateModified
+                    ? escape(dateModified?.toISOString())
+                    : undefined,
+                  datePublished: datePublished
+                    ? escape(datePublished?.toISOString())
+                    : undefined,
                   headline: escape(title),
                   image: escape(new URL("ogp.png", BASE).toString()),
                 } satisfies WithContext<BlogPosting>)}
