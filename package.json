@@ -16,6 +16,14 @@
     "html-rewriter-wasm": "^0.4.1"
   },
   "devDependencies": {
+    "@codemirror/autocomplete": "^6.18.7",
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/language": "^6.11.3",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.2",
+    "@lezer/highlight": "^1.2.1",
     "@types/html-escaper": "^3.0.4",
     "@types/node": "^24.3.0",
     "http-server": "^14.1.1",

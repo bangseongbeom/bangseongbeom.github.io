@@ -172,3 +172,25 @@ summary > .markdown-heading {
 .color-fg-success {
   color: var(--fgColor-success, var(--color-success-fg)) !important;
 }
+
+.cm-editor {
+  padding: var(--base-size-16);
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
+
+  .cm-content {
+    padding: 0;
+  }
+
+  .cm-line {
+    padding: 0;
+  }
+
+  .cm-scroller {
+    line-height: inherit;
+  }
+}

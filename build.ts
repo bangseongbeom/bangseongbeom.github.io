@@ -553,6 +553,37 @@ await Promise.all(
                 } satisfies WithContext<BlogPosting>)}
               </script>
               <script type="module" src="/clipboard-copy.js"></script>
+              <!--
+                Import map generated with JSPM Generator
+                Edit here: https://generator.jspm.io/#ZY47DoMwEERdpMhFUmaRIR+XvgQHWMEKHPkneyFKmlw9hs6i2Oa9Gc1eTkKcf71nw5ZGoYcwkjMphdTgwmEILlpi0g+QCp6VL86hH3NxCmSlLPrp+sIV85BM5JJo4XZMxA/Pwe/22F9w2mcldJXLjPs/d2grvhp6F9ypjVv6UmpmM822HGu5TfwB2+nFz+wA
+              -->
+              <script type="importmap">
+                {
+                  "imports": {
+                    "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.18.7/dist/index.js",
+                    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.8.1/dist/index.js",
+                    "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.4/dist/index.js",
+                    "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
+                    "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.11.3/dist/index.js",
+                    "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.5.2/dist/index.js",
+                    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.38.2/dist/index.js",
+                    "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.1/dist/index.js"
+                  },
+                  "scopes": {
+                    "https://ga.jspm.io/": {
+                      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.2.3/dist/index.js",
+                      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.3/dist/index.js",
+                      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.2/dist/index.js",
+                      "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
+                      "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
+                      "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
+                      "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.2/src/style-mod.js",
+                      "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
+                    }
+                  }
+                }
+              </script>
+              <script type="module" src="/run-code.js"></script>
               <!-- Google tag (gtag.js) -->
               <script
                 async
@@ -756,3 +787,17 @@ await copyFile(
   join(SRC_ROOT, "clipboard-copy.ts"),
   join(DEST_ROOT, "clipboard-copy.ts"),
 );
+
+output = ts.transpileModule(
+  await readFile(join(SRC_ROOT, "run-code.ts"), { encoding: "utf8" }),
+  {
+    compilerOptions: {
+      target: ts.ScriptTarget.ESNext,
+      sourceMap: true,
+    },
+    fileName: "run-code.ts",
+  },
+);
+await writeFile(join(DEST_ROOT, "run-code.js"), output.outputText);
+await writeFile(join(DEST_ROOT, "run-code.js.map"), output.sourceMapText);
+await copyFile(join(SRC_ROOT, "run-code.ts"), join(DEST_ROOT, "run-code.ts"));
