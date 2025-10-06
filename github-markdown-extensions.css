@@ -171,7 +171,6 @@ summary > .markdown-heading {
   font-weight: var(--base-text-weight-medium, 500);
   line-height: 20px;
   white-space: nowrap;
-  vertical-align: middle;
   border: 1px solid;
   border-color: var(--button-default-borderColor-rest);
   border-radius: 6px;
@@ -193,7 +192,7 @@ summary > .markdown-heading {
   --control-small-size: 28px;
 }
 
-.markdown-body button.clipboard-copy {
+.markdown-body .highlight button.clipboard-copy {
   width: var(--control-small-size, 28px);
   height: var(--control-small-size, 28px);
   padding: 0;

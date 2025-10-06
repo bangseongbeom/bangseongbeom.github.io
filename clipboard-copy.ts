@@ -3,13 +3,12 @@ import type { RunnableCode } from "./runnable-code.ts";
 document.querySelectorAll("button.clipboard-copy").forEach((button) =>
   button.addEventListener("click", (event) => {
     let data: string;
-
-    let pre = button.closest(".highlight")?.querySelector("pre");
+    let runnableCode = button.closest("runnable-code") as RunnableCode | null;
+    let view = runnableCode?.view;
+    let pre = button.closest(".highlight, runnable-code")?.querySelector("pre");
     if (pre) data = pre.textContent;
-    else {
-      let runnableCode = button.closest("runnable-code") as RunnableCode | null;
-      data = runnableCode!.view!.state.doc.toString();
-    }
+    else if (view) data = runnableCode!.view!.state.doc.toString();
+    else throw new Error();
 
     navigator.clipboard.writeText(data);
 

@@ -59,23 +59,8 @@ export class RunnableCode extends HTMLElement {
       highlight.querySelector("pre")!.remove();
       this.view = new EditorView({ state: startState });
       highlight.prepend(this.view.dom);
-
-      this.insertAdjacentHTML(
-        "beforeend",
-        /* HTML */ `<p>
-          <button type="button" class="run-code">코드 실행</button>
-        </p>`,
-      );
       this.querySelector("button.run-code")!.addEventListener("click", runCode);
-    } else if (flag == "java" || flag == "jsh") {
-      this.insertAdjacentHTML(
-        "beforeend",
-        /* HTML */ `<p>
-          <button type="button">복사</button>한 다음 The Java Playground에
-          붙여넣고 실행해보세요.
-        </p>`,
-      );
-    } else throw new Error();
+    }
   }
 }
 customElements.define("runnable-code", RunnableCode);
