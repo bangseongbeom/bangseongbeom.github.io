@@ -143,37 +143,33 @@ summary > .markdown-heading {
   --control-small-size: 28px;
 }
 
-.markdown-body clipboard-copy {
-  display: inline-block;
+.markdown-body button.clipboard-copy {
+  width: var(--control-small-size, 28px);
+  height: var(--control-small-size, 28px);
+  padding: 0;
+  margin: 8px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  border-radius: 6px;
 
-  button {
-    width: var(--control-small-size, 28px);
-    height: var(--control-small-size, 28px);
-    padding: 0;
-    margin: 8px;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0;
-    border-radius: 6px;
+  &:hover {
+    backdrop-filter: invert(10%);
+  }
 
-    &:hover {
-      backdrop-filter: invert(10%);
-    }
+  &:active {
+    backdrop-filter: none;
+  }
 
-    &:active {
-      backdrop-filter: none;
-    }
+  .octicon {
+    color: var(--fgColor-muted, var(--color-fg-muted));
+  }
 
-    .octicon {
-      color: var(--fgColor-muted, var(--color-fg-muted));
-    }
-
-    .color-fg-success {
-      color: var(--fgColor-success, var(--color-success-fg)) !important;
-    }
+  .color-fg-success {
+    color: var(--fgColor-success, var(--color-success-fg)) !important;
   }
 }
 
-.markdown-body run-code button {
+.markdown-body runnable-code button.run-code {
   position: relative;
   display: inline-block;
   padding: 5px var(--base-size-16);
