@@ -140,6 +140,56 @@ summary > .markdown-heading {
 }
 
 :root {
+  --button-default-fgColor-rest: #25292e;
+  --button-default-bgColor-rest: #f6f8fa;
+  --button-default-borderColor-rest: #d1d9e0;
+  --button-default-bgColor-hover: #eff2f5;
+  --button-default-borderColor-hover: #d1d9e0;
+  --button-default-bgColor-active: #e6eaef;
+  --button-default-borderColor-active: #d1d9e0;
+
+  @media (prefers-color-scheme: dark) {
+    --button-default-fgColor-rest: #c9d1d9;
+    --button-default-bgColor-rest: #212830;
+    --button-default-borderColor-rest: #3d444d;
+    --button-default-bgColor-hover: #262c36;
+    --button-default-borderColor-hover: #3d444d;
+    --button-default-bgColor-active: #2a313c;
+    --button-default-borderColor-active: #3d444d;
+  }
+}
+
+.markdown-body button {
+  color: var(--button-default-fgColor-rest);
+  background-color: var(--button-default-bgColor-rest);
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color, background-color, box-shadow, border-color;
+  display: inline-block;
+  padding: 5px var(--base-size-16);
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--base-text-weight-medium, 500);
+  line-height: 20px;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid;
+  border-color: var(--button-default-borderColor-rest);
+  border-radius: 6px;
+
+  &:hover {
+    background-color: var(--button-default-bgColor-hover);
+    border-color: var(--button-default-borderColor-hover);
+    transition-duration: 0.1s;
+  }
+
+  &:active {
+    background-color: var(--button-default-bgColor-active);
+    border-color: var(--button-default-borderColor-active);
+    transition: none;
+  }
+}
+
+:root {
   --control-small-size: 28px;
 }
 
@@ -148,16 +198,22 @@ summary > .markdown-heading {
   height: var(--control-small-size, 28px);
   padding: 0;
   margin: 8px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   border: 0;
   border-radius: 6px;
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color, background-color, box-shadow, border-color;
 
   &:hover {
-    backdrop-filter: invert(10%);
+    background-color: var(--button-default-bgColor-hover);
+    border-color: var(--button-default-borderColor-hover);
+    transition-duration: 0.1s;
   }
 
   &:active {
-    backdrop-filter: none;
+    background-color: var(--button-default-bgColor-active);
+    border-color: var(--button-default-borderColor-active);
+    transition: none;
   }
 
   .octicon {
@@ -166,53 +222,5 @@ summary > .markdown-heading {
 
   .color-fg-success {
     color: var(--fgColor-success, var(--color-success-fg)) !important;
-  }
-}
-
-.markdown-body runnable-code button.run-code {
-  position: relative;
-  display: inline-block;
-  padding: 5px var(--base-size-16);
-  font-size: 14px;
-  font-weight: var(--base-text-weight-medium, 500);
-  line-height: 20px;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  border: 1px solid;
-  border-radius: 6px;
-  appearance: none;
-
-  color: var(--button-default-fgColor-rest, var(--color-btn-text));
-  background-color: var(--button-default-bgColor-rest, var(--color-btn-bg));
-  border-color: var(--button-default-borderColor-rest, var(--color-btn-border));
-  box-shadow:
-    var(--button-default-shadow-resting, var(--color-btn-shadow)),
-    var(--button-default-shadow-inset, var(--color-btn-inset-shadow));
-  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
-  transition-property: color, background-color, box-shadow, border-color;
-
-  &:hover {
-    background-color: var(
-      --button-default-bgColor-hover,
-      var(--color-btn-hover-bg)
-    );
-    border-color: var(
-      --button-default-borderColor-hover,
-      var(--color-btn-hover-border)
-    );
-    transition-duration: 0.1s;
-  }
-
-  &:active {
-    background-color: var(
-      --button-default-bgColor-active,
-      var(--color-btn-active-bg)
-    );
-    border-color: var(
-      --button-default-borderColor-active,
-      var(--color-btn-active-border)
-    );
-    transition: none;
   }
 }
