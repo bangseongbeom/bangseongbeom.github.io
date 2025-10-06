@@ -527,7 +527,6 @@ await Promise.all(
               />
               <link rel="stylesheet" href="/github-markdown.css" />
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
-              <link rel="stylesheet" href="/both.css" />
               <link rel="stylesheet" href="/codemirror-github-theme.css" />
               <script type="application/ld+json">
                 ${JSON.stringify({
@@ -762,11 +761,6 @@ await writeFile(
 await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
   join(DEST_ROOT, "github-markdown.css"),
-);
-
-await copyFile(
-  fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
-  join(DEST_ROOT, "both.css"),
 );
 
 let output = ts.transpileModule(
