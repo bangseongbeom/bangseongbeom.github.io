@@ -28,6 +28,7 @@
     "@types/node": "^24.3.0",
     "http-server": "^14.1.1",
     "prettier": "^3.6.2",
+    "pyodide": "^0.28.3",
     "schema-dts": "^1.1.5",
     "typescript": "^5.9.2"
   },

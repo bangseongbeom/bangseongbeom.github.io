@@ -1,4 +1,4 @@
-import type { RunCodeElement } from "./run-code.ts";
+import type { RunnableCode } from "./runnable-code.ts";
 
 customElements.define(
   "clipboard-copy",
@@ -16,8 +16,8 @@ customElements.define(
       let pre = this.closest(".highlight")?.querySelector("pre");
       if (pre) data = pre.textContent;
       else {
-        let runCode = this.closest("run-code") as RunCodeElement | null;
-        data = runCode!.view!.state.doc.toString();
+        let runnableCode = this.closest("runnable-code") as RunnableCode | null;
+        data = runnableCode!.view!.state.doc.toString();
       }
 
       navigator.clipboard.writeText(data);

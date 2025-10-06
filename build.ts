@@ -37,14 +37,14 @@ const BASE = "https://www.bangseongbeom.com/";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-let sitemapURLs = [] as { loc: string; lastmod?: Date }[];
+let sitemapURLs = [] as { loc: string; lastmod?: Date | null }[];
 
 let rssItems = [] as {
   title: string;
   link: string;
   description: string;
   categories: string[];
-  pubDate?: Date;
+  pubDate?: Date | null;
   guid: string;
   content?: string;
 }[];
@@ -164,7 +164,7 @@ await Promise.all(
       });
 
       let alertText = "";
-      let alertType = null as string;
+      let alertType: string | null;
       let alertFirstText = true;
       rewriter.on("blockquote > p:first-child", {
         text(text) {
@@ -174,7 +174,7 @@ await Promise.all(
               /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
             );
             if (matchArray) {
-              alertType = matchArray[1];
+              alertType = matchArray[1] ?? null;
               textContent = textContent.replace(
                 /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
                 "",
@@ -224,7 +224,7 @@ await Promise.all(
                       important: `<svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
                       warning: `<svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
                       caution: `<svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
-                    }[alertType.toLowerCase()]}${alertType[0].toUpperCase() +
+                    }[alertType.toLowerCase()]}${alertType[0]!.toUpperCase() +
                     alertType.substring(1).toLowerCase()}
                   </p>
                   ${alertText}
@@ -373,18 +373,14 @@ await Promise.all(
       let codeText = "";
       rewriter.on("code", {
         element(element) {
-          let flag = element
-            .getAttribute("class")
-            ?.match(/language-(\w+)/)?.[1];
+          let flag = element.getAttribute("class")?.match(/language-(.+)/)?.[1];
           if (!flag) return;
           codeScope = starryNight.flagToScope(flag) ?? null;
           element.onEndTag((endTag) => {
             if (!codeScope) return;
             endTag.before(
               toHtml(starryNight.highlight(unescape(codeText), codeScope)),
-              {
-                html: true,
-              },
+              { html: true },
             );
             codeScope = null;
             codeText = "";
@@ -443,9 +439,8 @@ await Promise.all(
           .split("\n");
         if (committerDates[0] == "") committerDates = [];
         if (committerDates.length) {
-          if (!datePublished)
-            datePublished = new Date(committerDates[committerDates.length - 1]);
-          if (!dateModified) dateModified = new Date(committerDates[0]);
+          if (!datePublished) datePublished = new Date(committerDates.at(-1)!);
+          if (!dateModified) dateModified = new Date(committerDates[0]!);
         }
       }
 
@@ -459,8 +454,9 @@ await Promise.all(
         "machine-learning": "기계 학습",
         python: "파이썬",
         web: "웹",
-      };
-      let categories = file.data.categories ?? [];
+      } as const;
+      let categories = (file.data.categories ??
+        []) as (keyof typeof CATEGORY_NAMES)[];
       let categoryHTML = categories.map(
         (category) =>
           /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a></p>`,
@@ -534,23 +530,20 @@ await Promise.all(
               <link rel="stylesheet" href="/github-markdown.css" />
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
               <link rel="stylesheet" href="/both.css" />
+              <link rel="stylesheet" href="/codemirror-github-theme.css" />
               <script type="application/ld+json">
                 ${JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "BlogPosting",
                   author: {
                     "@type": "Person",
-                    name: escape(AUTHOR),
+                    name: AUTHOR,
                   },
-                  dateModified: dateModified
-                    ? escape(dateModified?.toISOString())
-                    : undefined,
-                  datePublished: datePublished
-                    ? escape(datePublished?.toISOString())
-                    : undefined,
-                  headline: escape(title),
-                  image: escape(new URL("ogp.png", BASE).toString()),
-                } satisfies WithContext<BlogPosting>)}
+                  dateModified: dateModified?.toISOString(),
+                  datePublished: datePublished?.toISOString(),
+                  headline: title,
+                  image: new URL("ogp.png", BASE).toString(),
+                } as WithContext<BlogPosting>)}
               </script>
               <script type="module" src="/clipboard-copy.js"></script>
               <!--
@@ -583,7 +576,14 @@ await Promise.all(
                   }
                 }
               </script>
-              <script type="module" src="/run-code.js"></script>
+              <script type="importmap">
+                {
+                  "imports": {
+                    "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"
+                  }
+                }
+              </script>
+              <script type="module" src="/runnable-code.js"></script>
               <!-- Google tag (gtag.js) -->
               <script
                 async
@@ -632,14 +632,14 @@ await Promise.all(
 
       sitemapURLs.push({
         loc: canonical,
-        lastmod: dateModified ?? datePublished,
+        lastmod: dateModified ?? datePublished ?? null,
       });
       rssItems.push({
         title,
         link: canonical,
         description: html,
         categories,
-        pubDate: datePublished,
+        pubDate: datePublished ?? null,
         guid: canonical,
       });
       rssItems = rssItems
@@ -782,22 +782,28 @@ let output = ts.transpileModule(
   },
 );
 await writeFile(join(DEST_ROOT, "clipboard-copy.js"), output.outputText);
-await writeFile(join(DEST_ROOT, "clipboard-copy.js.map"), output.sourceMapText);
+await writeFile(
+  join(DEST_ROOT, "clipboard-copy.js.map"),
+  output.sourceMapText!,
+);
 await copyFile(
   join(SRC_ROOT, "clipboard-copy.ts"),
   join(DEST_ROOT, "clipboard-copy.ts"),
 );
 
 output = ts.transpileModule(
-  await readFile(join(SRC_ROOT, "run-code.ts"), { encoding: "utf8" }),
+  await readFile(join(SRC_ROOT, "runnable-code.ts"), { encoding: "utf8" }),
   {
     compilerOptions: {
       target: ts.ScriptTarget.ESNext,
       sourceMap: true,
     },
-    fileName: "run-code.ts",
+    fileName: "runnable-code.ts",
   },
 );
-await writeFile(join(DEST_ROOT, "run-code.js"), output.outputText);
-await writeFile(join(DEST_ROOT, "run-code.js.map"), output.sourceMapText);
-await copyFile(join(SRC_ROOT, "run-code.ts"), join(DEST_ROOT, "run-code.ts"));
+await writeFile(join(DEST_ROOT, "runnable-code.js"), output.outputText);
+await writeFile(join(DEST_ROOT, "runnable-code.js.map"), output.sourceMapText!);
+await copyFile(
+  join(SRC_ROOT, "runnable-code.ts"),
+  join(DEST_ROOT, "runnable-code.ts"),
+);

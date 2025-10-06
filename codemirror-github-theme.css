@@ -1,0 +1,117 @@
+.cm-editor {
+  padding: var(--base-size-16);
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
+
+  .cm-content {
+    padding: 0;
+    caret-color: var(--fgColor-default);
+  }
+
+  .cm-line {
+    padding: 0;
+  }
+
+  .cm-scroller {
+    line-height: inherit;
+  }
+}
+
+.tok-link {
+  color: var(--color-prettylights-syntax-constant-other-reference-link);
+}
+
+.tok-heading {
+  color: var(--color-prettylights-syntax-markup-heading);
+}
+
+.tok-emphasis {
+  color: var(--color-prettylights-syntax-markup-italic);
+}
+
+.tok-strong {
+  color: var(--color-prettylights-syntax-markup-bold);
+}
+
+.tok-keyword {
+  color: var(--color-prettylights-syntax-keyword);
+}
+
+.tok-atom {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.tok-bool {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.tok-url {
+  color: var(--color-prettylights-syntax-constant-other-reference-link);
+}
+
+.tok-labelName {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.tok-inserted {
+  color: var(--color-prettylights-syntax-markup-inserted-text);
+  background-color: var(--color-prettylights-syntax-markup-inserted-bg);
+}
+
+.tok-deleted {
+  color: var(--color-prettylights-syntax-markup-deleted-text);
+  background-color: var(--color-prettylights-syntax-markup-deleted-bg);
+}
+
+.tok-literal {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.tok-string {
+  color: var(--color-prettylights-syntax-string);
+}
+
+.tok-string2 {
+  color: var(--color-prettylights-syntax-string);
+}
+
+.tok-number {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.tok-typeName {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.tok-namespace {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.tok-className {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.tok-macroName {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.tok-operator {
+  color: var(--color-prettylights-syntax-keyword);
+}
+
+.tok-comment {
+  color: var(--color-prettylights-syntax-comment);
+}
+
+.tok-meta {
+  color: var(--color-prettylights-syntax-meta-diff-range);
+}
+
+.tok-invalid {
+  color: var(--color-prettylights-syntax-invalid-illegal-text);
+  background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
+}
