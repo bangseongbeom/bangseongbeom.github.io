@@ -218,8 +218,8 @@ summary > .markdown-heading {
   .octicon {
     color: var(--fgColor-muted, var(--color-fg-muted));
   }
+}
 
-  .color-fg-success {
-    color: var(--fgColor-success, var(--color-success-fg)) !important;
-  }
+.markdown-body button.clipboard-copy .color-fg-success {
+  color: var(--fgColor-success, var(--color-success-fg)) !important;
 }
