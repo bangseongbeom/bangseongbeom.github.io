@@ -405,7 +405,7 @@ await Promise.all(
                   후
                   <a href="https://dev.java/playground/" target="_blank"
                     >The Java Playground</a
-                  >에 붙여넣어 실행
+                  >
                 </p>`,
                 { html: true },
               );

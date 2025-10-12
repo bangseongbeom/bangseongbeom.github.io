@@ -1,7 +1,7 @@
 import type { RunnableCode } from "./runnable-code.ts";
 
 document.querySelectorAll("button.clipboard-copy").forEach((button) =>
-  button.addEventListener("click", (event) => {
+  button.addEventListener("click", () => {
     let data: string;
     let runnableCode = button.closest("runnable-code") as RunnableCode | null;
     let view = runnableCode?.view;

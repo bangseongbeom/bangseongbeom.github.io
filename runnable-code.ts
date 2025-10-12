@@ -205,7 +205,10 @@ async function runCode(event: Event) {
     } catch (error) {
       let message = document.createElement("div");
       message.classList.add("error");
-      message.textContent = String(error);
+      message.textContent =
+        error instanceof Error
+          ? (error.stack ?? error.toString())
+          : String(error);
       messages.push(message);
     }
   } else throw new Error();
