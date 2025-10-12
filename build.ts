@@ -68,7 +68,7 @@ await Promise.all(
         BASE,
       ).toString();
 
-      let input = await readFile(src, { encoding: "utf8" });
+      let input = await readFile(src, "utf8");
       let file = matter(input) as {
         data: {
           categories?: string[];
@@ -829,7 +829,7 @@ await copyFile(
 );
 
 let output = ts.transpileModule(
-  await readFile(join(SRC_ROOT, "clipboard-copy.ts"), { encoding: "utf8" }),
+  await readFile(join(SRC_ROOT, "clipboard-copy.ts"), "utf8"),
   {
     compilerOptions: {
       target: ts.ScriptTarget.ESNext,
@@ -849,7 +849,7 @@ await copyFile(
 );
 
 output = ts.transpileModule(
-  await readFile(join(SRC_ROOT, "runnable-code.ts"), { encoding: "utf8" }),
+  await readFile(join(SRC_ROOT, "runnable-code.ts"), "utf8"),
   {
     compilerOptions: {
       target: ts.ScriptTarget.ESNext,
