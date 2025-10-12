@@ -9,7 +9,6 @@
     "comrak": "^0.4.2",
     "github-markdown-css": "^5.8.1",
     "github-slugger": "^2.0.0",
-    "globby": "^15.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.5",
     "html-escaper": "^3.0.3",
