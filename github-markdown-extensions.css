@@ -147,6 +147,9 @@ summary > .markdown-heading {
   --button-default-borderColor-hover: #d1d9e0;
   --button-default-bgColor-active: #e6eaef;
   --button-default-borderColor-active: #d1d9e0;
+  --fgColor-disabled: #818b98;
+  --button-default-bgColor-disabled: #eff2f5;
+  --button-default-borderColor-disabled: #818b981a;
 
   @media (prefers-color-scheme: dark) {
     --button-default-fgColor-rest: #c9d1d9;
@@ -156,6 +159,9 @@ summary > .markdown-heading {
     --button-default-borderColor-hover: #3d444d;
     --button-default-bgColor-active: #2a313c;
     --button-default-borderColor-active: #3d444d;
+    --fgColor-disabled: #656c7699;
+    --button-default-bgColor-disabled: #212830;
+    --button-default-borderColor-disabled: #656c761a;
   }
 }
 
@@ -185,6 +191,12 @@ summary > .markdown-heading {
     background-color: var(--button-default-bgColor-active);
     border-color: var(--button-default-borderColor-active);
     transition: none;
+  }
+
+  &:disabled {
+    color: var(--fgColor-disabled);
+    background-color: var(--button-default-bgColor-disabled);
+    border-color: var(--button-default-borderColor-disabled);
   }
 }
 

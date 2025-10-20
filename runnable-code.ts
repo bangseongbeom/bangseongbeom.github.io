@@ -68,9 +68,8 @@ customElements.define("runnable-code", RunnableCode);
 let pyodide: PyodideAPI;
 
 async function runCode(event: Event) {
-  let runnableCode = (event.currentTarget as HTMLElement).closest(
-    "runnable-code",
-  ) as RunnableCode;
+  let currentTarget = event.currentTarget as HTMLButtonElement;
+  let runnableCode = currentTarget.closest("runnable-code") as RunnableCode;
   let doc = runnableCode.view!.state.doc;
 
   let messages: HTMLElement[] = [];
@@ -181,8 +180,16 @@ async function runCode(event: Event) {
   } else if (runnableCode.flag == "python" || runnableCode.flag == "py") {
     await import("pyodide");
     if (!pyodide) {
+      currentTarget.disabled = true;
+      currentTarget.dataset.defaultTextContent = currentTarget.textContent;
+      currentTarget.textContent = "코드 실행 중...";
+
       // @ts-expect-error
       pyodide = await loadPyodide();
+
+      currentTarget.disabled = false;
+      currentTarget.textContent = currentTarget.dataset.defaultTextContent;
+      delete currentTarget.dataset.defaultTextContent;
     }
     pyodide.setStdout({
       batched(output) {
