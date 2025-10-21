@@ -1,23 +1,28 @@
-import type { RunnableCode } from "./runnable-code.ts";
+/**
+ * @typedef {import("./runnable-code.js").RunnableCode} RunnableCode
+ */
 
 document.querySelectorAll("button.clipboard-copy").forEach((button) =>
   button.addEventListener("click", () => {
-    let data: string;
-    let runnableCode = button.closest("runnable-code") as RunnableCode | null;
+    /** @type {string} */
+    let data;
+    /** @type {RunnableCode | null} */
+    let runnableCode = button.closest("runnable-code");
     let view = runnableCode?.view;
+    /** @type {HTMLPreElement | null | undefined} */
     let pre = button.closest(".highlight, runnable-code")?.querySelector("pre");
     if (pre) data = pre.textContent;
-    else if (view) data = runnableCode!.view!.state.doc.toString();
+    else if (view) data = view.state.doc.toString();
     else throw new Error();
 
     navigator.clipboard.writeText(data);
 
-    let copyIcon = button.querySelector(
-      ".js-clipboard-copy-icon",
-    ) as SVGElement;
-    let checkIcon = button.querySelector(
-      ".js-clipboard-check-icon",
-    ) as SVGElement;
+    let copyIcon = /** @type {SVGElement} */ (
+      button.querySelector(".js-clipboard-copy-icon")
+    );
+    let checkIcon = /** @type {SVGElement} */ (
+      button.querySelector(".js-clipboard-check-icon")
+    );
     copyIcon.attributeStyleMap.set("display", "none");
     checkIcon.attributeStyleMap.delete("display");
     setTimeout(() => {

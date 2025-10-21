@@ -1,13 +1,16 @@
-import type { EditorView } from "@codemirror/view";
-import { type PyodideAPI } from "pyodide";
+import { EditorView } from "@codemirror/view";
 
 export class RunnableCode extends HTMLElement {
-  view?: EditorView;
-  flag?: string | null;
+  /** @type {EditorView | undefined} */
+  view;
+  /** @type {string | null | undefined} */
+  flag;
 
   async connectedCallback() {
-    let highlight = this.querySelector(".highlight")!;
-    let code = highlight.querySelector("code")!;
+    let highlight = /** @type {HTMLElement} */ (
+      this.querySelector(".highlight")
+    );
+    let code = /** @type {HTMLElement} */ (highlight.querySelector("code"));
     let flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
     this.flag = flag ?? null;
 
@@ -56,29 +59,43 @@ export class RunnableCode extends HTMLElement {
           languageExtension,
         ],
       });
-      highlight.querySelector("pre")!.remove();
+      /** @type {HTMLPreElement} */ (highlight.querySelector("pre")).remove();
       this.view = new EditorView({ state: startState });
       highlight.prepend(this.view.dom);
-      this.querySelector("button.run-code")!.addEventListener("click", runCode);
+      /** @type {HTMLButtonElement} */ (
+        this.querySelector("button.run-code")
+      ).addEventListener("click", runCode);
     }
   }
 }
 customElements.define("runnable-code", RunnableCode);
 
-let pyodide: PyodideAPI;
+/** @type {import("pyodide").PyodideAPI} */
+let pyodide;
 
-async function runCode(event: Event) {
-  let currentTarget = event.currentTarget as HTMLButtonElement;
-  let runnableCode = currentTarget.closest("runnable-code") as RunnableCode;
-  let doc = runnableCode.view!.state.doc;
+/**
+ * @param {Event} event
+ */
+async function runCode(event) {
+  let currentTarget = /** @type {HTMLButtonElement} */ (event.currentTarget);
+  let runnableCode = /** @type {RunnableCode} */ (
+    currentTarget.closest("runnable-code")
+  );
+  if (!runnableCode.view) throw new Error();
+  let doc = runnableCode.view.state.doc;
 
-  let messages: HTMLElement[] = [];
+  /** @type {HTMLElement[]} */
+  let messages = [];
 
   if (runnableCode.flag == "javascript" || runnableCode.flag == "js") {
     let originalConsole = console;
     console = {
       ...originalConsole,
-      assert(condition?: boolean, ...data: any[]) {
+      /**
+       * @param {boolean | undefined} condition
+       * @param {...any} data
+       */
+      assert(condition, ...data) {
         if (!condition) {
           let message = document.createElement("div");
           message.classList.add("error");
@@ -93,74 +110,107 @@ async function runCode(event: Event) {
         messages = [];
         originalConsole.clear();
       },
-      debug(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      debug(...data) {
         let message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.debug(...data);
       },
-      error(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      error(...data) {
         let message = document.createElement("div");
         message.classList.add("error");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.error(...data);
       },
-      info(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      info(...data) {
         let message = document.createElement("div");
         message.classList.add("info");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.info(...data);
       },
-      log(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      log(...data) {
         let message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.log(...data);
       },
-      table(tabularData?: any, properties?: string[]) {
+      /**
+       * @param {any} tabularData
+       * @param {string[] | undefined} properties
+       */
+      table(tabularData, properties) {
         let message = document.createElement("table");
         message.append(
-          ...tabularData.map((row: any) => {
-            let tr = document.createElement("tr");
-            tr.append(
-              ...row.map((cell: any) => {
-                let td = document.createElement("td");
-                td.textContent = cell;
-                return td;
-              }),
-            );
-            return tr;
-          }),
+          ...tabularData.map(
+            /** @param {any} row */ (row) => {
+              let tr = document.createElement("tr");
+              tr.append(
+                ...row.map(
+                  /** @param {any} cell */ (cell) => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    return td;
+                  },
+                ),
+              );
+              return tr;
+            },
+          ),
         );
         messages.push(message);
         originalConsole.table(tabularData, properties);
       },
-      trace(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      trace(...data) {
         let message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.trace(...data);
       },
-      warn(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      warn(...data) {
         let message = document.createElement("div");
         message.classList.add("warn");
         message.textContent = data.join(" ");
         messages.push(message);
         originalConsole.warn(...data);
       },
-      dir(item?: any, options?: any) {
+      /**
+       * @param {any} item
+       * @param {any} options
+       */
+      dir(item, options) {
         let message = document.createElement("div");
         message.classList.add("log");
         message.textContent = item;
         messages.push(message);
         originalConsole.dir(item, options);
       },
-      dirxml(...data: any[]) {
+      /**
+       * @param {...any} data
+       */
+      dirxml(...data) {
         let message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
@@ -192,6 +242,9 @@ async function runCode(event: Event) {
       delete currentTarget.dataset.defaultTextContent;
     }
     pyodide.setStdout({
+      /**
+       * @param {string} output
+       */
       batched(output) {
         let message = document.createElement("div");
         message.classList.add("log");
@@ -200,6 +253,9 @@ async function runCode(event: Event) {
       },
     });
     pyodide.setStderr({
+      /**
+       * @param {string} output
+       */
       batched(output) {
         let message = document.createElement("div");
         message.classList.add("error");
@@ -220,13 +276,15 @@ async function runCode(event: Event) {
     }
   } else throw new Error();
 
-  let output: HTMLOutputElement | null = runnableCode.querySelector("output");
+  let output = runnableCode.querySelector("output");
   if (!output) {
     runnableCode.insertAdjacentHTML(
       "beforeend",
       /* HTML */ `<pre><output></output></pre>`,
     );
-    output = runnableCode.querySelector("output")!;
+    output = /** @type {HTMLOutputElement} */ (
+      runnableCode.querySelector("output")
+    );
   }
   output.replaceChildren(...messages);
 }

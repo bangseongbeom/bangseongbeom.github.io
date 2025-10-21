@@ -22,7 +22,6 @@ import {
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import type { BlogPosting, WithContext } from "schema-dts";
-import * as ts from "typescript";
 
 const execFile = promisify(child_process.execFile);
 
@@ -827,40 +826,11 @@ await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
   join(DEST_ROOT, "github-markdown.css"),
 );
-
-let output = ts.transpileModule(
-  await readFile(join(SRC_ROOT, "clipboard-copy.ts"), "utf8"),
-  {
-    compilerOptions: {
-      target: ts.ScriptTarget.ESNext,
-      sourceMap: true,
-    },
-    fileName: "clipboard-copy.ts",
-  },
-);
-await writeFile(join(DEST_ROOT, "clipboard-copy.js"), output.outputText);
-await writeFile(
-  join(DEST_ROOT, "clipboard-copy.js.map"),
-  output.sourceMapText!,
+await copyFile(
+  join(SRC_ROOT, "clipboard-copy.js"),
+  join(DEST_ROOT, "clipboard-copy.js"),
 );
 await copyFile(
-  join(SRC_ROOT, "clipboard-copy.ts"),
-  join(DEST_ROOT, "clipboard-copy.ts"),
-);
-
-output = ts.transpileModule(
-  await readFile(join(SRC_ROOT, "runnable-code.ts"), "utf8"),
-  {
-    compilerOptions: {
-      target: ts.ScriptTarget.ESNext,
-      sourceMap: true,
-    },
-    fileName: "runnable-code.ts",
-  },
-);
-await writeFile(join(DEST_ROOT, "runnable-code.js"), output.outputText);
-await writeFile(join(DEST_ROOT, "runnable-code.js.map"), output.sourceMapText!);
-await copyFile(
-  join(SRC_ROOT, "runnable-code.ts"),
-  join(DEST_ROOT, "runnable-code.ts"),
+  join(SRC_ROOT, "runnable-code.js"),
+  join(DEST_ROOT, "runnable-code.js"),
 );
