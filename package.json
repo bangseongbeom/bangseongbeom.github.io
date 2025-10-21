@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.ts",
-    "start": "http-server _site"
+    "start": "serve _site"
   },
   "dependencies": {
     "@wooorm/starry-night": "^3.8.0",
@@ -26,10 +26,10 @@
     "@lezer/highlight": "^1.2.1",
     "@types/html-escaper": "^3.0.4",
     "@types/node": "^24.7.0",
-    "http-server": "^14.1.1",
     "prettier": "^3.6.2",
     "pyodide": "^0.28.3",
-    "schema-dts": "^1.1.5"
+    "schema-dts": "^1.1.5",
+    "serve": "^14.2.5"
   },
   "prettier": {
     "embeddedLanguageFormatting": "auto"
