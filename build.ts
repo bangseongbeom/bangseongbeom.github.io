@@ -507,15 +507,15 @@ await Promise.all(
       }
 
       const CATEGORY_NAMES = {
-        android: "안드로이드",
-        etc: "기타",
-        git: "깃",
-        iot: "IoT",
-        java: "자바",
-        linux: "리눅스",
-        "machine-learning": "기계 학습",
-        python: "파이썬",
-        web: "웹",
+        android: "🤖 안드로이드",
+        etc: "📦 기타",
+        git: "🔀 깃",
+        iot: "📡 IoT",
+        java: "☕ 자바",
+        linux: "🐧 리눅스",
+        "machine-learning": "🧠 기계 학습",
+        python: "🐍 파이썬",
+        web: "🌐 웹",
       } as const;
       let categories = (file.data.categories ??
         []) as (keyof typeof CATEGORY_NAMES)[];
@@ -678,7 +678,7 @@ await Promise.all(
             </head>
             <body class="markdown-body p-5 container-lg">
               <nav>
-                <p><a href="/">${TITLE}</a></p>
+                <p><a href="/">🏠 ${TITLE}</a></p>
                 ${categoryHTML}
               </nav>
               ${html}
