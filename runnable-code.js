@@ -77,15 +77,18 @@ let pyodide;
  * @param {Event} event
  */
 async function runCode(event) {
-  let currentTarget = /** @type {HTMLButtonElement} */ (event.currentTarget);
+  let button = /** @type {HTMLButtonElement} */ (event.currentTarget);
   let runnableCode = /** @type {RunnableCode} */ (
-    currentTarget.closest("runnable-code")
+    button.closest("runnable-code")
   );
   if (!runnableCode.view) throw new Error();
   let doc = runnableCode.view.state.doc;
 
   /** @type {HTMLElement[]} */
   let messages = [];
+
+  /** @type {string | null} */
+  let version = null;
 
   if (runnableCode.flag == "javascript" || runnableCode.flag == "js") {
     let originalConsole = console;
@@ -230,17 +233,18 @@ async function runCode(event) {
   } else if (runnableCode.flag == "python" || runnableCode.flag == "py") {
     await import("pyodide");
     if (!pyodide) {
-      currentTarget.disabled = true;
-      currentTarget.dataset.defaultTextContent = currentTarget.textContent;
-      currentTarget.textContent = "코드 실행 중...";
+      button.disabled = true;
+      button.dataset.defaultTextContent = button.textContent;
+      button.textContent = "코드 실행 중...";
 
       // @ts-expect-error
       pyodide = await loadPyodide();
 
-      currentTarget.disabled = false;
-      currentTarget.textContent = currentTarget.dataset.defaultTextContent;
-      delete currentTarget.dataset.defaultTextContent;
+      button.disabled = false;
+      button.textContent = button.dataset.defaultTextContent;
+      delete button.dataset.defaultTextContent;
     }
+    version = `Pyodide ${pyodide.version}`;
     pyodide.setStdout({
       /**
        * @param {string} output
@@ -285,6 +289,16 @@ async function runCode(event) {
     output = /** @type {HTMLOutputElement} */ (
       runnableCode.querySelector("output")
     );
+    if (version) {
+      button.insertAdjacentHTML(
+        "afterend",
+        /* HTML */ ` <span class="version"></span>`,
+      );
+      let versionElement = /** @type {HTMLSpanElement} */ (
+        runnableCode.querySelector(".version")
+      );
+      versionElement.textContent = `(${version})`;
+    }
   }
   output.replaceChildren(...messages);
 }

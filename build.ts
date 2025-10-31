@@ -640,7 +640,7 @@ await Promise.all(
               <script type="importmap">
                 {
                   "imports": {
-                    "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"
+                    "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js"
                   }
                 }
               </script>

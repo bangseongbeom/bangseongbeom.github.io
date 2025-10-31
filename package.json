@@ -27,7 +27,7 @@
     "@types/html-escaper": "^3.0.4",
     "@types/node": "^24.7.0",
     "prettier": "^3.6.2",
-    "pyodide": "^0.28.3",
+    "pyodide": "^0.29.0",
     "schema-dts": "^1.1.5",
     "serve": "^14.2.5"
   },
