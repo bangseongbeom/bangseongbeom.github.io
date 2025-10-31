@@ -22,9 +22,15 @@ export class RunnableCode extends HTMLElement {
     ) {
       const [
         { EditorState },
-        { EditorView, keymap },
-        { defaultKeymap, indentWithTab },
-        { closeBrackets, closeBracketsKeymap },
+        { EditorView, keymap, highlightSpecialChars },
+        { defaultKeymap, indentWithTab, history, historyKeymap },
+        {
+          autocompletion,
+          completionKeymap,
+          acceptCompletion,
+          closeBrackets,
+          closeBracketsKeymap,
+        },
         { syntaxHighlighting, indentUnit, indentOnInput, bracketMatching },
         { classHighlighter },
       ] = await Promise.all([
@@ -49,11 +55,19 @@ export class RunnableCode extends HTMLElement {
       let startState = EditorState.create({
         doc: code.textContent.slice(0, -1),
         extensions: [
-          keymap.of(defaultKeymap),
-          keymap.of(closeBracketsKeymap),
-          keymap.of([indentWithTab]),
+          highlightSpecialChars(),
+          history(),
           syntaxHighlighting(classHighlighter),
+          keymap.of([
+            ...closeBracketsKeymap,
+            ...defaultKeymap,
+            ...historyKeymap,
+            ...completionKeymap,
+            { key: "Tab", run: acceptCompletion },
+            indentWithTab,
+          ]),
           closeBrackets(),
+          autocompletion(),
           indentOnInput(),
           bracketMatching(),
           languageExtension,
