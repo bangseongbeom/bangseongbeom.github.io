@@ -31,6 +31,7 @@ const DESCRIPTION = "개발자 방성범의 기술 블로그";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
+const LANG = "en";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
@@ -61,8 +62,14 @@ await Promise.all(
       ).toString();
 
       let input = await readFile(src, "utf8");
-      /** @type {{ data: { categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
+      /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
       let file = matter(input);
+
+      let lang = file.data.lang;
+      if (!lang && ["en", "ko"].includes(src.split(sep)[0]))
+        lang = src.split(sep)[0];
+      if (!lang) lang = LANG;
+
       let html = markdownToHTML(file.content, {
         extension: {
           autolink: true,
@@ -520,7 +527,7 @@ await Promise.all(
       await writeFile(
         dest,
         /* HTML */ `<!DOCTYPE html>
-          <html lang="en" prefix="og: https://ogp.me/ns#">
+          <html ${lang ? `lang="${lang}"` : ""} prefix="og: https://ogp.me/ns#">
             <head>
               <meta charset="utf-8" />
               <title>${escape(title)}</title>
@@ -665,7 +672,7 @@ await Promise.all(
                 data-emit-metadata="0"
                 data-input-position="bottom"
                 data-theme="preferred_color_scheme"
-                data-lang="ko"
+                ${lang ? `data-lang="${lang}"` : ""}
                 crossorigin="anonymous"
                 async
               ></script>
