@@ -65,10 +65,13 @@ await Promise.all(
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
       let file = matter(input);
 
-      let lang = file.data.lang;
-      if (!lang && ["en", "ko"].includes(src.split(sep)[0]))
-        lang = src.split(sep)[0];
-      if (!lang) lang = LANG;
+      let lang = Intl.getCanonicalLocales(file.data.lang)[0];
+      if (!lang) {
+        try {
+          lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
+        } catch {}
+      }
+      if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
 
       let html = markdownToHTML(file.content, {
         extension: {
