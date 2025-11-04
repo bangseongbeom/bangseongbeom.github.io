@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node build.ts",
+    "build": "node build.js",
     "start": "serve _site"
   },
   "dependencies": {

@@ -21,7 +21,6 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import type { BlogPosting, WithContext } from "schema-dts";
 
 const execFile = promisify(child_process.execFile);
 
@@ -36,17 +35,11 @@ const BASE = "https://www.bangseongbeom.com/";
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
-let sitemapURLs = [] as { loc: string; lastmod?: Date | null }[];
+/** @type {{ loc: string; lastmod?: Date | null }[]} */
+let sitemapURLs = [];
 
-let rssItems = [] as {
-  title: string;
-  link: string;
-  description: string;
-  categories: string[];
-  pubDate?: Date | null;
-  guid: string;
-  content?: string;
-}[];
+/** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} */
+let rssItems = [];
 
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
@@ -68,17 +61,8 @@ await Promise.all(
       ).toString();
 
       let input = await readFile(src, "utf8");
-      let file = matter(input) as {
-        data: {
-          categories?: string[];
-          title?: string;
-          description?: string;
-          date_published?: Date;
-          date_modified?: Date;
-          redirect_from?: string[];
-        };
-        content: string;
-      };
+      /** @type {{ data: { categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
+      let file = matter(input);
       let html = markdownToHTML(file.content, {
         extension: {
           autolink: true,
@@ -166,7 +150,8 @@ await Promise.all(
       });
 
       let alertText = "";
-      let alertType: string | null;
+      /** @type {string | null} */
+      let alertType = null;
       let alertFirstText = true;
       rewriter.on("blockquote > p:first-child", {
         text(text) {
@@ -226,7 +211,7 @@ await Promise.all(
                       important: `<svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
                       warning: `<svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
                       caution: `<svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
-                    }[alertType.toLowerCase()]}${alertType[0]!.toUpperCase() +
+                    }[alertType.toLowerCase()]}${alertType[0].toUpperCase() +
                     alertType.substring(1).toLowerCase()}
                   </p>
                   ${alertText}
@@ -356,18 +341,22 @@ await Promise.all(
         },
       });
 
-      let runnableCodeFlag: string | null;
+      /** @type {string | null} */
+      let runnableCodeFlag = null;
       rewriter.on("runnable-code", {
         element(element) {
           element.onEndTag((endTag) => {
-            if (["js", "ts", "py"].includes(runnableCodeFlag!))
+            if (
+              runnableCodeFlag &&
+              ["js", "ts", "py"].includes(runnableCodeFlag)
+            )
               endTag.before(
                 /* HTML */ `<p>
                   <button type="button" class="run-code">코드 실행</button>
                 </p>`,
                 { html: true },
               );
-            else if (["java"].includes(runnableCodeFlag!))
+            else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag))
               endTag.before(
                 /* HTML */ `<p>
                   <button type="button" class="clipboard-copy">
@@ -431,7 +420,8 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
-      let codeScope: string | null;
+      /** @type {string | null} */
+      let codeScope = null;
       let codeText = "";
       rewriter.on("code", {
         element(element) {
@@ -501,8 +491,11 @@ await Promise.all(
           .split("\n");
         if (committerDates[0] == "") committerDates = [];
         if (committerDates.length) {
-          if (!datePublished) datePublished = new Date(committerDates.at(-1)!);
-          if (!dateModified) dateModified = new Date(committerDates[0]!);
+          if (!datePublished)
+            datePublished = new Date(
+              /** @type {string} */ (committerDates.at(-1)),
+            );
+          if (!dateModified) dateModified = new Date(committerDates[0]);
         }
       }
 
@@ -516,12 +509,11 @@ await Promise.all(
         "machine-learning": "🧠 기계 학습",
         python: "🐍 파이썬",
         web: "🌐 웹",
-      } as const;
-      let categories = (file.data.categories ??
-        []) as (keyof typeof CATEGORY_NAMES)[];
+      };
+      let categories = file.data.categories ?? [];
       let categoryHTML = categories.map(
         (category) =>
-          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[category])}</a></p>`,
+          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[/** @type {keyof typeof CATEGORY_NAMES} */ (category)])}</a></p>`,
       );
 
       await mkdir(dirname(dest), { recursive: true });
@@ -593,18 +585,20 @@ await Promise.all(
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
               <link rel="stylesheet" href="/codemirror-github-theme.css" />
               <script type="application/ld+json">
-                ${JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "BlogPosting",
-                  author: {
-                    "@type": "Person",
-                    name: AUTHOR,
-                  },
-                  dateModified: dateModified?.toISOString(),
-                  datePublished: datePublished?.toISOString(),
-                  headline: title,
-                  image: new URL("ogp.png", BASE).toString(),
-                } as WithContext<BlogPosting>)}
+                ${JSON.stringify(
+                  /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    author: {
+                      "@type": "Person",
+                      name: AUTHOR,
+                    },
+                    dateModified: dateModified?.toISOString(),
+                    datePublished: datePublished?.toISOString(),
+                    headline: title,
+                    image: new URL("ogp.png", BASE).toString(),
+                  }),
+                )}
               </script>
               <script type="module" src="/clipboard-copy.js"></script>
               <!--
