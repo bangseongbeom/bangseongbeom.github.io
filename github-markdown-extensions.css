@@ -236,14 +236,14 @@ summary > .markdown-heading {
   color: var(--fgColor-success, var(--color-success-fg)) !important;
 }
 
-.markdown-body pre:has(output) {
+.markdown-body .output {
   white-space: pre-wrap;
 }
 
-.markdown-body output .warn {
+.markdown-body .output .warn {
   background: light-dark(#fef5d5, #413c26);
 }
 
-.markdown-body output .error {
+.markdown-body .output .error {
   background: light-dark(#fcebea, #4f3534);
 }

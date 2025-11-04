@@ -294,14 +294,14 @@ async function runCode(event) {
     }
   } else throw new Error();
 
-  let output = runnableCode.querySelector("output");
+  let output = runnableCode.querySelector(".output");
   if (!output) {
     runnableCode.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre><output></output></pre>`,
+      /* HTML */ `<pre class="output"></pre>`,
     );
-    output = /** @type {HTMLOutputElement} */ (
-      runnableCode.querySelector("output")
+    output = /** @type {HTMLPreElement} */ (
+      runnableCode.querySelector(".output")
     );
     if (version) {
       button.insertAdjacentHTML(
