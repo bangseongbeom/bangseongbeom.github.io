@@ -1,5 +1,5 @@
 ---
-categories: [etc]
+categories: [misc]
 date_published: 2020-05-07
 ---
 

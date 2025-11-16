@@ -41,12 +41,12 @@ const messages = {
   en: {
     categoryNames: {
       android: () => "🤖 Android",
-      etc: () => "📦 Etc.",
       git: () => "🔀 Git",
       iot: () => "📡 IoT",
       java: () => "☕ Java",
       linux: () => "🐧 Linux",
       machineLearning: () => "🧠 Machine learning",
+      misc: () => "📦 Misc.",
       python: () => "🐍 Python",
       web: () => "🌐 Web",
     },
@@ -61,12 +61,12 @@ const messages = {
     title: () => "방성범",
     categoryNames: {
       android: () => "🤖 안드로이드",
-      etc: () => "📦 기타",
       git: () => "🔀 깃",
       iot: () => "📡 IoT",
       java: () => "☕ 자바",
       linux: () => "🐧 리눅스",
       machineLearning: () => "🧠 기계 학습",
+      misc: () => "📦 기타",
       python: () => "🐍 파이썬",
       web: () => "🌐 웹",
     },
@@ -557,12 +557,12 @@ await Promise.all(
 
       const CATEGORY_NAMES = {
         android: messages[lc].categoryNames.android(),
-        etc: messages[lc].categoryNames.etc(),
         git: messages[lc].categoryNames.git(),
         iot: messages[lc].categoryNames.iot(),
         java: messages[lc].categoryNames.java(),
         linux: messages[lc].categoryNames.linux(),
         "machine-learning": messages[lc].categoryNames.machineLearning(),
+        misc: messages[lc].categoryNames.misc(),
         python: messages[lc].categoryNames.python(),
         web: messages[lc].categoryNames.web(),
       };
