@@ -26,8 +26,9 @@ const execFile = promisify(child_process.execFile);
 
 const starryNight = await createStarryNight(all);
 
-const TITLE = "방성범 블로그";
-const DESCRIPTION = "개발자 방성범의 기술 블로그";
+const TITLE = "Bang Seongbeom";
+const DESCRIPTION =
+  "Documentation on programming languages and software technologies.";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
@@ -35,6 +36,48 @@ const LANG = "en";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
+
+const messages = {
+  en: {
+    categoryNames: {
+      android: () => "🤖 Android",
+      etc: () => "📦 Etc.",
+      git: () => "🔀 Git",
+      iot: () => "📡 IoT",
+      java: () => "☕ Java",
+      linux: () => "🐧 Linux",
+      machineLearning: () => "🧠 Machine learning",
+      python: () => "🐍 Python",
+      web: () => "🌐 Web",
+    },
+    footer: {
+      viewAsMarkdown: () => "View as Markdown",
+      viewOnGitHub: () => "View on GitHub",
+      suggestEdit: () => "Suggest an edit",
+      rss: () => "RSS",
+    },
+  },
+  ko: {
+    title: () => "방성범",
+    categoryNames: {
+      android: () => "🤖 안드로이드",
+      etc: () => "📦 기타",
+      git: () => "🔀 깃",
+      iot: () => "📡 IoT",
+      java: () => "☕ 자바",
+      linux: () => "🐧 리눅스",
+      machineLearning: () => "🧠 기계 학습",
+      python: () => "🐍 파이썬",
+      web: () => "🌐 웹",
+    },
+    footer: {
+      viewAsMarkdown: () => "마크다운으로 보기",
+      viewOnGitHub: () => "GitHub에서 보기",
+      suggestEdit: () => "편집 제안",
+      rss: () => "RSS",
+    },
+  },
+};
 
 /** @type {{ loc: string; lastmod?: Date | null }[]} */
 let sitemapURLs = [];
@@ -72,6 +115,9 @@ await Promise.all(
         } catch {}
       }
       if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
+      let lc = Object.keys(messages).includes(lang)
+        ? /** @type {keyof typeof messages} */ (lang)
+        : "en";
 
       let html = markdownToHTML(file.content, {
         extension: {
@@ -116,7 +162,7 @@ await Promise.all(
                   href="${escape(
                     pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
                   )}"
-                  >마크다운으로 보기</a
+                  >${escape(messages[lc].footer.viewAsMarkdown())}</a
                 >
                 |
                 <a
@@ -127,7 +173,7 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >GitHub에서 보기</a
+                  >${escape(messages[lc].footer.viewOnGitHub())}</a
                 >
                 |
                 <a
@@ -136,7 +182,7 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >편집 제안</a
+                  >${escape(messages[lc].footer.suggestEdit())}</a
                 >
                 |
                 <a
@@ -144,7 +190,7 @@ await Promise.all(
                   type="application/rss+xml"
                   href="${escape(new URL("feed.xml", BASE).toString())}"
                   a
-                  >RSS</a
+                  >${escape(messages[lc].footer.rss())}</a
                 >
               </p>
             </footer>`,
@@ -510,15 +556,15 @@ await Promise.all(
       }
 
       const CATEGORY_NAMES = {
-        android: "🤖 안드로이드",
-        etc: "📦 기타",
-        git: "🔀 깃",
-        iot: "📡 IoT",
-        java: "☕ 자바",
-        linux: "🐧 리눅스",
-        "machine-learning": "🧠 기계 학습",
-        python: "🐍 파이썬",
-        web: "🌐 웹",
+        android: messages[lc].categoryNames.android(),
+        etc: messages[lc].categoryNames.etc(),
+        git: messages[lc].categoryNames.git(),
+        iot: messages[lc].categoryNames.iot(),
+        java: messages[lc].categoryNames.java(),
+        linux: messages[lc].categoryNames.linux(),
+        "machine-learning": messages[lc].categoryNames.machineLearning(),
+        python: messages[lc].categoryNames.python(),
+        web: messages[lc].categoryNames.web(),
       };
       let categories = file.data.categories ?? [];
       let categoryHTML = categories.map(
@@ -682,7 +728,7 @@ await Promise.all(
             </head>
             <body class="markdown-body p-5 container-lg">
               <nav>
-                <p><a href="/">🏠 ${TITLE}</a></p>
+                <p><a href="/">🏠 ${escape(TITLE)}</a></p>
                 ${categoryHTML}
               </nav>
               ${html}

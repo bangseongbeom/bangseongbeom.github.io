@@ -1,13 +1,13 @@
-# 방성범 블로그
+# Bang Seongbeom
 
-<span id="description">개발자 방성범의 기술 블로그</span>
+<span id="description">Documentation on programming languages and software technologies.</span>
 
-- [안드로이드](/android.md)
-- [기타](/etc.md)
-- [깃](/git.md)
-- [IoT](/iot.md)
-- [자바](/java.md)
-- [리눅스](/linux.md)
-- [기계 학습](/machine-learning.md)
-- [파이썬](/python.md)
-- [웹](/web.md)
+- [🤖 Android](/android.md)
+- [📦 Etc.](/etc.md)
+- [🔀 Git](/git.md)
+- [📡 IoT](/iot.md)
+- [☕ Java](/java.md)
+- [🐧 Linux](/linux.md)
+- [🧠 Machine learning](/machine-learning.md)
+- [🐍 Python](/python.md)
+- [🌐 Web](/web.md)

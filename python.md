@@ -2,7 +2,7 @@
 redirect_from: [/categories/python.html]
 ---
 
-# 파이썬
+# Python
 
 - [unittest vs pytest](/unittest-vs-pytest.md)
 - [파이썬 더블 샤프(##) 주석](/python-double-sharp-comments.md)

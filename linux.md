@@ -1,4 +1,4 @@
-# 리눅스
+# Linux
 
 - [리눅스 ACL 가이드](/linux-acl-guide.md)
 - [AF_INET vs PF_INET](/af-inet-vs-pf-inet.md)

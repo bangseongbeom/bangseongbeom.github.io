@@ -13,7 +13,8 @@
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.5",
     "html-escaper": "^3.0.3",
-    "html-rewriter-wasm": "^0.4.1"
+    "html-rewriter-wasm": "^0.4.1",
+    "messageformat": "^4.0.0-13"
   },
   "devDependencies": {
     "@codemirror/autocomplete": "^6.19.0",

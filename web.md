@@ -2,7 +2,7 @@
 redirect_from: [/categories/web.html]
 ---
 
-# 웹
+# Web
 
 - [시맨틱 태그가 인기 없는 이유](/semantic-tags-unpopular.md)
 - [웹 사이트 너비 정하기](/determine-website-width.md)
