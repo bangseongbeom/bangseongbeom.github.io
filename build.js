@@ -153,7 +153,7 @@ await Promise.all(
 
       rewriter.on("h1", {
         element(element) {
-          element.after(
+          element.before(
             /* HTML */ `<footer>
               <p>
                 <a
@@ -523,15 +523,26 @@ await Promise.all(
 
       let dateModified = file.data.date_modified;
 
-      try {
-        await rewriter.write(encoder.encode(html));
-        await rewriter.end();
-        html = output;
-      } finally {
-        rewriter.free();
+      if (file.data.date_published) {
+        rewriter.on("h1", {
+          element(element) {
+            if (!file.data.date_published) return;
+            element.after(
+              /* HTML */ `<p>
+                <time
+                  datetime="${escape(file.data.date_published.toISOString())}"
+                  >${escape(
+                    new Intl.DateTimeFormat(lc).format(
+                      file.data.date_published,
+                    ),
+                  )}</time
+                >
+              </p>`,
+              { html: true },
+            );
+          },
+        });
       }
-
-      if (!title) throw new Error();
 
       if (!datePublished || !dateModified) {
         let committerDates = (
@@ -554,6 +565,16 @@ await Promise.all(
           if (!dateModified) dateModified = new Date(committerDates[0]);
         }
       }
+
+      try {
+        await rewriter.write(encoder.encode(html));
+        await rewriter.end();
+        html = output;
+      } finally {
+        rewriter.free();
+      }
+
+      if (!title) throw new Error();
 
       const CATEGORY_NAMES = {
         android: messages[lc].categoryNames.android(),
