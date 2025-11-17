@@ -87,18 +87,20 @@ let rssItems = [];
 
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
-    if (extname(src) == ".md") {
+    if (extname(src) === ".md") {
       let dest = join(
         DEST_ROOT,
         dirname(relative(SRC_ROOT, src)),
-        basename(src) == "README.md" ? "index.html" : `${parse(src).name}.html`,
+        basename(src) === "README.md"
+          ? "index.html"
+          : `${parse(src).name}.html`,
       );
       let canonical = new URL(
         pathToFileURL(
           join(
             sep,
             dirname(relative(SRC_ROOT, src)),
-            basename(src) == "README.md" ? sep : parse(src).name,
+            basename(src) === "README.md" ? sep : parse(src).name,
           ),
         ).pathname.substring(1),
         BASE,
@@ -143,7 +145,7 @@ await Promise.all(
       rewriter.on("[href]", {
         element(element) {
           let href = element.getAttribute("href");
-          assert(typeof href == "string");
+          assert(typeof href === "string");
           if (href.endsWith("/README.md"))
             element.setAttribute("href", href.slice(0, -"README.md".length));
           else if (href.endsWith(".md"))
@@ -556,7 +558,7 @@ await Promise.all(
         ).stdout
           .trim()
           .split("\n");
-        if (committerDates[0] == "") committerDates = [];
+        if (committerDates[0] === "") committerDates = [];
         if (committerDates.length) {
           if (!datePublished)
             datePublished = new Date(
@@ -733,7 +735,7 @@ await Promise.all(
               <script
                 src="https://giscus.app/client.js"
                 data-repo="bangseongbeom/bangseongbeom.github.io"
-                data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ=="
+                data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
                 data-category="Comments"
                 data-category-id="DIC_kwDOBYE9uc4Ct9yc"
                 data-mapping="pathname"

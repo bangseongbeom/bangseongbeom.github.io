@@ -15,10 +15,10 @@ export class RunnableCode extends HTMLElement {
     this.flag = flag ?? null;
 
     if (
-      flag == "javascript" ||
-      flag == "js" ||
-      flag == "python" ||
-      flag == "py"
+      flag === "javascript" ||
+      flag === "js" ||
+      flag === "python" ||
+      flag === "py"
     ) {
       const [
         { EditorState },
@@ -42,11 +42,11 @@ export class RunnableCode extends HTMLElement {
         import("@lezer/highlight"),
       ]);
       let languageExtension = [];
-      if (flag == "javascript" || flag == "js")
+      if (flag === "javascript" || flag === "js")
         languageExtension.push(
           (await import("@codemirror/lang-javascript")).javascript(),
         );
-      else if (flag == "python" || flag == "py")
+      else if (flag === "python" || flag === "py")
         languageExtension.push(
           (await import("@codemirror/lang-python")).python(),
           indentUnit.of("    "),
@@ -104,7 +104,7 @@ async function runCode(event) {
   /** @type {string | null} */
   let version = null;
 
-  if (runnableCode.flag == "javascript" || runnableCode.flag == "js") {
+  if (runnableCode.flag === "javascript" || runnableCode.flag === "js") {
     let originalConsole = console;
     console = {
       ...originalConsole,
@@ -244,7 +244,7 @@ async function runCode(event) {
       messages.push(message);
     }
     console = originalConsole;
-  } else if (runnableCode.flag == "python" || runnableCode.flag == "py") {
+  } else if (runnableCode.flag === "python" || runnableCode.flag === "py") {
     await import("pyodide");
     if (!pyodide) {
       button.disabled = true;
