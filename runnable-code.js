@@ -7,11 +7,11 @@ export class RunnableCode extends HTMLElement {
   flag;
 
   async connectedCallback() {
-    let highlight = /** @type {HTMLElement} */ (
+    const highlight = /** @type {HTMLElement} */ (
       this.querySelector(".highlight")
     );
-    let code = /** @type {HTMLElement} */ (highlight.querySelector("code"));
-    let flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
+    const code = /** @type {HTMLElement} */ (highlight.querySelector("code"));
+    const flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
     this.flag = flag ?? null;
 
     if (
@@ -41,7 +41,7 @@ export class RunnableCode extends HTMLElement {
         import("@codemirror/language"),
         import("@lezer/highlight"),
       ]);
-      let languageExtension = [];
+      const languageExtension = [];
       if (flag === "javascript" || flag === "js")
         languageExtension.push(
           (await import("@codemirror/lang-javascript")).javascript(),
@@ -52,7 +52,7 @@ export class RunnableCode extends HTMLElement {
           indentUnit.of("    "),
         );
 
-      let startState = EditorState.create({
+      const startState = EditorState.create({
         doc: code.textContent.slice(0, -1),
         extensions: [
           highlightSpecialChars(),
@@ -91,12 +91,12 @@ let pyodide;
  * @param {Event} event
  */
 async function runCode(event) {
-  let button = /** @type {HTMLButtonElement} */ (event.currentTarget);
-  let runnableCode = /** @type {RunnableCode} */ (
+  const button = /** @type {HTMLButtonElement} */ (event.currentTarget);
+  const runnableCode = /** @type {RunnableCode} */ (
     button.closest("runnable-code")
   );
   if (!runnableCode.view) throw new Error();
-  let doc = runnableCode.view.state.doc;
+  const doc = runnableCode.view.state.doc;
 
   /** @type {HTMLElement[]} */
   let messages = [];
@@ -105,7 +105,7 @@ async function runCode(event) {
   let version = null;
 
   if (runnableCode.flag === "javascript" || runnableCode.flag === "js") {
-    let originalConsole = console;
+    const originalConsole = console;
     console = {
       ...originalConsole,
       /**
@@ -114,7 +114,7 @@ async function runCode(event) {
        */
       assert(condition, ...data) {
         if (!condition) {
-          let message = document.createElement("div");
+          const message = document.createElement("div");
           message.classList.add("error");
           message.textContent =
             "Assertion failed: " +
@@ -131,7 +131,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       debug(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -141,7 +141,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       error(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("error");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -151,7 +151,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       info(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("info");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -161,7 +161,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       log(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -172,15 +172,15 @@ async function runCode(event) {
        * @param {string[] | undefined} properties
        */
       table(tabularData, properties) {
-        let message = document.createElement("table");
+        const message = document.createElement("table");
         message.append(
           ...tabularData.map(
             /** @param {any} row */ (row) => {
-              let tr = document.createElement("tr");
+              const tr = document.createElement("tr");
               tr.append(
                 ...row.map(
                   /** @param {any} cell */ (cell) => {
-                    let td = document.createElement("td");
+                    const td = document.createElement("td");
                     td.textContent = cell;
                     return td;
                   },
@@ -197,7 +197,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       trace(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -207,7 +207,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       warn(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("warn");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -218,7 +218,7 @@ async function runCode(event) {
        * @param {any} options
        */
       dir(item, options) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = item;
         messages.push(message);
@@ -228,7 +228,7 @@ async function runCode(event) {
        * @param {...any} data
        */
       dirxml(...data) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = data.join(" ");
         messages.push(message);
@@ -238,7 +238,7 @@ async function runCode(event) {
     try {
       eval(doc.toString());
     } catch (error) {
-      let message = document.createElement("div");
+      const message = document.createElement("div");
       message.classList.add("error");
       message.textContent = String(error);
       messages.push(message);
@@ -264,7 +264,7 @@ async function runCode(event) {
        * @param {string} output
        */
       batched(output) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("log");
         message.textContent = output;
         messages.push(message);
@@ -275,7 +275,7 @@ async function runCode(event) {
        * @param {string} output
        */
       batched(output) {
-        let message = document.createElement("div");
+        const message = document.createElement("div");
         message.classList.add("error");
         message.textContent = output;
         messages.push(message);
@@ -284,7 +284,7 @@ async function runCode(event) {
     try {
       pyodide.runPython(doc.toString());
     } catch (error) {
-      let message = document.createElement("div");
+      const message = document.createElement("div");
       message.classList.add("error");
       message.textContent =
         error instanceof Error
@@ -308,7 +308,7 @@ async function runCode(event) {
         "afterend",
         /* HTML */ ` <span class="version"></span>`,
       );
-      let versionElement = /** @type {HTMLSpanElement} */ (
+      const versionElement = /** @type {HTMLSpanElement} */ (
         runnableCode.querySelector(".version")
       );
       versionElement.textContent = `(${version})`;

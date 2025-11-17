@@ -80,7 +80,7 @@ const messages = {
 };
 
 /** @type {{ loc: string; lastmod?: Date | null }[]} */
-let sitemapURLs = [];
+const sitemapURLs = [];
 
 /** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} */
 let rssItems = [];
@@ -88,14 +88,14 @@ let rssItems = [];
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
     if (extname(src) === ".md") {
-      let dest = join(
+      const dest = join(
         DEST_ROOT,
         dirname(relative(SRC_ROOT, src)),
         basename(src) === "README.md"
           ? "index.html"
           : `${parse(src).name}.html`,
       );
-      let canonical = new URL(
+      const canonical = new URL(
         pathToFileURL(
           join(
             sep,
@@ -106,9 +106,9 @@ await Promise.all(
         BASE,
       ).toString();
 
-      let input = await readFile(src, "utf8");
+      const input = await readFile(src, "utf8");
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
-      let file = matter(input);
+      const file = matter(input);
 
       let lang = Intl.getCanonicalLocales(file.data.lang)[0];
       if (!lang) {
@@ -117,7 +117,7 @@ await Promise.all(
         } catch {}
       }
       if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
-      let lc = Object.keys(messages).includes(lang)
+      const lc = Object.keys(messages).includes(lang)
         ? /** @type {keyof typeof messages} */ (lang)
         : "en";
 
@@ -134,8 +134,8 @@ await Promise.all(
         },
       });
 
-      let encoder = new TextEncoder();
-      let decoder = new TextDecoder();
+      const encoder = new TextEncoder();
+      const decoder = new TextDecoder();
 
       let output = "";
       let rewriter = new HTMLRewriter((outputChunk) => {
@@ -144,7 +144,7 @@ await Promise.all(
 
       rewriter.on("[href]", {
         element(element) {
-          let href = element.getAttribute("href");
+          const href = element.getAttribute("href");
           assert(typeof href === "string");
           if (href.endsWith("/README.md"))
             element.setAttribute("href", href.slice(0, -"README.md".length));
@@ -215,7 +215,7 @@ await Promise.all(
         text(text) {
           let textContent = text.text;
           if (alertFirstText) {
-            let matchArray = textContent.match(
+            const matchArray = textContent.match(
               /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
             );
             if (matchArray) {
@@ -358,14 +358,14 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
-      let slugger = new GithubSlugger();
+      const slugger = new GithubSlugger();
       let headingContent = "";
       let headingText = "";
       rewriter.on("h1, h2, h3, h4, h5, h6", {
         element(element) {
           element.removeAndKeepContent();
           element.onEndTag((endTag) => {
-            let slug = slugger.slug(unescape(headingText));
+            const slug = slugger.slug(unescape(headingText));
             endTag.after(
               /* HTML */ `<div class="markdown-heading">
                 <${endTag.name} tabindex="-1" class="heading-element">${headingContent}</${endTag.name}>
@@ -483,7 +483,9 @@ await Promise.all(
       let codeText = "";
       rewriter.on("code", {
         element(element) {
-          let flag = element.getAttribute("class")?.match(/language-(.+)/)?.[1];
+          const flag = element
+            .getAttribute("class")
+            ?.match(/language-(.+)/)?.[1];
           if (!flag) return;
           codeScope = starryNight.flagToScope(flag) ?? null;
           element.onEndTag((endTag) => {
@@ -589,8 +591,8 @@ await Promise.all(
         python: messages[lc].categoryNames.python(),
         web: messages[lc].categoryNames.web(),
       };
-      let categories = file.data.categories ?? [];
-      let categoryHTML = categories.map(
+      const categories = file.data.categories ?? [];
+      const categoryHTML = categories.map(
         (category) =>
           /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[/** @type {keyof typeof CATEGORY_NAMES} */ (category)])}</a></p>`,
       );
@@ -783,8 +785,8 @@ await Promise.all(
         .slice(0, 10);
 
       if (file.data.redirect_from) {
-        for (let redirectFromPath of file.data.redirect_from) {
-          let path = isAbsolute(redirectFromPath)
+        for (const redirectFromPath of file.data.redirect_from) {
+          const path = isAbsolute(redirectFromPath)
             ? join(DEST_ROOT, redirectFromPath)
             : join(dest, "..", redirectFromPath);
           await mkdir(dirname(path), {
@@ -833,7 +835,7 @@ await Promise.all(
         extname(src),
       )
     ) {
-      let dest = join(DEST_ROOT, relative(SRC_ROOT, src));
+      const dest = join(DEST_ROOT, relative(SRC_ROOT, src));
       await mkdir(dirname(dest), { recursive: true });
       await copyFile(src, dest);
     }

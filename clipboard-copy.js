@@ -7,20 +7,22 @@ document.querySelectorAll("button.clipboard-copy").forEach((button) =>
     /** @type {string} */
     let data;
     /** @type {RunnableCode | null} */
-    let runnableCode = button.closest("runnable-code");
-    let view = runnableCode?.view;
+    const runnableCode = button.closest("runnable-code");
+    const view = runnableCode?.view;
     /** @type {HTMLPreElement | null | undefined} */
-    let pre = button.closest(".highlight, runnable-code")?.querySelector("pre");
+    const pre = button
+      .closest(".highlight, runnable-code")
+      ?.querySelector("pre");
     if (pre) data = pre.textContent;
     else if (view) data = view.state.doc.toString();
     else throw new Error();
 
     navigator.clipboard.writeText(data);
 
-    let copyIcon = /** @type {SVGElement} */ (
+    const copyIcon = /** @type {SVGElement} */ (
       button.querySelector(".js-clipboard-copy-icon")
     );
-    let checkIcon = /** @type {SVGElement} */ (
+    const checkIcon = /** @type {SVGElement} */ (
       button.querySelector(".js-clipboard-check-icon")
     );
     copyIcon.attributeStyleMap.set("display", "none");
