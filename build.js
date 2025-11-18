@@ -39,6 +39,7 @@ const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
 const messages = {
   en: {
+    title: () => TITLE,
     categoryNames: {
       android: () => "🤖 Android",
       git: () => "🔀 Git",
@@ -753,7 +754,7 @@ await Promise.all(
             </head>
             <body class="markdown-body p-5 container-lg">
               <nav>
-                <p><a href="/">🏠 ${escape(TITLE)}</a></p>
+                <p><a href="/">🏠 ${escape(messages[lc].title())}</a></p>
                 ${categoryHTML}
               </nav>
               ${html}
