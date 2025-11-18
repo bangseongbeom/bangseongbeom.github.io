@@ -41,15 +41,15 @@ const messages = {
   en: {
     title: () => TITLE,
     categoryNames: {
-      android: () => "🤖 Android",
-      git: () => "🔀 Git",
-      iot: () => "🌍 IoT",
-      java: () => "☕ Java",
-      linux: () => "🐧 Linux",
-      machineLearning: () => "🧠 Machine learning",
-      misc: () => "📦 Misc.",
-      python: () => "🐍 Python",
-      web: () => "🌐 Web",
+      android: () => "Android",
+      git: () => "Git",
+      iot: () => "IoT",
+      java: () => "Java",
+      linux: () => "Linux",
+      machineLearning: () => "Machine learning",
+      misc: () => "Misc.",
+      python: () => "Python",
+      web: () => "Web",
     },
     footer: {
       viewAsMarkdown: () => "View as Markdown",
@@ -61,15 +61,15 @@ const messages = {
   ko: {
     title: () => "방성범",
     categoryNames: {
-      android: () => "🤖 안드로이드",
-      git: () => "🔀 깃",
-      iot: () => "🌍 IoT",
-      java: () => "☕ 자바",
-      linux: () => "🐧 리눅스",
-      machineLearning: () => "🧠 기계 학습",
-      misc: () => "📦 기타",
-      python: () => "🐍 파이썬",
-      web: () => "🌐 웹",
+      android: () => "안드로이드",
+      git: () => "깃",
+      iot: () => "IoT",
+      java: () => "자바",
+      linux: () => "리눅스",
+      machineLearning: () => "기계 학습",
+      misc: () => "기타",
+      python: () => "파이썬",
+      web: () => "웹",
     },
     footer: {
       viewAsMarkdown: () => "마크다운으로 보기",
@@ -767,7 +767,7 @@ await Promise.all(
             </head>
             <body class="markdown-body p-5 container-lg">
               <nav>
-                <p><a href="/">🏠 ${escape(messages[lc].title())}</a></p>
+                <p><a href="/">${escape(messages[lc].title())}</a></p>
                 ${categoryHTML}
               </nav>
               ${html}
