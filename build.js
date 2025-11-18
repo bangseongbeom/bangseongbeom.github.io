@@ -42,7 +42,7 @@ const messages = {
     categoryNames: {
       android: () => "🤖 Android",
       git: () => "🔀 Git",
-      iot: () => "📡 IoT",
+      iot: () => "🌍 IoT",
       java: () => "☕ Java",
       linux: () => "🐧 Linux",
       machineLearning: () => "🧠 Machine learning",
@@ -62,7 +62,7 @@ const messages = {
     categoryNames: {
       android: () => "🤖 안드로이드",
       git: () => "🔀 깃",
-      iot: () => "📡 IoT",
+      iot: () => "🌍 IoT",
       java: () => "☕ 자바",
       linux: () => "🐧 리눅스",
       machineLearning: () => "🧠 기계 학습",

@@ -4,7 +4,7 @@
 
 - [🤖 Android](/android.md)
 - [🔀 Git](/git.md)
-- [📡 IoT](/iot.md)
+- [🌍 IoT](/iot.md)
 - [☕ Java](/java.md)
 - [🐧 Linux](/linux.md)
 - [🧠 Machine learning](/machine-learning.md)
