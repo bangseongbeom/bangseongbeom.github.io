@@ -111,16 +111,29 @@ await Promise.all(
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
       const file = matter(input);
 
-      let lang = Intl.getCanonicalLocales(file.data.lang)[0];
+      let lang;
+      try {
+        lang = Intl.getCanonicalLocales(file.data.lang)[0];
+      } catch {}
       if (!lang) {
         try {
           lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
         } catch {}
       }
       if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
-      const lc = Object.keys(messages).includes(lang)
-        ? /** @type {keyof typeof messages} */ (lang)
-        : "en";
+
+      /** @type {keyof typeof messages | undefined} */
+      let lc;
+      if (Object.keys(messages).includes(lang))
+        lc = /** @type {keyof typeof messages} */ (lang);
+      if (
+        !lc &&
+        Object.keys(messages).includes(Intl.getCanonicalLocales(LANG)[0])
+      )
+        lc = /** @type {keyof typeof messages} */ (
+          Intl.getCanonicalLocales(LANG)[0]
+        );
+      if (!lc) throw new Error();
 
       let html = markdownToHTML(file.content, {
         extension: {
