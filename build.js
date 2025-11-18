@@ -608,7 +608,15 @@ await Promise.all(
       const categories = file.data.categories ?? [];
       const categoryHTML = categories.map(
         (category) =>
-          /*HTML */ `<p><a href="/${category}">${escape(CATEGORY_NAMES[/** @type {keyof typeof CATEGORY_NAMES} */ (category)])}</a></p>`,
+          /* HTML */ `<p>
+            <a href="/${category}"
+              >${escape(
+                CATEGORY_NAMES[
+                  /** @type {keyof typeof CATEGORY_NAMES} */ (category)
+                ],
+              )}</a
+            >
+          </p>`,
       );
 
       await mkdir(dirname(dest), { recursive: true });
