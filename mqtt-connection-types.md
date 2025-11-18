@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [iot]
 date_published: 2019-08-16
 ---

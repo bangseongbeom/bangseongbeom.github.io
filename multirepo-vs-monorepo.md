@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [git]
 date_published: 2019-07-19
 ---

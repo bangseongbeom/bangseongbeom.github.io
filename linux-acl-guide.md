@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [linux]
 date_published: 2019-07-15
 redirect_from: [/linux-acl.html]

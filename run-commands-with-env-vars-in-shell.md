@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [linux]
 date_published: 2020-04-25
 redirect_from: [/run-command-env-vars.html, /shell-command-env-vars.html]

@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [python]
 date_published: 2020-04-19
 ---

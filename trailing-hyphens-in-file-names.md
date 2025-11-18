@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [linux]
 date_published: 2020-04-21
 redirect_from: [/hyphen-files.html, /file-name-trailing-hyphens.html]

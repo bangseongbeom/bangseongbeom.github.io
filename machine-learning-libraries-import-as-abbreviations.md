@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [machine-learning]
 date_published: 2020-05-10
 ---

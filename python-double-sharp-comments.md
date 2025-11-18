@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [python]
 date_published: 2018-11-22
 redirect_from: [/posts/python-double-sharp-comments.html]

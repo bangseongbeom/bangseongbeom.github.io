@@ -1,4 +1,5 @@
 ---
+lang: ko
 categories: [android]
 date_published: 2018-10-29
 redirect_from: [/posts/now-kotlin.html]
