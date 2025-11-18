@@ -34,7 +34,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-1.png)
+![](balena-etcher-1.png)
 
 <figcaption>
 
@@ -46,7 +46,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-2.png)
+![](balena-etcher-2.png)
 
 <figcaption>
 
@@ -58,7 +58,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-3.png)
+![](balena-etcher-3.png)
 
 <figcaption>
 
@@ -70,7 +70,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-4.png)
+![](balena-etcher-4.png)
 
 <figcaption>
 
@@ -82,7 +82,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-5.png)
+![](balena-etcher-5.png)
 
 <figcaption>
 
@@ -94,7 +94,7 @@ date_published: 2020-05-07
 
 <figure>
 
-![](/assets/2020-05-07-balena-etcher-intro/balena-etcher-6.png)
+![](balena-etcher-6.png)
 
 <figcaption>
 

@@ -13,7 +13,7 @@ redirect_from: [/posts/python-double-sharp-comments.html]
 
 <figure>
 
-![IDLE에서 'Format' > 'Comment Out Region'](/assets/2018-11-22-python-double-sharp-comments/comment-out-region.png)
+![IDLE에서 'Format' > 'Comment Out Region'](comment-out-region.png)
 
 <figcaption>
 

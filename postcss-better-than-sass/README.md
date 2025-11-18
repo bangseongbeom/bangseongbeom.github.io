@@ -36,7 +36,7 @@ PostCSS는 Sass에 비해 덜 유명합니다. 덜 유명한 도구를 사용한
 
 <figure>
 
-![Sass의 인기를 100%로 봤을 때, PostCSS의 인기는 84%](/assets/2019-07-17-postcss-better-than-sass/tools-section-overview.png)
+![Sass의 인기를 100%로 봤을 때, PostCSS의 인기는 84%](tools-section-overview.png)
 
 <figcaption>
 
