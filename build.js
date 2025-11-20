@@ -226,6 +226,27 @@ await Promise.all(
         },
       });
 
+      if (file.data.date_published) {
+        rewriter.on("h1", {
+          element(element) {
+            if (!file.data.date_published) return;
+            element.after(
+              /* HTML */ `<p>
+                <time
+                  datetime="${escape(file.data.date_published.toISOString())}"
+                  >${escape(
+                    new Intl.DateTimeFormat(lc).format(
+                      file.data.date_published,
+                    ),
+                  )}</time
+                >
+              </p>`,
+              { html: true },
+            );
+          },
+        });
+      }
+
       rewriter.on(".anchor", {
         element(element) {
           element.remove();
@@ -551,27 +572,6 @@ await Promise.all(
       let datePublished = file.data.date_published;
 
       let dateModified = file.data.date_modified;
-
-      if (file.data.date_published) {
-        rewriter.on("h1", {
-          element(element) {
-            if (!file.data.date_published) return;
-            element.after(
-              /* HTML */ `<p>
-                <time
-                  datetime="${escape(file.data.date_published.toISOString())}"
-                  >${escape(
-                    new Intl.DateTimeFormat(lc).format(
-                      file.data.date_published,
-                    ),
-                  )}</time
-                >
-              </p>`,
-              { html: true },
-            );
-          },
-        });
-      }
 
       if (!datePublished || !dateModified) {
         let committerDates = (
