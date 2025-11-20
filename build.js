@@ -55,6 +55,7 @@ const messages = {
       viewAsMarkdown: () => "View as Markdown",
       viewOnGitHub: () => "View on GitHub",
       suggestEdit: () => "Suggest an edit",
+      viewHistory: () => "View history",
       rss: () => "RSS",
     },
   },
@@ -75,6 +76,7 @@ const messages = {
       viewAsMarkdown: () => "마크다운으로 보기",
       viewOnGitHub: () => "GitHub에서 보기",
       suggestEdit: () => "편집 제안",
+      viewHistory: () => "역사 보기",
       rss: () => "RSS",
     },
   },
@@ -199,6 +201,15 @@ await Promise.all(
                     }`,
                   )}"
                   >${escape(messages[lc].footer.suggestEdit())}</a
+                >
+                |
+                <a
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
+                  >${escape(messages[lc].footer.viewHistory())}</a
                 >
                 |
                 <a
