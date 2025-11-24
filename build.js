@@ -33,6 +33,7 @@ const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
 const LANG = "en";
+const DEFAULT_LANG = Intl.getCanonicalLocales(LANG)[0];
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
 const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
@@ -88,6 +89,10 @@ const sitemapURLs = [];
 /** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} */
 let rssItems = [];
 
+// Create encoder/decoder once outside the loop for reuse
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
     if (extname(src) === ".md") {
@@ -122,19 +127,14 @@ await Promise.all(
           lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
         } catch {}
       }
-      if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
+      if (!lang) lang = DEFAULT_LANG;
 
       /** @type {keyof typeof messages | undefined} */
       let lc;
       if (Object.keys(messages).includes(lang))
         lc = /** @type {keyof typeof messages} */ (lang);
-      if (
-        !lc &&
-        Object.keys(messages).includes(Intl.getCanonicalLocales(LANG)[0])
-      )
-        lc = /** @type {keyof typeof messages} */ (
-          Intl.getCanonicalLocales(LANG)[0]
-        );
+      if (!lc && Object.keys(messages).includes(DEFAULT_LANG))
+        lc = /** @type {keyof typeof messages} */ (DEFAULT_LANG);
       if (!lc) throw new Error();
 
       let html = markdownToHTML(file.content, {
@@ -149,9 +149,6 @@ await Promise.all(
           unsafe: true,
         },
       });
-
-      const encoder = new TextEncoder();
-      const decoder = new TextDecoder();
 
       let output = "";
       let rewriter = new HTMLRewriter((outputChunk) => {
@@ -811,11 +808,6 @@ await Promise.all(
         pubDate: datePublished ?? null,
         guid: canonical,
       });
-      rssItems = rssItems
-        .toSorted(
-          (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
-        )
-        .slice(0, 10);
 
       if (file.data.redirect_from) {
         for (const redirectFromPath of file.data.redirect_from) {
@@ -874,6 +866,11 @@ await Promise.all(
     }
   }),
 );
+
+// Sort and limit RSS items after all files have been processed
+rssItems = rssItems
+  .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
+  .slice(0, 10);
 
 await writeFile(
   join(DEST_ROOT, "sitemap.xml"),
