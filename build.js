@@ -52,11 +52,11 @@ const messages = {
       web: () => "🌐 Web",
     },
     footer: {
-      viewAsMarkdown: () => "View as Markdown",
-      viewOnGitHub: () => "View on GitHub",
-      suggestEdit: () => "Suggest an edit",
-      viewHistory: () => "View history",
-      rss: () => "RSS",
+      markdown: { title: () => "View as Markdown", content: () => "Markdown" },
+      github: { title: () => "View on GitHub", content: () => "GitHub" },
+      edit: { title: () => "Suggest an edit", content: () => "Edit" },
+      history: { title: () => "View history", content: () => "History" },
+      rss: { title: () => "RSS feed", content: () => "RSS" },
     },
   },
   ko: {
@@ -73,11 +73,11 @@ const messages = {
       web: () => "🌐 웹",
     },
     footer: {
-      viewAsMarkdown: () => "마크다운으로 보기",
-      viewOnGitHub: () => "GitHub에서 보기",
-      suggestEdit: () => "편집 제안",
-      viewHistory: () => "역사 보기",
-      rss: () => "RSS",
+      markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
+      github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
+      edit: { title: () => "편집 제안", content: () => "편집" },
+      history: { title: () => "역사 보기", content: () => "역사" },
+      rss: { title: () => "RSS 피드", content: () => "RSS" },
     },
   },
 };
@@ -180,7 +180,8 @@ await Promise.all(
                   href="${escape(
                     pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
                   )}"
-                  >${escape(messages[lc].footer.viewAsMarkdown())}</a
+                  title="${escape(messages[lc].footer.markdown.title())}"
+                  >${escape(messages[lc].footer.markdown.content())}</a
                 >
                 |
                 <a
@@ -191,7 +192,8 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >${escape(messages[lc].footer.viewOnGitHub())}</a
+                  title="${escape(messages[lc].footer.github.title())}"
+                  >${escape(messages[lc].footer.github.content())}</a
                 >
                 |
                 <a
@@ -200,7 +202,8 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >${escape(messages[lc].footer.suggestEdit())}</a
+                  title="${escape(messages[lc].footer.edit.title())}"
+                  >${escape(messages[lc].footer.edit.content())}</a
                 >
                 |
                 <a
@@ -209,15 +212,16 @@ await Promise.all(
                       pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
                     }`,
                   )}"
-                  >${escape(messages[lc].footer.viewHistory())}</a
+                  title="${escape(messages[lc].footer.history.title())}"
+                  >${escape(messages[lc].footer.history.content())}</a
                 >
                 |
                 <a
                   rel="alternate"
                   type="application/rss+xml"
                   href="${escape(new URL("feed.xml", BASE).toString())}"
-                  a
-                  >${escape(messages[lc].footer.rss())}</a
+                  title="${escape(messages[lc].footer.rss.title())}"
+                  >${escape(messages[lc].footer.rss.content())}</a
                 >
               </p>
             </footer>`,
