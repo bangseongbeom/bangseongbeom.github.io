@@ -811,11 +811,6 @@ await Promise.all(
         pubDate: datePublished ?? null,
         guid: canonical,
       });
-      rssItems = rssItems
-        .toSorted(
-          (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
-        )
-        .slice(0, 10);
 
       if (file.data.redirect_from) {
         for (const redirectFromPath of file.data.redirect_from) {
@@ -896,6 +891,10 @@ await writeFile(
   join(DEST_ROOT, "robots.txt"),
   `Sitemap: ${new URL("sitemap.xml", BASE)}`,
 );
+
+rssItems = rssItems
+  .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
+  .slice(0, 10);
 
 await writeFile(
   join(DEST_ROOT, "feed.xml"),
