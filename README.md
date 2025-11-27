@@ -1,6 +1,6 @@
 # Bang Seongbeom
 
-<span id="description">Documentation on programming languages and software technologies.</span>
+<span id="description">Developer Bang Seongbeom's technical documentation.</span>
 
 - [🤖 Android](/android.md)
 - [🔀 Git](/git.md)

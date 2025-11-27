@@ -27,8 +27,7 @@ const execFile = promisify(child_process.execFile);
 const starryNight = await createStarryNight(all);
 
 const TITLE = "Bang Seongbeom";
-const DESCRIPTION =
-  "Documentation on programming languages and software technologies.";
+const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
 const BASE = "https://www.bangseongbeom.com/";
