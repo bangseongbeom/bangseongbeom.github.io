@@ -169,67 +169,6 @@ await Promise.all(
         },
       });
 
-      rewriter.on("h1", {
-        element(element) {
-          element.before(
-            /* HTML */ `<footer>
-              <p>
-                <a
-                  rel="alternate"
-                  type="text/markdown"
-                  href="${escape(
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                  )}"
-                  title="${escape(messages[lc].footer.markdown.title())}"
-                  >${escape(messages[lc].footer.markdown.content())}</a
-                >
-                |
-                <a
-                  rel="alternate"
-                  type="text/html"
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.github.title())}"
-                  >${escape(messages[lc].footer.github.content())}</a
-                >
-                |
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.edit.title())}"
-                  >${escape(messages[lc].footer.edit.content())}</a
-                >
-                |
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.history.title())}"
-                  >${escape(messages[lc].footer.history.content())}</a
-                >
-                |
-                <a
-                  rel="alternate"
-                  type="application/rss+xml"
-                  href="${escape(new URL("feed.xml", BASE).toString())}"
-                  title="${escape(messages[lc].footer.rss.title())}"
-                  >${escape(messages[lc].footer.rss.content())}</a
-                >
-              </p>
-            </footer>`,
-            { html: true },
-          );
-        },
-      });
-
       if (file.data.date_published) {
         rewriter.on("h1", {
           element(element) {
