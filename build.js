@@ -52,11 +52,12 @@ const messages = {
       web: () => "🌐 Web",
     },
     footer: {
-      markdown: { title: () => "View as Markdown", content: () => "Markdown" },
-      github: { title: () => "View on GitHub", content: () => "GitHub" },
-      edit: { title: () => "Suggest an edit", content: () => "Edit" },
-      history: { title: () => "View history", content: () => "History" },
-      rss: { title: () => "RSS feed", content: () => "RSS" },
+      heading: () => "Shortcuts",
+      markdown: () => "View as Markdown",
+      github: () => "View on GitHub",
+      edit: () => "Suggest an edit",
+      history: () => "View edit history",
+      rss: () => "RSS feed",
     },
   },
   ko: {
@@ -73,11 +74,12 @@ const messages = {
       web: () => "🌐 웹",
     },
     footer: {
-      markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
-      github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
-      edit: { title: () => "편집 제안", content: () => "편집" },
-      history: { title: () => "역사 보기", content: () => "역사" },
-      rss: { title: () => "RSS 피드", content: () => "RSS" },
+      heading: () => "바로가기",
+      markdown: () => "마크다운으로 보기",
+      github: () => "GitHub에서 보기",
+      edit: () => "편집 제안",
+      history: () => "편집 이력 보기",
+      rss: () => "RSS 피드",
     },
   },
 };
@@ -166,67 +168,6 @@ await Promise.all(
             element.setAttribute("href", href.slice(0, -"README.md".length));
           else if (href.endsWith(".md"))
             element.setAttribute("href", href.slice(0, -".md".length));
-        },
-      });
-
-      rewriter.on("h1", {
-        element(element) {
-          element.before(
-            /* HTML */ `<footer>
-              <p>
-                <a
-                  rel="alternate"
-                  type="text/markdown"
-                  href="${escape(
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                  )}"
-                  title="${escape(messages[lc].footer.markdown.title())}"
-                  >${escape(messages[lc].footer.markdown.content())}</a
-                >
-                |
-                <a
-                  rel="alternate"
-                  type="text/html"
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.github.title())}"
-                  >${escape(messages[lc].footer.github.content())}</a
-                >
-                |
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.edit.title())}"
-                  >${escape(messages[lc].footer.edit.content())}</a
-                >
-                |
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="${escape(messages[lc].footer.history.title())}"
-                  >${escape(messages[lc].footer.history.content())}</a
-                >
-                |
-                <a
-                  rel="alternate"
-                  type="application/rss+xml"
-                  href="${escape(new URL("feed.xml", BASE).toString())}"
-                  title="${escape(messages[lc].footer.rss.title())}"
-                  >${escape(messages[lc].footer.rss.content())}</a
-                >
-              </p>
-            </footer>`,
-            { html: true },
-          );
         },
       });
 
@@ -798,7 +739,71 @@ await Promise.all(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
               )
                 ? ""
-                : /* HTML */ `<section id="comments" class="giscus"></section>`}
+                : /* HTML */ `<footer>
+                      <h2>${escape(messages[lc].footer.heading())}</h2>
+                      <ul>
+                        <li>
+                          <a
+                            rel="alternate"
+                            type="text/markdown"
+                            href="${escape(
+                              pathToFileURL(join(sep, relative(SRC_ROOT, src)))
+                                .pathname,
+                            )}"
+                            >${escape(messages[lc].footer.markdown())}</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            rel="alternate"
+                            type="text/html"
+                            href="${escape(
+                              `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                                pathToFileURL(
+                                  join(sep, relative(SRC_ROOT, src)),
+                                ).pathname
+                              }`,
+                            )}"
+                            >${escape(messages[lc].footer.github())}</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="${escape(
+                              `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                                pathToFileURL(
+                                  join(sep, relative(SRC_ROOT, src)),
+                                ).pathname
+                              }`,
+                            )}"
+                            >${escape(messages[lc].footer.edit())}</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="${escape(
+                              `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
+                                pathToFileURL(
+                                  join(sep, relative(SRC_ROOT, src)),
+                                ).pathname
+                              }`,
+                            )}"
+                            >${escape(messages[lc].footer.history())}</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            rel="alternate"
+                            type="application/rss+xml"
+                            href="${escape(
+                              new URL("feed.xml", BASE).toString(),
+                            )}"
+                            >${escape(messages[lc].footer.rss())}</a
+                          >
+                        </li>
+                      </ul>
+                    </footer>
+                    <section id="comments" class="giscus"></section>`}
             </body>
           </html>`,
       );
