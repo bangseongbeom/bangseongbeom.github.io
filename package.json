@@ -7,25 +7,25 @@
   "dependencies": {
     "@wooorm/starry-night": "^3.8.0",
     "comrak": "^0.48.0-rc.0",
-    "globby": "^15.0.0",
+    "globby": "^16.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.5",
     "html-escaper": "^3.0.3",
     "html-rewriter-wasm": "^0.4.1",
-    "messageformat": "^4.0.0-13"
+    "messageformat": "^4.0.0"
   },
   "devDependencies": {
-    "@codemirror/autocomplete": "^6.19.0",
-    "@codemirror/commands": "^6.9.0",
+    "@codemirror/autocomplete": "^6.20.0",
+    "@codemirror/commands": "^6.10.0",
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/lang-python": "^6.2.1",
     "@codemirror/language": "^6.11.3",
     "@codemirror/state": "^6.5.2",
-    "@codemirror/view": "^6.38.4",
-    "@lezer/highlight": "^1.2.1",
+    "@codemirror/view": "^6.39.0",
+    "@lezer/highlight": "^1.2.3",
     "@types/html-escaper": "^3.0.4",
-    "@types/node": "^24.7.0",
-    "prettier": "^3.6.2",
+    "@types/node": "^24.10.2",
+    "prettier": "^3.7.4",
     "pyodide": "^0.29.0",
     "schema-dts": "^1.1.5",
     "serve": "^14.2.5"
