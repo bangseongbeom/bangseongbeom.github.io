@@ -669,7 +669,7 @@ figure.highlight td.code {
   width: 100%;
 }
 
-code.highlighter-rouge {
+code {
   padding: 1px 5px;
   font-size: 14px;
   border: 1px solid var(--minima-border-color-01);
