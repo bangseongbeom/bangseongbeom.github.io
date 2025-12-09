@@ -7,8 +7,6 @@
   "dependencies": {
     "@wooorm/starry-night": "^3.8.0",
     "comrak": "^0.48.0-rc.0",
-    "github-markdown-css": "^5.8.1",
-    "github-slugger": "^2.0.0",
     "globby": "^15.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.5",
