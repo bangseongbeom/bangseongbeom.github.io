@@ -675,7 +675,7 @@ figure.highlight td.code {
 
 code {
   padding: 1px 5px;
-  font-size: 14px;
+  font-size: 0.875em;
   border: 1px solid var(--minima-border-color-01);
   border-radius: 3px;
 }
