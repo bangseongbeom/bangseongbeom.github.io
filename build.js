@@ -633,6 +633,7 @@ await Promise.all(
               <link rel="stylesheet" href="/auto.css" />
               <link rel="stylesheet" href="/both.css" />
               <link rel="stylesheet" href="/codemirror-github-theme.css" />
+              <link rel="stylesheet" href="/github-markdown-extensions.css" />
               <script type="application/ld+json">
                 ${JSON.stringify(
                   /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
