@@ -127,6 +127,54 @@
   }
 }
 
+.post-content [data-footnote-ref]::before {
+  content: "[";
+}
+
+.post-content [data-footnote-ref]::after {
+  content: "]";
+}
+
+.post-content .footnotes {
+  font-size: 12px;
+  color: var(--fgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.post-content .footnotes ol {
+  padding-left: var(--base-size-16);
+}
+
+.post-content .footnotes ol ul {
+  display: inline-block;
+  padding-left: var(--base-size-16);
+  margin-top: var(--base-size-16);
+}
+
+.post-content .footnotes li {
+  position: relative;
+}
+
+.post-content .footnotes li:target::before {
+  position: absolute;
+  top: calc(var(--base-size-8) * -1);
+  right: calc(var(--base-size-8) * -1);
+  bottom: calc(var(--base-size-8) * -1);
+  left: calc(var(--base-size-24) * -1);
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--borderColor-accent-emphasis);
+  border-radius: 6px;
+}
+
+.post-content .footnotes li:target {
+  color: var(--fgColor-default);
+}
+
+.post-content .footnotes .data-footnote-backref g-emoji {
+  font-family: monospace;
+}
+
 .post-content .octicon {
   display: inline-block;
   fill: currentColor;
