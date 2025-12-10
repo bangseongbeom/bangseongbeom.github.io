@@ -589,7 +589,7 @@ blockquote {
   color: var(--minima-brand-color);
   border-left: 4px solid var(--minima-border-color-01);
   padding-left: 15px;
-  font-size: 1.05em;
+  font-size: 1.05rem;
   font-style: italic;
 }
 blockquote > :last-child {
