@@ -127,6 +127,10 @@
   }
 }
 
+.post-content li > p {
+  margin-top: var(--base-size-16);
+}
+
 .post-content [data-footnote-ref]::before {
   content: "[";
 }
