@@ -496,7 +496,7 @@ await Promise.all(
         ${[
           "/README.md",
           "/404.md",
-          "/android/README.md",
+          "/android.md",
           "/git.md",
           "/iot.md",
           "/java.md",
