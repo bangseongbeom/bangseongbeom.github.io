@@ -158,9 +158,9 @@
 
 .post-content .footnotes li:target::before {
   position: absolute;
-  top: 0;
+  top: calc(var(--base-size-8) * -1);
   right: calc(var(--base-size-8) * -1);
-  bottom: 0;
+  bottom: calc(var(--base-size-8) * -1);
   left: calc(var(--base-size-24) * -1);
   pointer-events: none;
   content: "";
