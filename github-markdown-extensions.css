@@ -139,6 +139,7 @@
   font-size: 12px;
   color: var(--fgColor-muted);
   border-top: 1px solid var(--borderColor-default);
+  padding-top: 15px;
 }
 
 .post-content .footnotes ol {
@@ -157,9 +158,9 @@
 
 .post-content .footnotes li:target::before {
   position: absolute;
-  top: calc(var(--base-size-8) * -1);
+  top: 0;
   right: calc(var(--base-size-8) * -1);
-  bottom: calc(var(--base-size-8) * -1);
+  bottom: 0;
   left: calc(var(--base-size-24) * -1);
   pointer-events: none;
   content: "";
