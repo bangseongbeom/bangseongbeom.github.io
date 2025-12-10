@@ -496,9 +496,7 @@ await Promise.all(
         ${["/README.md", "/404.md"].includes(
           pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
         )
-          ? /* HTML */ `<div class="comments-disabled-message">
-              Comments have been disabled for this post.
-            </div>`
+          ? ""
           : comments}
 
         <a class="u-url" href="${escape(canonical)}" hidden></a>
