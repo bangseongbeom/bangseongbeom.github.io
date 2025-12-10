@@ -493,9 +493,19 @@ await Promise.all(
 
         <div class="post-content e-content" itemprop="articleBody">${html}</div>
 
-        ${["/README.md", "/404.md"].includes(
-          pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-        )
+        ${[
+          "/README.md",
+          "/404.md",
+          "/android/README.md",
+          "/git.md",
+          "/iot.md",
+          "/java.md",
+          "/linux.md",
+          "/machine-learning.md",
+          "/misc.md",
+          "/python.md",
+          "/web.md",
+        ].includes(pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname)
           ? ""
           : comments}
 
