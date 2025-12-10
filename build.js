@@ -42,16 +42,14 @@ const messages = {
       github: { title: () => "View on GitHub", content: () => "GitHub" },
       edit: { title: () => "Suggest an edit", content: () => "Edit" },
       history: { title: () => "View history", content: () => "History" },
-      rss: { title: () => "RSS feed", content: () => "RSS" },
     },
   },
   ko: {
     footer: {
-      markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
+      markdown: { title: () => "Markdown으로 보기", content: () => "Markdown" },
       github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
       edit: { title: () => "편집 제안", content: () => "편집" },
       history: { title: () => "역사 보기", content: () => "역사" },
-      rss: { title: () => "RSS 피드", content: () => "RSS" },
     },
   },
 };
@@ -488,6 +486,45 @@ await Promise.all(
               )}
             </time>`
               : ""}
+            <div>
+              <a
+                href="${escape(
+                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+                )}"
+                title="${escape(messages[lc].footer.markdown.title())}"
+                >${messages[lc].footer.markdown.content()}</a
+              >
+              •
+              <a
+                href="${escape(
+                  `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                  }`,
+                )}"
+                title="${escape(messages[lc].footer.github.title())}"
+                >${messages[lc].footer.github.content()}</a
+              >
+              •
+              <a
+                href="${escape(
+                  `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                  }`,
+                )}"
+                title="${escape(messages[lc].footer.edit.title())}"
+                >${messages[lc].footer.edit.content()}</a
+              >
+              •
+              <a
+                href="${escape(
+                  `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                  }`,
+                )}"
+                title="${escape(messages[lc].footer.history.title())}"
+                >${messages[lc].footer.history.content()}</a
+              >
+            </div>
           </div>
         </header>
 
