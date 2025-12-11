@@ -197,10 +197,21 @@
 }
 
 .markdown-alert {
-  padding: var(--base-size-8) var(--base-size-16);
-  margin-bottom: var(--base-size-16);
   color: inherit;
-  border-left: 0.25em solid var(--borderColor-default);
+  padding-left: 15px;
+  border-left: 4px solid var(--borderColor-default);
+  margin-bottom: var(--base-size-16);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.markdown-alerte > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert i,
+.markdown-alert em {
+  font-style: normal;
 }
 
 .markdown-alert > :first-child {
