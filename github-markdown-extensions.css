@@ -1,217 +1,80 @@
-.post-content {
-  --base-size-4: 0.25rem;
-  --base-size-8: 0.5rem;
-  --base-size-16: 1rem;
-  --base-size-24: 1.5rem;
-  --base-size-40: 2.5rem;
-  --base-text-weight-normal: 400;
-  --base-text-weight-medium: 500;
-  --base-text-weight-semibold: 600;
-  --fontStack-monospace:
-    ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
-    monospace;
-  --fgColor-accent: Highlight;
-}
-@media (prefers-color-scheme: dark) {
-  .post-content,
-  [data-theme="dark"] {
-    /* dark */
-    color-scheme: dark;
-    --focus-outlineColor: #1f6feb;
-    --fgColor-default: #f0f6fc;
-    --fgColor-muted: #9198a1;
-    --fgColor-accent: #4493f8;
-    --fgColor-success: #3fb950;
-    --fgColor-attention: #d29922;
-    --fgColor-danger: #f85149;
-    --fgColor-done: #ab7df8;
-    --bgColor-default: #0d1117;
-    --bgColor-muted: #151b23;
-    --bgColor-neutral-muted: #656c7633;
-    --bgColor-attention-muted: #bb800926;
-    --borderColor-default: #3d444d;
-    --borderColor-muted: #3d444db3;
-    --borderColor-neutral-muted: #3d444db3;
-    --borderColor-accent-emphasis: #1f6feb;
-    --borderColor-success-emphasis: #238636;
-    --borderColor-attention-emphasis: #9e6a03;
-    --borderColor-danger-emphasis: #da3633;
-    --borderColor-done-emphasis: #8957e5;
-    --color-prettylights-syntax-comment: #9198a1;
-    --color-prettylights-syntax-constant: #79c0ff;
-    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-    --color-prettylights-syntax-entity: #d2a8ff;
-    --color-prettylights-syntax-storage-modifier-import: #f0f6fc;
-    --color-prettylights-syntax-entity-tag: #7ee787;
-    --color-prettylights-syntax-keyword: #ff7b72;
-    --color-prettylights-syntax-string: #a5d6ff;
-    --color-prettylights-syntax-variable: #ffa657;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-    --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
-    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
-    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
-    --color-prettylights-syntax-carriage-return-bg: #b62324;
-    --color-prettylights-syntax-string-regexp: #7ee787;
-    --color-prettylights-syntax-markup-list: #f2cc60;
-    --color-prettylights-syntax-markup-heading: #1f6feb;
-    --color-prettylights-syntax-markup-italic: #f0f6fc;
-    --color-prettylights-syntax-markup-bold: #f0f6fc;
-    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
-    --color-prettylights-syntax-markup-deleted-bg: #67060c;
-    --color-prettylights-syntax-markup-inserted-text: #aff5b4;
-    --color-prettylights-syntax-markup-inserted-bg: #033a16;
-    --color-prettylights-syntax-markup-changed-text: #ffdfb6;
-    --color-prettylights-syntax-markup-changed-bg: #5a1e02;
-    --color-prettylights-syntax-markup-ignored-text: #f0f6fc;
-    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
-    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
-  }
-}
-@media (prefers-color-scheme: light) {
-  .post-content,
-  [data-theme="light"] {
-    /* light */
-    color-scheme: light;
-    --focus-outlineColor: #0969da;
-    --fgColor-default: #1f2328;
-    --fgColor-muted: #59636e;
-    --fgColor-accent: #0969da;
-    --fgColor-success: #1a7f37;
-    --fgColor-attention: #9a6700;
-    --fgColor-danger: #d1242f;
-    --fgColor-done: #8250df;
-    --bgColor-default: #ffffff;
-    --bgColor-muted: #f6f8fa;
-    --bgColor-neutral-muted: #818b981f;
-    --bgColor-attention-muted: #fff8c5;
-    --borderColor-default: #d1d9e0;
-    --borderColor-muted: #d1d9e0b3;
-    --borderColor-neutral-muted: #d1d9e0b3;
-    --borderColor-accent-emphasis: #0969da;
-    --borderColor-success-emphasis: #1a7f37;
-    --borderColor-attention-emphasis: #9a6700;
-    --borderColor-danger-emphasis: #cf222e;
-    --borderColor-done-emphasis: #8250df;
-    --color-prettylights-syntax-comment: #59636e;
-    --color-prettylights-syntax-constant: #0550ae;
-    --color-prettylights-syntax-constant-other-reference-link: #0a3069;
-    --color-prettylights-syntax-entity: #6639ba;
-    --color-prettylights-syntax-storage-modifier-import: #1f2328;
-    --color-prettylights-syntax-entity-tag: #0550ae;
-    --color-prettylights-syntax-keyword: #cf222e;
-    --color-prettylights-syntax-string: #0a3069;
-    --color-prettylights-syntax-variable: #953800;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-    --color-prettylights-syntax-brackethighlighter-angle: #59636e;
-    --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-    --color-prettylights-syntax-invalid-illegal-bg: #82071e;
-    --color-prettylights-syntax-carriage-return-text: #f6f8fa;
-    --color-prettylights-syntax-carriage-return-bg: #cf222e;
-    --color-prettylights-syntax-string-regexp: #116329;
-    --color-prettylights-syntax-markup-list: #3b2300;
-    --color-prettylights-syntax-markup-heading: #0550ae;
-    --color-prettylights-syntax-markup-italic: #1f2328;
-    --color-prettylights-syntax-markup-bold: #1f2328;
-    --color-prettylights-syntax-markup-deleted-text: #82071e;
-    --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
-    --color-prettylights-syntax-markup-inserted-text: #116329;
-    --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
-    --color-prettylights-syntax-markup-changed-text: #953800;
-    --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
-    --color-prettylights-syntax-markup-ignored-text: #d1d9e0;
-    --color-prettylights-syntax-markup-ignored-bg: #0550ae;
-    --color-prettylights-syntax-meta-diff-range: #8250df;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #818b98;
-  }
+.container-lg {
+  max-width: 1012px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.post-content li > p {
-  margin-top: var(--base-size-16);
+.p-5 {
+  padding: 32px;
 }
 
-.post-content [data-footnote-ref]::before {
-  content: "[";
+.markdown-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
-.post-content [data-footnote-ref]::after {
-  content: "]";
-}
-
-.post-content .footnotes {
-  font-size: 12px;
-  color: var(--fgColor-muted);
-  border-top: 1px solid var(--borderColor-default);
-}
-
-.post-content .footnotes ol {
-  padding-left: var(--base-size-16);
-}
-
-.post-content .footnotes ol ul {
-  display: inline-block;
-  padding-left: var(--base-size-16);
-  margin-top: var(--base-size-16);
-}
-
-.post-content .footnotes li {
+.markdown-heading {
   position: relative;
 }
 
-.post-content .footnotes li:target::before {
-  position: absolute;
-  top: calc(var(--base-size-8) * -1);
-  right: calc(var(--base-size-8) * -1);
-  bottom: calc(var(--base-size-8) * -1);
-  left: calc(var(--base-size-24) * -1);
-  pointer-events: none;
-  content: "";
-  border: 2px solid var(--borderColor-accent-emphasis);
-  border-radius: 6px;
+.markdown-heading .heading-element:hover + .anchor {
+  opacity: 1;
 }
 
-.post-content .footnotes li:target {
+.markdown-heading h1.heading-element + .anchor,
+.markdown-heading h2.heading-element + .anchor {
+  transform: translateY(calc(-50% - 0.3rem));
+}
+
+:root {
+  --borderRadius-medium: 0.375rem;
+}
+
+.markdown-heading .anchor {
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  margin: auto;
+  border-radius: var(--borderRadius-medium);
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+  padding-right: initial;
+}
+
+.markdown-heading .anchor:hover {
+  opacity: 1;
+}
+
+.markdown-heading .anchor:focus {
+  outline: 2px solid var(--focus-outlineColor) !important;
+  outline-offset: -2px;
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .markdown-heading .anchor {
+    opacity: 1;
+  }
+}
+
+.markdown-heading .anchor .octicon {
   color: var(--fgColor-default);
 }
 
-.post-content .footnotes .data-footnote-backref g-emoji {
-  font-family: monospace;
-}
-
-.post-content .octicon {
+summary > .markdown-heading {
   display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.post-content .octicon {
-  display: inline-block;
-  overflow: visible !important;
-  vertical-align: text-bottom;
-  fill: currentColor;
-}
-
-.post-content .mr-2 {
-  margin-right: var(--base-size-8, 8px) !important;
 }
 
 .markdown-alert {
-  color: inherit;
-  padding-left: 15px;
-  border-left: 4px solid var(--borderColor-default);
+  padding: var(--base-size-8) var(--base-size-16);
   margin-bottom: var(--base-size-16);
-  font-size: 1.05rem;
-  font-style: italic;
-}
-
-.markdown-alerte > :last-child {
-  margin-bottom: 0;
-}
-
-.markdown-alert i,
-.markdown-alert em {
-  font-style: normal;
+  color: inherit;
+  border-left: 0.25em solid var(--borderColor-default);
 }
 
 .markdown-alert > :first-child {
@@ -267,4 +130,120 @@
 
 .markdown-alert.markdown-alert-caution .markdown-alert-title {
   color: var(--fgColor-danger);
+}
+
+.markdown-body .highlight {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
+}
+
+:root {
+  --button-default-fgColor-rest: #25292e;
+  --button-default-bgColor-rest: #f6f8fa;
+  --button-default-borderColor-rest: #d1d9e0;
+  --button-default-bgColor-hover: #eff2f5;
+  --button-default-borderColor-hover: #d1d9e0;
+  --button-default-bgColor-active: #e6eaef;
+  --button-default-borderColor-active: #d1d9e0;
+  --fgColor-disabled: #818b98;
+  --button-default-bgColor-disabled: #eff2f5;
+  --button-default-borderColor-disabled: #818b981a;
+
+  @media (prefers-color-scheme: dark) {
+    --button-default-fgColor-rest: #c9d1d9;
+    --button-default-bgColor-rest: #212830;
+    --button-default-borderColor-rest: #3d444d;
+    --button-default-bgColor-hover: #262c36;
+    --button-default-borderColor-hover: #3d444d;
+    --button-default-bgColor-active: #2a313c;
+    --button-default-borderColor-active: #3d444d;
+    --fgColor-disabled: #656c7699;
+    --button-default-bgColor-disabled: #212830;
+    --button-default-borderColor-disabled: #656c761a;
+  }
+}
+
+.markdown-body button {
+  color: var(--button-default-fgColor-rest);
+  background-color: var(--button-default-bgColor-rest);
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color, background-color, box-shadow, border-color;
+  display: inline-block;
+  padding: 5px var(--base-size-16);
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--base-text-weight-medium, 500);
+  line-height: 20px;
+  white-space: nowrap;
+  border: 1px solid;
+  border-color: var(--button-default-borderColor-rest);
+  border-radius: 6px;
+
+  &:hover {
+    background-color: var(--button-default-bgColor-hover);
+    border-color: var(--button-default-borderColor-hover);
+    transition-duration: 0.1s;
+  }
+
+  &:active {
+    background-color: var(--button-default-bgColor-active);
+    border-color: var(--button-default-borderColor-active);
+    transition: none;
+  }
+
+  &:disabled {
+    color: var(--fgColor-disabled);
+    background-color: var(--button-default-bgColor-disabled);
+    border-color: var(--button-default-borderColor-disabled);
+  }
+}
+
+:root {
+  --control-small-size: 28px;
+}
+
+.markdown-body .highlight button.clipboard-copy {
+  width: var(--control-small-size, 28px);
+  height: var(--control-small-size, 28px);
+  padding: 0;
+  margin: 8px;
+  background-color: transparent;
+  border: 0;
+  border-radius: 6px;
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color, background-color, box-shadow, border-color;
+
+  &:hover {
+    background-color: var(--button-default-bgColor-hover);
+    border-color: var(--button-default-borderColor-hover);
+    transition-duration: 0.1s;
+  }
+
+  &:active {
+    background-color: var(--button-default-bgColor-active);
+    border-color: var(--button-default-borderColor-active);
+    transition: none;
+  }
+
+  .octicon {
+    color: var(--fgColor-muted, var(--color-fg-muted));
+  }
+}
+
+.markdown-body button.clipboard-copy .color-fg-success {
+  color: var(--fgColor-success, var(--color-success-fg)) !important;
+}
+
+.markdown-body .output {
+  white-space: pre-wrap;
+}
+
+.markdown-body .output .warn {
+  background: light-dark(#fef5d5, #413c26);
+}
+
+.markdown-body .output .error {
+  background: light-dark(#fcebea, #4f3534);
 }

@@ -1,5 +1,6 @@
 import { all, createStarryNight } from "@wooorm/starry-night";
 import { markdownToHTML } from "comrak";
+import GithubSlugger from "github-slugger";
 import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
@@ -37,19 +38,45 @@ const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
 
 const messages = {
   en: {
+    title: () => TITLE,
+    categoryNames: {
+      android: () => "🤖 Android",
+      git: () => "🔀 Git",
+      iot: () => "🌍 IoT",
+      java: () => "☕ Java",
+      linux: () => "🐧 Linux",
+      machineLearning: () => "🧠 Machine learning",
+      misc: () => "📦 Misc.",
+      python: () => "🐍 Python",
+      web: () => "🌐 Web",
+    },
     footer: {
       markdown: { title: () => "View as Markdown", content: () => "Markdown" },
       github: { title: () => "View on GitHub", content: () => "GitHub" },
       edit: { title: () => "Suggest an edit", content: () => "Edit" },
       history: { title: () => "View history", content: () => "History" },
+      rss: { title: () => "RSS feed", content: () => "RSS" },
     },
   },
   ko: {
+    title: () => "방성범",
+    categoryNames: {
+      android: () => "🤖 안드로이드",
+      git: () => "🔀 깃",
+      iot: () => "🌍 IoT",
+      java: () => "☕ 자바",
+      linux: () => "🐧 리눅스",
+      machineLearning: () => "🧠 기계 학습",
+      misc: () => "📦 기타",
+      python: () => "🐍 파이썬",
+      web: () => "🌐 웹",
+    },
     footer: {
-      markdown: { title: () => "Markdown으로 보기", content: () => "Markdown" },
+      markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
       github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
       edit: { title: () => "편집 제안", content: () => "편집" },
       history: { title: () => "역사 보기", content: () => "역사" },
+      rss: { title: () => "RSS 피드", content: () => "RSS" },
     },
   },
 };
@@ -114,7 +141,6 @@ await Promise.all(
           autolink: true,
           footnotes: true,
           strikethrough: true,
-          headerIDs: "",
           table: true,
           tasklist: true,
         },
@@ -139,6 +165,33 @@ await Promise.all(
             element.setAttribute("href", href.slice(0, -"README.md".length));
           else if (href.endsWith(".md"))
             element.setAttribute("href", href.slice(0, -".md".length));
+        },
+      });
+
+      if (file.data.date_published) {
+        rewriter.on("h1", {
+          element(element) {
+            if (!file.data.date_published) return;
+            element.after(
+              /* HTML */ `<p>
+                <time
+                  datetime="${escape(file.data.date_published.toISOString())}"
+                  >${escape(
+                    new Intl.DateTimeFormat(lc).format(
+                      file.data.date_published,
+                    ),
+                  )}</time
+                >
+              </p>`,
+              { html: true },
+            );
+          },
+        });
+      }
+
+      rewriter.on(".anchor", {
+        element(element) {
+          element.remove();
         },
       });
 
@@ -239,33 +292,46 @@ await Promise.all(
       rewriter.on("pre", {
         element(element) {
           element.before(`<div class="highlight">`, { html: true });
+          element.after(`</div>`, { html: true });
           element.after(
-            /* HTML */ `<p>
+            /* HTML */ `<div>
               <button type="button" class="clipboard-copy">
-                <span>코드 복사</span><span class="copied" hidden>복사됨</span>
+                <svg
+                  aria-hidden="true"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  version="1.1"
+                  width="16"
+                  class="octicon octicon-copy js-clipboard-copy-icon"
+                >
+                  <path
+                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+                  ></path>
+                  <path
+                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+                  ></path>
+                </svg>
+                <svg
+                  aria-hidden="true"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  version="1.1"
+                  width="16"
+                  class="octicon octicon-check js-clipboard-check-icon color-fg-success"
+                  style="display: none;"
+                >
+                  <path
+                    d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"
+                  ></path>
+                </svg>
               </button>
-            </p>`,
+            </div>`,
             {
               html: true,
             },
           );
-          element.after(`</div>`, { html: true });
         },
       });
-
-      /** @type {string[]} */
-      const headingIDs = [];
-      rewriter.on(
-        "h1 .anchor, h2 .anchor, h3 .anchor, h4 .anchor, h5 .anchor, h6 .anchor",
-        {
-          element(element) {
-            const id = element.getAttribute("id");
-            assert(id);
-            headingIDs.push(id);
-            element.remove();
-          },
-        },
-      );
 
       try {
         await rewriter.write(encoder.encode(html));
@@ -280,35 +346,104 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
+      const slugger = new GithubSlugger();
+      let headingContent = "";
+      let headingText = "";
       rewriter.on("h1, h2, h3, h4, h5, h6", {
         element(element) {
-          const id = headingIDs.shift();
-          assert(id);
-          element.setAttribute("id", id);
+          element.removeAndKeepContent();
+          element.onEndTag((endTag) => {
+            const slug = slugger.slug(unescape(headingText));
+            endTag.after(
+              /* HTML */ `<div class="markdown-heading">
+                <${endTag.name} tabindex="-1" class="heading-element">${headingContent}</${endTag.name}>
+                <a id="${escape(slug)}" class="anchor" aria-label="Permalink: ${headingText}" href="#${escape(slug)}">
+                  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                </a>
+              </div>`,
+              { html: true },
+            );
+
+            headingContent = "";
+            headingText = "";
+          });
+        },
+        text(text) {
+          headingContent += text.text;
+          headingText += text.text;
+          text.remove();
+        },
+      });
+      rewriter.on("h1 *, h2 *, h3 *, h4 *, h5 *, h6 *", {
+        element(element) {
+          if (element.removed) return;
+          headingContent += `<${element.tagName}${Array.from(element.attributes)
+            .map(([k, v]) => ` ${k}="${escape(v)}"`)
+            .join("")}>`;
+          element.onEndTag((endTag) => {
+            headingContent += `</${endTag.name}>`;
+          });
+          element.removeAndKeepContent();
         },
       });
 
       /** @type {string | null} */
       let runnableCodeFlag = null;
-      rewriter.on("runnable-code p", {
+      rewriter.on("runnable-code", {
         element(element) {
-          if (runnableCodeFlag && ["js", "ts", "py"].includes(runnableCodeFlag))
-            element.append(
-              /* HTML */ `
-                <button type="button" class="run-code">코드 실행</button>
-              `,
-              { html: true },
-            );
-          else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag))
-            element.append(
-              /* HTML */ `
-                후
-                <a href="https://dev.java/playground/" target="_blank"
-                  >The Java Playground</a
-                >
-              `,
-              { html: true },
-            );
+          element.onEndTag((endTag) => {
+            if (
+              runnableCodeFlag &&
+              ["js", "ts", "py"].includes(runnableCodeFlag)
+            )
+              endTag.before(
+                /* HTML */ `<p>
+                  <button type="button" class="run-code">코드 실행</button>
+                </p>`,
+                { html: true },
+              );
+            else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag))
+              endTag.before(
+                /* HTML */ `<p>
+                  <button type="button" class="clipboard-copy">
+                    <svg
+                      aria-hidden="true"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      version="1.1"
+                      width="16"
+                      class="octicon octicon-copy js-clipboard-copy-icon"
+                    >
+                      <path
+                        d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"
+                      ></path>
+                      <path
+                        d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"
+                      ></path>
+                    </svg>
+                    <svg
+                      aria-hidden="true"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      version="1.1"
+                      width="16"
+                      class="octicon octicon-check js-clipboard-check-icon color-fg-success"
+                      style="display: none;"
+                    >
+                      <path
+                        d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"
+                      ></path>
+                    </svg>
+                    코드 복사
+                  </button>
+                  후
+                  <a href="https://dev.java/playground/" target="_blank"
+                    >The Java Playground</a
+                  >
+                </p>`,
+                { html: true },
+              );
+          });
         },
       });
       rewriter.on("runnable-code code", {
@@ -361,9 +496,6 @@ await Promise.all(
       let title = file.data.title;
       if (!title) {
         rewriter.on("h1", {
-          element(element) {
-            element.remove();
-          },
           text(text) {
             if (!title) title = unescape(text.text);
           },
@@ -415,195 +547,30 @@ await Promise.all(
 
       if (!title) throw new Error();
 
+      const CATEGORY_NAMES = {
+        android: messages[lc].categoryNames.android(),
+        git: messages[lc].categoryNames.git(),
+        iot: messages[lc].categoryNames.iot(),
+        java: messages[lc].categoryNames.java(),
+        linux: messages[lc].categoryNames.linux(),
+        "machine-learning": messages[lc].categoryNames.machineLearning(),
+        misc: messages[lc].categoryNames.misc(),
+        python: messages[lc].categoryNames.python(),
+        web: messages[lc].categoryNames.web(),
+      };
       const categories = file.data.categories ?? [];
-
-      const navItems = /* HTML */ `<div class="nav-items">
-        <a class="nav-item" href="/android">Android</a>
-        <a class="nav-item" href="/git">Git</a>
-        <a class="nav-item" href="/iot">IoT</a>
-        <a class="nav-item" href="/java">Java</a>
-        <a class="nav-item" href="/linux">Linux</a>
-        <a class="nav-item" href="/machine-learning">Machine learning</a>
-        <a class="nav-item" href="/misc">Misc.</a>
-        <a class="nav-item" href="/python">Python</a>
-        <a class="nav-item" href="/web">Web</a>
-      </div>`;
-
-      const header = /* HTML */ `<header class="site-header">
-        <div class="wrapper">
-          <a class="site-title" rel="author" href="/">${escape(TITLE)}</a>
-          <nav class="site-nav">
-            <input type="checkbox" id="nav-trigger" />
-            <label for="nav-trigger">
-              <span class="menu-icon"></span>
-            </label>
-
-            ${navItems}
-          </nav>
-        </div>
-      </header>`;
-
-      const comments = /* HTML */ `<section
-        id="comments"
-        class="giscus"
-      ></section>`;
-
-      const content = /* HTML */ `<article
-        class="post h-entry"
-        itemscope
-        itemtype="http://schema.org/BlogPosting"
-      >
-        <header class="post-header">
-          <h1 class="post-title p-name" itemprop="name headline">
-            ${escape(title)}
-          </h1>
-          <div class="post-meta">
-            ${file.data.date_modified
-              ? /* HTML */ `<span class="meta-label">Published:</span>`
-              : ""}
-            ${file.data.date_published
-              ? /*HTML */ `<time
-              class="dt-published"
-              datetime="${escape(file.data.date_published.toISOString())}"
-              itemprop="datePublished"
+      const categoryHTML = categories.map(
+        (category) =>
+          /* HTML */ `<p>
+            <a href="/${category}"
+              >${escape(
+                CATEGORY_NAMES[
+                  /** @type {keyof typeof CATEGORY_NAMES} */ (category)
+                ],
+              )}</a
             >
-              ${escape(
-                new Intl.DateTimeFormat(lc).format(file.data.date_published),
-              )}
-            </time>`
-              : ""}
-            ${file.data.date_modified
-              ? /*HTML */ `
-            <span class="bullet-divider">•</span>
-            <span class="meta-label">Updated:</span>
-            <time
-              class="dt-modified"
-              datetime="${escape(file.data.date_modified.toISOString())}"
-              itemprop="dateModified"
-            >
-              ${escape(
-                new Intl.DateTimeFormat(lc).format(file.data.date_modified),
-              )}
-            </time>`
-              : ""}
-            <div>
-              <a
-                href="${escape(
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                )}"
-                title="${escape(messages[lc].footer.markdown.title())}"
-                >${messages[lc].footer.markdown.content()}</a
-              >
-              •
-              <a
-                href="${escape(
-                  `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                  }`,
-                )}"
-                title="${escape(messages[lc].footer.github.title())}"
-                >${messages[lc].footer.github.content()}</a
-              >
-              •
-              <a
-                href="${escape(
-                  `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                  }`,
-                )}"
-                title="${escape(messages[lc].footer.edit.title())}"
-                >${messages[lc].footer.edit.content()}</a
-              >
-              •
-              <a
-                href="${escape(
-                  `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                  }`,
-                )}"
-                title="${escape(messages[lc].footer.history.title())}"
-                >${messages[lc].footer.history.content()}</a
-              >
-            </div>
-          </div>
-        </header>
-
-        <div class="post-content e-content" itemprop="articleBody">${html}</div>
-
-        ${[
-          "/README.md",
-          "/404.md",
-          "/android.md",
-          "/git.md",
-          "/iot.md",
-          "/java.md",
-          "/linux.md",
-          "/machine-learning.md",
-          "/misc.md",
-          "/python.md",
-          "/web.md",
-        ].includes(pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname)
-          ? ""
-          : comments}
-
-        <a class="u-url" href="${escape(canonical)}" hidden></a>
-      </article>`;
-
-      const social = /* HTML */ `<ul class="social-media-list">
-        <li>
-          <a
-            rel="me"
-            href="https://github.com/bangseongbeom/bangseongbeom.github.io"
-            target="_blank"
-            title="Repository at GitHub"
-          >
-            <span class="grey fa-brands fa-github fa-lg"></span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="${escape(new URL("feed.xml", BASE).toString())}"
-            target="_blank"
-            title="Subscribe to syndication feed"
-          >
-            <svg class="svg-icon grey" viewbox="0 0 16 16">
-              <path
-                d="M12.8 16C12.8 8.978 7.022 3.2 0 3.2V0c8.777 0 16 7.223 16 16h-3.2zM2.194
-          11.61c1.21 0 2.195.985 2.195 2.196 0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017 0
-          13.806c0-1.21.983-2.195 2.194-2.195zM10.606
-          16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818 0 10.606 4.79 10.606 10.607z"
-              />
-            </svg>
-          </a>
-        </li>
-      </ul>`;
-
-      const footer = /* HTML */ `<footer class="site-footer h-card">
-        <data
-          class="u-url"
-          value="${escape(new URL("/", BASE).toString())}"
-        ></data>
-
-        <div class="wrapper">
-          <div class="footer-col-wrapper">
-            <div class="footer-col">
-              <ul class="contact-list">
-                <li class="p-name">${escape(AUTHOR)}</li>
-                <li>
-                  <a class="u-email" href="mailto:${escape(EMAIL)}"
-                    >${escape(EMAIL)}</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="footer-col">
-              <p>${escape(DESCRIPTION)}</p>
-            </div>
-          </div>
-
-          <div class="social-links">${social}</div>
-        </div>
-      </footer>`;
+          </p>`,
+      );
 
       await mkdir(dirname(dest), { recursive: true });
       await writeFile(
@@ -670,15 +637,9 @@ await Promise.all(
                 type="application/rss+xml"
                 href="${escape(new URL("feed.xml", BASE).toString())}"
               />
-              <link
-                id="fa-stylesheet"
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"
-              />
-              <link rel="stylesheet" href="/auto.css" />
-              <link rel="stylesheet" href="/both.css" />
-              <link rel="stylesheet" href="/codemirror-github-theme.css" />
+              <link rel="stylesheet" href="/github-markdown.css" />
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
+              <link rel="stylesheet" href="/codemirror-github-theme.css" />
               <script type="application/ld+json">
                 ${JSON.stringify(
                   /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
@@ -734,12 +695,6 @@ await Promise.all(
                 }
               </script>
               <script type="module" src="/runnable-code.js"></script>
-              <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
-              <script>
-                document.addEventListener("DOMContentLoaded", (event) =>
-                  anchors.add(),
-                );
-              </script>
               <!-- Google tag (gtag.js) -->
               <script
                 async
@@ -771,36 +726,17 @@ await Promise.all(
                 async
               ></script>
             </head>
-            <body>
-              ${header}
-              <main class="page-content" aria-label="Content">
-                <div class="wrapper">
-                  ${pathToFileURL(join(sep, relative(SRC_ROOT, src)))
-                    .pathname === "/404.md"
-                    ? /* HTML */ `<style type="text/css" media="screen">
-                          .container {
-                            margin: 10px auto;
-                            max-width: 600px;
-                            text-align: center;
-                          }
-                          h1 {
-                            margin: 30px 0;
-                            font-size: 4em;
-                            line-height: 1;
-                            letter-spacing: -1px;
-                          }
-                        </style>
-
-                        <div class="container">
-                          <h1>404</h1>
-
-                          <p><strong>Page not found :(</strong></p>
-                          <p>The requested page could not be found.</p>
-                        </div>`
-                    : content}
-                </div>
-              </main>
-              ${footer}
+            <body class="markdown-body p-5 container-lg">
+              <nav>
+                <p><a href="/">🏠 ${escape(messages[lc].title())}</a></p>
+                ${categoryHTML}
+              </nav>
+              ${html}
+              ${["/README.md", "/404.md"].includes(
+                pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+              )
+                ? ""
+                : /* HTML */ `<section id="comments" class="giscus"></section>`}
             </body>
           </html>`,
       );
@@ -936,8 +872,8 @@ await writeFile(
 );
 
 await copyFile(
-  fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
-  join(DEST_ROOT, "both.css"),
+  fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
+  join(DEST_ROOT, "github-markdown.css"),
 );
 await copyFile(
   join(SRC_ROOT, "clipboard-copy.js"),

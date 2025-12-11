@@ -1,14 +1,15 @@
 .cm-editor {
+  padding: var(--base-size-16);
   overflow: auto;
-  font-size: 15px;
-  line-height: 1.4;
-  color: var(--minima-heading-color);
-  background-color: var(--minima-code-background-color);
-  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
 
   .cm-content {
-    padding: 8px 12px;
-    color: var(--minima-heading-color);
+    padding: 0;
+    caret-color: var(--fgColor-default);
   }
 
   .cm-line {
@@ -20,8 +21,8 @@
   }
 
   .cm-tooltip {
-    border: 1px solid var(--minima-border-color-01);
-    background-color: var(--minima-code-background-color);
+    border: 1px solid var(--borderColor-default);
+    background-color: var(--bgColor-muted);
   }
 }
 
