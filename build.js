@@ -189,6 +189,37 @@ await Promise.all(
         });
       }
 
+      rewriter.on("h1", {
+        element(element) {
+          element.after(
+            /* HTML */ `<nav>
+              <p>
+                <a href="/README.md" title="View as Markdown">Markdown</a>
+                •
+                <a
+                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main/README.md"
+                  title="View on GitHub"
+                  >GitHub</a
+                >
+                •
+                <a
+                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main/README.md"
+                  title="Suggest an edit"
+                  >Edit</a
+                >
+                •
+                <a
+                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main/README.md"
+                  title="View history"
+                  >History</a
+                >
+              </p>
+            </nav>`,
+            { html: true },
+          );
+        },
+      });
+
       /** @type {string[]} */
       const headingIDs = [];
       rewriter.on(
@@ -616,6 +647,11 @@ await Promise.all(
                   .markdown-body {
                     padding: 15px;
                   }
+                }
+
+                main nav {
+                  font-size: 12px;
+                  color: var(--fgColor-muted);
                 }
               </style>
               <script type="application/ld+json">
