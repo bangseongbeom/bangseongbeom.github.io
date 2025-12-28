@@ -296,7 +296,9 @@ async function runCode(event) {
 
   let output = runnableCode.querySelector(".output");
   if (!output) {
-    runnableCode.insertAdjacentHTML(
+    const highlight = runnableCode.querySelector(".highlight");
+    if (!highlight) throw new Error();
+    highlight.insertAdjacentHTML(
       "beforeend",
       /* HTML */ `<pre class="output"></pre>`,
     );

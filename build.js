@@ -333,6 +333,7 @@ await Promise.all(
       rewriter.on("pre", {
         element(element) {
           element.before(`<div class="highlight">`, { html: true });
+          element.after(`</div>`, { html: true });
           element.after(
             /* HTML */ `<p>
               <button type="button" class="clipboard-copy">
@@ -344,7 +345,6 @@ await Promise.all(
               html: true,
             },
           );
-          element.after(`</div>`, { html: true });
         },
       });
 
@@ -596,6 +596,11 @@ await Promise.all(
                 main nav {
                   font-size: 12px;
                   color: var(--fgColor-muted);
+                }
+
+                .markdown-body .highlight pre,
+                .markdown-body .highlight .cm-editor {
+                  margin-bottom: var(--base-size-16);
                 }
               </style>
               <script type="application/ld+json">
