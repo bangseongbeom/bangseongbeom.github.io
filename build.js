@@ -729,6 +729,10 @@ await Promise.all(
                     padding: 45px 30px;
                     box-sizing: border-box;
 
+                    summary::marker {
+                      content: "";
+                    }
+
                     details::details-content {
                       content-visibility: visible;
                     }
