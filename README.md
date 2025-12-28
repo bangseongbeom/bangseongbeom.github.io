@@ -11,8 +11,3 @@
 - [Misc.](/misc.md)
 - [Python](/python.md)
 - [Web](/web.md)
-
-## Shortcuts
-
-- [GitHub](https://github.com/bangseongbeom/bangseongbeom.github.io)
-- [RSS](https://www.bangseongbeom.com/feed.xml)

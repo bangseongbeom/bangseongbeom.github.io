@@ -213,6 +213,8 @@ await Promise.all(
                   title="View history"
                   >History</a
                 >
+                •
+                <a href="/feed.xml" title="RSS feed">RSS</a>
               </p>
             </nav>`,
             { html: true },
