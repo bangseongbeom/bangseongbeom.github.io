@@ -1,6 +1,5 @@
 import { all, createStarryNight } from "@wooorm/starry-night";
 import { markdownToHTML } from "comrak";
-import GithubSlugger from "github-slugger";
 import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
@@ -141,6 +140,7 @@ await Promise.all(
           autolink: true,
           footnotes: true,
           strikethrough: true,
+          headerIDs: "",
           table: true,
           tasklist: true,
         },
@@ -189,11 +189,19 @@ await Promise.all(
         });
       }
 
-      rewriter.on(".anchor", {
-        element(element) {
-          element.remove();
+      /** @type {string[]} */
+      const headingIDs = [];
+      rewriter.on(
+        "h1 .anchor, h2 .anchor, h3 .anchor, h4 .anchor, h5 .anchor, h6 .anchor",
+        {
+          element(element) {
+            const id = element.getAttribute("id");
+            assert(id);
+            headingIDs.push(id);
+            element.remove();
+          },
         },
-      });
+      );
 
       let alertText = "";
       /** @type {string | null} */
@@ -346,44 +354,11 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
-      const slugger = new GithubSlugger();
-      let headingContent = "";
-      let headingText = "";
       rewriter.on("h1, h2, h3, h4, h5, h6", {
         element(element) {
-          element.removeAndKeepContent();
-          element.onEndTag((endTag) => {
-            const slug = slugger.slug(unescape(headingText));
-            endTag.after(
-              /* HTML */ `<div class="markdown-heading">
-                <${endTag.name} tabindex="-1" class="heading-element">${headingContent}</${endTag.name}>
-                <a id="${escape(slug)}" class="anchor" aria-label="Permalink: ${headingText}" href="#${escape(slug)}">
-                  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-                </a>
-              </div>`,
-              { html: true },
-            );
-
-            headingContent = "";
-            headingText = "";
-          });
-        },
-        text(text) {
-          headingContent += text.text;
-          headingText += text.text;
-          text.remove();
-        },
-      });
-      rewriter.on("h1 *, h2 *, h3 *, h4 *, h5 *, h6 *", {
-        element(element) {
-          if (element.removed) return;
-          headingContent += `<${element.tagName}${Array.from(element.attributes)
-            .map(([k, v]) => ` ${k}="${escape(v)}"`)
-            .join("")}>`;
-          element.onEndTag((endTag) => {
-            headingContent += `</${endTag.name}>`;
-          });
-          element.removeAndKeepContent();
+          const id = headingIDs.shift();
+          assert(id);
+          element.setAttribute("id", id);
         },
       });
 
@@ -640,6 +615,21 @@ await Promise.all(
               <link rel="stylesheet" href="/github-markdown.css" />
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
               <link rel="stylesheet" href="/codemirror-github-theme.css" />
+              <style>
+                .markdown-body {
+                  box-sizing: border-box;
+                  min-width: 200px;
+                  max-width: 980px;
+                  margin: 0 auto;
+                  padding: 45px;
+                }
+
+                @media (max-width: 767px) {
+                  .markdown-body {
+                    padding: 15px;
+                  }
+                }
+              </style>
               <script type="application/ld+json">
                 ${JSON.stringify(
                   /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
@@ -725,8 +715,14 @@ await Promise.all(
                 crossorigin="anonymous"
                 async
               ></script>
+              <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  anchors.add();
+                });
+              </script>
             </head>
-            <body class="markdown-body p-5 container-lg">
+            <body class="markdown-body">
               <nav>
                 <p><a href="/">🏠 ${escape(messages[lc].title())}</a></p>
                 ${categoryHTML}
