@@ -1,4 +1,5 @@
 ---
+categories: [java]
 redirect_from: [/categories/java.html]
 ---
 

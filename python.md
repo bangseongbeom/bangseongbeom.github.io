@@ -1,4 +1,5 @@
 ---
+categories: [python]
 redirect_from: [/categories/python.html]
 ---
 

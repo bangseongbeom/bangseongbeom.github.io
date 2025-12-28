@@ -1,4 +1,5 @@
 ---
+categories: [android]
 redirect_from: [/categories/android.html]
 ---
 

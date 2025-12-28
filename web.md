@@ -1,4 +1,5 @@
 ---
+categories: [web]
 redirect_from: [/categories/web.html]
 ---
 

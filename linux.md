@@ -1,3 +1,7 @@
+---
+categories: [linux]
+---
+
 # Linux
 
 - [리눅스 ACL 가이드](/linux-acl-guide.md)

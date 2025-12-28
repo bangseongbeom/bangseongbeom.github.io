@@ -1,3 +1,7 @@
+---
+categories: [machine-learning]
+---
+
 # Machine learning
 
 - [기계 학습 라이브러리들의 'import as' 약칭](/machine-learning-libraries-import-as-abbreviations.md)

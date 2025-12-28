@@ -1,4 +1,5 @@
 ---
+categories: [misc]
 redirect_from: [/etc.html]
 ---
 
