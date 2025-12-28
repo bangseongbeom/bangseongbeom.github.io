@@ -1,5 +1,4 @@
 .cm-editor {
-  padding: var(--base-size-16);
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
@@ -8,7 +7,7 @@
   border-radius: 6px;
 
   .cm-content {
-    padding: 0;
+    padding: var(--base-size-16);
     caret-color: var(--fgColor-default);
   }
 
