@@ -296,27 +296,49 @@ await Promise.all(
           element.after(
             /* HTML */ `<nav>
               <p>
-                <a href="/README.md" title="View as Markdown">Markdown</a>
+                <a
+                  href="${escape(
+                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+                  )}"
+                  title="View as Markdown"
+                  >Markdown</a
+                >
                 •
                 <a
-                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main/README.md"
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
                   title="View on GitHub"
                   >GitHub</a
                 >
                 •
                 <a
-                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main/README.md"
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
                   title="Suggest an edit"
                   >Edit</a
                 >
                 •
                 <a
-                  href="https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main/README.md"
+                  href="${escape(
+                    `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
+                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                    }`,
+                  )}"
                   title="View history"
                   >History</a
                 >
                 •
-                <a href="/feed.xml" title="RSS feed">RSS</a>
+                <a
+                  href="${escape(new URL("feed.xml", BASE).toString())}"
+                  title="RSS feed"
+                  >RSS</a
+                >
               </p>
             </nav>`,
             { html: true },
