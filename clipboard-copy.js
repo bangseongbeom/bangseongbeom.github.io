@@ -19,17 +19,13 @@ document.querySelectorAll("button.clipboard-copy").forEach((button) =>
 
     navigator.clipboard.writeText(data);
 
-    const copyIcon = /** @type {SVGElement} */ (
-      button.querySelector(".js-clipboard-copy-icon")
-    );
-    const checkIcon = /** @type {SVGElement} */ (
-      button.querySelector(".js-clipboard-check-icon")
-    );
-    copyIcon.attributeStyleMap.set("display", "none");
-    checkIcon.attributeStyleMap.delete("display");
+    const copy = /** @type {HTMLElement} */ (button.querySelector(".copy"));
+    const copied = /** @type {HTMLElement} */ (button.querySelector(".copied"));
+    copy.hidden = true;
+    copied.hidden = false;
     setTimeout(() => {
-      copyIcon.attributeStyleMap.delete("display");
-      checkIcon.attributeStyleMap.set("display", "none");
+      copy.hidden = false;
+      copied.hidden = true;
     }, 2000);
   }),
 );
