@@ -748,18 +748,18 @@ await Promise.all(
             </head>
             <body class="markdown-body">
               <nav>
-                <p><a href="/">[${escape(messages[lc].title())}]</a></p>
+                <p><a href="/">${escape(messages[lc].title())}</a></p>
                 ${categories.map(
                   (category) =>
                     /* HTML */ `<p>
                       <a href="/${category}"
-                        >[${escape(
+                        >${escape(
                           CATEGORY_NAMES[
                             /** @type {keyof typeof CATEGORY_NAMES} */ (
                               category
                             )
                           ],
-                        )}]</a
+                        )}</a
                       >
                     </p>`,
                 )}
