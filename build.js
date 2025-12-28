@@ -39,15 +39,15 @@ const messages = {
   en: {
     title: () => TITLE,
     categoryNames: {
-      android: () => "🤖 Android",
-      git: () => "🔀 Git",
-      iot: () => "🌍 IoT",
-      java: () => "☕ Java",
-      linux: () => "🐧 Linux",
-      machineLearning: () => "🧠 Machine learning",
-      misc: () => "📦 Misc.",
-      python: () => "🐍 Python",
-      web: () => "🌐 Web",
+      android: () => "Android",
+      git: () => "Git",
+      iot: () => "IoT",
+      java: () => "Java",
+      linux: () => "Linux",
+      machineLearning: () => "Machine learning",
+      misc: () => "Misc.",
+      python: () => "Python",
+      web: () => "Web",
     },
     footer: {
       markdown: { title: () => "View as Markdown", content: () => "Markdown" },
@@ -60,15 +60,15 @@ const messages = {
   ko: {
     title: () => "방성범",
     categoryNames: {
-      android: () => "🤖 안드로이드",
-      git: () => "🔀 깃",
-      iot: () => "🌍 IoT",
-      java: () => "☕ 자바",
-      linux: () => "🐧 리눅스",
-      machineLearning: () => "🧠 기계 학습",
-      misc: () => "📦 기타",
-      python: () => "🐍 파이썬",
-      web: () => "🌐 웹",
+      android: () => "안드로이드",
+      git: () => "깃",
+      iot: () => "IoT",
+      java: () => "자바",
+      linux: () => "리눅스",
+      machineLearning: () => "기계 학습",
+      misc: () => "기타",
+      python: () => "파이썬",
+      web: () => "웹",
     },
     footer: {
       markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
@@ -538,11 +538,11 @@ await Promise.all(
         (category) =>
           /* HTML */ `<p>
             <a href="/${category}"
-              >${escape(
+              >[${escape(
                 CATEGORY_NAMES[
                   /** @type {keyof typeof CATEGORY_NAMES} */ (category)
                 ],
-              )}</a
+              )}]</a
             >
           </p>`,
       );
@@ -724,7 +724,7 @@ await Promise.all(
             </head>
             <body class="markdown-body">
               <nav>
-                <p><a href="/">🏠 ${escape(messages[lc].title())}</a></p>
+                <p><a href="/">[${escape(messages[lc].title())}]</a></p>
                 ${categoryHTML}
               </nav>
               ${html}
