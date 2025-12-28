@@ -534,18 +534,6 @@ await Promise.all(
         web: messages[lc].categoryNames.web(),
       };
       const categories = file.data.categories ?? [];
-      const categoryHTML = categories.map(
-        (category) =>
-          /* HTML */ `<p>
-            <a href="/${category}"
-              >[${escape(
-                CATEGORY_NAMES[
-                  /** @type {keyof typeof CATEGORY_NAMES} */ (category)
-                ],
-              )}]</a
-            >
-          </p>`,
-      );
 
       await mkdir(dirname(dest), { recursive: true });
       await writeFile(
@@ -725,7 +713,20 @@ await Promise.all(
             <body class="markdown-body">
               <nav>
                 <p><a href="/">[${escape(messages[lc].title())}]</a></p>
-                ${categoryHTML}
+                ${categories.map(
+                  (category) =>
+                    /* HTML */ `<p>
+                      <a href="/${category}"
+                        >[${escape(
+                          CATEGORY_NAMES[
+                            /** @type {keyof typeof CATEGORY_NAMES} */ (
+                              category
+                            )
+                          ],
+                        )}]</a
+                      >
+                    </p>`,
+                )}
               </nav>
               ${html}
               ${["/README.md", "/404.md"].includes(
