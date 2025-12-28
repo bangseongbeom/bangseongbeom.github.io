@@ -717,16 +717,16 @@ await Promise.all(
                   }
                 }
 
-                @media (min-width: 1580px) {
+                @media (min-width: 1400px) {
                   .markdown-body > nav {
                     display: block;
                     position: fixed;
                     left: 0;
                     top: 0;
-                    width: 300px;
+                    width: 255px;
                     height: 100vh;
                     overflow: auto;
-                    padding: 45px 30px;
+                    padding: 45px 15px;
                     box-sizing: border-box;
 
                     details::details-content {
