@@ -728,7 +728,7 @@ await Promise.all(
                     </p>`,
                 )}
               </nav>
-              ${html}
+              <main>${html}</main>
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
               )
