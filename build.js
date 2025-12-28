@@ -723,8 +723,8 @@ await Promise.all(
                     position: fixed;
                     left: 0;
                     top: 0;
-                    width: 255px;
-                    height: 100vh;
+                    width: 250px;
+                    height: 100%;
                     overflow: auto;
                     padding: 45px 15px;
                     box-sizing: border-box;
