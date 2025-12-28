@@ -717,6 +717,28 @@ await Promise.all(
                   }
                 }
 
+                @media (min-width: 1580px) {
+                  .markdown-body > nav {
+                    display: block;
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 300px;
+                    height: 100vh;
+                    overflow: auto;
+                    padding: 45px 30px;
+                    box-sizing: border-box;
+
+                    details::details-content {
+                      content-visibility: visible;
+                    }
+                  }
+
+                  .markdown-body main > *:first-child {
+                    margin-top: 0 !important;
+                  }
+                }
+
                 main nav {
                   font-size: 12px;
                   color: var(--fgColor-muted);
