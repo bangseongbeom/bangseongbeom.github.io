@@ -80,108 +80,6 @@ const messages = {
   },
 };
 
-const CATEGORY_LISTS = {
-  android: /* HTML */ `
-    <ul>
-      <li><a href="/now-kotlin">이제서야 코틀린을 도입하게 된 이유</a></li>
-    </ul>
-  `,
-  git: /* HTML */ `
-    <ul>
-      <li><a href="/multirepo-vs-monorepo">다중 저장소 vs 단일 저장소</a></li>
-      <li><a href="/gitflow-bad">GitFlow가 안 좋은 이유</a></li>
-    </ul>
-  `,
-  iot: /* HTML */ `
-    <ul>
-      <li><a href="/iot-platforms">IoT 플랫폼 업체 비교</a></li>
-      <li><a href="/mqtt-connection-types">MQTT 연결 방식</a></li>
-      <li><a href="/mqtt-intro">MQTT 소개</a></li>
-    </ul>
-  `,
-  java: /* HTML */ `
-    <ul>
-      <li><a href="/spring-downsides-alternatives">스프링의 단점과 대안</a></li>
-    </ul>
-  `,
-  linux: /* HTML */ `
-    <ul>
-      <li><a href="/linux-acl-guide">리눅스 ACL 가이드</a></li>
-      <li><a href="/af-inet-vs-pf-inet">AF_INET vs PF_INET</a></li>
-      <li>
-        <a href="/trailing-dot-d-in-directory-names">디렉터리 이름 끝 '.d'</a>
-      </li>
-      <li><a href="/trailing-hyphens-in-file-names">파일 이름 끝 하이픈</a></li>
-      <li>
-        <a href="/run-commands-with-env-vars-in-shell"
-          >셸에서 환경 변수와 함께 명령어를 실행하는 법</a
-        >
-      </li>
-      <li><a href="/source-dot">source, . (점): 셸 스크립트 파일 실행</a></li>
-      <li><a href="/bash-arrays">배시 배열</a></li>
-    </ul>
-  `,
-  "machine-learning": /* HTML */ `
-    <ul>
-      <li>
-        <a href="/machine-learning-libraries-import-as-abbreviations"
-          >기계 학습 라이브러리들의 'import as' 약칭</a
-        >
-      </li>
-      <li><a href="/numpy-vs-scipy">넘파이 vs 사이파이</a></li>
-    </ul>
-  `,
-  misc: /* HTML */ `
-    <ul>
-      <li><a href="/balena-etcher-intro/">발레나에처 소개</a></li>
-    </ul>
-  `,
-  python: /* HTML */ `
-    <ul>
-      <li><a href="/unittest-vs-pytest">unittest vs pytest</a></li>
-      <li>
-        <a href="/python-double-sharp-comments/">파이썬 더블 샤프(##) 주석</a>
-      </li>
-      <li>
-        <a href="/python-switch-case">파이썬에 switch/case 문이 없는 이유</a>
-      </li>
-      <li><a href="/flask-signals">플라스크 시그널</a></li>
-      <li>
-        <a href="/sys-path-pythonpath"
-          >sys.path, PYTHONPATH: 파이썬 파일 탐색 경로</a
-        >
-      </li>
-      <li>
-        <a href="/avoid-same-names-as-python-builtin-modules"
-          >파이썬 내장 모듈과 동일한 이름 피하기</a
-        >
-      </li>
-    </ul>
-  `,
-  web: /* HTML */ `
-    <ul>
-      <li>
-        <a href="/semantic-tags-unpopular">시맨틱 태그가 인기 없는 이유</a>
-      </li>
-      <li><a href="/determine-website-width">웹 사이트 너비 정하기</a></li>
-      <li>
-        <a href="/graphql-downsides-alternatives">GraphQL의 단점과 대안</a>
-      </li>
-      <li>
-        <a href="/postcss-better-than-sass/">PostCSS가 Sass보다 좋은 이유</a>
-      </li>
-      <li><a href="/redux-benefits-caveats">Redux의 장점과 주의점</a></li>
-      <li><a href="/javascript-var-let">자바스크립트 var, let 차이점</a></li>
-      <li><a href="/javascript-closures">자바스크립트 클로저</a></li>
-      <li>
-        <a href="/vanilla-web-components">바닐라 웹 컴포넌트 만드는 법</a>
-      </li>
-      <li><a href="/selenium-guide">셀레늄 가이드</a></li>
-      <li><a href="/selenium-ide-guide/">셀레늄 IDE 가이드</a></li>
-    </ul>
-  `,
-};
-
 /** @type {{ loc: string; lastmod?: Date | null }[]} */
 const sitemapURLs = [];
 
@@ -717,28 +615,6 @@ await Promise.all(
                   }
                 }
 
-                @media (min-width: 1400px) {
-                  .markdown-body > nav {
-                    display: block;
-                    position: fixed;
-                    left: 0;
-                    top: 0;
-                    width: 250px;
-                    height: 100%;
-                    overflow: auto;
-                    padding: 45px 15px;
-                    box-sizing: border-box;
-
-                    details::details-content {
-                      content-visibility: visible;
-                    }
-                  }
-
-                  .markdown-body main > *:first-child {
-                    margin-top: 0 !important;
-                  }
-                }
-
                 main nav {
                   font-size: 12px;
                   color: var(--fgColor-muted);
@@ -844,61 +720,20 @@ await Promise.all(
             <body class="markdown-body">
               <nav>
                 <p><a href="/">${escape(messages[lc].title())}</a></p>
-                ${await (async () => {
-                  const path = new URL(canonical).pathname;
-
-                  let html = categories
-                    .map(
-                      (category) =>
-                        /* HTML */ `<details>
-                          <summary>
-                            <a href="/${escape(category)}"
-                              >${escape(
-                                CATEGORY_NAMES[
-                                  /** @type {keyof typeof CATEGORY_NAMES} */ (
-                                    category
-                                  )
-                                ],
-                              )}</a
-                            >
-                          </summary>
-                          ${CATEGORY_LISTS[
-                            /** @type {keyof typeof CATEGORY_LISTS} */ (
+                ${categories.map(
+                  (category) =>
+                    /* HTML */ `<p>
+                      <a href="/${category}"
+                        >${escape(
+                          CATEGORY_NAMES[
+                            /** @type {keyof typeof CATEGORY_NAMES} */ (
                               category
                             )
-                          ]}
-                        </details>`,
-                    )
-                    .join("");
-
-                  const encoder = new TextEncoder();
-                  const decoder = new TextDecoder();
-
-                  let output = "";
-                  const rewriter = new HTMLRewriter((outputChunk) => {
-                    output += decoder.decode(outputChunk);
-                  });
-
-                  rewriter.on("a[href]", {
-                    element(element) {
-                      const href = element.getAttribute("href");
-                      if (href === path) {
-                        element.before("<mark>", { html: true });
-                        element.after("</mark>", { html: true });
-                      }
-                    },
-                  });
-
-                  try {
-                    await rewriter.write(encoder.encode(html));
-                    await rewriter.end();
-                    html = output;
-                  } finally {
-                    rewriter.free();
-                  }
-
-                  return html;
-                })()}
+                          ],
+                        )}</a
+                      >
+                    </p>`,
+                )}
               </nav>
               <main>${html}</main>
               ${["/README.md", "/404.md"].includes(
