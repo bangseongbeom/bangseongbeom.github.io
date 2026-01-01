@@ -352,21 +352,34 @@ await Promise.all(
         output += decoder.decode(outputChunk);
       });
 
+      let languageOutput = false;
       rewriter.on("pre", {
         element(element) {
           element.before(`<div class="highlight">`, { html: true });
           element.after(`</div>`, { html: true });
-          element.after(
-            /* HTML */ `<p>
-              <button type="button" class="clipboard-copy">
-                <span class="copy">복사</span>
-                <span class="copied" hidden>복사 완료</span>
-              </button>
-            </p>`,
-            {
-              html: true,
-            },
-          );
+          languageOutput = false;
+          element.onEndTag((endTag) => {
+            if (!languageOutput) {
+              endTag.after(
+                /* HTML */ `<p>
+                  <button type="button" class="clipboard-copy">
+                    <span class="copy">복사</span>
+                    <span class="copied" hidden>복사 완료</span>
+                  </button>
+                </p>`,
+                {
+                  html: true,
+                },
+              );
+            }
+          });
+        },
+      });
+      rewriter.on("pre code", {
+        element(element) {
+          const className = element.getAttribute("class");
+          if (className && className.split(" ").includes("language-output"))
+            languageOutput = true;
         },
       });
 

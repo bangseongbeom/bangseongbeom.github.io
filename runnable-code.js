@@ -294,27 +294,27 @@ async function runCode(event) {
     }
   } else throw new Error();
 
-  let output = runnableCode.querySelector(".output");
+  let output = runnableCode.querySelector(".language-output");
   if (!output) {
     const highlight = runnableCode.querySelector(".highlight");
     if (!highlight) throw new Error();
     highlight.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre class="output"></pre>`,
+      /* HTML */ `<pre><code class="language-output"></code></pre>`,
     );
-    output = /** @type {HTMLPreElement} */ (
-      runnableCode.querySelector(".output")
+    output = /** @type {HTMLElement} */ (
+      runnableCode.querySelector(".language-output")
     );
-    if (version) {
-      button.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ ` <span class="version"></span>`,
-      );
-      const versionElement = /** @type {HTMLSpanElement} */ (
-        runnableCode.querySelector(".version")
-      );
-      versionElement.textContent = `(${version})`;
-    }
+  }
+  if (version && !runnableCode.querySelector(".version")) {
+    button.insertAdjacentHTML(
+      "afterend",
+      /* HTML */ ` <span class="version"></span>`,
+    );
+    const versionElement = /** @type {HTMLSpanElement} */ (
+      runnableCode.querySelector(".version")
+    );
+    versionElement.textContent = `(${version})`;
   }
   output.replaceChildren(...messages);
 }
