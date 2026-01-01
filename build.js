@@ -662,24 +662,24 @@ await Promise.all(
               <script type="importmap">
                 {
                   "imports": {
-                    "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.18.7/dist/index.js",
-                    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.8.1/dist/index.js",
+                    "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.0/dist/index.js",
+                    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.1/dist/index.js",
                     "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.4/dist/index.js",
                     "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
                     "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.11.3/dist/index.js",
                     "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.5.2/dist/index.js",
-                    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.38.2/dist/index.js",
-                    "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.1/dist/index.js"
+                    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.39.4/dist/index.js",
+                    "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
                   },
                   "scopes": {
                     "https://ga.jspm.io/": {
-                      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.2.3/dist/index.js",
-                      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.3/dist/index.js",
-                      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.2/dist/index.js",
+                      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.4.0/dist/index.js",
+                      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
+                      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.5/dist/index.js",
                       "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
                       "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
                       "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
-                      "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.2/src/style-mod.js",
+                      "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
                       "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
                     }
                   }
