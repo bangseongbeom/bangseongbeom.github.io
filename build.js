@@ -423,7 +423,7 @@ await Promise.all(
               endTag.after(
                 /* HTML */ `
                   <a href="https://dev.java/playground/" target="_blank"
-                    >The Java Playground에서 실행</a
+                    >The Java Playground에 붙여넣고 실행</a
                   >
                 `,
                 { html: true },
