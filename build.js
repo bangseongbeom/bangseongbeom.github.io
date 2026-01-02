@@ -1,10 +1,10 @@
 import { all, createStarryNight } from "@wooorm/starry-night";
+import { load } from "cheerio";
 import { markdownToHTML } from "comrak";
 import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
-import { escape, unescape } from "html-escaper";
-import { HTMLRewriter } from "html-rewriter-wasm";
+import { escape } from "html-escaper";
 import assert from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
@@ -149,352 +149,186 @@ await Promise.all(
         },
       });
 
-      const encoder = new TextEncoder();
-      const decoder = new TextDecoder();
+      const $ = load(html, null, false);
 
-      let output = "";
-      let rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      rewriter.on("[href]", {
-        element(element) {
-          const href = element.getAttribute("href");
-          assert(typeof href === "string");
-          if (href.endsWith("/README.md"))
-            element.setAttribute("href", href.slice(0, -"README.md".length));
-          else if (href.endsWith(".md"))
-            element.setAttribute("href", href.slice(0, -".md".length));
-        },
+      $("[href]").each(function () {
+        const $element = $(this);
+        const href = $element.attr("href");
+        assert(typeof href === "string");
+        if (href.endsWith("/README.md"))
+          $element.attr("href", href.slice(0, -"README.md".length));
+        else if (href.endsWith(".md"))
+          $element.attr("href", href.slice(0, -".md".length));
       });
 
       if (file.data.date_published) {
-        rewriter.on("h1", {
-          element(element) {
-            if (!file.data.date_published) return;
-            element.after(
-              /* HTML */ `<p>
-                <time
-                  datetime="${escape(file.data.date_published.toISOString())}"
-                  >${escape(
-                    new Intl.DateTimeFormat(lc).format(
-                      file.data.date_published,
-                    ),
-                  )}</time
-                >
-              </p>`,
-              { html: true },
-            );
-          },
-        });
+        $("h1").after(
+          /* HTML */ `<p>
+            <time datetime="${escape(file.data.date_published.toISOString())}"
+              >${escape(
+                new Intl.DateTimeFormat(lc).format(file.data.date_published),
+              )}</time
+            >
+          </p>`,
+        );
       }
 
-      rewriter.on("h1", {
-        element(element) {
-          element.after(
-            /* HTML */ `<nav>
-              <p>
-                <a
-                  href="${escape(
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                  )}"
-                  title="View as Markdown"
-                  >Markdown</a
-                >
-                •
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="View on GitHub"
-                  >GitHub</a
-                >
-                •
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="Suggest an edit"
-                  >Edit</a
-                >
-                •
-                <a
-                  href="${escape(
-                    `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
-                      pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                    }`,
-                  )}"
-                  title="View history"
-                  >History</a
-                >
-                •
-                <a
-                  href="${escape(new URL("feed.xml", BASE).toString())}"
-                  title="RSS feed"
-                  >RSS</a
-                >
-              </p>
-            </nav>`,
-            { html: true },
-          );
-        },
-      });
-
-      /** @type {string[]} */
-      const headingIDs = [];
-      rewriter.on(
-        "h1 .anchor, h2 .anchor, h3 .anchor, h4 .anchor, h5 .anchor, h6 .anchor",
-        {
-          element(element) {
-            const id = element.getAttribute("id");
-            assert(id);
-            headingIDs.push(id);
-            element.remove();
-          },
-        },
+      $("h1").after(
+        /* HTML */ `<nav>
+          <p>
+            <a
+              href="${escape(
+                pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+              )}"
+              title="View as Markdown"
+              >Markdown</a
+            >
+            •
+            <a
+              href="${escape(
+                `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                }`,
+              )}"
+              title="View on GitHub"
+              >GitHub</a
+            >
+            •
+            <a
+              href="${escape(
+                `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
+                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                }`,
+              )}"
+              title="Suggest an edit"
+              >Edit</a
+            >
+            •
+            <a
+              href="${escape(
+                `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
+                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
+                }`,
+              )}"
+              title="View history"
+              >History</a
+            >
+            •
+            <a
+              href="${escape(new URL("feed.xml", BASE).toString())}"
+              title="RSS feed"
+              >RSS</a
+            >
+          </p>
+        </nav>`,
       );
 
-      let alertText = "";
-      /** @type {string | null} */
-      let alertType = null;
-      let alertFirstText = true;
-      rewriter.on("blockquote > p:first-child", {
-        text(text) {
-          let textContent = text.text;
-          if (alertFirstText) {
-            const matchArray = textContent.match(
-              /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
-            );
-            if (matchArray) {
-              alertType = matchArray[1] ?? null;
-              textContent = textContent.replace(
-                /\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
-                "",
-              );
-            }
-          }
-          alertText += textContent;
-          text.remove();
-
-          if (text.lastInTextNode) alertFirstText = true;
-          else alertFirstText = false;
-        },
-      });
-      rewriter.on("blockquote *", {
-        element(element) {
-          alertText += `<${element.tagName}${Array.from(element.attributes)
-            .map(([k, v]) => ` ${k}="${escape(v)}"`)
-            .join("")}>`;
-          element.onEndTag((endTag) => {
-            alertText += `</${endTag.name}>`;
-          });
-          element.removeAndKeepContent();
-        },
-        text(text) {
-          if (text.removed) return;
-          alertText += text.text;
-          text.remove();
-        },
-        comments(comment) {
-          alertText += `<!--${comment.text}-->`;
-          comment.remove();
-        },
-      });
-      rewriter.on("blockquote", {
-        element(element) {
-          element.removeAndKeepContent();
-          element.onEndTag((endTag) => {
-            if (alertType) {
-              endTag.after(
-                /* HTML */ `<div
-                  class="markdown-alert markdown-alert-${alertType.toLowerCase()}"
-                >
-                  <p class="markdown-alert-title">
-                    ${{
-                      note: `<svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
-                      tip: `<svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>`,
-                      important: `<svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
-                      warning: `<svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
-                      caution: `<svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
-                    }[alertType.toLowerCase()]}${alertType[0].toUpperCase() +
-                    alertType.substring(1).toLowerCase()}
-                  </p>
-                  ${alertText}
-                </div>`,
-                { html: true },
-              );
-            } else {
-              endTag.after(/* HTML */ `<blockquote>${alertText}</blockquote>`, {
-                html: true,
-              });
-            }
-
-            alertText = "";
-            alertType = null;
-          });
-        },
-      });
-
-      try {
-        await rewriter.write(encoder.encode(html));
-        await rewriter.end();
-        html = output;
-      } finally {
-        rewriter.free();
-      }
-
-      output = "";
-      rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      let languageOutput = false;
-      rewriter.on("pre", {
-        element(element) {
-          element.before(`<div class="highlight">`, { html: true });
-          element.after(`</div>`, { html: true });
-          languageOutput = false;
-          element.onEndTag((endTag) => {
-            if (!languageOutput) {
-              endTag.after(
-                /* HTML */ `<p>
-                  <button type="button" class="clipboard-copy">
-                    <span class="copy">복사</span>
-                    <span class="copied" hidden>복사 완료</span>
-                  </button>
-                </p>`,
-                {
-                  html: true,
-                },
-              );
-            }
-          });
-        },
-      });
-      rewriter.on("pre code", {
-        element(element) {
-          const className = element.getAttribute("class");
-          if (className && className.split(" ").includes("language-output"))
-            languageOutput = true;
-        },
-      });
-
-      try {
-        await rewriter.write(encoder.encode(html));
-        await rewriter.end();
-        html = output;
-      } finally {
-        rewriter.free();
-      }
-
-      output = "";
-      rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      rewriter.on("h1, h2, h3, h4, h5, h6", {
-        element(element) {
-          const id = headingIDs.shift();
+      $("h1, h2, h3, h4, h5, h6").each(function () {
+        const $element = $(this);
+        const $anchor = $element.find(".anchor");
+        if ($anchor.length) {
+          const id = $anchor.attr("id");
           assert(id);
-          element.setAttribute("id", id);
-        },
+          $element.attr("id", id);
+          $anchor.remove();
+        }
       });
 
-      /** @type {string | null} */
-      let runnableCodeFlag = null;
-      rewriter.on("runnable-code .clipboard-copy", {
-        element(element) {
-          element.onEndTag((endTag) => {
-            if (
-              runnableCodeFlag &&
-              ["js", "ts", "py"].includes(runnableCodeFlag)
-            )
-              endTag.after(
-                /* HTML */ `
-                  <button type="button" class="run-code">코드 실행</button>
-                `,
-                { html: true },
-              );
-            else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag))
-              endTag.after(
-                /* HTML */ `
-                  <a href="https://dev.java/playground/" target="_blank"
-                    >The Java Playground에 붙여넣고 실행</a
-                  >
-                `,
-                { html: true },
-              );
-          });
-        },
-      });
-      rewriter.on("runnable-code code", {
-        element(element) {
-          runnableCodeFlag =
-            element.getAttribute("class")?.match(/language-(.+)/)?.[1] ?? null;
-        },
-      });
+      $("blockquote").each(function () {
+        const $element = $(this);
+        const $firstParagraph = $element.find("p").first();
+        if ($firstParagraph.length === 0) return;
 
-      try {
-        await rewriter.write(encoder.encode(html));
-        await rewriter.end();
-        html = output;
-      } finally {
-        rewriter.free();
-      }
-
-      output = "";
-      rewriter = new HTMLRewriter((outputChunk) => {
-        output += decoder.decode(outputChunk);
-      });
-
-      /** @type {string | null} */
-      let codeScope = null;
-      let codeText = "";
-      rewriter.on("code", {
-        element(element) {
-          const flag = element
-            .getAttribute("class")
-            ?.match(/language-(.+)/)?.[1];
-          if (!flag) return;
-          codeScope = starryNight.flagToScope(flag) ?? null;
-          element.onEndTag((endTag) => {
-            if (!codeScope) return;
-            endTag.before(
-              toHtml(starryNight.highlight(unescape(codeText), codeScope)),
-              { html: true },
+        const firstNode = $firstParagraph.contents().first();
+        if (
+          firstNode.length &&
+          firstNode[0].type === "text" &&
+          firstNode[0].data
+        ) {
+          const matchArray = firstNode[0].data.match(
+            /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
+          );
+          if (matchArray) {
+            const alertType = matchArray[1];
+            firstNode[0].data = firstNode[0].data.replace(
+              /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s/i,
+              "",
             );
-            codeScope = null;
-            codeText = "";
-          });
-        },
-        text(text) {
-          if (!codeScope) return;
-          codeText += text.text;
-          text.remove();
-        },
+            const innerHtml = $element.html();
+            $element.replaceWith(
+              /* HTML */ `<div
+                class="markdown-alert markdown-alert-${alertType.toLowerCase()}"
+              >
+                <p class="markdown-alert-title">
+                  ${{
+                    note: `<svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
+                    tip: `<svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>`,
+                    important: `<svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
+                    warning: `<svg class="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>`,
+                    caution: `<svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>`,
+                  }[alertType.toLowerCase()]}${alertType[0].toUpperCase() +
+                  alertType.substring(1).toLowerCase()}
+                </p>
+                ${innerHtml}
+              </div>`,
+            );
+          }
+        }
+      });
+
+      $("pre").each(function () {
+        const $element = $(this);
+        $element.wrap('<div class="highlight"></div>');
+        const $code = $element.find("code");
+
+        if (!$code.hasClass("language-output")) {
+          $element.after(
+            /* HTML */ `<p>
+              <button type="button" class="clipboard-copy">
+                <span class="copy">복사</span>
+                <span class="copied" hidden>복사 완료</span>
+              </button>
+            </p>`,
+          );
+        }
+      });
+
+      $("runnable-code").each(function () {
+        const $element = $(this);
+        const $code = $element.find("code");
+        const runnableCodeFlag =
+          $code.attr("class")?.match(/language-(.+)/)?.[1] ?? null;
+        const $clipboardCopy = $element.find(".clipboard-copy");
+
+        if (runnableCodeFlag && ["js", "ts", "py"].includes(runnableCodeFlag)) {
+          $clipboardCopy.after(/* HTML */ `
+            <button type="button" class="run-code">코드 실행</button>
+          `);
+        } else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag)) {
+          $clipboardCopy.after(/* HTML */ `
+            <a href="https://dev.java/playground/" target="_blank"
+              >The Java Playground에 붙여넣고 실행</a
+            >
+          `);
+        }
+      });
+
+      $("code").each(function () {
+        const $element = $(this);
+        const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
+        if (!flag) return;
+        const codeScope = starryNight.flagToScope(flag) ?? null;
+        if (!codeScope) return;
+        $element.html(
+          toHtml(starryNight.highlight($element.text(), codeScope)),
+        );
       });
 
       let title = file.data.title;
-      if (!title) {
-        rewriter.on("h1", {
-          text(text) {
-            if (!title) title = unescape(text.text);
-          },
-        });
-      }
+      if (!title) title = $("h1").first().text();
 
       let description = file.data.description;
-      if (!description) {
-        rewriter.on("#description", {
-          text(text) {
-            if (!description) description = unescape(text.text);
-          },
-        });
-      }
+      if (!description) description = $("#description").text();
 
       let datePublished = file.data.date_published;
 
@@ -522,13 +356,7 @@ await Promise.all(
         }
       }
 
-      try {
-        await rewriter.write(encoder.encode(html));
-        await rewriter.end();
-        html = output;
-      } finally {
-        rewriter.free();
-      }
+      html = $.html();
 
       if (!title) throw new Error();
 
