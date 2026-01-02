@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [git]
-date_published: 2019-07-21
+date: 2019-07-21
 ---
 
 # GitFlow가 안 좋은 이유

@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [machine-learning]
-date_published: 2020-05-10
+date: 2020-05-10
 ---
 
 # 기계 학습 라이브러리들의 'import as' 약칭

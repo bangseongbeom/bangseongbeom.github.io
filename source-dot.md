@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [linux]
-date_published: 2020-04-29
+date: 2020-04-29
 ---
 
 # source, . (점): 셸 스크립트 파일 실행

@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [misc]
-date_published: 2020-05-07
+date: 2020-05-07
 ---
 
 # 발레나에처 소개

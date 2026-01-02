@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [iot]
-date_published: 2019-08-16
+date: 2019-08-16
 ---
 
 # MQTT 연결 방식

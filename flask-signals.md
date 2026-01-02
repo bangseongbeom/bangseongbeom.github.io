@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [python]
-date_published: 2019-08-20
+date: 2019-08-20
 ---
 
 # 플라스크 시그널

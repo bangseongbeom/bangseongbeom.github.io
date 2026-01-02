@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [linux]
-date_published: 2020-04-19
+date: 2020-04-19
 redirect_from: [/dot-d-directories.html]
 ---
 

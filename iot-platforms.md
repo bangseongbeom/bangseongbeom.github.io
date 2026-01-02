@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [iot]
-date_published: 2019-08-15
+date: 2019-08-15
 ---
 
 # IoT 플랫폼 업체 비교

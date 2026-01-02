@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2019-08-01
+date: 2019-08-01
 ---
 
 # 바닐라 웹 컴포넌트 만드는 법

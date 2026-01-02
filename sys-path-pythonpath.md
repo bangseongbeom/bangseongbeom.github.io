@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [python]
-date_published: 2020-04-19
+date: 2020-04-19
 ---
 
 # sys.path, PYTHONPATH: 파이썬 파일 탐색 경로

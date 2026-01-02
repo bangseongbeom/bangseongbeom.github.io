@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [machine-learning]
-date_published: 2020-05-17
+date: 2020-05-17
 ---
 
 # 넘파이 vs 사이파이

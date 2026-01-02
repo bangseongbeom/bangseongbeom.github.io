@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2018-11-08
+date: 2018-11-08
 redirect_from: [/posts/website-width.html, /website-width.html]
 ---
 

@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2019-07-22
+date: 2019-07-22
 redirect_from: [/difference-var-let.html]
 ---
 

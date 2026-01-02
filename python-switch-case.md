@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [python]
-date_published: 2019-07-01
+date: 2019-07-01
 ---
 
 # 파이썬에 switch/case 문이 없는 이유

@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [java]
-date_published: 2018-11-15
+date: 2018-11-15
 redirect_from: [/posts/spring-downsides-alternatives.html]
 ---
 

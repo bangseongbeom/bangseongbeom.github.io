@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2019-07-21
+date: 2019-07-21
 ---
 
 # Redux의 장점과 주의점

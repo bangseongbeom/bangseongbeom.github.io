@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2020-06-14
+date: 2020-06-14
 ---
 
 # 셀레늄 IDE 가이드

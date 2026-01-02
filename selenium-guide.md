@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2020-06-09
+date: 2020-06-09
 ---
 
 # 셀레늄 가이드

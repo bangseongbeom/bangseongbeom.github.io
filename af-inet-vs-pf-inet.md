@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [linux]
-date_published: 2019-11-08
+date: 2019-11-08
 ---
 
 # AF_INET vs PF_INET

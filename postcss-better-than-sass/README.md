@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2019-07-17
+date: 2019-07-17
 ---
 
 # PostCSS가 Sass보다 좋은 이유

@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [git]
-date_published: 2019-07-19
+date: 2019-07-19
 ---
 
 # 다중 저장소 vs 단일 저장소

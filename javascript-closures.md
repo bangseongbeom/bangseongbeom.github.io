@@ -1,7 +1,7 @@
 ---
 lang: ko
 categories: [web]
-date_published: 2019-07-27
+date: 2019-07-27
 ---
 
 # 자바스크립트 클로저

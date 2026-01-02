@@ -108,7 +108,7 @@ await Promise.all(
       ).toString();
 
       const input = await readFile(src, "utf8");
-      /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date_published?: Date; date_modified?: Date; redirect_from?: string[]; }; content: string; }} */
+      /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date?: Date; modified_date?: Date; redirect_from?: string[]; }; content: string; }} */
       const file = matter(input);
 
       let lang;
@@ -162,12 +162,12 @@ await Promise.all(
           $element.attr("href", href.slice(0, -".md".length));
       });
 
-      if (file.data.date_published) {
+      if (file.data.date) {
         $("h1").after(
           /* HTML */ `<p>
-            <time datetime="${escape(file.data.date_published.toISOString())}"
+            <time datetime="${escape(file.data.date.toISOString())}"
               >${escape(
-                new Intl.DateTimeFormat(lc).format(file.data.date_published),
+                new Intl.DateTimeFormat(lc).format(file.data.date),
               )}</time
             >
           </p>`,
@@ -289,11 +289,11 @@ await Promise.all(
       let description = file.data.description;
       if (!description) description = $("#description").text();
 
-      let datePublished = file.data.date_published;
+      let date = file.data.date;
 
-      let dateModified = file.data.date_modified;
+      let modifiedDate = file.data.modified_date;
 
-      if (!datePublished || !dateModified) {
+      if (!date || !modifiedDate) {
         let committerDates = (
           await execFile("git", [
             "log",
@@ -307,11 +307,9 @@ await Promise.all(
           .split("\n");
         if (committerDates[0] === "") committerDates = [];
         if (committerDates.length) {
-          if (!datePublished)
-            datePublished = new Date(
-              /** @type {string} */ (committerDates.at(-1)),
-            );
-          if (!dateModified) dateModified = new Date(committerDates[0]);
+          if (!date)
+            date = new Date(/** @type {string} */ (committerDates.at(-1)));
+          if (!modifiedDate) modifiedDate = new Date(committerDates[0]);
         }
       }
 
@@ -434,8 +432,8 @@ await Promise.all(
                       "@type": "Person",
                       name: AUTHOR,
                     },
-                    dateModified: dateModified?.toISOString(),
-                    datePublished: datePublished?.toISOString(),
+                    dateModified: modifiedDate?.toISOString(),
+                    datePublished: date?.toISOString(),
                     headline: title,
                     image: new URL("ogp.png", BASE).toString(),
                   }),
@@ -547,14 +545,14 @@ await Promise.all(
 
       sitemapURLs.push({
         loc: canonical,
-        lastmod: dateModified ?? datePublished ?? null,
+        lastmod: modifiedDate ?? date ?? null,
       });
       rssItems.push({
         title,
         link: canonical,
         description: html,
         categories,
-        pubDate: datePublished ?? null,
+        pubDate: date ?? null,
         guid: canonical,
       });
 
