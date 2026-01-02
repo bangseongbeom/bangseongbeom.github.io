@@ -296,15 +296,15 @@ await Promise.all(
       $("runnable-code").each(function () {
         const $element = $(this);
         const $code = $element.find("code");
-        const runnableCodeFlag =
-          $code.attr("class")?.match(/language-(.+)/)?.[1] ?? null;
+        const flag = $code.attr("class")?.match(/language-(.+)/)?.[1];
+        if (!flag) return;
         const $clipboardCopy = $element.find(".clipboard-copy");
 
-        if (runnableCodeFlag && ["js", "ts", "py"].includes(runnableCodeFlag)) {
+        if (["js", "ts", "py"].includes(flag)) {
           $clipboardCopy.after(/* HTML */ `
             <button type="button" class="run-code">코드 실행</button>
           `);
-        } else if (runnableCodeFlag && ["java"].includes(runnableCodeFlag)) {
+        } else if (["java"].includes(flag)) {
           $clipboardCopy.after(/* HTML */ `
             <a href="https://dev.java/playground/" target="_blank"
               >The Java Playground에 붙여넣고 실행</a
