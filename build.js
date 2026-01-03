@@ -418,6 +418,7 @@ await Promise.all(
                 main nav,
                 time {
                   font-size: 12px;
+                  color: var(--fgColor-muted);
                 }
 
                 .markdown-body .highlight pre,
