@@ -152,6 +152,17 @@ await Promise.all(
 
       const $ = load(html, null, false);
 
+      $("h1, h2, h3, h4, h5, h6").each(function () {
+        const $element = $(this);
+        const $anchor = $element.find(".anchor");
+        if ($anchor.length) {
+          const id = $anchor.attr("id");
+          assert(id);
+          $element.attr("id", id);
+          $anchor.remove();
+        }
+      });
+
       $("[href]").each(function () {
         const $element = $(this);
         const href = $element.attr("href");
@@ -161,6 +172,8 @@ await Promise.all(
         else if (href.endsWith(".md"))
           $element.attr("href", href.slice(0, -".md".length));
       });
+
+      const rssDescription = $.html();
 
       if (file.data.date) {
         $("h1").after(
@@ -223,17 +236,6 @@ await Promise.all(
           </p>
         </nav>`,
       );
-
-      $("h1, h2, h3, h4, h5, h6").each(function () {
-        const $element = $(this);
-        const $anchor = $element.find(".anchor");
-        if ($anchor.length) {
-          const id = $anchor.attr("id");
-          assert(id);
-          $element.attr("id", id);
-          $anchor.remove();
-        }
-      });
 
       $("pre").each(function () {
         const $element = $(this);
@@ -550,7 +552,7 @@ await Promise.all(
       rssItems.push({
         title,
         link: canonical,
-        description: html,
+        description: rssDescription,
         categories,
         pubDate: date ?? null,
         guid: canonical,
