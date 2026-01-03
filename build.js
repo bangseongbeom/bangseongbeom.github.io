@@ -401,6 +401,12 @@ await Promise.all(
               <link rel="stylesheet" href="/github-markdown-extensions.css" />
               <link rel="stylesheet" href="/codemirror-github-theme.css" />
               <style>
+                @media (hover: none) {
+                  .anchorjs-link {
+                    opacity: 1;
+                  }
+                }
+
                 .markdown-body {
                   box-sizing: border-box;
                   min-width: 200px;
