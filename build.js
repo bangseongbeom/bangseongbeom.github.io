@@ -1,3 +1,4 @@
+import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
 import { load } from "cheerio";
 import { markdownToHTML } from "comrak";
@@ -20,6 +21,127 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
+
+/**
+ * @param {string} src
+ * @param {string} srcRoot
+ * @param {string} destRoot
+ */
+function srcToDest(src, srcRoot, destRoot) {
+  return join(
+    destRoot,
+    dirname(relative(srcRoot, src)),
+    basename(src) === "README.md" ? "index.html" : `${parse(src).name}.html`,
+  );
+}
+
+/**
+ * @param {string} src
+ * @param {string} srcRoot
+ * @param {string} base
+ */
+function srcToCanonical(src, srcRoot, base) {
+  return new URL(
+    pathToFileURL(
+      join(
+        sep,
+        dirname(relative(srcRoot, src)),
+        basename(src) === "README.md" ? sep : parse(src).name,
+      ),
+    ).pathname.substring(1),
+    base,
+  ).toString();
+}
+
+/**
+ * @param {string | undefined} fileLang
+ * @param {string} src
+ * @param {string} defaultLang
+ */
+function getLang(fileLang, src, defaultLang) {
+  let lang;
+  try {
+    lang = Intl.getCanonicalLocales(fileLang)[0];
+  } catch {}
+  if (!lang) {
+    try {
+      lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
+    } catch {}
+  }
+  if (!lang) lang = Intl.getCanonicalLocales(defaultLang)[0];
+  return lang;
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
+ */
+function moveIds($) {
+  $("h1, h2, h3, h4, h5, h6").each(function () {
+    const $element = $(this);
+    const $anchor = $element.find(".anchor");
+    if ($anchor.length) {
+      const id = $anchor.attr("id");
+      assert(id);
+      $element.attr("id", id);
+      $anchor.remove();
+    }
+  });
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
+ */
+function convertLinks($) {
+  $("[href]").each(function () {
+    const $element = $(this);
+    const href = $element.attr("href");
+    assert(typeof href === "string");
+    if (href.endsWith("/README.md"))
+      $element.attr("href", href.slice(0, -"README.md".length));
+    else if (href.endsWith(".md"))
+      $element.attr("href", href.slice(0, -".md".length));
+  });
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
+ * @param {Awaited<ReturnType<typeof createStarryNight>>} starryNight
+ */
+function highlight($, starryNight) {
+  $("code").each(function () {
+    const $element = $(this);
+    const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
+    if (!flag) return;
+    const codeScope = starryNight.flagToScope(flag) ?? null;
+    if (!codeScope) return;
+    $element.html(toHtml(starryNight.highlight($element.text(), codeScope)));
+  });
+}
+
+/**
+ * @param {string} src
+ */
+async function getCommitterDates(src) {
+  let committerDates = (
+    await execFile("git", [
+      "log",
+      "--follow",
+      "--pretty=tformat:%cI",
+      "--",
+      src,
+    ])
+  ).stdout
+    .trim()
+    .split("\n");
+  if (committerDates[0] === "") committerDates = [];
+
+  const date = committerDates.at(-1);
+  const modifiedDate = committerDates.at(0);
+  return {
+    date: date ? new Date(date) : undefined,
+    modifiedDate: modifiedDate ? new Date(modifiedDate) : undefined,
+  };
+}
 
 const execFile = promisify(child_process.execFile);
 
@@ -89,51 +211,25 @@ let rssItems = [];
 await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
     if (extname(src) === ".md") {
-      const dest = join(
-        DEST_ROOT,
-        dirname(relative(SRC_ROOT, src)),
-        basename(src) === "README.md"
-          ? "index.html"
-          : `${parse(src).name}.html`,
-      );
-      const canonical = new URL(
-        pathToFileURL(
-          join(
-            sep,
-            dirname(relative(SRC_ROOT, src)),
-            basename(src) === "README.md" ? sep : parse(src).name,
-          ),
-        ).pathname.substring(1),
-        BASE,
-      ).toString();
+      const dest = srcToDest(src, SRC_ROOT, DEST_ROOT);
+      const canonical = srcToCanonical(src, SRC_ROOT, BASE);
 
       const input = await readFile(src, "utf8");
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date?: Date; modified_date?: Date; redirect_from?: string[]; }; content: string; }} */
       const file = matter(input);
 
-      let lang;
-      try {
-        lang = Intl.getCanonicalLocales(file.data.lang)[0];
-      } catch {}
-      if (!lang) {
-        try {
-          lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
-        } catch {}
-      }
-      if (!lang) lang = Intl.getCanonicalLocales(LANG)[0];
+      const lang = getLang(file.data.lang, src, LANG);
+      const lc = /** @type {keyof typeof messages} */ (
+        match([lang], Object.keys(messages), LANG)
+      );
 
-      /** @type {keyof typeof messages | undefined} */
-      let lc;
-      if (Object.keys(messages).includes(lang))
-        lc = /** @type {keyof typeof messages} */ (lang);
-      if (
-        !lc &&
-        Object.keys(messages).includes(Intl.getCanonicalLocales(LANG)[0])
-      )
-        lc = /** @type {keyof typeof messages} */ (
-          Intl.getCanonicalLocales(LANG)[0]
-        );
-      if (!lc) throw new Error();
+      let date = file.data.date;
+      let modifiedDate = file.data.modified_date;
+      if (!date || !modifiedDate) {
+        const committerDates = await getCommitterDates(src);
+        date = date ?? committerDates.date;
+        modifiedDate = modifiedDate ?? committerDates.modifiedDate;
+      }
 
       let html = markdownToHTML(file.content, {
         extension: {
@@ -152,39 +248,46 @@ await Promise.all(
 
       const $ = load(html, null, false);
 
-      $("h1, h2, h3, h4, h5, h6").each(function () {
-        const $element = $(this);
-        const $anchor = $element.find(".anchor");
-        if ($anchor.length) {
-          const id = $anchor.attr("id");
-          assert(id);
-          $element.attr("id", id);
-          $anchor.remove();
-        }
-      });
+      moveIds($);
 
-      $("[href]").each(function () {
-        const $element = $(this);
-        const href = $element.attr("href");
-        assert(typeof href === "string");
-        if (href.endsWith("/README.md"))
-          $element.attr("href", href.slice(0, -"README.md".length));
-        else if (href.endsWith(".md"))
-          $element.attr("href", href.slice(0, -".md".length));
-      });
+      convertLinks($);
 
       const rssDescription = $.html();
 
       if (file.data.date) {
-        $("h1").after(
-          /* HTML */ `<p>
-            <time datetime="${escape(file.data.date.toISOString())}"
-              >${escape(
-                new Intl.DateTimeFormat(lc).format(file.data.date),
-              )}</time
-            >
-          </p>`,
-        );
+        if (
+          modifiedDate &&
+          modifiedDate.toISOString() !== file.data.date.toISOString()
+        ) {
+          $("h1").after(
+            /* HTML */ `<p id="dates">
+              Published:
+              <time id="date" datetime="${escape(file.data.date.toISOString())}"
+                >${escape(
+                  new Intl.DateTimeFormat(lang).format(file.data.date),
+                )}</time
+              >
+              • Modified:
+              <time
+                id="modified-date"
+                datetime="${escape(modifiedDate.toISOString())}"
+                >${escape(
+                  new Intl.DateTimeFormat(lang).format(modifiedDate),
+                )}</time
+              >
+            </p>`,
+          );
+        } else {
+          $("h1").after(
+            /* HTML */ `<p>
+              <time id="date" datetime="${escape(file.data.date.toISOString())}"
+                >${escape(
+                  new Intl.DateTimeFormat(lang).format(file.data.date),
+                )}</time
+              >
+            </p>`,
+          );
+        }
       }
 
       $("h1").after(
@@ -274,46 +377,10 @@ await Promise.all(
         }
       });
 
-      $("code").each(function () {
-        const $element = $(this);
-        const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
-        if (!flag) return;
-        const codeScope = starryNight.flagToScope(flag) ?? null;
-        if (!codeScope) return;
-        $element.html(
-          toHtml(starryNight.highlight($element.text(), codeScope)),
-        );
-      });
+      highlight($, starryNight);
 
-      let title = file.data.title;
-      if (!title) title = $("h1").first().text();
-
-      let description = file.data.description;
-      if (!description) description = $("#description").text();
-
-      let date = file.data.date;
-
-      let modifiedDate = file.data.modified_date;
-
-      if (!date || !modifiedDate) {
-        let committerDates = (
-          await execFile("git", [
-            "log",
-            "--follow",
-            "--pretty=tformat:%cI",
-            "--",
-            src,
-          ])
-        ).stdout
-          .trim()
-          .split("\n");
-        if (committerDates[0] === "") committerDates = [];
-        if (committerDates.length) {
-          if (!date)
-            date = new Date(/** @type {string} */ (committerDates.at(-1)));
-          if (!modifiedDate) modifiedDate = new Date(committerDates[0]);
-        }
-      }
+      const title = file.data.title ?? $("h1").first().text();
+      const description = file.data.description ?? $("#description").text();
 
       html = $.html();
 
@@ -422,7 +489,7 @@ await Promise.all(
                 }
 
                 main nav,
-                time {
+                main p:has(time) {
                   font-size: 12px;
                   color: var(--fgColor-muted);
                 }
