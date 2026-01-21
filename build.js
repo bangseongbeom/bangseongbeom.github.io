@@ -73,9 +73,26 @@ function getLang(fileLang, src, defaultLang) {
 }
 
 /**
- * @param {import("cheerio").CheerioAPI} $
+ * @param {string} markdown
  */
-function moveIds($) {
+function markdownToCheerioAPI(markdown) {
+  const html = markdownToHTML(markdown, {
+    extension: {
+      alerts: true,
+      autolink: true,
+      footnotes: true,
+      strikethrough: true,
+      headerIDs: "",
+      table: true,
+      tasklist: true,
+    },
+    render: {
+      unsafe: true,
+    },
+  });
+
+  const $ = load(html, null, false);
+
   $("h1, h2, h3, h4, h5, h6").each(function () {
     const $element = $(this);
     const $anchor = $element.find(".anchor");
@@ -86,6 +103,8 @@ function moveIds($) {
       $anchor.remove();
     }
   });
+
+  return $;
 }
 
 /**
@@ -231,24 +250,7 @@ await Promise.all(
         modifiedDate = modifiedDate ?? committerDates.modifiedDate;
       }
 
-      let html = markdownToHTML(file.content, {
-        extension: {
-          alerts: true,
-          autolink: true,
-          footnotes: true,
-          strikethrough: true,
-          headerIDs: "",
-          table: true,
-          tasklist: true,
-        },
-        render: {
-          unsafe: true,
-        },
-      });
-
-      const $ = load(html, null, false);
-
-      moveIds($);
+      const $ = markdownToCheerioAPI(file.content);
 
       convertLinks($);
 
@@ -381,8 +383,6 @@ await Promise.all(
 
       const title = file.data.title ?? $("h1").first().text();
       const description = file.data.description ?? $("#description").text();
-
-      html = $.html();
 
       if (!title) throw new Error();
 
@@ -609,7 +609,7 @@ await Promise.all(
                     </p>`,
                 )}
               </nav>
-              <main>${html}</main>
+              <main>${$.html()}</main>
               ${["/README.md", "/404.md"].includes(
                 pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
               )
