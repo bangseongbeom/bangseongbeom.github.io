@@ -300,6 +300,260 @@ function highlight($, starryNight) {
 }
 
 /**
+ * @param {{
+ *   dest: string;
+ *   lang?: string;
+ *   title: string;
+ *   description?: string | null;
+ *   modifiedDate?: Date | undefined;
+ *   date?: Date | undefined;
+ *   canonical: string;
+ *   base: string;
+ *   author: string;
+ *   lc: keyof typeof messages;
+ *   messages: typeof messages;
+ *   categories: string[];
+ *   categoryNames: Record<string, string>;
+ *   $: import("cheerio").CheerioAPI;
+ *   src: string;
+ *   srcRoot: string;
+ * }} param0
+ */
+async function writeHTML({
+  dest,
+  lang,
+  title,
+  description,
+  modifiedDate,
+  date,
+  canonical,
+  base,
+  author,
+  lc,
+  messages,
+  categories,
+  categoryNames,
+  $,
+  src,
+  srcRoot,
+}) {
+  await mkdir(dirname(dest), { recursive: true });
+  await writeFile(
+    dest,
+    /* HTML */ `<!DOCTYPE html>
+      <html ${lang ? `lang="${lang}"` : ""} prefix="og: https://ogp.me/ns#">
+        <head>
+          <meta charset="utf-8" />
+          <title>${escape(title)}</title>
+          ${description
+            ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
+            : ""}
+          <meta name="author" content="${escape(author)}" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="color-scheme" content="light dark" />
+          <meta property="og:title" content="${escape(title)}" />
+          <meta property="og:type" content="article" />
+          <meta
+            property="og:image"
+            content="${escape(new URL("ogp.png", base).toString())}"
+          />
+          <meta property="og:url" content="${escape(canonical)}" />
+          ${description
+            ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
+            : ""}
+          <link rel="canonical" href="${escape(canonical)}" />
+          <link
+            rel="icon"
+            href="${escape(new URL("favicon.ico", base).toString())}"
+            sizes="32x32"
+          />
+          <link
+            rel="icon"
+            href="${escape(new URL("icon.svg", base).toString())}"
+            type="image/svg+xml"
+          />
+          <link
+            rel="apple-touch-icon"
+            href="${escape(new URL("apple-touch-icon.png", base).toString())}"
+          />
+          <link
+            rel="alternate"
+            type="text/markdown"
+            href="${escape(
+              pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+            )}"
+          />
+          <link
+            rel="alternate"
+            type="text/html"
+            href="${escape(
+              `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+                pathToFileURL(join(sep, relative(srcRoot, src))).pathname
+              }`,
+            )}"
+          />
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            href="${escape(new URL("feed.xml", base).toString())}"
+          />
+          <link rel="stylesheet" href="/github-markdown.css" />
+          <link rel="stylesheet" href="/github-markdown-extensions.css" />
+          <link rel="stylesheet" href="/codemirror-github-theme.css" />
+          <style>
+            @media (hover: none) {
+              .anchorjs-link {
+                opacity: 1;
+              }
+            }
+
+            .markdown-body {
+              box-sizing: border-box;
+              min-width: 200px;
+              max-width: 980px;
+              margin: 0 auto;
+              padding: 45px;
+            }
+
+            @media (max-width: 767px) {
+              .markdown-body {
+                padding: 15px;
+              }
+            }
+
+            main header {
+              font-size: 12px;
+              color: var(--fgColor-muted);
+            }
+
+            .markdown-body .highlight pre,
+            .markdown-body .highlight .cm-editor {
+              margin-bottom: var(--base-size-16);
+            }
+          </style>
+          <script type="application/ld+json">
+            ${JSON.stringify(
+              /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                author: {
+                  "@type": "Person",
+                  name: author,
+                },
+                dateModified: modifiedDate?.toISOString(),
+                datePublished: date?.toISOString(),
+                headline: title,
+                image: new URL("ogp.png", base).toString(),
+              }),
+            )}
+          </script>
+          <script type="module" src="/clipboard-copy.js"></script>
+          <!--
+                Import map generated with JSPM Generator
+                Edit here: https://generator.jspm.io/#ZY47DoMwEERdpMhFUmaRIR+XvgQHWMEKHPkneyFKmlw9hs6i2Oa9Gc1eTkKcf71nw5ZGoYcwkjMphdTgwmEILlpi0g+QCp6VL86hH3NxCmSlLPrp+sIV85BM5JJo4XZMxA/Pwe/22F9w2mcldJXLjPs/d2grvhp6F9ypjVv6UmpmM822HGu5TfwB2+nFz+wA
+              -->
+          <script type="importmap">
+            {
+              "imports": {
+                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.0/dist/index.js",
+                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.1/dist/index.js",
+                "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.4/dist/index.js",
+                "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
+                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.11.3/dist/index.js",
+                "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.5.2/dist/index.js",
+                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.39.4/dist/index.js",
+                "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
+              },
+              "scopes": {
+                "https://ga.jspm.io/": {
+                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.4.0/dist/index.js",
+                  "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
+                  "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.5/dist/index.js",
+                  "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
+                  "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
+                  "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
+                  "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
+                  "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
+                }
+              }
+            }
+          </script>
+          <script type="importmap">
+            {
+              "imports": {
+                "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js"
+              }
+            }
+          </script>
+          <script type="module" src="/runnable-code.js"></script>
+          <!-- Google tag (gtag.js) -->
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
+          ></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-P5S28YZ348");
+          </script>
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="bangseongbeom/bangseongbeom.github.io"
+            data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
+            data-category="Comments"
+            data-category-id="DIC_kwDOBYE9uc4Ct9yc"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            ${lang ? `data-lang="${lang}"` : ""}
+            crossorigin="anonymous"
+            async
+          ></script>
+          <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              anchors.add();
+            });
+          </script>
+        </head>
+        <body class="markdown-body">
+          <nav>
+            <p>
+              <a href="${new URL(".", base).toString()}"
+                >${escape(messages[lc].title())}</a
+              >
+              ${categories.map(
+                (category) =>
+                  /* HTML */ `/
+                    <a href="/${category}"
+                      >${escape(
+                        categoryNames[
+                          /** @type {keyof typeof categoryNames} */ (category)
+                        ],
+                      )}</a
+                    > `,
+              )}
+            </p>
+          </nav>
+          <main>${$.html()}</main>
+          ${["/README.md", "/404.md"].includes(
+            pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+          )
+            ? ""
+            : /* HTML */ `<section id="comments" class="giscus"></section>`}
+        </body>
+      </html>`,
+  );
+}
+
+/**
  * @param {string[] | undefined} redirectFrom
  * @param {string} dest
  * @param {string} title
@@ -462,227 +716,24 @@ await Promise.all(
       };
       const categories = file.data.categories ?? [];
 
-      await mkdir(dirname(dest), { recursive: true });
-      await writeFile(
+      await writeHTML({
         dest,
-        /* HTML */ `<!DOCTYPE html>
-          <html ${lang ? `lang="${lang}"` : ""} prefix="og: https://ogp.me/ns#">
-            <head>
-              <meta charset="utf-8" />
-              <title>${escape(title)}</title>
-              ${description
-                ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
-                : ""}
-              <meta name="author" content="${escape(AUTHOR)}" />
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-              <meta name="color-scheme" content="light dark" />
-              <meta property="og:title" content="${escape(title)}" />
-              <meta property="og:type" content="article" />
-              <meta
-                property="og:image"
-                content="${escape(new URL("ogp.png", BASE).toString())}"
-              />
-              <meta property="og:url" content="${escape(canonical)}" />
-              ${description
-                ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
-                : ""}
-              <link rel="canonical" href="${escape(canonical)}" />
-              <link
-                rel="icon"
-                href="${escape(new URL("favicon.ico", BASE).toString())}"
-                sizes="32x32"
-              />
-              <link
-                rel="icon"
-                href="${escape(new URL("icon.svg", BASE).toString())}"
-                type="image/svg+xml"
-              />
-              <link
-                rel="apple-touch-icon"
-                href="${escape(
-                  new URL("apple-touch-icon.png", BASE).toString(),
-                )}"
-              />
-              <link
-                rel="alternate"
-                type="text/markdown"
-                href="${escape(
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-                )}"
-              />
-              <link
-                rel="alternate"
-                type="text/html"
-                href="${escape(
-                  `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                    pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                  }`,
-                )}"
-              />
-              <link
-                rel="alternate"
-                type="application/rss+xml"
-                href="${escape(new URL("feed.xml", BASE).toString())}"
-              />
-              <link rel="stylesheet" href="/github-markdown.css" />
-              <link rel="stylesheet" href="/github-markdown-extensions.css" />
-              <link rel="stylesheet" href="/codemirror-github-theme.css" />
-              <style>
-                @media (hover: none) {
-                  .anchorjs-link {
-                    opacity: 1;
-                  }
-                }
-
-                .markdown-body {
-                  box-sizing: border-box;
-                  min-width: 200px;
-                  max-width: 980px;
-                  margin: 0 auto;
-                  padding: 45px;
-                }
-
-                @media (max-width: 767px) {
-                  .markdown-body {
-                    padding: 15px;
-                  }
-                }
-
-                main header {
-                  font-size: 12px;
-                  color: var(--fgColor-muted);
-                }
-
-                .markdown-body .highlight pre,
-                .markdown-body .highlight .cm-editor {
-                  margin-bottom: var(--base-size-16);
-                }
-              </style>
-              <script type="application/ld+json">
-                ${JSON.stringify(
-                  /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
-                    "@context": "https://schema.org",
-                    "@type": "BlogPosting",
-                    author: {
-                      "@type": "Person",
-                      name: AUTHOR,
-                    },
-                    dateModified: modifiedDate?.toISOString(),
-                    datePublished: date?.toISOString(),
-                    headline: title,
-                    image: new URL("ogp.png", BASE).toString(),
-                  }),
-                )}
-              </script>
-              <script type="module" src="/clipboard-copy.js"></script>
-              <!--
-                Import map generated with JSPM Generator
-                Edit here: https://generator.jspm.io/#ZY47DoMwEERdpMhFUmaRIR+XvgQHWMEKHPkneyFKmlw9hs6i2Oa9Gc1eTkKcf71nw5ZGoYcwkjMphdTgwmEILlpi0g+QCp6VL86hH3NxCmSlLPrp+sIV85BM5JJo4XZMxA/Pwe/22F9w2mcldJXLjPs/d2grvhp6F9ypjVv6UmpmM822HGu5TfwB2+nFz+wA
-              -->
-              <script type="importmap">
-                {
-                  "imports": {
-                    "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.0/dist/index.js",
-                    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.1/dist/index.js",
-                    "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.4/dist/index.js",
-                    "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
-                    "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.11.3/dist/index.js",
-                    "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.5.2/dist/index.js",
-                    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.39.4/dist/index.js",
-                    "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
-                  },
-                  "scopes": {
-                    "https://ga.jspm.io/": {
-                      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.4.0/dist/index.js",
-                      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
-                      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.5/dist/index.js",
-                      "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
-                      "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
-                      "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
-                      "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
-                      "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
-                    }
-                  }
-                }
-              </script>
-              <script type="importmap">
-                {
-                  "imports": {
-                    "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.29.0/full/pyodide.js"
-                  }
-                }
-              </script>
-              <script type="module" src="/runnable-code.js"></script>
-              <!-- Google tag (gtag.js) -->
-              <script
-                async
-                src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
-              ></script>
-              <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag() {
-                  dataLayer.push(arguments);
-                }
-                gtag("js", new Date());
-
-                gtag("config", "G-P5S28YZ348");
-              </script>
-              <script
-                src="https://giscus.app/client.js"
-                data-repo="bangseongbeom/bangseongbeom.github.io"
-                data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
-                data-category="Comments"
-                data-category-id="DIC_kwDOBYE9uc4Ct9yc"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="preferred_color_scheme"
-                ${lang ? `data-lang="${lang}"` : ""}
-                crossorigin="anonymous"
-                async
-              ></script>
-              <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
-              <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                  anchors.add();
-                });
-              </script>
-            </head>
-            <body class="markdown-body">
-              <nav>
-                <p>
-                  <a href="${new URL(".", BASE).toString()}"
-                    >${escape(messages[lc].title())}</a
-                  >
-                  ${categories.map(
-                    (category) =>
-                      /* HTML */ `/
-                        <a href="/${category}"
-                          >${escape(
-                            categoryNames[
-                              /** @type {keyof typeof categoryNames} */ (
-                                category
-                              )
-                            ],
-                          )}</a
-                        > `,
-                  )}
-                </p>
-              </nav>
-              <main>${$.html()}</main>
-              ${["/README.md", "/404.md"].includes(
-                pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-              )
-                ? ""
-                : /* HTML */ `<section id="comments" class="giscus"></section>`}
-            </body>
-          </html>`,
-      );
+        lang,
+        title,
+        description,
+        modifiedDate,
+        date,
+        canonical,
+        base: BASE,
+        author: AUTHOR,
+        lc,
+        messages,
+        categories,
+        categoryNames,
+        $,
+        src,
+        srcRoot: SRC_ROOT,
+      });
 
       sitemapURLs.push({
         loc: canonical,
