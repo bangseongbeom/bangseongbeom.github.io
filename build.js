@@ -228,6 +228,53 @@ function insertDates($, date, modifiedDate, lang) {
 }
 
 /**
+ * @param {import("cheerio").CheerioAPI} $
+ */
+function insertClipboardCopy($) {
+  $("pre").each(function () {
+    const $element = $(this);
+    $element.wrap('<div class="highlight"></div>');
+    const $code = $element.find("code");
+
+    if (!$code.hasClass("language-output")) {
+      $element.after(
+        /* HTML */ `<p>
+          <button type="button" class="clipboard-copy">
+            <span class="copy">복사</span>
+            <span class="copied" hidden>복사 완료</span>
+          </button>
+        </p>`,
+      );
+    }
+  });
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
+ */
+function insertRunnableCodeChildren($) {
+  $("runnable-code").each(function () {
+    const $element = $(this);
+    const $code = $element.find("code");
+    const flag = $code.attr("class")?.match(/language-(.+)/)?.[1];
+    if (!flag) return;
+    const $clipboardCopy = $element.find(".clipboard-copy");
+
+    if (["js", "ts", "py"].includes(flag)) {
+      $clipboardCopy.after(/* HTML */ `
+        <button type="button" class="run-code">코드 실행</button>
+      `);
+    } else if (["java"].includes(flag)) {
+      $clipboardCopy.after(/* HTML */ `
+        <a href="https://dev.java/playground/" target="_blank"
+          >The Java Playground에 붙여넣고 실행</a
+        >
+      `);
+    }
+  });
+}
+
+/**
  * @param {string} src
  */
 async function getGitLogDates(src) {
@@ -348,42 +395,9 @@ await Promise.all(
 
       insertDates($, file.data.date, modifiedDate, lang);
 
-      $("pre").each(function () {
-        const $element = $(this);
-        $element.wrap('<div class="highlight"></div>');
-        const $code = $element.find("code");
+      insertClipboardCopy($);
 
-        if (!$code.hasClass("language-output")) {
-          $element.after(
-            /* HTML */ `<p>
-              <button type="button" class="clipboard-copy">
-                <span class="copy">복사</span>
-                <span class="copied" hidden>복사 완료</span>
-              </button>
-            </p>`,
-          );
-        }
-      });
-
-      $("runnable-code").each(function () {
-        const $element = $(this);
-        const $code = $element.find("code");
-        const flag = $code.attr("class")?.match(/language-(.+)/)?.[1];
-        if (!flag) return;
-        const $clipboardCopy = $element.find(".clipboard-copy");
-
-        if (["js", "ts", "py"].includes(flag)) {
-          $clipboardCopy.after(/* HTML */ `
-            <button type="button" class="run-code">코드 실행</button>
-          `);
-        } else if (["java"].includes(flag)) {
-          $clipboardCopy.after(/* HTML */ `
-            <a href="https://dev.java/playground/" target="_blank"
-              >The Java Playground에 붙여넣고 실행</a
-            >
-          `);
-        }
-      });
+      insertRunnableCodeChildren($);
 
       highlight($, starryNight);
 
