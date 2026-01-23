@@ -600,10 +600,10 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
 }
 
 /**
- * @param {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
  * @param {string} destRoot
+ * @param {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
  */
-async function writeSitemap(sitemapURLs, destRoot) {
+async function writeSitemap(destRoot, sitemapURLs) {
   await writeFile(
     join(destRoot, "sitemap.xml"),
     /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
@@ -628,7 +628,7 @@ ${sitemapURLs
  * @param {string} destRoot
  * @param {string | URL | undefined} base
  */
-async function writeRobots(destRoot, base) {
+async function writeSitemapRobots(destRoot, base) {
   await writeFile(
     join(destRoot, "robots.txt"),
     `Sitemap: ${new URL("sitemap.xml", base)}`,
@@ -636,12 +636,14 @@ async function writeRobots(destRoot, base) {
 }
 
 /**
+ * @param {string} destRoot
+ * @param {{ title: string; base: string; description: string; email: string; author: string; }} param1
  * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
- * @param {{ destRoot: string; title: string; base: string; description: string; email: string; author: string; }} param1
  */
 async function writeRSS(
+  destRoot,
+  { title, base, description, email, author },
   rssItems,
-  { destRoot, title, base, description, email, author },
 ) {
   rssItems = rssItems
     .toSorted(
@@ -848,16 +850,19 @@ await Promise.all(
   }),
 );
 
-await writeSitemap(sitemapURLs, DEST_ROOT);
-await writeRobots(DEST_ROOT, BASE);
-await writeRSS(rssItems, {
-  destRoot: DEST_ROOT,
-  title: TITLE,
-  base: BASE,
-  description: DESCRIPTION,
-  email: EMAIL,
-  author: AUTHOR,
-});
+await writeSitemap(DEST_ROOT, sitemapURLs);
+await writeSitemapRobots(DEST_ROOT, BASE);
+await writeRSS(
+  DEST_ROOT,
+  {
+    title: TITLE,
+    base: BASE,
+    description: DESCRIPTION,
+    email: EMAIL,
+    author: AUTHOR,
+  },
+  rssItems,
+);
 
 await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
