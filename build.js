@@ -599,7 +599,9 @@ await Promise.all(
             <body class="markdown-body">
               <nav>
                 <p>
-                  <a href="/">${escape(messages[lc].title())}</a>
+                  <a href="${new URL(".", BASE).toString()}"
+                    >${escape(messages[lc].title())}</a
+                  >
                   ${categories.map(
                     (category) =>
                       /* HTML */ `/
