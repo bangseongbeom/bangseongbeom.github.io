@@ -559,7 +559,7 @@ async function writeHTML({
  * @param {string} title
  * @param {string} canonical
  */
-async function writeRedirectFiles(redirectFrom, dest, title, canonical) {
+async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
   if (!redirectFrom) return;
 
   for (const redirectFromPath of redirectFrom) {
@@ -748,7 +748,7 @@ await Promise.all(
         guid: canonical,
       });
 
-      await writeRedirectFiles(file.data.redirect_from, dest, title, canonical);
+      await writeRedirectHTMLs(file.data.redirect_from, dest, title, canonical);
     }
     if (
       [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
