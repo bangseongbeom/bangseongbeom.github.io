@@ -150,49 +150,47 @@ function insertHeader($) {
  * @param {keyof typeof messages} lc
  */
 function insertNav($, src, lc) {
-  $("h1 + header").append(
-    /* HTML */ `<nav>
-      <p>
-        <a
-          href="${escape(
-            pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-          )}"
-          title="${escape(messages[lc].footer.markdown.title())}"
-          >${escape(messages[lc].footer.markdown.content())}</a
-        >
-        •
-        <a
-          href="${escape(
-            `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].footer.github.title())}"
-          >${escape(messages[lc].footer.github.content())}</a
-        >
-        •
-        <a
-          href="${escape(
-            `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].footer.edit.title())}"
-          >${escape(messages[lc].footer.edit.content())}</a
-        >
-        •
-        <a
-          href="${escape(
-            `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].footer.history.title())}"
-          >${escape(messages[lc].footer.history.content())}</a
-        >
-        •
-        <a
-          href="${escape(new URL("feed.xml", BASE).toString())}"
-          title="${escape(messages[lc].footer.rss.title())}"
-          >${escape(messages[lc].footer.rss.content())}</a
-        >
-      </p>
-    </nav>`,
-  );
+  $("h1 + header").append(/* HTML */ `
+    <p>
+      <a
+        href="${escape(
+          pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+        )}"
+        title="${escape(messages[lc].footer.markdown.title())}"
+        >${escape(messages[lc].footer.markdown.content())}</a
+      >
+      •
+      <a
+        href="${escape(
+          `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+        )}"
+        title="${escape(messages[lc].footer.github.title())}"
+        >${escape(messages[lc].footer.github.content())}</a
+      >
+      •
+      <a
+        href="${escape(
+          `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+        )}"
+        title="${escape(messages[lc].footer.edit.title())}"
+        >${escape(messages[lc].footer.edit.content())}</a
+      >
+      •
+      <a
+        href="${escape(
+          `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+        )}"
+        title="${escape(messages[lc].footer.history.title())}"
+        >${escape(messages[lc].footer.history.content())}</a
+      >
+      •
+      <a
+        href="${escape(new URL("feed.xml", BASE).toString())}"
+        title="${escape(messages[lc].footer.rss.title())}"
+        >${escape(messages[lc].footer.rss.content())}</a
+      >
+    </p>
+  `);
 }
 
 /**
