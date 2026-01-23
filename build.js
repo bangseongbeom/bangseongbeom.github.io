@@ -6,7 +6,7 @@ import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
 import { escape } from "html-escaper";
-import assert from "node:assert/strict";
+import assert, { fail } from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
@@ -73,6 +73,31 @@ function getLang(fileLang, src, defaultLang) {
 }
 
 /**
+ * @param {string} src
+ */
+async function getGitLogDates(src) {
+  let gitLogDates = (
+    await execFile("git", [
+      "log",
+      "--follow",
+      "--pretty=tformat:%cI",
+      "--",
+      src,
+    ])
+  ).stdout
+    .trim()
+    .split("\n");
+  if (gitLogDates[0] === "") gitLogDates = [];
+
+  const date = gitLogDates.at(-1);
+  const modifiedDate = gitLogDates.at(0);
+  return {
+    date: date ? new Date(date) : undefined,
+    modifiedDate: modifiedDate ? new Date(modifiedDate) : undefined,
+  };
+}
+
+/**
  * @param {string} markdown
  */
 function markdownToCheerioAPI(markdown) {
@@ -119,21 +144,6 @@ function convertLinks($) {
       $element.attr("href", href.slice(0, -"README.md".length));
     else if (href.endsWith(".md"))
       $element.attr("href", href.slice(0, -".md".length));
-  });
-}
-
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {Awaited<ReturnType<typeof createStarryNight>>} starryNight
- */
-function highlight($, starryNight) {
-  $("code").each(function () {
-    const $element = $(this);
-    const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
-    if (!flag) return;
-    const codeScope = starryNight.flagToScope(flag) ?? null;
-    if (!codeScope) return;
-    $element.html(toHtml(starryNight.highlight($element.text(), codeScope)));
   });
 }
 
@@ -275,28 +285,18 @@ function insertRunnableCodeChildren($) {
 }
 
 /**
- * @param {string} src
+ * @param {import("cheerio").CheerioAPI} $
+ * @param {Awaited<ReturnType<typeof createStarryNight>>} starryNight
  */
-async function getGitLogDates(src) {
-  let gitLogDates = (
-    await execFile("git", [
-      "log",
-      "--follow",
-      "--pretty=tformat:%cI",
-      "--",
-      src,
-    ])
-  ).stdout
-    .trim()
-    .split("\n");
-  if (gitLogDates[0] === "") gitLogDates = [];
-
-  const date = gitLogDates.at(-1);
-  const modifiedDate = gitLogDates.at(0);
-  return {
-    date: date ? new Date(date) : undefined,
-    modifiedDate: modifiedDate ? new Date(modifiedDate) : undefined,
-  };
+function highlight($, starryNight) {
+  $("code").each(function () {
+    const $element = $(this);
+    const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
+    if (!flag) return;
+    const codeScope = starryNight.flagToScope(flag) ?? null;
+    if (!codeScope) return;
+    $element.html(toHtml(starryNight.highlight($element.text(), codeScope)));
+  });
 }
 
 const execFile = promisify(child_process.execFile);
@@ -387,26 +387,23 @@ await Promise.all(
 
       convertLinks($);
 
+      const title =
+        file.data.title ??
+        $("h1").first().prop("textContent") ??
+        fail("title is required");
+      const description =
+        file.data.description ?? $("#description").prop("textContent");
+
       const rssDescription = $.html();
 
       insertHeader($);
-
       insertNav($, src, lc);
-
       insertDates($, file.data.date, modifiedDate, lang);
-
       insertClipboardCopy($);
-
       insertRunnableCodeChildren($);
-
       highlight($, starryNight);
 
-      const title = file.data.title ?? $("h1").first().text();
-      const description = file.data.description ?? $("#description").text();
-
-      if (!title) throw new Error();
-
-      const CATEGORY_NAMES = {
+      const categoryNames = {
         android: messages[lc].categoryNames.android(),
         git: messages[lc].categoryNames.git(),
         iot: messages[lc].categoryNames.iot(),
@@ -621,8 +618,8 @@ await Promise.all(
                       /* HTML */ `/
                         <a href="/${category}"
                           >${escape(
-                            CATEGORY_NAMES[
-                              /** @type {keyof typeof CATEGORY_NAMES} */ (
+                            categoryNames[
+                              /** @type {keyof typeof categoryNames} */ (
                                 category
                               )
                             ],
