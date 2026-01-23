@@ -599,6 +599,88 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
   }
 }
 
+/**
+ * @param {{ loc: string; lastmod?: Date | null }[]} sitemapURLs
+ * @param {string} destRoot
+ */
+async function writeSitemap(sitemapURLs, destRoot) {
+  await writeFile(
+    join(destRoot, "sitemap.xml"),
+    /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapURLs
+  .map(
+    ({ loc, lastmod }) => /* XML */ `<url>
+  <loc>${escape(loc)}</loc>
+  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod.toISOString())}</lastmod>` : ""}
+</url>
+`,
+  )
+  .join("")}
+</urlset>
+`,
+  );
+}
+
+/**
+ * @param {string} destRoot
+ * @param {string | URL | undefined} base
+ */
+async function writeRobots(destRoot, base) {
+  await writeFile(
+    join(destRoot, "robots.txt"),
+    `Sitemap: ${new URL("sitemap.xml", base)}`,
+  );
+}
+
+/**
+ * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} rssItems
+ * @param {{ destRoot: string; title: string; base: string; description: string; email: string; author: string; }} param1
+ */
+async function writeRSS(
+  rssItems,
+  { destRoot, title, base, description, email, author },
+) {
+  rssItems = rssItems
+    .toSorted(
+      (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
+    )
+    .slice(0, 10);
+
+  await writeFile(
+    join(destRoot, "feed.xml"),
+    /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>${escape(title)}</title>
+    <link>${escape(base)}</link>
+    <description>${escape(description)}</description>
+    <language>en</language>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <managingEditor>${escape(email)} (${escape(author)})</managingEditor>
+    <webMaster>${escape(email)} (${escape(author)})</webMaster>
+    <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
+    <atom:link href="${escape(new URL("feed.xml", base).toString())}" rel="self" type="application/rss+xml" />
+    ${rssItems
+      .map(
+        (item) => /* XML */ `<item>
+      <title>${escape(item.title)}</title>
+      <link>${escape(item.link)}</link>
+      <description>${escape(item.description)}</description>
+      ${item.categories.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("")}
+      ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
+      <guid>${escape(item.guid)}</guid>
+      ${item.content ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
+    </item>
+    `,
+      )
+      .join("")}
+  </channel>
+</rss>
+`,
+  );
+}
+
 const execFile = promisify(child_process.execFile);
 
 const starryNight = await createStarryNight(all);
@@ -762,64 +844,16 @@ await Promise.all(
   }),
 );
 
-await writeFile(
-  join(DEST_ROOT, "sitemap.xml"),
-  /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapURLs
-  .map(
-    ({ loc, lastmod }) => /* XML */ `<url>
-  <loc>${escape(loc)}</loc>
-  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod.toISOString())}</lastmod>` : ""}
-</url>
-`,
-  )
-  .join("")}
-</urlset>
-`,
-);
-
-await writeFile(
-  join(DEST_ROOT, "robots.txt"),
-  `Sitemap: ${new URL("sitemap.xml", BASE)}`,
-);
-
-rssItems = rssItems
-  .toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0))
-  .slice(0, 10);
-
-await writeFile(
-  join(DEST_ROOT, "feed.xml"),
-  /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
-  <channel>
-    <title>${escape(TITLE)}</title>
-    <link>${escape(BASE)}</link>
-    <description>${escape(DESCRIPTION)}</description>
-    <language>en</language>
-    <docs>https://www.rssboard.org/rss-specification</docs>
-    <managingEditor>${escape(EMAIL)} (${escape(AUTHOR)})</managingEditor>
-    <webMaster>${escape(EMAIL)} (${escape(AUTHOR)})</webMaster>
-    <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
-    <atom:link href="${escape(new URL("feed.xml", BASE).toString())}" rel="self" type="application/rss+xml" />
-    ${rssItems
-      .map(
-        (item) => /* XML */ `<item>
-      <title>${escape(item.title)}</title>
-      <link>${escape(item.link)}</link>
-      <description>${escape(item.description)}</description>
-      ${item.categories.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("\n")}
-      ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
-      <guid>${escape(item.guid)}</guid>
-      ${item.content ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
-    </item>
-    `,
-      )
-      .join("")}
-  </channel>
-</rss>
-`,
-);
+await writeSitemap(sitemapURLs, DEST_ROOT);
+await writeRobots(DEST_ROOT, BASE);
+await writeRSS(rssItems, {
+  destRoot: DEST_ROOT,
+  title: TITLE,
+  base: BASE,
+  description: DESCRIPTION,
+  email: EMAIL,
+  author: AUTHOR,
+});
 
 await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
