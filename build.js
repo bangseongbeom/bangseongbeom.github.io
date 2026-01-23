@@ -600,21 +600,22 @@ await Promise.all(
             </head>
             <body class="markdown-body">
               <nav>
-                <p><a href="/">${escape(messages[lc].title())}</a></p>
-                ${categories.map(
-                  (category) =>
-                    /* HTML */ `<p>
-                      <a href="/${category}"
-                        >${escape(
-                          CATEGORY_NAMES[
-                            /** @type {keyof typeof CATEGORY_NAMES} */ (
-                              category
-                            )
-                          ],
-                        )}</a
-                      >
-                    </p>`,
-                )}
+                <p>
+                  <a href="/">${escape(messages[lc].title())}</a>
+                  ${categories.map(
+                    (category) =>
+                      /* HTML */ `/
+                        <a href="/${category}"
+                          >${escape(
+                            CATEGORY_NAMES[
+                              /** @type {keyof typeof CATEGORY_NAMES} */ (
+                                category
+                              )
+                            ],
+                          )}</a
+                        > `,
+                  )}
+                </p>
               </nav>
               <main>${$.html()}</main>
               ${["/README.md", "/404.md"].includes(
