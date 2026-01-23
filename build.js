@@ -299,6 +299,52 @@ function highlight($, starryNight) {
   });
 }
 
+/**
+ * @param {string[] | undefined} redirectFrom
+ * @param {string} dest
+ * @param {string} title
+ * @param {string} canonical
+ */
+async function writeRedirectFiles(redirectFrom, dest, title, canonical) {
+  if (!redirectFrom) return;
+
+  for (const redirectFromPath of redirectFrom) {
+    const resolvedPath = isAbsolute(redirectFromPath)
+      ? join(DEST_ROOT, redirectFromPath)
+      : join(dest, "..", redirectFromPath);
+    await mkdir(dirname(resolvedPath), { recursive: true });
+    await writeFile(
+      resolvedPath,
+      /* HTML */ `<!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            <title>${escape(title)}</title>
+            <meta http-equiv="refresh" content="0; URL=${escape(canonical)}" />
+            <link rel="canonical" href="${escape(canonical)}" />
+            <link
+              rel="icon"
+              href="${escape(new URL("favicon.ico", BASE).toString())}"
+              sizes="32x32"
+            />
+            <link
+              rel="icon"
+              href="${escape(new URL("icon.svg", BASE).toString())}"
+              type="image/svg+xml"
+            />
+            <link
+              rel="apple-touch-icon"
+              href="${escape(new URL("apple-touch-icon.png", BASE).toString())}"
+            />
+          </head>
+          <body>
+            <a href="${escape(canonical)}">${escape(canonical)}</a>
+          </body>
+        </html> `,
+    );
+  }
+}
+
 const execFile = promisify(child_process.execFile);
 
 const starryNight = await createStarryNight(all);
@@ -651,50 +697,7 @@ await Promise.all(
         guid: canonical,
       });
 
-      if (file.data.redirect_from) {
-        for (const redirectFromPath of file.data.redirect_from) {
-          const path = isAbsolute(redirectFromPath)
-            ? join(DEST_ROOT, redirectFromPath)
-            : join(dest, "..", redirectFromPath);
-          await mkdir(dirname(path), {
-            recursive: true,
-          });
-          await writeFile(
-            path,
-            /* HTML */ `<!DOCTYPE html>
-              <html>
-                <head>
-                  <meta charset="utf-8" />
-                  <title>${escape(title)}</title>
-                  <meta
-                    http-equiv="refresh"
-                    content="0; URL=${escape(canonical)}"
-                  />
-                  <link rel="canonical" href="${escape(canonical)}" />
-                  <link
-                    rel="icon"
-                    href="${escape(new URL("favicon.ico", BASE).toString())}"
-                    sizes="32x32"
-                  />
-                  <link
-                    rel="icon"
-                    href="${escape(new URL("icon.svg", BASE).toString())}"
-                    type="image/svg+xml"
-                  />
-                  <link
-                    rel="apple-touch-icon"
-                    href="${escape(
-                      new URL("apple-touch-icon.png", BASE).toString(),
-                    )}"
-                  />
-                </head>
-                <body>
-                  <a href="${escape(canonical)}">${escape(canonical)}</a>
-                </body>
-              </html> `,
-          );
-        }
-      }
+      await writeRedirectFiles(file.data.redirect_from, dest, title, canonical);
     }
     if (
       [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
