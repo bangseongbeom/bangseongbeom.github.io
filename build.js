@@ -293,7 +293,7 @@ function highlight($, starryNight) {
     const $element = $(this);
     const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
     if (!flag) return;
-    const codeScope = starryNight.flagToScope(flag) ?? null;
+    const codeScope = starryNight.flagToScope(flag);
     if (!codeScope) return;
     $element.html(toHtml(starryNight.highlight($element.text(), codeScope)));
   });
@@ -304,7 +304,7 @@ function highlight($, starryNight) {
  *   dest: string;
  *   lang?: string;
  *   title: string;
- *   description?: string | null;
+ *   description?: string;
  *   modifiedDate?: Date | undefined;
  *   date?: Date | undefined;
  *   canonical: string;
@@ -600,7 +600,7 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
 }
 
 /**
- * @param {{ loc: string; lastmod?: Date | null; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
+ * @param {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
  * @param {string} destRoot
  */
 async function writeSitemap(sitemapURLs, destRoot) {
@@ -636,7 +636,7 @@ async function writeRobots(destRoot, base) {
 }
 
 /**
- * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} rssItems
+ * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
  * @param {{ destRoot: string; title: string; base: string; description: string; email: string; author: string; }} param1
  */
 async function writeRSS(
@@ -742,10 +742,10 @@ const messages = {
   },
 };
 
-/** @type {{ loc: string; lastmod?: Date | null; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} */
+/** @type {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} */
 const sitemapURLs = [];
 
-/** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} */
+/** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} */
 let rssItems = [];
 
 await Promise.all(
@@ -776,7 +776,9 @@ await Promise.all(
         $("h1").first().prop("textContent") ??
         fail("title is required");
       const description =
-        file.data.description ?? $("#description").prop("textContent");
+        file.data.description ??
+        $("#description").prop("textContent") ??
+        undefined;
 
       const rssDescription = $.html();
 
@@ -821,14 +823,14 @@ await Promise.all(
 
       sitemapURLs.push({
         loc: canonical,
-        lastmod: modifiedDate ?? date ?? null,
+        lastmod: modifiedDate ?? date,
       });
       rssItems.push({
         title,
         link: canonical,
         description: rssDescription,
         categories,
-        pubDate: date ?? null,
+        pubDate: date,
         guid: canonical,
       });
 
