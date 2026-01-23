@@ -670,7 +670,6 @@ await Promise.all(
                     http-equiv="refresh"
                     content="0; URL=${escape(canonical)}"
                   />
-                  <meta name="robots" content="noindex" />
                   <link rel="canonical" href="${escape(canonical)}" />
                   <link
                     rel="icon"
