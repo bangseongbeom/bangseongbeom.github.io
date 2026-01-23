@@ -600,7 +600,7 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
 }
 
 /**
- * @param {{ loc: string; lastmod?: Date | null }[]} sitemapURLs
+ * @param {{ loc: string; lastmod?: Date | null; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
  * @param {string} destRoot
  */
 async function writeSitemap(sitemapURLs, destRoot) {
@@ -610,9 +610,11 @@ async function writeSitemap(sitemapURLs, destRoot) {
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
   .map(
-    ({ loc, lastmod }) => /* XML */ `<url>
+    ({ loc, lastmod, changefreq, priority }) => /* XML */ `<url>
   <loc>${escape(loc)}</loc>
   ${lastmod ? /* XML */ `<lastmod>${escape(lastmod.toISOString())}</lastmod>` : ""}
+  ${changefreq ? /* XML */ `<changefreq>${escape(changefreq)}</changefreq>` : ""}
+  ${priority !== undefined ? /* XML */ `<priority>${escape(priority.toString())}</priority>` : ""}
 </url>
 `,
   )
@@ -740,7 +742,7 @@ const messages = {
   },
 };
 
-/** @type {{ loc: string; lastmod?: Date | null }[]} */
+/** @type {{ loc: string; lastmod?: Date | null; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} */
 const sitemapURLs = [];
 
 /** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date | null; guid: string; content?: string; }[]} */
