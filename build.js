@@ -140,8 +140,8 @@ function highlight($, starryNight) {
 /**
  * @param {string} src
  */
-async function getCommitterDates(src) {
-  let committerDates = (
+async function getGitLogDates(src) {
+  let gitLogDates = (
     await execFile("git", [
       "log",
       "--follow",
@@ -152,10 +152,10 @@ async function getCommitterDates(src) {
   ).stdout
     .trim()
     .split("\n");
-  if (committerDates[0] === "") committerDates = [];
+  if (gitLogDates[0] === "") gitLogDates = [];
 
-  const date = committerDates.at(-1);
-  const modifiedDate = committerDates.at(0);
+  const date = gitLogDates.at(-1);
+  const modifiedDate = gitLogDates.at(0);
   return {
     date: date ? new Date(date) : undefined,
     modifiedDate: modifiedDate ? new Date(modifiedDate) : undefined,
@@ -242,13 +242,9 @@ await Promise.all(
         match([lang], Object.keys(messages), LANG)
       );
 
-      let date = file.data.date;
-      let modifiedDate = file.data.modified_date;
-      if (!date || !modifiedDate) {
-        const committerDates = await getCommitterDates(src);
-        date = date ?? committerDates.date;
-        modifiedDate = modifiedDate ?? committerDates.modifiedDate;
-      }
+      const gitLogDates = await getGitLogDates(src);
+      const date = file.data.date ?? gitLogDates.date;
+      const modifiedDate = file.data.modified_date ?? gitLogDates.modifiedDate;
 
       const $ = markdownToCheerioAPI(file.content);
 
