@@ -139,6 +139,64 @@ function highlight($, starryNight) {
 
 /**
  * @param {import("cheerio").CheerioAPI} $
+ */
+function insertHeader($) {
+  $("h1").after(/* HTML */ `<header></header>`);
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
+ * @param {string} src
+ * @param {keyof typeof messages} lc
+ */
+function insertNav($, src, lc) {
+  $("h1 + header").append(
+    /* HTML */ `<nav>
+      <p>
+        <a
+          href="${escape(
+            pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+          )}"
+          title="${escape(messages[lc].footer.markdown.title())}"
+          >${escape(messages[lc].footer.markdown.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.github.title())}"
+          >${escape(messages[lc].footer.github.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.edit.title())}"
+          >${escape(messages[lc].footer.edit.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.history.title())}"
+          >${escape(messages[lc].footer.history.content())}</a
+        >
+        •
+        <a
+          href="${escape(new URL("feed.xml", BASE).toString())}"
+          title="${escape(messages[lc].footer.rss.title())}"
+          >${escape(messages[lc].footer.rss.content())}</a
+        >
+      </p>
+    </nav>`,
+  );
+}
+
+/**
+ * @param {import("cheerio").CheerioAPI} $
  * @param {Date | undefined} date
  * @param {Date | undefined} modifiedDate
  * @param {string} lang
@@ -146,7 +204,7 @@ function highlight($, starryNight) {
 function insertDates($, date, modifiedDate, lang) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
-    $("h1").after(
+    $("h1 + header").append(
       /* HTML */ `<p id="dates">
         Published:
         <time id="date" datetime="${escape(date.toISOString())}"
@@ -161,7 +219,7 @@ function insertDates($, date, modifiedDate, lang) {
       </p>`,
     );
   } else {
-    $("h1").after(
+    $("h1 + header").append(
       /* HTML */ `<p>
         <time id="date" datetime="${escape(date.toISOString())}"
           >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
@@ -286,57 +344,11 @@ await Promise.all(
 
       const rssDescription = $.html();
 
-      insertDates($, file.data.date, modifiedDate, lang);
+      insertHeader($);
 
-      $("h1").after(
-        /* HTML */ `<nav>
-          <p>
-            <a
-              href="${escape(
-                pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
-              )}"
-              title="View as Markdown"
-              >Markdown</a
-            >
-            •
-            <a
-              href="${escape(
-                `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                }`,
-              )}"
-              title="View on GitHub"
-              >GitHub</a
-            >
-            •
-            <a
-              href="${escape(
-                `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                }`,
-              )}"
-              title="Suggest an edit"
-              >Edit</a
-            >
-            •
-            <a
-              href="${escape(
-                `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${
-                  pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname
-                }`,
-              )}"
-              title="View history"
-              >History</a
-            >
-            •
-            <a
-              href="${escape(new URL("feed.xml", BASE).toString())}"
-              title="RSS feed"
-              >RSS</a
-            >
-          </p>
-        </nav>`,
-      );
+      insertNav($, src, lc);
+
+      insertDates($, file.data.date, modifiedDate, lang);
 
       $("pre").each(function () {
         const $element = $(this);
@@ -484,8 +496,7 @@ await Promise.all(
                   }
                 }
 
-                main nav,
-                main p:has(time) {
+                main header {
                   font-size: 12px;
                   color: var(--fgColor-muted);
                 }
