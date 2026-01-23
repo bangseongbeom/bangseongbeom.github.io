@@ -138,6 +138,40 @@ function highlight($, starryNight) {
 }
 
 /**
+ * @param {import("cheerio").CheerioAPI} $
+ * @param {Date | undefined} date
+ * @param {Date | undefined} modifiedDate
+ * @param {string} lang
+ */
+function insertDates($, date, modifiedDate, lang) {
+  if (!date) return;
+  if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
+    $("h1").after(
+      /* HTML */ `<p id="dates">
+        Published:
+        <time id="date" datetime="${escape(date.toISOString())}"
+          >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
+        >
+        • Modified:
+        <time
+          id="modified-date"
+          datetime="${escape(modifiedDate.toISOString())}"
+          >${escape(new Intl.DateTimeFormat(lang).format(modifiedDate))}</time
+        >
+      </p>`,
+    );
+  } else {
+    $("h1").after(
+      /* HTML */ `<p>
+        <time id="date" datetime="${escape(date.toISOString())}"
+          >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
+        >
+      </p>`,
+    );
+  }
+}
+
+/**
  * @param {string} src
  */
 async function getGitLogDates(src) {
@@ -252,41 +286,7 @@ await Promise.all(
 
       const rssDescription = $.html();
 
-      if (file.data.date) {
-        if (
-          modifiedDate &&
-          modifiedDate.toISOString() !== file.data.date.toISOString()
-        ) {
-          $("h1").after(
-            /* HTML */ `<p id="dates">
-              Published:
-              <time id="date" datetime="${escape(file.data.date.toISOString())}"
-                >${escape(
-                  new Intl.DateTimeFormat(lang).format(file.data.date),
-                )}</time
-              >
-              • Modified:
-              <time
-                id="modified-date"
-                datetime="${escape(modifiedDate.toISOString())}"
-                >${escape(
-                  new Intl.DateTimeFormat(lang).format(modifiedDate),
-                )}</time
-              >
-            </p>`,
-          );
-        } else {
-          $("h1").after(
-            /* HTML */ `<p>
-              <time id="date" datetime="${escape(file.data.date.toISOString())}"
-                >${escape(
-                  new Intl.DateTimeFormat(lang).format(file.data.date),
-                )}</time
-              >
-            </p>`,
-          );
-        }
-      }
+      insertDates($, file.data.date, modifiedDate, lang);
 
       $("h1").after(
         /* HTML */ `<nav>
