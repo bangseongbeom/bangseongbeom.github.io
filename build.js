@@ -637,12 +637,23 @@ async function writeSitemapRobots(destRoot, base) {
 
 /**
  * @param {string} destRoot
- * @param {{ title: string; base: string; description: string; email: string; author: string; }} param1
+ * @param {{ title: string; base: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
  * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
  */
 async function writeRSS(
   destRoot,
-  { title, base, description, email, author },
+  {
+    title,
+    base,
+    description,
+    language,
+    copyright,
+    managingEditor,
+    webMaster,
+    pubDate,
+    categories,
+    generator,
+  },
   rssItems,
 ) {
   rssItems = rssItems
@@ -659,11 +670,40 @@ async function writeRSS(
     <title>${escape(title)}</title>
     <link>${escape(base)}</link>
     <description>${escape(description)}</description>
-    <language>en</language>
-    <docs>https://www.rssboard.org/rss-specification</docs>
-    <managingEditor>${escape(email)} (${escape(author)})</managingEditor>
-    <webMaster>${escape(email)} (${escape(author)})</webMaster>
+    ${language ? /* XML */ `<language>${escape(language)}</language>` : ""}
+    ${copyright ? /* XML */ `<copyright>${escape(copyright)}</copyright>` : ""}
+    ${
+      managingEditor
+        ? /* XML */ `<managingEditor>${
+            typeof managingEditor === "string"
+              ? escape(managingEditor)
+              : `${escape(managingEditor.email)} (${escape(managingEditor.name)})`
+          }</managingEditor>`
+        : ""
+    }
+    ${
+      webMaster
+        ? /* XML */ `<webMaster>${
+            typeof webMaster === "string"
+              ? escape(webMaster)
+              : `${escape(webMaster.email)} (${escape(webMaster.name)})`
+          }</webMaster>`
+        : ""
+    }
+    ${pubDate ? /* XML */ `<pubDate>${escape(pubDate.toUTCString())}</pubDate>` : ""}
     <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
+    ${
+      categories
+        ? categories
+            .map(
+              (category) =>
+                /* XML */ `<category>${escape(category)}</category>`,
+            )
+            .join("")
+        : ""
+    }
+    ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
+    <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link href="${escape(new URL("feed.xml", base).toString())}" rel="self" type="application/rss+xml" />
     ${rssItems
       .map(
@@ -858,8 +898,9 @@ await writeRSS(
     title: TITLE,
     base: BASE,
     description: DESCRIPTION,
-    email: EMAIL,
-    author: AUTHOR,
+    language: LANG,
+    managingEditor: { email: EMAIL, name: AUTHOR },
+    webMaster: { email: EMAIL, name: AUTHOR },
   },
   rssItems,
 );
