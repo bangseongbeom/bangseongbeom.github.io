@@ -66,6 +66,8 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 

@@ -743,7 +743,7 @@ const TITLE = "Bang Seongbeom";
 const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
-const BASE_URL = "https://www.bangseongbeom.com/";
+const BASE_URL = process.env.BASE_URL ?? fail("BASE_URL is required");
 const LANG = "en";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
