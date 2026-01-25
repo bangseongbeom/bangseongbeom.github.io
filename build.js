@@ -6,7 +6,7 @@ import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
 import { escape } from "html-escaper";
-import assert, { fail } from "node:assert/strict";
+import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
@@ -122,8 +122,7 @@ function markdownToCheerioAPI(markdown) {
     const $element = $(this);
     const $anchor = $element.find(".anchor");
     if ($anchor.length) {
-      const id = $anchor.attr("id");
-      assert(id);
+      const id = $anchor.attr("id") ?? fail();
       $element.attr("id", id);
       $anchor.remove();
     }
@@ -138,8 +137,7 @@ function markdownToCheerioAPI(markdown) {
 function convertLinks($) {
   $("[href]").each(function () {
     const $element = $(this);
-    const href = $element.attr("href");
-    assert(typeof href === "string");
+    const href = $element.attr("href") ?? fail();
     if (href.endsWith("/README.md"))
       $element.attr("href", href.slice(0, -"README.md".length));
     else if (href.endsWith(".md"))
