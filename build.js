@@ -343,7 +343,10 @@ async function writeHTML({
   await writeFile(
     dest,
     /* HTML */ `<!DOCTYPE html>
-      <html ${lang ? `lang="${lang}"` : ""} prefix="og: https://ogp.me/ns#">
+      <html
+        ${lang ? `lang="${escape(lang)}"` : ""}
+        prefix="og: https://ogp.me/ns#"
+      >
         <head>
           <meta charset="utf-8" />
           <title>${escape(title)}</title>
@@ -535,7 +538,7 @@ async function writeHTML({
             data-emit-metadata="0"
             data-input-position="bottom"
             data-theme="preferred_color_scheme"
-            ${lang ? `data-lang="${lang}"` : ""}
+            ${lang ? `data-lang="${escape(lang)}"` : ""}
             crossorigin="anonymous"
             async
           ></script>
