@@ -158,8 +158,9 @@ function insertHeader($) {
  * @param {import("cheerio").CheerioAPI} $
  * @param {string} src
  * @param {keyof typeof messages} lc
+ * @param {string} base
  */
-function insertNav($, src, lc) {
+function insertNav($, src, lc, base) {
   $("h1 + header").append(/* HTML */ `
     <p>
       <a
@@ -195,7 +196,7 @@ function insertNav($, src, lc) {
       >
       •
       <a
-        href="${escape(new URL("feed.xml", BASE).toString())}"
+        href="${escape(new URL("feed.xml", base).toString())}"
         title="${escape(messages[lc].footer.rss.title())}"
         >${escape(messages[lc].footer.rss.content())}</a
       >
@@ -826,7 +827,7 @@ await Promise.all(
       const rssDescription = $.html();
 
       insertHeader($);
-      insertNav($, src, lc);
+      insertNav($, src, lc, BASE);
       insertDates($, file.data.date, modifiedDate, lang);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
