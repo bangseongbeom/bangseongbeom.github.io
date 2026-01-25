@@ -657,7 +657,7 @@ ${sitemapURLs
  * @param {string} destRoot
  * @param {string | URL | undefined} baseURL
  */
-async function writeSitemapRobots(destRoot, baseURL) {
+async function writeSitemapOnlyRobots(destRoot, baseURL) {
   await writeFile(
     join(destRoot, "robots.txt"),
     `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
@@ -926,7 +926,7 @@ await Promise.all(
 );
 
 await writeSitemap(DEST_ROOT, sitemapURLs);
-await writeSitemapRobots(DEST_ROOT, BASE_URL);
+await writeSitemapOnlyRobots(DEST_ROOT, BASE_URL);
 await writeRSS(
   DEST_ROOT,
   {
