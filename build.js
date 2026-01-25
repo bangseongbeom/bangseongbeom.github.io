@@ -157,8 +157,9 @@ function insertHeader($) {
  * @param {string} src
  * @param {keyof typeof messages} lc
  * @param {string} baseURL
+ * @param {string} pagesRepoNWO
  */
-function insertNav($, src, lc, baseURL) {
+function insertNav($, src, lc, baseURL, pagesRepoNWO) {
   $("h1 + header").append(/* HTML */ `
     <p>
       <a
@@ -171,7 +172,7 @@ function insertNav($, src, lc, baseURL) {
       •
       <a
         href="${escape(
-          `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.github.title())}"
         >${escape(messages[lc].footer.github.content())}</a
@@ -179,7 +180,7 @@ function insertNav($, src, lc, baseURL) {
       •
       <a
         href="${escape(
-          `https://github.com/bangseongbeom/bangseongbeom.github.io/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.edit.title())}"
         >${escape(messages[lc].footer.edit.content())}</a
@@ -187,7 +188,7 @@ function insertNav($, src, lc, baseURL) {
       •
       <a
         href="${escape(
-          `https://github.com/bangseongbeom/bangseongbeom.github.io/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.history.title())}"
         >${escape(messages[lc].footer.history.content())}</a
@@ -316,6 +317,7 @@ function highlight($, starryNight) {
  *   $: import("cheerio").CheerioAPI;
  *   src: string;
  *   srcRoot: string;
+ *   pagesRepoNWO: string;
  * }} param0
  */
 async function writeHTML({
@@ -335,6 +337,7 @@ async function writeHTML({
   $,
   src,
   srcRoot,
+  pagesRepoNWO,
 }) {
   await mkdir(dirname(dest), { recursive: true });
   await writeFile(
@@ -388,7 +391,7 @@ async function writeHTML({
             rel="alternate"
             type="text/html"
             href="${escape(
-              `https://github.com/bangseongbeom/bangseongbeom.github.io/blob/main${
+              `https://github.com/${pagesRepoNWO}/blob/main${
                 pathToFileURL(join(sep, relative(srcRoot, src))).pathname
               }`,
             )}"
@@ -522,7 +525,7 @@ async function writeHTML({
           </script>
           <script
             src="https://giscus.app/client.js"
-            data-repo="bangseongbeom/bangseongbeom.github.io"
+            data-repo="${escape(pagesRepoNWO)}"
             data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
             data-category="Comments"
             data-category-id="DIC_kwDOBYE9uc4Ct9yc"
@@ -758,6 +761,7 @@ const execFile = promisify(child_process.execFile);
 
 const starryNight = await createStarryNight(all);
 
+const PAGES_REPO_NWO = "bangseongbeom/bangseongbeom.github.io";
 const TITLE = "Bang Seongbeom";
 const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
 const AUTHOR = "방성범 (Bang Seongbeom)";
@@ -854,7 +858,7 @@ await Promise.all(
       const rssDescription = $.html();
 
       insertHeader($);
-      insertNav($, src, lc, BASE_URL);
+      insertNav($, src, lc, BASE_URL, PAGES_REPO_NWO);
       insertDates($, file.data.date, modifiedDate, lang);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
@@ -890,6 +894,7 @@ await Promise.all(
         $,
         src,
         srcRoot: SRC_ROOT,
+        pagesRepoNWO: PAGES_REPO_NWO,
       });
 
       sitemapURLs.push({
