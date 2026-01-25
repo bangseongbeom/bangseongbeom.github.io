@@ -155,16 +155,17 @@ function insertHeader($) {
 /**
  * @param {import("cheerio").CheerioAPI} $
  * @param {string} src
+ * @param {string} srcRoot
  * @param {keyof typeof messages} lc
  * @param {string} baseURL
  * @param {string} pagesRepoNWO
  */
-function insertNav($, src, lc, baseURL, pagesRepoNWO) {
+function insertNav($, src, srcRoot, lc, baseURL, pagesRepoNWO) {
   $("h1 + header").append(/* HTML */ `
     <p>
       <a
         href="${escape(
-          pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname,
+          pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
         )}"
         title="${escape(messages[lc].footer.markdown.title())}"
         >${escape(messages[lc].footer.markdown.content())}</a
@@ -172,7 +173,7 @@ function insertNav($, src, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/blob/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.github.title())}"
         >${escape(messages[lc].footer.github.content())}</a
@@ -180,7 +181,7 @@ function insertNav($, src, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/edit/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.edit.title())}"
         >${escape(messages[lc].footer.edit.content())}</a
@@ -188,7 +189,7 @@ function insertNav($, src, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/commits/main${pathToFileURL(join(sep, relative(SRC_ROOT, src))).pathname}`,
+          `https://github.com/${pagesRepoNWO}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.history.title())}"
         >${escape(messages[lc].footer.history.content())}</a
@@ -582,6 +583,7 @@ async function writeHTML({
 /**
  * @param {string[] | undefined} redirectFrom
  * @param {string} dest
+ * @param {string} destRoot
  * @param {string} title
  * @param {string} canonical
  * @param {string} baseURL
@@ -589,6 +591,7 @@ async function writeHTML({
 async function writeRedirectHTMLs(
   redirectFrom,
   dest,
+  destRoot,
   title,
   canonical,
   baseURL,
@@ -597,7 +600,7 @@ async function writeRedirectHTMLs(
 
   for (const redirectFromPath of redirectFrom) {
     const resolvedPath = isAbsolute(redirectFromPath)
-      ? join(DEST_ROOT, redirectFromPath)
+      ? join(destRoot, redirectFromPath)
       : join(dest, "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
     await writeFile(
@@ -861,7 +864,7 @@ await Promise.all(
       const rssDescription = $.html();
 
       insertHeader($);
-      insertNav($, src, lc, BASE_URL, PAGES_REPO_NWO);
+      insertNav($, src, SRC_ROOT, lc, BASE_URL, PAGES_REPO_NWO);
       insertDates($, file.data.date, modifiedDate, lang);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
@@ -916,6 +919,7 @@ await Promise.all(
       await writeRedirectHTMLs(
         file.data.redirect_from,
         dest,
+        DEST_ROOT,
         title,
         canonical,
         BASE_URL,
