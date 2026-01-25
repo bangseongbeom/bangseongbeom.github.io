@@ -38,9 +38,9 @@ function srcToDest(src, srcRoot, destRoot) {
 /**
  * @param {string} src
  * @param {string} srcRoot
- * @param {string} base
+ * @param {string} baseURL
  */
-function srcToCanonical(src, srcRoot, base) {
+function srcToCanonical(src, srcRoot, baseURL) {
   return new URL(
     pathToFileURL(
       join(
@@ -49,7 +49,7 @@ function srcToCanonical(src, srcRoot, base) {
         basename(src) === "README.md" ? sep : parse(src).name,
       ),
     ).pathname.substring(1),
-    base,
+    baseURL,
   ).toString();
 }
 
@@ -158,9 +158,9 @@ function insertHeader($) {
  * @param {import("cheerio").CheerioAPI} $
  * @param {string} src
  * @param {keyof typeof messages} lc
- * @param {string} base
+ * @param {string} baseURL
  */
-function insertNav($, src, lc, base) {
+function insertNav($, src, lc, baseURL) {
   $("h1 + header").append(/* HTML */ `
     <p>
       <a
@@ -196,7 +196,7 @@ function insertNav($, src, lc, base) {
       >
       •
       <a
-        href="${escape(new URL("feed.xml", base).toString())}"
+        href="${escape(new URL("feed.xml", baseURL).toString())}"
         title="${escape(messages[lc].footer.rss.title())}"
         >${escape(messages[lc].footer.rss.content())}</a
       >
@@ -309,7 +309,7 @@ function highlight($, starryNight) {
  *   modifiedDate?: Date | undefined;
  *   date?: Date | undefined;
  *   canonical: string;
- *   base: string;
+ *   baseURL: string;
  *   author: string;
  *   lc: keyof typeof messages;
  *   messages: typeof messages;
@@ -328,7 +328,7 @@ async function writeHTML({
   modifiedDate,
   date,
   canonical,
-  base,
+  baseURL,
   author,
   lc,
   messages,
@@ -356,7 +356,7 @@ async function writeHTML({
           <meta property="og:type" content="article" />
           <meta
             property="og:image"
-            content="${escape(new URL("ogp.png", base).toString())}"
+            content="${escape(new URL("ogp.png", baseURL).toString())}"
           />
           <meta property="og:url" content="${escape(canonical)}" />
           ${description
@@ -365,17 +365,19 @@ async function writeHTML({
           <link rel="canonical" href="${escape(canonical)}" />
           <link
             rel="icon"
-            href="${escape(new URL("favicon.ico", base).toString())}"
+            href="${escape(new URL("favicon.ico", baseURL).toString())}"
             sizes="32x32"
           />
           <link
             rel="icon"
-            href="${escape(new URL("icon.svg", base).toString())}"
+            href="${escape(new URL("icon.svg", baseURL).toString())}"
             type="image/svg+xml"
           />
           <link
             rel="apple-touch-icon"
-            href="${escape(new URL("apple-touch-icon.png", base).toString())}"
+            href="${escape(
+              new URL("apple-touch-icon.png", baseURL).toString(),
+            )}"
           />
           <link
             rel="alternate"
@@ -396,7 +398,7 @@ async function writeHTML({
           <link
             rel="alternate"
             type="application/rss+xml"
-            href="${escape(new URL("feed.xml", base).toString())}"
+            href="${escape(new URL("feed.xml", baseURL).toString())}"
           />
           <link rel="stylesheet" href="/github-markdown.css" />
           <link rel="stylesheet" href="/github-markdown-extensions.css" />
@@ -444,7 +446,7 @@ async function writeHTML({
                 dateModified: modifiedDate?.toISOString(),
                 datePublished: date?.toISOString(),
                 headline: title,
-                image: new URL("ogp.png", base).toString(),
+                image: new URL("ogp.png", baseURL).toString(),
               }),
             )}
           </script>
@@ -527,7 +529,7 @@ async function writeHTML({
         <body class="markdown-body">
           <nav>
             <p>
-              <a href="${new URL(".", base).toString()}"
+              <a href="${new URL(".", baseURL).toString()}"
                 >${escape(messages[lc].title())}</a
               >
               ${categories.map(
@@ -559,9 +561,15 @@ async function writeHTML({
  * @param {string} dest
  * @param {string} title
  * @param {string} canonical
- * @param {string} base
+ * @param {string} baseURL
  */
-async function writeRedirectHTMLs(redirectFrom, dest, title, canonical, base) {
+async function writeRedirectHTMLs(
+  redirectFrom,
+  dest,
+  title,
+  canonical,
+  baseURL,
+) {
   if (!redirectFrom) return;
 
   for (const redirectFromPath of redirectFrom) {
@@ -580,17 +588,19 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical, base) {
             <link rel="canonical" href="${escape(canonical)}" />
             <link
               rel="icon"
-              href="${escape(new URL("favicon.ico", base).toString())}"
+              href="${escape(new URL("favicon.ico", baseURL).toString())}"
               sizes="32x32"
             />
             <link
               rel="icon"
-              href="${escape(new URL("icon.svg", base).toString())}"
+              href="${escape(new URL("icon.svg", baseURL).toString())}"
               type="image/svg+xml"
             />
             <link
               rel="apple-touch-icon"
-              href="${escape(new URL("apple-touch-icon.png", base).toString())}"
+              href="${escape(
+                new URL("apple-touch-icon.png", baseURL).toString(),
+              )}"
             />
           </head>
           <body>
@@ -628,25 +638,25 @@ ${sitemapURLs
 
 /**
  * @param {string} destRoot
- * @param {string | URL | undefined} base
+ * @param {string | URL | undefined} baseURL
  */
-async function writeSitemapRobots(destRoot, base) {
+async function writeSitemapRobots(destRoot, baseURL) {
   await writeFile(
     join(destRoot, "robots.txt"),
-    `Sitemap: ${new URL("sitemap.xml", base)}`,
+    `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
   );
 }
 
 /**
  * @param {string} destRoot
- * @param {{ title: string; base: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
+ * @param {{ title: string; baseURL: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
  * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
  */
 async function writeRSS(
   destRoot,
   {
     title,
-    base,
+    baseURL,
     description,
     language,
     copyright,
@@ -670,7 +680,7 @@ async function writeRSS(
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
     <title>${escape(title)}</title>
-    <link>${escape(base)}</link>
+    <link>${escape(baseURL)}</link>
     <description>${escape(description)}</description>
     ${language ? /* XML */ `<language>${escape(language)}</language>` : ""}
     ${copyright ? /* XML */ `<copyright>${escape(copyright)}</copyright>` : ""}
@@ -706,7 +716,7 @@ async function writeRSS(
     }
     ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
     <docs>https://www.rssboard.org/rss-specification</docs>
-    <atom:link href="${escape(new URL("feed.xml", base).toString())}" rel="self" type="application/rss+xml" />
+    <atom:link href="${escape(new URL("feed.xml", baseURL).toString())}" rel="self" type="application/rss+xml" />
     ${rssItems
       .map(
         (item) => /* XML */ `<item>
@@ -735,7 +745,7 @@ const TITLE = "Bang Seongbeom";
 const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
 const AUTHOR = "방성범 (Bang Seongbeom)";
 const EMAIL = "bangseongbeom@gmail.com";
-const BASE = "https://www.bangseongbeom.com/";
+const BASE_URL = "https://www.bangseongbeom.com/";
 const LANG = "en";
 
 const SRC_ROOT = process.env.SRC_ROOT ?? ".";
@@ -796,7 +806,7 @@ await Promise.all(
   (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
     if (extname(src) === ".md") {
       const dest = srcToDest(src, SRC_ROOT, DEST_ROOT);
-      const canonical = srcToCanonical(src, SRC_ROOT, BASE);
+      const canonical = srcToCanonical(src, SRC_ROOT, BASE_URL);
 
       const input = await readFile(src, "utf8");
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date?: Date; modified_date?: Date; redirect_from?: string[]; }; content: string; }} */
@@ -827,7 +837,7 @@ await Promise.all(
       const rssDescription = $.html();
 
       insertHeader($);
-      insertNav($, src, lc, BASE);
+      insertNav($, src, lc, BASE_URL);
       insertDates($, file.data.date, modifiedDate, lang);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
@@ -854,7 +864,7 @@ await Promise.all(
         modifiedDate,
         date,
         canonical,
-        base: BASE,
+        baseURL: BASE_URL,
         author: AUTHOR,
         lc,
         messages,
@@ -883,7 +893,7 @@ await Promise.all(
         dest,
         title,
         canonical,
-        BASE,
+        BASE_URL,
       );
     }
     if (
@@ -899,12 +909,12 @@ await Promise.all(
 );
 
 await writeSitemap(DEST_ROOT, sitemapURLs);
-await writeSitemapRobots(DEST_ROOT, BASE);
+await writeSitemapRobots(DEST_ROOT, BASE_URL);
 await writeRSS(
   DEST_ROOT,
   {
     title: TITLE,
-    base: BASE,
+    baseURL: BASE_URL,
     description: DESCRIPTION,
     language: LANG,
     managingEditor: { email: EMAIL, name: AUTHOR },
