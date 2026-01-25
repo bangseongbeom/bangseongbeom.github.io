@@ -770,8 +770,8 @@ const starryNight = await createStarryNight(all);
 const PAGES_REPO_NWO = "bangseongbeom/bangseongbeom.github.io";
 const TITLE = "Bang Seongbeom";
 const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
-const AUTHOR = "방성범 (Bang Seongbeom)";
-const EMAIL = "bangseongbeom@gmail.com";
+const AUTHOR_NAME = "방성범 (Bang Seongbeom)";
+const AUTHOR_EMAIL = "bangseongbeom@gmail.com";
 const BASE_URL = process.env.BASE_URL ?? fail("BASE_URL is required");
 const LANG = "en";
 
@@ -892,7 +892,7 @@ await Promise.all(
         date,
         canonical,
         baseURL: BASE_URL,
-        author: AUTHOR,
+        author: AUTHOR_NAME,
         lc,
         messages,
         categories,
@@ -946,8 +946,8 @@ await writeRSS(
     baseURL: BASE_URL,
     description: DESCRIPTION,
     language: LANG,
-    managingEditor: { email: EMAIL, name: AUTHOR },
-    webMaster: { email: EMAIL, name: AUTHOR },
+    managingEditor: { email: AUTHOR_EMAIL, name: AUTHOR_NAME },
+    webMaster: { email: AUTHOR_EMAIL, name: AUTHOR_NAME },
   },
   rssItems,
 );
