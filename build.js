@@ -558,8 +558,9 @@ async function writeHTML({
  * @param {string} dest
  * @param {string} title
  * @param {string} canonical
+ * @param {string} base
  */
-async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
+async function writeRedirectHTMLs(redirectFrom, dest, title, canonical, base) {
   if (!redirectFrom) return;
 
   for (const redirectFromPath of redirectFrom) {
@@ -578,17 +579,17 @@ async function writeRedirectHTMLs(redirectFrom, dest, title, canonical) {
             <link rel="canonical" href="${escape(canonical)}" />
             <link
               rel="icon"
-              href="${escape(new URL("favicon.ico", BASE).toString())}"
+              href="${escape(new URL("favicon.ico", base).toString())}"
               sizes="32x32"
             />
             <link
               rel="icon"
-              href="${escape(new URL("icon.svg", BASE).toString())}"
+              href="${escape(new URL("icon.svg", base).toString())}"
               type="image/svg+xml"
             />
             <link
               rel="apple-touch-icon"
-              href="${escape(new URL("apple-touch-icon.png", BASE).toString())}"
+              href="${escape(new URL("apple-touch-icon.png", base).toString())}"
             />
           </head>
           <body>
@@ -876,7 +877,13 @@ await Promise.all(
         guid: canonical,
       });
 
-      await writeRedirectHTMLs(file.data.redirect_from, dest, title, canonical);
+      await writeRedirectHTMLs(
+        file.data.redirect_from,
+        dest,
+        title,
+        canonical,
+        BASE,
+      );
     }
     if (
       [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
