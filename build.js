@@ -398,9 +398,22 @@ async function writeHTML({
             type="application/rss+xml"
             href="${escape(new URL("feed.xml", baseURL).toString())}"
           />
-          <link rel="stylesheet" href="/github-markdown.css" />
-          <link rel="stylesheet" href="/github-markdown-extensions.css" />
-          <link rel="stylesheet" href="/codemirror-github-theme.css" />
+          <link
+            rel="stylesheet"
+            href="${escape(new URL("github-markdown.css", baseURL).toString())}"
+          />
+          <link
+            rel="stylesheet"
+            href="${escape(
+              new URL("github-markdown-extensions.css", baseURL).toString(),
+            )}"
+          />
+          <link
+            rel="stylesheet"
+            href="${escape(
+              new URL("codemirror-github-theme.css", baseURL).toString(),
+            )}"
+          />
           <style>
             @media (hover: none) {
               .anchorjs-link {
@@ -448,7 +461,10 @@ async function writeHTML({
               }),
             )}
           </script>
-          <script type="module" src="/clipboard-copy.js"></script>
+          <script
+            type="module"
+            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
+          ></script>
           <!--
                 Import map generated with JSPM Generator
                 Edit here: https://generator.jspm.io/#ZY47DoMwEERdpMhFUmaRIR+XvgQHWMEKHPkneyFKmlw9hs6i2Oa9Gc1eTkKcf71nw5ZGoYcwkjMphdTgwmEILlpi0g+QCp6VL86hH3NxCmSlLPrp+sIV85BM5JJo4XZMxA/Pwe/22F9w2mcldJXLjPs/d2grvhp6F9ypjVv6UmpmM822HGu5TfwB2+nFz+wA
@@ -486,7 +502,10 @@ async function writeHTML({
               }
             }
           </script>
-          <script type="module" src="/runnable-code.js"></script>
+          <script
+            type="module"
+            src="${escape(new URL("runnable-code.js", baseURL).toString())}"
+          ></script>
           <!-- Google tag (gtag.js) -->
           <script
             async
@@ -533,7 +552,7 @@ async function writeHTML({
               ${categories.map(
                 (category) =>
                   /* HTML */ `/
-                    <a href="/${category}"
+                    <a href="${escape(new URL(category, baseURL).toString())}"
                       >${escape(
                         categoryNames[
                           /** @type {keyof typeof categoryNames} */ (category)
