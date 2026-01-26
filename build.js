@@ -158,9 +158,9 @@ function insertHeader($) {
  * @param {string} srcRoot
  * @param {keyof typeof messages} lc
  * @param {string} baseURL
- * @param {string} pagesRepoNWO
+ * @param {string} repository
  */
-function insertNav($, src, srcRoot, lc, baseURL, pagesRepoNWO) {
+function insertNav($, src, srcRoot, lc, baseURL, repository) {
   $("h1 + header").append(/* HTML */ `
     <p>
       <a
@@ -173,7 +173,7 @@ function insertNav($, src, srcRoot, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.github.title())}"
         >${escape(messages[lc].footer.github.content())}</a
@@ -181,7 +181,7 @@ function insertNav($, src, srcRoot, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.edit.title())}"
         >${escape(messages[lc].footer.edit.content())}</a
@@ -189,7 +189,7 @@ function insertNav($, src, srcRoot, lc, baseURL, pagesRepoNWO) {
       •
       <a
         href="${escape(
-          `https://github.com/${pagesRepoNWO}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
         )}"
         title="${escape(messages[lc].footer.history.title())}"
         >${escape(messages[lc].footer.history.content())}</a
@@ -318,7 +318,7 @@ function highlight($, starryNight) {
  *   $: import("cheerio").CheerioAPI;
  *   src: string;
  *   srcRoot: string;
- *   pagesRepoNWO: string;
+ *   repository: string;
  * }} param0
  */
 async function writeHTML({
@@ -338,7 +338,7 @@ async function writeHTML({
   $,
   src,
   srcRoot,
-  pagesRepoNWO,
+  repository,
 }) {
   await mkdir(dirname(dest), { recursive: true });
   await writeFile(
@@ -395,7 +395,7 @@ async function writeHTML({
             rel="alternate"
             type="text/html"
             href="${escape(
-              `https://github.com/${pagesRepoNWO}/blob/main${
+              `https://github.com/${repository}/blob/main${
                 pathToFileURL(join(sep, relative(srcRoot, src))).pathname
               }`,
             )}"
@@ -529,7 +529,7 @@ async function writeHTML({
           </script>
           <script
             src="https://giscus.app/client.js"
-            data-repo="${escape(pagesRepoNWO)}"
+            data-repo="${escape(repository)}"
             data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
             data-category="Comments"
             data-category-id="DIC_kwDOBYE9uc4Ct9yc"
@@ -767,20 +767,22 @@ const execFile = promisify(child_process.execFile);
 
 const starryNight = await createStarryNight(all);
 
-const PAGES_REPO_NWO = "bangseongbeom/bangseongbeom.github.io";
-const TITLE = "Bang Seongbeom";
-const DESCRIPTION = "Developer Bang Seongbeom's technical documentation.";
-const AUTHOR_NAME = "방성범 (Bang Seongbeom)";
-const AUTHOR_EMAIL = "bangseongbeom@gmail.com";
-const BASE_URL = process.env.BASE_URL ?? fail("BASE_URL is required");
-const LANG = "en";
+const repository = "bangseongbeom/bangseongbeom.github.io";
+const title = "Bang Seongbeom";
+const description = "Developer Bang Seongbeom's technical documentation.";
+const author = {
+  name: "방성범 (Bang Seongbeom)",
+  email: "bangseongbeom@gmail.com",
+};
+const baseURL = process.env.BASE_URL ?? fail("BASE_URL is required");
+const defaultLang = "en";
 
-const SRC_ROOT = process.env.SRC_ROOT ?? ".";
-const DEST_ROOT = process.env.DEST_ROOT ?? "_site";
+const srcRoot = process.env.SRC_ROOT ?? ".";
+const destRoot = process.env.DEST_ROOT ?? "_site";
 
 const messages = {
   en: {
-    title: () => TITLE,
+    title: () => title,
     categoryNames: {
       android: () => "Android",
       git: () => "Git",
@@ -830,42 +832,43 @@ const sitemapURLs = [];
 let rssItems = [];
 
 await Promise.all(
-  (await globby(join(SRC_ROOT, "**"), { gitignore: true })).map(async (src) => {
+  (await globby(join(srcRoot, "**"), { gitignore: true })).map(async (src) => {
     if (extname(src) === ".md") {
-      const dest = srcToDest(src, SRC_ROOT, DEST_ROOT);
-      const canonical = srcToCanonical(src, SRC_ROOT, BASE_URL);
+      const dest = srcToDest(src, srcRoot, destRoot);
+      const canonical = srcToCanonical(src, srcRoot, baseURL);
 
-      const input = await readFile(src, "utf8");
+      const markdown = await readFile(src, "utf8");
       /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date?: Date; modified_date?: Date; redirect_from?: string[]; }; content: string; }} */
-      const file = matter(input);
+      const { data: frontMatter, content } = matter(markdown);
 
-      const lang = getLang(file.data.lang, src, LANG);
+      const lang = getLang(frontMatter.lang, src, defaultLang);
       const lc = /** @type {keyof typeof messages} */ (
-        match([lang], Object.keys(messages), LANG)
+        match([lang], Object.keys(messages), defaultLang)
       );
 
       const gitLogDates = await getGitLogDates(src);
-      const date = file.data.date ?? gitLogDates.date;
-      const modifiedDate = file.data.modified_date ?? gitLogDates.modifiedDate;
+      const date = frontMatter.date ?? gitLogDates.date;
+      const modifiedDate =
+        frontMatter.modified_date ?? gitLogDates.modifiedDate;
 
-      const $ = markdownToCheerioAPI(file.content);
+      const $ = markdownToCheerioAPI(content);
 
       convertLinks($);
 
       const title =
-        file.data.title ??
+        frontMatter.title ??
         $("h1").first().prop("textContent") ??
         fail("title is required");
       const description =
-        file.data.description ??
+        frontMatter.description ??
         $("#description").prop("textContent") ??
         undefined;
 
       const rssDescription = $.html();
 
       insertHeader($);
-      insertNav($, src, SRC_ROOT, lc, BASE_URL, PAGES_REPO_NWO);
-      insertDates($, file.data.date, modifiedDate, lang);
+      insertNav($, src, srcRoot, lc, baseURL, repository);
+      insertDates($, frontMatter.date, modifiedDate, lang);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
       highlight($, starryNight);
@@ -881,7 +884,7 @@ await Promise.all(
         python: messages[lc].categoryNames.python(),
         web: messages[lc].categoryNames.web(),
       };
-      const categories = file.data.categories ?? [];
+      const categories = frontMatter.categories ?? [];
 
       await writeHTML({
         dest,
@@ -891,16 +894,16 @@ await Promise.all(
         modifiedDate,
         date,
         canonical,
-        baseURL: BASE_URL,
-        author: AUTHOR_NAME,
+        baseURL,
+        author: author.name,
         lc,
         messages,
         categories,
         categoryNames,
         $,
         src,
-        srcRoot: SRC_ROOT,
-        pagesRepoNWO: PAGES_REPO_NWO,
+        srcRoot,
+        repository,
       });
 
       sitemapURLs.push({
@@ -917,12 +920,12 @@ await Promise.all(
       });
 
       await writeRedirectHTMLs(
-        file.data.redirect_from,
+        frontMatter.redirect_from,
         dest,
-        DEST_ROOT,
+        destRoot,
         title,
         canonical,
-        BASE_URL,
+        baseURL,
       );
     }
     if (
@@ -930,37 +933,37 @@ await Promise.all(
         extname(src),
       )
     ) {
-      const dest = join(DEST_ROOT, relative(SRC_ROOT, src));
+      const dest = join(destRoot, relative(srcRoot, src));
       await mkdir(dirname(dest), { recursive: true });
       await copyFile(src, dest);
     }
   }),
 );
 
-await writeSitemap(DEST_ROOT, sitemapURLs);
-await writeSitemapOnlyRobots(DEST_ROOT, BASE_URL);
+await writeSitemap(destRoot, sitemapURLs);
+await writeSitemapOnlyRobots(destRoot, baseURL);
 await writeRSS(
-  DEST_ROOT,
+  destRoot,
   {
-    title: TITLE,
-    baseURL: BASE_URL,
-    description: DESCRIPTION,
-    language: LANG,
-    managingEditor: { email: AUTHOR_EMAIL, name: AUTHOR_NAME },
-    webMaster: { email: AUTHOR_EMAIL, name: AUTHOR_NAME },
+    title,
+    baseURL,
+    description,
+    language: defaultLang,
+    managingEditor: author,
+    webMaster: author,
   },
   rssItems,
 );
 
 await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
-  join(DEST_ROOT, "github-markdown.css"),
+  join(destRoot, "github-markdown.css"),
 );
 await copyFile(
-  join(SRC_ROOT, "clipboard-copy.js"),
-  join(DEST_ROOT, "clipboard-copy.js"),
+  join(srcRoot, "clipboard-copy.js"),
+  join(destRoot, "clipboard-copy.js"),
 );
 await copyFile(
-  join(SRC_ROOT, "runnable-code.js"),
-  join(DEST_ROOT, "runnable-code.js"),
+  join(srcRoot, "runnable-code.js"),
+  join(destRoot, "runnable-code.js"),
 );
