@@ -675,14 +675,14 @@ async function writeSitemapOnlyRobots(destRoot, baseURL) {
 
 /**
  * @param {string} destRoot
- * @param {{ title: string; baseURL: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
+ * @param {{ title: string; link: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; atomLink: string; }} param1
  * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
  */
 async function writeRSS(
   destRoot,
   {
     title,
-    baseURL,
+    link,
     description,
     language,
     copyright,
@@ -691,6 +691,7 @@ async function writeRSS(
     pubDate,
     categories,
     generator,
+    atomLink,
   },
   rssItems,
 ) {
@@ -706,7 +707,7 @@ async function writeRSS(
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
     <title>${escape(title)}</title>
-    <link>${escape(baseURL)}</link>
+    <link>${escape(link)}</link>
     <description>${escape(description)}</description>
     ${language ? /* XML */ `<language>${escape(language)}</language>` : ""}
     ${copyright ? /* XML */ `<copyright>${escape(copyright)}</copyright>` : ""}
@@ -742,7 +743,7 @@ async function writeRSS(
     }
     ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
     <docs>https://www.rssboard.org/rss-specification</docs>
-    <atom:link href="${escape(new URL("feed.xml", baseURL).toString())}" rel="self" type="application/rss+xml" />
+    <atom:link href="${escape(atomLink)}" rel="self" type="application/rss+xml" />
     ${rssItems
       .map(
         (item) => /* XML */ `<item>
@@ -946,11 +947,12 @@ await writeRSS(
   destRoot,
   {
     title,
-    baseURL,
+    link: baseURL,
     description,
     language: defaultLang,
     managingEditor: author,
     webMaster: author,
+    atomLink: new URL("feed.xml", baseURL).toString(),
   },
   rssItems,
 );
