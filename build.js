@@ -905,7 +905,7 @@ await Promise.all(
 
       sitemapURLs.push({
         loc: canonical,
-        lastmod: modifiedDate ?? date,
+        lastmod: modifiedDate,
       });
       rssItems.push({
         title,
