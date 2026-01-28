@@ -313,10 +313,6 @@ function highlight($, starryNight) {
  *   canonical: string;
  *   baseURL: string;
  *   author: string;
- *   lc: keyof typeof messages;
- *   messages: typeof messages;
- *   categories: string[];
- *   categoryNames: Record<string, string>;
  *   $: import("cheerio").CheerioAPI;
  *   src: string;
  *   srcRoot: string;
@@ -333,10 +329,6 @@ async function writeHTML({
   canonical,
   baseURL,
   author,
-  lc,
-  messages,
-  categories,
-  categoryNames,
   $,
   src,
   srcRoot,
@@ -559,24 +551,6 @@ async function writeHTML({
           </script>
         </head>
         <body>
-          <nav>
-            <p>
-              <a href="${new URL(".", baseURL).toString()}"
-                >${escape(messages[lc].title())}</a
-              >
-              ${categories.map(
-                (category) =>
-                  /* HTML */ `/
-                    <a href="${escape(new URL(category, baseURL).toString())}"
-                      >${escape(
-                        categoryNames[
-                          /** @type {keyof typeof categoryNames} */ (category)
-                        ],
-                      )}</a
-                    > `,
-              )}
-            </p>
-          </nav>
           <main class="markdown-body">${$.html()}</main>
           ${["/README.md", "/404.md"].includes(
             pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
@@ -791,17 +765,6 @@ const destRoot = process.env.DEST_ROOT ?? "_site";
 const messages = {
   en: {
     title: () => title,
-    categoryNames: {
-      android: () => "Android",
-      git: () => "Git",
-      iot: () => "IoT",
-      java: () => "Java",
-      linux: () => "Linux",
-      machineLearning: () => "Machine learning",
-      misc: () => "Misc.",
-      python: () => "Python",
-      web: () => "Web",
-    },
     footer: {
       markdown: { title: () => "View as Markdown", content: () => "Markdown" },
       github: { title: () => "View on GitHub", content: () => "GitHub" },
@@ -812,17 +775,6 @@ const messages = {
   },
   ko: {
     title: () => "방성범",
-    categoryNames: {
-      android: () => "안드로이드",
-      git: () => "깃",
-      iot: () => "IoT",
-      java: () => "자바",
-      linux: () => "리눅스",
-      machineLearning: () => "기계 학습",
-      misc: () => "기타",
-      python: () => "파이썬",
-      web: () => "웹",
-    },
     footer: {
       markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
       github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
@@ -879,17 +831,6 @@ await Promise.all(
       insertRunnableCodeChildren($);
       highlight($, starryNight);
 
-      const categoryNames = {
-        android: messages[lc].categoryNames.android(),
-        git: messages[lc].categoryNames.git(),
-        iot: messages[lc].categoryNames.iot(),
-        java: messages[lc].categoryNames.java(),
-        linux: messages[lc].categoryNames.linux(),
-        "machine-learning": messages[lc].categoryNames.machineLearning(),
-        misc: messages[lc].categoryNames.misc(),
-        python: messages[lc].categoryNames.python(),
-        web: messages[lc].categoryNames.web(),
-      };
       const categories = frontMatter.categories ?? [];
 
       await writeHTML({
@@ -902,10 +843,6 @@ await Promise.all(
         canonical,
         baseURL,
         author: author.name,
-        lc,
-        messages,
-        categories,
-        categoryNames,
         $,
         src,
         srcRoot,
