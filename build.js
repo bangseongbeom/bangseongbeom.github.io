@@ -658,7 +658,7 @@ async function writeSitemapOnlyRobots(destRoot, baseURL) {
 /**
  * @param {string} destRoot
  * @param {{ title: string; link: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
- * @param {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
+ * @param {{ title: string; link: string; description: string; categories?: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
  */
 async function writeRSS(
   destRoot,
@@ -714,13 +714,10 @@ async function writeRSS(
     <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
     ${
       categories
-        ? categories
-            .map(
-              (category) =>
-                /* XML */ `<category>${escape(category)}</category>`,
-            )
-            .join("")
-        : ""
+        ?.map(
+          (category) => /* XML */ `<category>${escape(category)}</category>`,
+        )
+        .join("") ?? ""
     }
     ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
     <docs>https://www.rssboard.org/rss-specification</docs>
@@ -731,7 +728,7 @@ async function writeRSS(
       <title>${escape(item.title)}</title>
       <link>${escape(item.link)}</link>
       <description>${escape(item.description)}</description>
-      ${item.categories.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("")}
+      ${item.categories?.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("") ?? ""}
       ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
       <guid>${escape(item.guid)}</guid>
       ${item.content ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
@@ -788,7 +785,7 @@ const messages = {
 /** @type {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} */
 const sitemapURLs = [];
 
-/** @type {{ title: string; link: string; description: string; categories: string[]; pubDate?: Date; guid: string; content?: string; }[]} */
+/** @type {{ title: string; link: string; description: string; categories?: string[]; pubDate?: Date; guid: string; content?: string; }[]} */
 let rssItems = [];
 
 await Promise.all(
@@ -831,7 +828,7 @@ await Promise.all(
       insertRunnableCodeChildren($);
       highlight($, starryNight);
 
-      const categories = frontMatter.categories ?? [];
+      const categories = frontMatter.categories;
 
       await writeHTML({
         dest,
