@@ -4,6 +4,8 @@ categories: [linux]
 date: 2020-04-29
 ---
 
+[방성범](/README.md) / [리눅스](/linux.md)
+
 # source, . (점): 셸 스크립트 파일 실행
 
 [배시]\(Bash)에서 `source`와 `.`은 동일한 기능을 하는 명령어로, 셸 스크립트 파일을 실행하는 데 사용합니다.

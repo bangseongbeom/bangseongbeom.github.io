@@ -5,6 +5,8 @@ date: 2020-05-02
 redirect_from: [/shell-arrays.html]
 ---
 
+[방성범](/README.md) / [리눅스](/linux.md)
+
 # 배시 배열
 
 배열을 통해 여러 값을 효과적으로 다룰 수 있습니다.

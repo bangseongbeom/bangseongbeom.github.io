@@ -1,6 +1,4 @@
----
-categories: [linux]
----
+[Bang Seongbeom](/README.md)
 
 # Linux
 

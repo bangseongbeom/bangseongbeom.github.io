@@ -4,6 +4,8 @@ categories: [python]
 date: 2019-08-20
 ---
 
+[방성범](/README.md) / [파이썬](/python.md)
+
 # 플라스크 시그널
 
 파이썬 [플라스크(Flask)](https://flask.palletsprojects.com/)에서 프레임워크 내부 동작을 감지하는 방법인 시그널(Signals)에 대해 살펴봅니다.

@@ -5,6 +5,8 @@ date: 2020-04-21
 redirect_from: [/hyphen-files.html, /file-name-trailing-hyphens.html]
 ---
 
+[방성범](/README.md) / [리눅스](/linux.md)
+
 # 파일 이름 끝 하이픈
 
 리눅스에서 `/etc/group-`, `/etc/passwd-`, `/etc/shadow-`의 파일 이름 끝에 있는 하이픈(`-`)은 백업 파일을 의미합니다.

@@ -5,6 +5,8 @@ date: 2020-04-19
 redirect_from: [/dot-d-directories.html]
 ---
 
+[방성범](/README.md) / [리눅스](/linux.md)
+
 # 디렉터리 이름 끝 '.d'
 
 리눅스의 `/etc` 디렉터리 안에는 여러 하위 디렉터리가 존재합니다. 이중 이름 끝에 붙는 `.d`는 무엇을 의미할까요?

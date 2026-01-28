@@ -1,6 +1,4 @@
----
-categories: [machine-learning]
----
+[Bang Seongbeom](/README.md)
 
 # Machine learning
 

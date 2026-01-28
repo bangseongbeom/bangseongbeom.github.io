@@ -1,6 +1,4 @@
----
-categories: [git]
----
+[Bang Seongbeom](/README.md)
 
 # Git
 

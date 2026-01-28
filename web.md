@@ -1,7 +1,8 @@
 ---
-categories: [web]
 redirect_from: [/categories/web.html]
 ---
+
+[Bang Seongbeom](/README.md)
 
 # Web
 

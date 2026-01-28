@@ -4,6 +4,8 @@ categories: [web]
 date: 2019-07-21
 ---
 
+[방성범](/README.md) / [웹](/web.md)
+
 # Redux의 장점과 주의점
 
 [Redux(리덕스)](https://redux.js.org/)를 쓰는 이유와 사용 시 주의할 점에 대해 살펴봅니다.
