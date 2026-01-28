@@ -422,7 +422,7 @@ async function writeHTML({
               }
             }
 
-            body {
+            .markdown-body {
               box-sizing: border-box;
               min-width: 200px;
               max-width: 980px;
@@ -430,14 +430,14 @@ async function writeHTML({
               padding: 45px;
             }
 
-            @media (prefers-color-scheme: dark) {
-              body {
-                background-color: #0d1117;
+            @media (max-width: 767px) {
+              .markdown-body {
+                padding: 15px;
               }
             }
 
-            .markdown-body > header {
-              &:first-child h1 {
+            .markdown-body header:first-child {
+              h1 {
                 margin-top: 0 !important;
               }
 
@@ -550,8 +550,8 @@ async function writeHTML({
             });
           </script>
         </head>
-        <body>
-          <main class="markdown-body">${$.html()}</main>
+        <body class="markdown-body">
+          <main>${$.html()}</main>
           ${["/README.md", "/404.md"].includes(
             pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
           )
