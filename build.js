@@ -860,9 +860,7 @@ await Promise.all(
         $("h1").first().prop("textContent") ??
         fail("title is required");
       const description =
-        frontMatter.description ??
-        $("#description").prop("textContent") ??
-        undefined;
+        frontMatter.description ?? $("h1 + p").prop("textContent") ?? undefined;
 
       const rssDescription = $.html();
 

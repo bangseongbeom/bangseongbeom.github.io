@@ -1,6 +1,6 @@
 # Bang Seongbeom
 
-<span id="description">Developer Bang Seongbeom's technical documentation.</span>
+Developer Bang Seongbeom's technical documentation.
 
 - [Android](/android.md)
 - [Git](/git.md)
