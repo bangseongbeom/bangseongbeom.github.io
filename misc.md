@@ -1,8 +1,7 @@
 ---
+categories: [misc]
 redirect_from: [/etc.html]
 ---
-
-[Bang Seongbeom](/README.md)
 
 # Misc.
 

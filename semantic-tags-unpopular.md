@@ -5,8 +5,6 @@ date: 2018-11-07
 redirect_from: [/posts/semantic-tags-unpopular.html]
 ---
 
-[방성범](/README.md) / [웹](/web.md)
-
 # 시맨틱 태그가 인기 없는 이유
 
 시맨틱 태그가 더 널리 사용되게 하기 위해서는 시맨틱 태그에도 기본적인 CSS 스타일이 있어야 합니다.

@@ -1,8 +1,7 @@
 ---
+categories: [java]
 redirect_from: [/categories/java.html]
 ---
-
-[Bang Seongbeom](/README.md)
 
 # Java
 

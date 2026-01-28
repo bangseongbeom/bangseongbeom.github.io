@@ -4,8 +4,6 @@ categories: [python]
 date: 2020-04-19
 ---
 
-[방성범](/README.md) / [파이썬](/python.md)
-
 # sys.path, PYTHONPATH: 파이썬 파일 탐색 경로
 
 `import` 문을 통해 다른 파이썬 파일을 불러올 때, 파이썬은 내부적으로 파일을 찾기 위해 [`sys.path`]와 [`PYTHONPATH`]에 있는 경로를 탐색합니다. 이 두 변수를 적절히 수정해 임의의 디렉터리에 있는 파이썬 파일을 손쉽게 불러올 수 있습니다.

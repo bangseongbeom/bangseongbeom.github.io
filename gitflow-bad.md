@@ -4,8 +4,6 @@ categories: [git]
 date: 2019-07-21
 ---
 
-[방성범](/README.md) / [깃](/git.md)
-
 # GitFlow가 안 좋은 이유
 
 깃에서 가장 유명한 브랜칭 전략인 [GitFlow(깃플로)](https://danielkummer.github.io/git-flow-cheatsheet/)의 단점을 분석합니다.

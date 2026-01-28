@@ -1,4 +1,6 @@
-[Bang Seongbeom](/README.md)
+---
+categories: [iot]
+---
 
 # IoT
 

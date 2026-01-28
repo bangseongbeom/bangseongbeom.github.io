@@ -4,8 +4,6 @@ categories: [web]
 date: 2020-06-14
 ---
 
-[방성범](/README.md) / [웹](/web.md)
-
 # 셀레늄 IDE 가이드
 
 [셀레늄 IDE](https://www.selenium.dev/selenium-ide/)(Selenium IDE)는 사용자가 웹 브라우저에서 수행한 동작을 기록하고, 이를 다시 재현합니다.

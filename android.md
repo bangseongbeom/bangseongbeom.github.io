@@ -1,8 +1,7 @@
 ---
+categories: [android]
 redirect_from: [/categories/android.html]
 ---
-
-[Bang Seongbeom](/README.md)
 
 # Android
 

@@ -5,8 +5,6 @@ date: 2020-04-25
 redirect_from: [/run-command-env-vars.html, /shell-command-env-vars.html]
 ---
 
-[방성범](/README.md) / [리눅스](/linux.md)
-
 # 셸에서 환경 변수와 함께 명령어를 실행하는 법
 
 `ABC=123 bash asdf.sh`처럼 명령어 앞에 환경 변수를 선언할 수 있습니다. 이렇게 선언된 환경 변수는 해당 명령어를 실행하는 동안에만 유효합니다.

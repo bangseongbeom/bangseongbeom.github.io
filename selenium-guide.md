@@ -4,8 +4,6 @@ categories: [web]
 date: 2020-06-09
 ---
 
-[방성범](/README.md) / [웹](/web.md)
-
 # 셀레늄 가이드
 
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE

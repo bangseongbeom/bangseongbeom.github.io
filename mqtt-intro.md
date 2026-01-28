@@ -4,8 +4,6 @@ categories: [iot]
 date: 2019-08-16
 ---
 
-[방성범](/README.md) / [IoT](/iot.md)
-
 # MQTT 소개
 
 MQTT의 필요성과 특징에 대해 소개합니다.

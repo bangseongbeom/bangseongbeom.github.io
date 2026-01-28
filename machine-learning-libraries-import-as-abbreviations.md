@@ -4,8 +4,6 @@ categories: [machine-learning]
 date: 2020-05-10
 ---
 
-[방성범](/README.md) / [기계 학습](/machine-learning.md)
-
 # 기계 학습 라이브러리들의 'import as' 약칭
 
 `numpy`를 `np`로 줄여쓰는 것처럼, 다양한 기계 학습 라이브러리의 약칭을 정리했습니다.

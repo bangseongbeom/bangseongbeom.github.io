@@ -4,8 +4,6 @@ categories: [machine-learning]
 date: 2020-05-17
 ---
 
-[방성범](/README.md) / [기계 학습](/machine-learning.md)
-
 # 넘파이 vs 사이파이
 
 [넘파이]\(NumPy)와 [사이파이]\(SciPy)의 차이점에 대해 다룹니다.

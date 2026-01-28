@@ -1,8 +1,7 @@
 ---
+categories: [python]
 redirect_from: [/categories/python.html]
 ---
-
-[Bang Seongbeom](/README.md)
 
 # Python
 
