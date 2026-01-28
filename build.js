@@ -148,8 +148,8 @@ function convertLinks($) {
 /**
  * @param {import("cheerio").CheerioAPI} $
  */
-function insertHeader($) {
-  $("h1").after(/* HTML */ `<header></header>`);
+function wrapWithHeader($) {
+  $("h1").wrap(/* HTML */ `<header></header>`);
 }
 
 /**
@@ -161,46 +161,48 @@ function insertHeader($) {
  * @param {string} repository
  */
 function insertNav($, src, srcRoot, lc, baseURL, repository) {
-  $("h1 + header").append(/* HTML */ `
-    <p>
-      <a
-        href="${escape(
-          pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
-        )}"
-        title="${escape(messages[lc].footer.markdown.title())}"
-        >${escape(messages[lc].footer.markdown.content())}</a
-      >
-      •
-      <a
-        href="${escape(
-          `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-        )}"
-        title="${escape(messages[lc].footer.github.title())}"
-        >${escape(messages[lc].footer.github.content())}</a
-      >
-      •
-      <a
-        href="${escape(
-          `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-        )}"
-        title="${escape(messages[lc].footer.edit.title())}"
-        >${escape(messages[lc].footer.edit.content())}</a
-      >
-      •
-      <a
-        href="${escape(
-          `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-        )}"
-        title="${escape(messages[lc].footer.history.title())}"
-        >${escape(messages[lc].footer.history.content())}</a
-      >
-      •
-      <a
-        href="${escape(new URL("feed.xml", baseURL).toString())}"
-        title="${escape(messages[lc].footer.rss.title())}"
-        >${escape(messages[lc].footer.rss.content())}</a
-      >
-    </p>
+  $("header").append(/* HTML */ `
+    <nav>
+      <p>
+        <a
+          href="${escape(
+            pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+          )}"
+          title="${escape(messages[lc].footer.markdown.title())}"
+          >${escape(messages[lc].footer.markdown.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.github.title())}"
+          >${escape(messages[lc].footer.github.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.edit.title())}"
+          >${escape(messages[lc].footer.edit.content())}</a
+        >
+        •
+        <a
+          href="${escape(
+            `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+          )}"
+          title="${escape(messages[lc].footer.history.title())}"
+          >${escape(messages[lc].footer.history.content())}</a
+        >
+        •
+        <a
+          href="${escape(new URL("feed.xml", baseURL).toString())}"
+          title="${escape(messages[lc].footer.rss.title())}"
+          >${escape(messages[lc].footer.rss.content())}</a
+        >
+      </p>
+    </nav>
   `);
 }
 
@@ -213,7 +215,7 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
 function insertDates($, date, modifiedDate, lang) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
-    $("h1 + header").append(
+    $("header").append(
       /* HTML */ `<p id="dates">
         Published:
         <time id="date" datetime="${escape(date.toISOString())}"
@@ -442,7 +444,7 @@ async function writeHTML({
               }
             }
 
-            main header {
+            main header p {
               font-size: 12px;
               color: var(--fgColor-muted);
             }
@@ -864,7 +866,7 @@ await Promise.all(
 
       const rssDescription = $.html();
 
-      insertHeader($);
+      wrapWithHeader($);
       insertNav($, src, srcRoot, lc, baseURL, repository);
       insertDates($, frontMatter.date, modifiedDate, lang);
       insertClipboardCopy($);
