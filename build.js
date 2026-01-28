@@ -436,8 +436,8 @@ async function writeHTML({
               }
             }
 
-            .markdown-body header:first-child {
-              h1 {
+            .markdown-body header {
+              &:first-child h1 {
                 margin-top: 0 !important;
               }
 
