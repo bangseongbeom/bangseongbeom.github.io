@@ -168,38 +168,38 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
           href="${escape(
             pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
           )}"
-          title="${escape(messages[lc].footer.markdown.title())}"
-          >${escape(messages[lc].footer.markdown.content())}</a
+          title="${escape(messages[lc].header.nav.markdown.title())}"
+          >${escape(messages[lc].header.nav.markdown.content())}</a
         >
         •
         <a
           href="${escape(
             `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
           )}"
-          title="${escape(messages[lc].footer.github.title())}"
-          >${escape(messages[lc].footer.github.content())}</a
+          title="${escape(messages[lc].header.nav.github.title())}"
+          >${escape(messages[lc].header.nav.github.content())}</a
         >
         •
         <a
           href="${escape(
             `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
           )}"
-          title="${escape(messages[lc].footer.edit.title())}"
-          >${escape(messages[lc].footer.edit.content())}</a
+          title="${escape(messages[lc].header.nav.edit.title())}"
+          >${escape(messages[lc].header.nav.edit.content())}</a
         >
         •
         <a
           href="${escape(
             `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
           )}"
-          title="${escape(messages[lc].footer.history.title())}"
-          >${escape(messages[lc].footer.history.content())}</a
+          title="${escape(messages[lc].header.nav.history.title())}"
+          >${escape(messages[lc].header.nav.history.content())}</a
         >
         •
         <a
           href="${escape(new URL("feed.xml", baseURL).toString())}"
-          title="${escape(messages[lc].footer.rss.title())}"
-          >${escape(messages[lc].footer.rss.content())}</a
+          title="${escape(messages[lc].header.nav.rss.title())}"
+          >${escape(messages[lc].header.nav.rss.content())}</a
         >
       </p>
     </nav>
@@ -762,22 +762,32 @@ const destRoot = process.env.DEST_ROOT ?? "_site";
 const messages = {
   en: {
     title: () => title,
-    footer: {
-      markdown: { title: () => "View as Markdown", content: () => "Markdown" },
-      github: { title: () => "View on GitHub", content: () => "GitHub" },
-      edit: { title: () => "Suggest an edit", content: () => "Edit" },
-      history: { title: () => "View history", content: () => "History" },
-      rss: { title: () => "RSS feed", content: () => "RSS" },
+    header: {
+      nav: {
+        markdown: {
+          title: () => "View as Markdown",
+          content: () => "Markdown",
+        },
+        github: { title: () => "View on GitHub", content: () => "GitHub" },
+        edit: { title: () => "Suggest an edit", content: () => "Edit" },
+        history: { title: () => "View history", content: () => "History" },
+        rss: { title: () => "RSS feed", content: () => "RSS" },
+      },
     },
   },
   ko: {
     title: () => "방성범",
-    footer: {
-      markdown: { title: () => "마크다운으로 보기", content: () => "마크다운" },
-      github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
-      edit: { title: () => "편집 제안", content: () => "편집" },
-      history: { title: () => "역사 보기", content: () => "역사" },
-      rss: { title: () => "RSS 피드", content: () => "RSS" },
+    header: {
+      nav: {
+        markdown: {
+          title: () => "마크다운으로 보기",
+          content: () => "마크다운",
+        },
+        github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
+        edit: { title: () => "편집 제안", content: () => "편집" },
+        history: { title: () => "역사 보기", content: () => "역사" },
+        rss: { title: () => "RSS 피드", content: () => "RSS" },
+      },
     },
   },
 };
