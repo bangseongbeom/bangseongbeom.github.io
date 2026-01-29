@@ -171,7 +171,7 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
           title="${escape(messages[lc].header.nav.markdown.title())}"
           >${escape(messages[lc].header.nav.markdown.content())}</a
         >
-        •
+        <span>·</span>
         <a
           href="${escape(
             `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
@@ -179,7 +179,7 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
           title="${escape(messages[lc].header.nav.github.title())}"
           >${escape(messages[lc].header.nav.github.content())}</a
         >
-        •
+        <span>·</span>
         <a
           href="${escape(
             `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
@@ -187,7 +187,7 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
           title="${escape(messages[lc].header.nav.edit.title())}"
           >${escape(messages[lc].header.nav.edit.content())}</a
         >
-        •
+        <span>·</span>
         <a
           href="${escape(
             `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
@@ -195,7 +195,7 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
           title="${escape(messages[lc].header.nav.history.title())}"
           >${escape(messages[lc].header.nav.history.content())}</a
         >
-        •
+        <span>·</span>
         <a
           href="${escape(new URL("feed.xml", baseURL).toString())}"
           title="${escape(messages[lc].header.nav.rss.title())}"
@@ -217,15 +217,20 @@ function insertDates($, date, modifiedDate, lang) {
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
     $("header").append(
       /* HTML */ `<p id="dates">
-        Published:
-        <time id="date" datetime="${escape(date.toISOString())}"
-          >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
+        <span
+          >Published:
+          <time id="date" datetime="${escape(date.toISOString())}"
+            >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
+          ></span
         >
-        • Modified:
-        <time
-          id="modified-date"
-          datetime="${escape(modifiedDate.toISOString())}"
-          >${escape(new Intl.DateTimeFormat(lang).format(modifiedDate))}</time
+        <span>·</span>
+        <span
+          >Modified:
+          <time
+            id="modified-date"
+            datetime="${escape(modifiedDate.toISOString())}"
+            >${escape(new Intl.DateTimeFormat(lang).format(modifiedDate))}</time
+          ></span
         >
       </p>`,
     );
@@ -450,6 +455,9 @@ async function writeHTML({
               }
 
               p {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--base-size-8);
                 font-size: 14px;
                 color: var(--fgColor-muted);
               }
