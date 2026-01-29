@@ -450,7 +450,7 @@ async function writeHTML({
               }
 
               p {
-                font-size: 12px;
+                font-size: 14px;
                 color: var(--fgColor-muted);
               }
             }
