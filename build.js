@@ -459,6 +459,14 @@ async function writeHTML({
             .markdown-body .highlight .cm-editor {
               margin-bottom: var(--base-size-16);
             }
+
+            .markdown-body #breadcrumb p {
+              display: flex;
+              flex-wrap: wrap;
+              gap: var(--base-size-8);
+              font-size: 14px;
+              color: var(--fgColor-muted);
+            }
           </style>
           <script type="application/ld+json">
             ${JSON.stringify(
@@ -559,22 +567,24 @@ async function writeHTML({
           </script>
         </head>
         <body class="markdown-body">
-          <nav>
+          <nav id="breadcrumb">
             <p>
               <a href="${new URL(".", baseURL).toString()}"
                 >${escape(messages[lc].title())}</a
-              >
-              ${categories?.map(
-                (category) =>
-                  /* HTML */ `/
-                    <a href="${escape(new URL(category, baseURL).toString())}"
-                      >${escape(
-                        categoryNames[
-                          /** @type {keyof typeof categoryNames} */ (category)
-                        ],
-                      )}</a
-                    > `,
-              ) ?? ""}
+              >${categories
+                ?.map(
+                  (category) =>
+                    /* HTML */ `<span>/</span
+                      ><a
+                        href="${escape(new URL(category, baseURL).toString())}"
+                        >${escape(
+                          categoryNames[
+                            /** @type {keyof typeof categoryNames} */ (category)
+                          ],
+                        )}</a
+                      >`,
+                )
+                .join("") ?? ""}
             </p>
           </nav>
           <main>${$.html()}</main>
@@ -788,7 +798,7 @@ const destRoot = process.env.DEST_ROOT ?? "_site";
 const messages = {
   en: {
     title: () => title,
-    
+
     categoryNames: {
       android: () => "Android",
       git: () => "Git",
@@ -810,7 +820,8 @@ const messages = {
         edit: { title: () => "Suggest an edit", content: () => "Edit" },
         history: { title: () => "View history", content: () => "History" },
         rss: { title: () => "RSS feed", content: () => "RSS" },
-      },}
+      },
+    },
   },
   ko: {
     title: () => "방성범",
@@ -835,7 +846,8 @@ const messages = {
         edit: { title: () => "편집 제안", content: () => "편집" },
         history: { title: () => "역사 보기", content: () => "역사" },
         rss: { title: () => "RSS 피드", content: () => "RSS" },
-      },}
+      },
+    },
   },
 };
 
