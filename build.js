@@ -579,20 +579,33 @@ async function writeHTML({
             <p>
               <a href="${new URL(".", baseURL).toString()}"
                 >${escape(messages[lc].title())}</a
-              >${categories
-                ?.map(
-                  (category) =>
-                    /* HTML */ `<span>/</span
-                      ><a
-                        href="${escape(new URL(category, baseURL).toString())}"
-                        >${escape(
-                          categoryNames[
-                            /** @type {keyof typeof categoryNames} */ (category)
-                          ],
-                        )}</a
-                      >`,
+              >${categories && categories.length >= 1
+                ? /* HTML */ `<span>/</span>`
+                : ""}${categories
+                ?.map((category) =>
+                  category
+                    .split("/")
+                    .map(
+                      (segment, index, segments) =>
+                        /* HTML */ `<a
+                          href="${escape(
+                            new URL(
+                              segments.slice(0, index + 1).join("/"),
+                              baseURL,
+                            ).toString(),
+                          )}"
+                          >${escape(
+                            categoryNames[
+                              /** @type {keyof typeof categoryNames} */ (
+                                segment
+                              )
+                            ] ?? segment,
+                          )}</a
+                        >`,
+                    )
+                    .join(/* HTML */ `<span>/</span>`),
                 )
-                .join("") ?? ""}
+                .join(/* HTML */ `<span>·</span>`) ?? ""}
             </p>
           </nav>
           <main>${$.html()}</main>
