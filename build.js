@@ -321,7 +321,7 @@ function highlight($, starryNight) {
  *   lc: keyof typeof messages;
  *   messages: typeof messages;
  *   categories?: string[];
- *   categoryNames: Record<string, string>;
+ *   categoryData: { [key: string]: { name: string; href: string } };
  *   $: import("cheerio").CheerioAPI;
  *   src: string;
  *   srcRoot: string;
@@ -341,7 +341,7 @@ async function writeHTML({
   lc,
   messages,
   categories,
-  categoryNames,
+  categoryData,
   $,
   src,
   srcRoot,
@@ -586,20 +586,13 @@ async function writeHTML({
                   category
                     .split("/")
                     .map(
-                      (segment, index, segments) =>
+                      (segment) =>
                         /* HTML */ `<a
-                          href="${escape(
-                            new URL(
-                              segments.slice(0, index + 1).join("/"),
-                              baseURL,
-                            ).toString(),
-                          )}"
+                          href="${escape(categoryData[segment].href)}"
                           >${escape(
-                            categoryNames[
-                              /** @type {keyof typeof categoryNames} */ (
-                                segment
-                              )
-                            ] ?? segment,
+                            categoryData[
+                              /** @type {keyof typeof categoryData} */ (segment)
+                            ].name,
                           )}</a
                         >`,
                     )
@@ -918,16 +911,22 @@ await Promise.all(
       insertRunnableCodeChildren($);
       highlight($, starryNight);
 
-      const categoryNames = {
-        android: messages[lc].categoryNames.android(),
-        git: messages[lc].categoryNames.git(),
-        iot: messages[lc].categoryNames.iot(),
-        java: messages[lc].categoryNames.java(),
-        linux: messages[lc].categoryNames.linux(),
-        "machine-learning": messages[lc].categoryNames.machineLearning(),
-        misc: messages[lc].categoryNames.misc(),
-        python: messages[lc].categoryNames.python(),
-        web: messages[lc].categoryNames.web(),
+      const categoryData = {
+        android: {
+          name: messages[lc].categoryNames.android(),
+          href: "/android",
+        },
+        git: { name: messages[lc].categoryNames.git(), href: "/git" },
+        iot: { name: messages[lc].categoryNames.iot(), href: "/iot" },
+        java: { name: messages[lc].categoryNames.java(), href: "/java" },
+        linux: { name: messages[lc].categoryNames.linux(), href: "/linux" },
+        "machine-learning": {
+          name: messages[lc].categoryNames.machineLearning(),
+          href: "/machine-learning",
+        },
+        misc: { name: messages[lc].categoryNames.misc(), href: "/misc" },
+        python: { name: messages[lc].categoryNames.python(), href: "/python/" },
+        web: { name: messages[lc].categoryNames.web(), href: "/web" },
       };
       const categories = frontMatter.categories;
 
@@ -944,7 +943,7 @@ await Promise.all(
         lc,
         messages,
         categories,
-        categoryNames,
+        categoryData,
         $,
         src,
         srcRoot,
