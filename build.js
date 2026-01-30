@@ -925,7 +925,7 @@ await Promise.all(
           href: "/machine-learning",
         },
         misc: { name: messages[lc].categoryNames.misc(), href: "/misc" },
-        python: { name: messages[lc].categoryNames.python(), href: "/python/" },
+        python: { name: messages[lc].categoryNames.python(), href: "/python" },
         web: { name: messages[lc].categoryNames.web(), href: "/web" },
       };
       const categories = frontMatter.categories;
