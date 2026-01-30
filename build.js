@@ -586,12 +586,17 @@ async function writeHTML({
                   category
                     .split("/")
                     .map(
-                      (segment) =>
+                      (_, i, segments) =>
                         /* HTML */ `<a
-                          href="${escape(categoryData[segment].href)}"
+                          href="${escape(
+                            categoryData[segments.slice(0, i + 1).join("/")]
+                              .href,
+                          )}"
                           >${escape(
                             categoryData[
-                              /** @type {keyof typeof categoryData} */ (segment)
+                              /** @type {keyof typeof categoryData} */ (
+                                segments.slice(0, i + 1).join("/")
+                              )
                             ].name,
                           )}</a
                         >`,
