@@ -449,31 +449,14 @@ async function writeHTML({
               }
             }
 
-            .markdown-body header {
-              &:first-child h1 {
-                margin-top: 0 !important;
-              }
-
-              p {
-                display: flex;
-                flex-wrap: wrap;
-                gap: var(--base-size-8);
-                font-size: 14px;
-                color: var(--fgColor-muted);
-              }
+            .markdown-body > *:first-child > *:first-child,
+            .markdown-body > *:first-child > *:first-child > *:first-child {
+              margin-top: 0 !important;
             }
 
             .markdown-body .highlight pre,
             .markdown-body .highlight .cm-editor {
               margin-bottom: var(--base-size-16);
-            }
-
-            .markdown-body #breadcrumb p {
-              display: flex;
-              flex-wrap: wrap;
-              gap: var(--base-size-8);
-              font-size: 14px;
-              color: var(--fgColor-muted);
             }
           </style>
           <script type="application/ld+json">
@@ -579,15 +562,16 @@ async function writeHTML({
             <p>
               <a href="${new URL(".", baseURL).toString()}"
                 >${escape(messages[lc].title())}</a
-              >${categories && categories.length >= 1
+              >
+              ${categories && categories.length >= 1
                 ? /* HTML */ `<span>/</span>`
                 : ""}${categories
                 ?.map((category) =>
                   category
                     .split("/")
                     .map(
-                      (_, i, segments) =>
-                        /* HTML */ `<a
+                      (_, i, segments) => /* HTML */ `
+                        <a
                           href="${escape(
                             categoryData[segments.slice(0, i + 1).join("/")]
                               .href,
@@ -599,7 +583,8 @@ async function writeHTML({
                               )
                             ].name,
                           )}</a
-                        >`,
+                        >
+                      `,
                     )
                     .join(/* HTML */ `<span>/</span>`),
                 )
