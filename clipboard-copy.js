@@ -13,8 +13,8 @@ document.querySelectorAll("button.clipboard-copy").forEach((button) =>
     const pre = button
       .closest(".highlight, runnable-code")
       ?.querySelector("pre");
-    if (pre) data = pre.textContent;
-    else if (view) data = view.state.doc.toString();
+    if (view) data = view.state.doc.toString();
+    else if (pre) data = pre.textContent;
     else throw new Error();
 
     navigator.clipboard.writeText(data);
