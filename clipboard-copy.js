@@ -19,12 +19,12 @@ document.querySelectorAll("button.clipboard-copy").forEach((button) =>
 
     navigator.clipboard.writeText(data);
 
-    const copy = /** @type {HTMLElement} */ (button.querySelector(".copy"));
+    const normal = /** @type {HTMLElement} */ (button.querySelector(".normal"));
     const copied = /** @type {HTMLElement} */ (button.querySelector(".copied"));
-    copy.hidden = true;
+    normal.hidden = true;
     copied.hidden = false;
     setTimeout(() => {
-      copy.hidden = false;
+      normal.hidden = false;
       copied.hidden = true;
     }, 2000);
   }),

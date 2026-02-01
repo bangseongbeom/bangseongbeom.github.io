@@ -258,8 +258,8 @@ function insertClipboardCopy($) {
       $element.after(
         /* HTML */ `<p>
           <button type="button" class="clipboard-copy">
-            <span class="copy">복사</span>
-            <span class="copied" hidden>복사 완료</span>
+            <span class="normal">Copy</span>
+            <span class="copied" hidden>Copied</span>
           </button>
         </p>`,
       );
@@ -280,12 +280,16 @@ function insertRunnableCodeChildren($) {
 
     if (["js", "ts", "py"].includes(flag)) {
       $clipboardCopy.after(/* HTML */ `
-        <button type="button" class="run-code">코드 실행</button>
+        <button type="button" class="run-code">
+          <span class="normal">Run code</span>
+          <span class="running" hidden>Running...</span>
+        </button>
       `);
     } else if (["java"].includes(flag)) {
       $clipboardCopy.after(/* HTML */ `
+        Paste and run in
         <a href="https://dev.java/playground/" target="_blank"
-          >The Java Playground에 붙여넣고 실행</a
+          >The Java Playground</a
         >
       `);
     }

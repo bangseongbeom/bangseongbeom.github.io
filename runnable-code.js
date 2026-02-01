@@ -248,15 +248,21 @@ async function runCode(event) {
     await import("pyodide");
     if (!pyodide) {
       button.disabled = true;
-      button.dataset.defaultTextContent = button.textContent;
-      button.textContent = "코드 실행 중...";
+      const normal = /** @type {HTMLElement} */ (
+        button.querySelector(".normal")
+      );
+      const running = /** @type {HTMLElement} */ (
+        button.querySelector(".running")
+      );
+      normal.hidden = true;
+      running.hidden = false;
 
       // @ts-expect-error
       pyodide = await loadPyodide();
 
       button.disabled = false;
-      button.textContent = button.dataset.defaultTextContent;
-      delete button.dataset.defaultTextContent;
+      normal.hidden = false;
+      running.hidden = true;
     }
     version = `Pyodide ${pyodide.version}`;
     pyodide.setStdout({
