@@ -245,24 +245,18 @@ async function runCode(event) {
     }
     console = originalConsole;
   } else if (runnableCode.flag === "python" || runnableCode.flag === "py") {
+    button.disabled = true;
+    const normal = /** @type {HTMLElement} */ (button.querySelector(".normal"));
+    const running = /** @type {HTMLElement} */ (
+      button.querySelector(".running")
+    );
+    normal.hidden = true;
+    running.hidden = false;
+
     await import("pyodide");
     if (!pyodide) {
-      button.disabled = true;
-      const normal = /** @type {HTMLElement} */ (
-        button.querySelector(".normal")
-      );
-      const running = /** @type {HTMLElement} */ (
-        button.querySelector(".running")
-      );
-      normal.hidden = true;
-      running.hidden = false;
-
       // @ts-expect-error
       pyodide = await loadPyodide();
-
-      button.disabled = false;
-      normal.hidden = false;
-      running.hidden = true;
     }
     version = `Pyodide ${pyodide.version}`;
     pyodide.setStdout({
@@ -298,6 +292,10 @@ async function runCode(event) {
           : String(error);
       messages.push(message);
     }
+
+    button.disabled = false;
+    normal.hidden = false;
+    running.hidden = true;
   } else throw new Error();
 
   let output = runnableCode.querySelector(".language-output");
