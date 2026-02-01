@@ -60,15 +60,15 @@
   color: var(--fgColor-danger);
 }
 
-.output {
+.language-output {
   white-space: pre-wrap;
   word-break: break-word;
-}
 
-.output .warn {
-  background: light-dark(#fef5d5, #413c26);
-}
+  .warn {
+    background: light-dark(#fef5d5, #413c26);
+  }
 
-.output .error {
-  background: light-dark(#fcebea, #4f3534);
+  .error {
+    background: light-dark(#fcebea, #4f3534);
+  }
 }
