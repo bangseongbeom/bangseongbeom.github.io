@@ -1,7 +1,6 @@
 {
-  "type": "module",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.mjs",
     "start": "serve _site"
   },
   "dependencies": {
