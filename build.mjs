@@ -489,7 +489,7 @@ async function writeHTML({
           <link
             rel="stylesheet"
             href="${escape(
-              new URL("github-markdown-extensions.css", baseURL).toString(),
+              new URL("github-markdown-alert.css", baseURL).toString(),
             )}"
           />
           <link
