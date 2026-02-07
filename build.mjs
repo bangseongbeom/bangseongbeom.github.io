@@ -418,19 +418,11 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(new URL("github-markdown.css", baseURL).toString())}"
+            href="${escape(new URL("both.css", baseURL).toString())}"
           />
           <link
             rel="stylesheet"
-            href="${escape(
-              new URL("github-markdown-extensions.css", baseURL).toString(),
-            )}"
-          />
-          <link
-            rel="stylesheet"
-            href="${escape(
-              new URL("codemirror-github-theme.css", baseURL).toString(),
-            )}"
+            href="${escape(new URL("codemirror.css", baseURL).toString())}"
           />
           <style>
             @media (hover: none) {
@@ -439,28 +431,149 @@ async function writeHTML({
               }
             }
 
-            .markdown-body {
-              box-sizing: border-box;
-              min-width: 200px;
-              max-width: 980px;
-              margin: 0 auto;
-              padding: 45px;
+            body {
+              max-width: 80ch;
+              margin-inline: auto;
+              padding-inline: 8px;
+              line-height: 1.5;
+              overflow-wrap: break-word;
             }
 
-            @media (max-width: 767px) {
-              .markdown-body {
-                padding: 15px;
+            img {
+              max-width: 100%;
+            }
+
+            pre {
+              overflow: auto;
+            }
+
+            table {
+              border-style: outset;
+            }
+            table > tr > td,
+            table > tr > th,
+            table > thead > tr > td,
+            table > thead > tr > th,
+            table > tbody > tr > td,
+            table > tbody > tr > th,
+            table > tfoot > tr > td,
+            table > tfoot > tr > th {
+              border-width: 1px;
+              border-style: inset;
+            }
+
+            blockquote,
+            figure {
+              margin-inline: 20px;
+            }
+
+            dd {
+              margin-inline-start: 20px;
+            }
+            dir,
+            menu,
+            ol,
+            ul {
+              padding-inline-start: 20px;
+            }
+
+            code {
+              padding: 0.25em;
+              background-color: light-dark(
+                rgba(0, 0, 0, 0.1),
+                rgba(255, 255, 255, 0.1)
+              );
+            }
+
+            pre {
+              padding: 0.5em;
+              background-color: light-dark(
+                rgba(0, 0, 0, 0.1),
+                rgba(255, 255, 255, 0.1)
+              );
+
+              code {
+                padding: 0;
+                background-color: transparent;
               }
             }
 
-            .markdown-body > *:first-child > *:first-child,
-            .markdown-body > *:first-child > *:first-child > *:first-child {
-              margin-top: 0 !important;
+            main header p {
+              font-size: smaller;
             }
 
-            .markdown-body .highlight pre,
-            .markdown-body .highlight .cm-editor {
-              margin-bottom: var(--base-size-16);
+            [data-footnote-ref]::before {
+              content: "[";
+            }
+
+            [data-footnote-ref]::after {
+              content: "]";
+            }
+
+            .footnotes {
+              font-size: smaller;
+            }
+
+            .markdown-alert {
+              border-inline-start: 0.25em solid;
+              padding-inline: 20px;
+
+              .markdown-alert-title {
+                font-weight: bolder;
+              }
+
+              &.markdown-alert-note {
+                border-color: light-dark(#0969da, #4493f8);
+
+                .markdown-alert-title {
+                  color: light-dark(#0969da, #4493f8);
+                }
+              }
+
+              &.markdown-alert-tip {
+                border-color: light-dark(#1a7f37, #3fb950);
+
+                .markdown-alert-title {
+                  color: light-dark(#1a7f37, #3fb950);
+                }
+              }
+
+              &.markdown-alert-important {
+                border-color: light-dark(#8250df, #ab7df8);
+
+                .markdown-alert-title {
+                  color: light-dark(#8250df, #ab7df8);
+                }
+              }
+
+              &.markdown-alert-warning {
+                border-color: light-dark(#9a6700, #d29922);
+
+                .markdown-alert-title {
+                  color: light-dark(#9a6700, #d29922);
+                }
+              }
+
+              &.markdown-alert-caution {
+                border-color: light-dark(#d1242f, #f85149);
+
+                .markdown-alert-title {
+                  color: light-dark(#d1242f, #f85149);
+                }
+              }
+            }
+
+            .language-output {
+              white-space: pre-wrap;
+              word-break: break-word;
+
+              .warn {
+                background: light-dark(#fef5d5, #413c26);
+              }
+
+              .error {
+                background: light-dark(#fcebea, #4f3534);
+              }
             }
           </style>
           <script type="application/ld+json">
@@ -561,7 +674,7 @@ async function writeHTML({
             });
           </script>
         </head>
-        <body class="markdown-body">
+        <body>
           <nav id="breadcrumb">
             <p>
               <a href="${new URL(".", baseURL).toString()}"
@@ -994,8 +1107,8 @@ await writeRSS(
 );
 
 await copyFile(
-  fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
-  join(destRoot, "github-markdown.css"),
+  fileURLToPath(import.meta.resolve("@wooorm/starry-night/style/both")),
+  join(destRoot, "both.css"),
 );
 await copyFile(
   join(srcRoot, "clipboard-copy.js"),
