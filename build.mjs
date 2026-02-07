@@ -494,6 +494,10 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
+            href="${escape(new URL("github-button.css", baseURL).toString())}"
+          />
+          <link
+            rel="stylesheet"
             href="${escape(new URL("codemirror.css", baseURL).toString())}"
           />
           <style>
