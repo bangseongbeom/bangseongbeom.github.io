@@ -477,6 +477,21 @@ async function writeHTML({
               padding-inline-start: 20px;
             }
 
+            code {
+              padding: 0.25em 0.5em;
+              background-color: light-dark(#818b981f, #656c7633);
+            }
+
+            pre {
+              padding: 1em;
+              background-color: light-dark(#818b981f, #656c7633);
+
+              code {
+                padding: 0;
+                background-color: transparent;
+              }
+            }
+
             main header p {
               font-size: smaller;
             }

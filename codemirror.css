@@ -2,6 +2,9 @@
   .cm-content {
     padding: 0;
     caret-color: CanvasText;
+
+    padding: 1em;
+    background-color: light-dark(#818b981f, #656c7633);
   }
 
   .cm-line {
