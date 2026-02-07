@@ -532,15 +532,12 @@ async function writeHTML({
             }
 
             .language-output {
-              white-space: pre-wrap;
-              word-break: break-word;
-
               .warn {
-                background: light-dark(#fef5d5, #413c26);
+                color: var(--fgColor-attention);
               }
 
               .error {
-                background: light-dark(#fcebea, #4f3534);
+                color: var(--fgColor-danger);
               }
             }
           </style>
