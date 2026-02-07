@@ -477,27 +477,6 @@ async function writeHTML({
               padding-inline-start: 20px;
             }
 
-            code {
-              padding: 0.25em;
-              background-color: light-dark(
-                rgba(0, 0, 0, 0.1),
-                rgba(255, 255, 255, 0.1)
-              );
-            }
-
-            pre {
-              padding: 0.5em;
-              background-color: light-dark(
-                rgba(0, 0, 0, 0.1),
-                rgba(255, 255, 255, 0.1)
-              );
-
-              code {
-                padding: 0;
-                background-color: transparent;
-              }
-            }
-
             main header p {
               font-size: smaller;
             }
