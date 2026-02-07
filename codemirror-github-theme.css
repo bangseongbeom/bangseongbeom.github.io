@@ -1,10 +1,14 @@
 .cm-editor {
-  .cm-content {
-    padding: 0;
-    caret-color: CanvasText;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
 
-    padding: 1em;
-    background-color: light-dark(#818b981f, #656c7633);
+  .cm-content {
+    padding: var(--base-size-16);
+    caret-color: var(--fgColor-default);
   }
 
   .cm-line {
@@ -16,7 +20,8 @@
   }
 
   .cm-tooltip {
-    background-color: Field;
+    border: 1px solid var(--borderColor-default);
+    background-color: var(--bgColor-muted);
   }
 }
 

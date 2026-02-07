@@ -8,6 +8,7 @@
     "@wooorm/starry-night": "^3.9.0",
     "cheerio": "^1.2.0",
     "comrak": "^0.48.0-rc.0",
+    "github-markdown-css": "^5.9.0",
     "github-slugger": "^2.0.0",
     "globby": "^16.1.0",
     "gray-matter": "^4.0.3",
