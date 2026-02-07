@@ -20,6 +20,11 @@
   line-height: 1;
 }
 
+.markdown-alert .markdown-alert-title svg {
+  fill: currentcolor;
+  margin-right: var(--base-size-8);
+}
+
 .markdown-alert.markdown-alert-note {
   border-left-color: var(--borderColor-accent-emphasis);
 }
