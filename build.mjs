@@ -428,9 +428,7 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(
-              new URL("codemirror-github-theme.css", baseURL).toString(),
-            )}"
+            href="${escape(new URL("codemirror.css", baseURL).toString())}"
           />
           <style>
             @media (hover: none) {
