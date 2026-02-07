@@ -462,6 +462,19 @@ async function writeHTML({
             .markdown-body .highlight .cm-editor {
               margin-bottom: var(--base-size-16);
             }
+
+            .language-output {
+              white-space: pre-wrap;
+              word-break: break-word;
+
+              .warn {
+                background: light-dark(#fef5d5, #413c26);
+              }
+
+              .error {
+                background: light-dark(#fcebea, #4f3534);
+              }
+            }
           </style>
           <script type="application/ld+json">
             ${JSON.stringify(
