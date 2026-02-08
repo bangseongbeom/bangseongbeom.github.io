@@ -557,10 +557,6 @@ async function writeHTML({
               }),
             )}
           </script>
-          <script
-            type="module"
-            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
-          ></script>
           <!--
             Import map generated with JSPM Generator
             Edit here: https://generator.jspm.io/#ZY49DsIwDEYzMHARRtKEAhJbLsEBrMRKg/KnxC2ChauTdms7ePH7nj+fDowdf89IjjwapnQyGFwpqXQwUtIpZI+E6s4vgosVbyxANLUxKbhcMQ/Rnl8wQdXFZZp1ft0n8oeGFBe690ewc6/cskqwPHTbXJwcvtu6f3DZBI9fLN3g7ODbkJKto/8DSFlPF+4A
@@ -598,6 +594,10 @@ async function writeHTML({
               }
             }
           </script>
+          <script
+            type="module"
+            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
+          ></script>
           <script
             type="module"
             src="${escape(new URL("runnable-code.js", baseURL).toString())}"
