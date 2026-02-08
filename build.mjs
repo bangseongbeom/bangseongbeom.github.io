@@ -210,22 +210,23 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
  * @param {import("cheerio").CheerioAPI} $
  * @param {Date | undefined} date
  * @param {Date | undefined} modifiedDate
+ * @param {keyof typeof messages} lc
  * @param {string} lang
  */
-function insertDates($, date, modifiedDate, lang) {
+function insertDates($, date, modifiedDate, lc, lang) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
     $("header").append(
       /* HTML */ `<p id="dates">
         <span
-          >Published:
+          >${escape(messages[lc].header.dates.published())}:
           <time id="date" datetime="${escape(date.toISOString())}"
             >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
           ></span
         >
         <span>·</span>
         <span
-          >Modified:
+          >${escape(messages[lc].header.dates.modified())}:
           <time
             id="modified-date"
             datetime="${escape(modifiedDate.toISOString())}"
@@ -884,7 +885,6 @@ const destRoot = process.env.DEST_ROOT ?? "_site";
 const messages = {
   en: {
     title: () => title,
-
     categoryNames: {
       android: () => "Android",
       git: () => "Git",
@@ -906,6 +906,10 @@ const messages = {
         edit: { title: () => "Suggest an edit", content: () => "Edit" },
         history: { title: () => "View history", content: () => "History" },
         rss: { title: () => "RSS feed", content: () => "RSS" },
+      },
+      dates: {
+        published: () => "Published",
+        modified: () => "Modified",
       },
     },
   },
@@ -932,6 +936,10 @@ const messages = {
         edit: { title: () => "편집 제안", content: () => "편집" },
         history: { title: () => "역사 보기", content: () => "역사" },
         rss: { title: () => "RSS 피드", content: () => "RSS" },
+      },
+      dates: {
+        published: () => "게시일",
+        modified: () => "수정일",
       },
     },
   },
@@ -978,7 +986,7 @@ await Promise.all(
 
       wrapWithHeader($);
       insertNav($, src, srcRoot, lc, baseURL, repository);
-      insertDates($, frontMatter.date, modifiedDate, lang);
+      insertDates($, frontMatter.date, modifiedDate, lc, lang);
       insertAlertOcticons($);
       insertClipboardCopy($);
       insertRunnableCodeChildren($);
