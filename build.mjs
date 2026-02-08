@@ -314,8 +314,9 @@ function insertAlertOcticons($) {
 
 /**
  * @param {import("cheerio").CheerioAPI} $
+ * @param {keyof typeof messages} lc
  */
-function insertClipboardCopy($) {
+function insertClipboardCopy($, lc) {
   $("pre").each(function () {
     const $element = $(this);
     $element.wrap('<div class="highlight"></div>');
@@ -325,8 +326,12 @@ function insertClipboardCopy($) {
       $element.after(
         /* HTML */ `<p>
           <button type="button" class="clipboard-copy">
-            <span class="normal">Copy</span>
-            <span class="copied" hidden>Copied</span>
+            <span class="normal"
+              >${escape(messages[lc].clipboardCopy.normal())}</span
+            >
+            <span class="copied" hidden
+              >${escape(messages[lc].clipboardCopy.copied())}</span
+            >
           </button>
         </p>`,
       );
@@ -336,8 +341,9 @@ function insertClipboardCopy($) {
 
 /**
  * @param {import("cheerio").CheerioAPI} $
+ * @param {keyof typeof messages} lc
  */
-function insertRunnableCodeChildren($) {
+function insertRunnableCodeChildren($, lc) {
   $("runnable-code").each(function () {
     const $element = $(this);
     const $code = $element.find("code");
@@ -348,8 +354,12 @@ function insertRunnableCodeChildren($) {
     if (["js", "ts", "py"].includes(flag)) {
       $clipboardCopy.after(/* HTML */ `
         <button type="button" class="run-code">
-          <span class="normal">Run code</span>
-          <span class="running" hidden>Running...</span>
+          <span class="normal"
+            >${escape(messages[lc].runnableCode.normal())}</span
+          >
+          <span class="running" hidden
+            >${escape(messages[lc].runnableCode.running())}</span
+          >
         </button>
       `);
     } else if (["java"].includes(flag)) {
@@ -912,6 +922,14 @@ const messages = {
         modified: () => "Modified",
       },
     },
+    clipboardCopy: {
+      normal: () => "Copy",
+      copied: () => "Copied!",
+    },
+    runnableCode: {
+      normal: () => "Run code",
+      running: () => "Running...",
+    },
   },
   ko: {
     title: () => "방성범",
@@ -941,6 +959,14 @@ const messages = {
         published: () => "게시일",
         modified: () => "수정일",
       },
+    },
+    clipboardCopy: {
+      normal: () => "복사",
+      copied: () => "복사 완료!",
+    },
+    runnableCode: {
+      normal: () => "코드 실행",
+      running: () => "실행 중...",
     },
   },
 };
@@ -988,8 +1014,8 @@ await Promise.all(
       insertNav($, src, srcRoot, lc, baseURL, repository);
       insertDates($, frontMatter.date, modifiedDate, lc, lang);
       insertAlertOcticons($);
-      insertClipboardCopy($);
-      insertRunnableCodeChildren($);
+      insertClipboardCopy($, lc);
+      insertRunnableCodeChildren($, lc);
       highlight($, starryNight);
 
       const categoryData = {
