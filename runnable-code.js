@@ -114,11 +114,12 @@ async function runCode(event) {
        */
       assert(condition, ...data) {
         if (!condition) {
-          const message = document.createElement("div");
+          const message = document.createElement("span");
           message.classList.add("error");
           message.textContent =
             "Assertion failed: " +
             (data.length ? data.join(" ") : "console.assert");
+          message.textContent += "\n";
           messages.push(message);
         }
         originalConsole.assert(condition, ...data);
@@ -131,9 +132,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       debug(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.debug(...data);
       },
@@ -141,9 +143,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       error(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("error");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.error(...data);
       },
@@ -151,9 +154,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       info(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("info");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.info(...data);
       },
@@ -161,9 +165,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       log(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.log(...data);
       },
@@ -197,9 +202,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       trace(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.trace(...data);
       },
@@ -207,9 +213,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       warn(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("warn");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.warn(...data);
       },
@@ -218,9 +225,10 @@ async function runCode(event) {
        * @param {any} options
        */
       dir(item, options) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = item;
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.dir(item, options);
       },
@@ -228,9 +236,10 @@ async function runCode(event) {
        * @param {...any} data
        */
       dirxml(...data) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = data.join(" ");
+        message.textContent += "\n";
         messages.push(message);
         originalConsole.dirxml(...data);
       },
@@ -238,9 +247,10 @@ async function runCode(event) {
     try {
       eval(doc.toString());
     } catch (error) {
-      const message = document.createElement("div");
+      const message = document.createElement("span");
       message.classList.add("error");
       message.textContent = String(error);
+      message.textContent += "\n";
       messages.push(message);
     }
     console = originalConsole;
@@ -264,9 +274,10 @@ async function runCode(event) {
        * @param {string} output
        */
       batched(output) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("log");
         message.textContent = output;
+        message.textContent += "\n";
         messages.push(message);
       },
     });
@@ -275,21 +286,23 @@ async function runCode(event) {
        * @param {string} output
        */
       batched(output) {
-        const message = document.createElement("div");
+        const message = document.createElement("span");
         message.classList.add("error");
         message.textContent = output;
+        message.textContent += "\n";
         messages.push(message);
       },
     });
     try {
       pyodide.runPython(doc.toString());
     } catch (error) {
-      const message = document.createElement("div");
+      const message = document.createElement("span");
       message.classList.add("error");
       message.textContent =
         error instanceof Error
           ? (error.stack ?? error.toString())
           : String(error);
+      message.textContent += "\n";
       messages.push(message);
     }
 
