@@ -269,6 +269,19 @@ async function runCode(event) {
       pyodide = await loadPyodide();
     }
     version = `Pyodide ${pyodide.version}`;
+    pyodide.setStdin({
+      stdin() {
+        const result = prompt();
+        if (typeof result === "string") {
+          const message = document.createElement("span");
+          message.classList.add("log");
+          message.textContent = result;
+          message.textContent += "\n";
+          messages.push(message);
+        }
+        return result;
+      },
+    });
     pyodide.setStdout({
       /**
        * @param {string} output
