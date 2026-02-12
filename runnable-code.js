@@ -283,27 +283,21 @@ async function runCode(event) {
       },
     });
     pyodide.setStdout({
-      /**
-       * @param {string} output
-       */
-      batched(output) {
+      write(buffer) {
         const message = document.createElement("span");
         message.classList.add("log");
-        message.textContent = output;
-        message.textContent += "\n";
+        message.textContent = new TextDecoder().decode(buffer);
         messages.push(message);
+        return buffer.length;
       },
     });
     pyodide.setStderr({
-      /**
-       * @param {string} output
-       */
-      batched(output) {
+      write(buffer) {
         const message = document.createElement("span");
         message.classList.add("error");
-        message.textContent = output;
-        message.textContent += "\n";
+        message.textContent = new TextDecoder().decode(buffer);
         messages.push(message);
+        return buffer.length;
       },
     });
     try {
