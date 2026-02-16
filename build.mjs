@@ -355,10 +355,10 @@ function insertRunnableCodeChildren($, lc) {
       $clipboardCopy.after(/* HTML */ `
         <button type="button" class="run-code">
           <span class="normal"
-            >${escape(messages[lc].runnableCode.normal())}</span
+            >${escape(messages[lc].runCode.normal())}</span
           >
           <span class="running" hidden
-            >${escape(messages[lc].runnableCode.running())}</span
+            >${escape(messages[lc].runCode.running())}</span
           >
         </button>
       `);
@@ -926,8 +926,8 @@ const messages = {
       normal: () => "Copy",
       copied: () => "Copied!",
     },
-    runnableCode: {
-      normal: () => "Run code",
+    runCode: {
+      normal: () => "Run",
       running: () => "Running...",
     },
   },
@@ -964,8 +964,8 @@ const messages = {
       normal: () => "복사",
       copied: () => "복사 완료!",
     },
-    runnableCode: {
-      normal: () => "코드 실행",
+    runCode: {
+      normal: () => "실행",
       running: () => "실행 중...",
     },
   },
