@@ -354,9 +354,7 @@ function insertRunnableCodeChildren($, lc) {
     if (["js", "ts", "py"].includes(flag)) {
       $clipboardCopy.after(/* HTML */ `
         <button type="button" class="run-code">
-          <span class="normal"
-            >${escape(messages[lc].runCode.normal())}</span
-          >
+          <span class="normal">${escape(messages[lc].runCode.normal())}</span>
           <span class="running" hidden
             >${escape(messages[lc].runCode.running())}</span
           >
@@ -670,11 +668,8 @@ async function writeHTML({
                               .href,
                           )}"
                           >${escape(
-                            categoryData[
-                              /** @type {keyof typeof categoryData} */ (
-                                segments.slice(0, i + 1).join("/")
-                              )
-                            ].name,
+                            categoryData[segments.slice(0, i + 1).join("/")]
+                              .name,
                           )}</a
                         >
                       `,

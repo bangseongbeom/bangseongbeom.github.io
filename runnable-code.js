@@ -1,16 +1,16 @@
 import { EditorView } from "@codemirror/view";
 
 export class RunnableCode extends HTMLElement {
-  /** @type {EditorView | undefined} */
+  /** @type {EditorView} */
   view;
-  /** @type {string | null | undefined} */
+  /** @type {string | null} */
   flag;
 
   async connectedCallback() {
-    const highlight = /** @type {HTMLElement} */ (
-      this.querySelector(".highlight")
-    );
-    const code = /** @type {HTMLElement} */ (highlight.querySelector("code"));
+    const highlight = this.querySelector(".highlight");
+    if (!highlight) throw new Error();
+    const code = highlight.querySelector("code");
+    if (!code) throw new Error();
     const flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
     this.flag = flag ?? null;
 
@@ -73,12 +73,10 @@ export class RunnableCode extends HTMLElement {
           languageExtension,
         ],
       });
-      /** @type {HTMLPreElement} */ (highlight.querySelector("pre")).remove();
+      highlight.querySelector("pre").remove();
       this.view = new EditorView({ state: startState });
       highlight.prepend(this.view.dom);
-      /** @type {HTMLButtonElement} */ (
-        this.querySelector("button.run-code")
-      ).addEventListener("click", runCode);
+      this.querySelector("button.run-code").addEventListener("click", runCode);
     }
   }
 }
@@ -91,14 +89,12 @@ let pyodide;
  * @param {Event} event
  */
 async function runCode(event) {
-  const button = /** @type {HTMLButtonElement} */ (event.currentTarget);
-  const runnableCode = /** @type {RunnableCode} */ (
-    button.closest("runnable-code")
-  );
+  const button = event.currentTarget;
+  /** @type {RunnableCode} */
+  const runnableCode = button.closest("runnable-code");
   if (!runnableCode.view) throw new Error();
   const doc = runnableCode.view.state.doc;
 
-  /** @type {HTMLElement[]} */
   let messages = [];
 
   /** @type {string | null} */
@@ -179,21 +175,17 @@ async function runCode(event) {
       table(tabularData, properties) {
         const message = document.createElement("table");
         message.append(
-          ...tabularData.map(
-            /** @param {any} row */ (row) => {
-              const tr = document.createElement("tr");
-              tr.append(
-                ...row.map(
-                  /** @param {any} cell */ (cell) => {
-                    const td = document.createElement("td");
-                    td.textContent = cell;
-                    return td;
-                  },
-                ),
-              );
-              return tr;
-            },
-          ),
+          ...tabularData.map((row) => {
+            const tr = document.createElement("tr");
+            tr.append(
+              ...row.map((cell) => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                return td;
+              }),
+            );
+            return tr;
+          }),
         );
         messages.push(message);
         originalConsole.table(tabularData, properties);
@@ -256,10 +248,10 @@ async function runCode(event) {
     console = originalConsole;
   } else if (runnableCode.flag === "python" || runnableCode.flag === "py") {
     button.disabled = true;
-    const normal = /** @type {HTMLElement} */ (button.querySelector(".normal"));
-    const running = /** @type {HTMLElement} */ (
-      button.querySelector(".running")
-    );
+    const normal = button.querySelector(".normal");
+    if (!normal) throw new Error();
+    const running = button.querySelector(".running");
+    if (!running) throw new Error();
     normal.hidden = true;
     running.hidden = false;
 
@@ -326,18 +318,16 @@ async function runCode(event) {
       "beforeend",
       /* HTML */ `<pre><code class="language-output"></code></pre>`,
     );
-    output = /** @type {HTMLElement} */ (
-      runnableCode.querySelector(".language-output")
-    );
+    output = runnableCode.querySelector(".language-output");
+    if (!output) throw new Error();
   }
   if (version && !runnableCode.querySelector(".version")) {
     button.insertAdjacentHTML(
       "afterend",
       /* HTML */ ` <span class="version"></span>`,
     );
-    const versionElement = /** @type {HTMLSpanElement} */ (
-      runnableCode.querySelector(".version")
-    );
+    const versionElement = runnableCode.querySelector(".version");
+    if (!versionElement) throw new Error();
     versionElement.textContent = `(${version})`;
   }
   output.replaceChildren(...messages);
