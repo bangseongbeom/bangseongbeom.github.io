@@ -18,9 +18,9 @@ document.querySelectorAll("button.clipboard-copy").forEach((button) =>
     navigator.clipboard.writeText(data);
 
     const normal = button.querySelector(".normal");
-    if (!normal) throw new Error();
+    if (!(normal instanceof HTMLElement)) throw new Error();
     const copied = button.querySelector(".copied");
-    if (!copied) throw new Error();
+    if (!(copied instanceof HTMLElement)) throw new Error();
     normal.hidden = true;
     copied.hidden = false;
     setTimeout(() => {

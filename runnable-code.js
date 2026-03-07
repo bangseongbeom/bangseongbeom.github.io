@@ -1,9 +1,9 @@
 import { EditorView } from "@codemirror/view";
 
 export class RunnableCode extends HTMLElement {
-  /** @type {EditorView} */
+  /** @type {EditorView | undefined} */
   view;
-  /** @type {string | null} */
+  /** @type {string | null | undefined} */
   flag;
 
   async connectedCallback() {
@@ -73,10 +73,14 @@ export class RunnableCode extends HTMLElement {
           languageExtension,
         ],
       });
-      highlight.querySelector("pre").remove();
+      const pre = highlight.querySelector("pre");
+      if (!pre) throw new Error();
+      pre.remove();
       this.view = new EditorView({ state: startState });
       highlight.prepend(this.view.dom);
-      this.querySelector("button.run-code").addEventListener("click", runCode);
+      const runCodeButton = this.querySelector("button.run-code");
+      if (!runCodeButton) throw new Error();
+      runCodeButton.addEventListener("click", runCode);
     }
   }
 }
@@ -90,8 +94,9 @@ let pyodide;
  */
 async function runCode(event) {
   const button = event.currentTarget;
-  /** @type {RunnableCode} */
+  if (!(button instanceof HTMLButtonElement)) throw new Error();
   const runnableCode = button.closest("runnable-code");
+  if (!(runnableCode instanceof RunnableCode)) throw new Error();
   if (!runnableCode.view) throw new Error();
   const doc = runnableCode.view.state.doc;
 
@@ -175,10 +180,10 @@ async function runCode(event) {
       table(tabularData, properties) {
         const message = document.createElement("table");
         message.append(
-          ...tabularData.map((row) => {
+          ...tabularData.map((/** @type {any} */ row) => {
             const tr = document.createElement("tr");
             tr.append(
-              ...row.map((cell) => {
+              ...row.map((/** @type {any} */ cell) => {
                 const td = document.createElement("td");
                 td.textContent = cell;
                 return td;
@@ -249,9 +254,9 @@ async function runCode(event) {
   } else if (runnableCode.flag === "python" || runnableCode.flag === "py") {
     button.disabled = true;
     const normal = button.querySelector(".normal");
-    if (!normal) throw new Error();
+    if (!(normal instanceof HTMLElement)) throw new Error();
     const running = button.querySelector(".running");
-    if (!running) throw new Error();
+    if (!(running instanceof HTMLElement)) throw new Error();
     normal.hidden = true;
     running.hidden = false;
 
