@@ -79,7 +79,7 @@ export class RunnableCode extends HTMLElement {
       this.view = new EditorView({ state: startState });
       highlight.prepend(this.view.dom);
       const runCodeButton = this.querySelector("button.run-code");
-      if (!runCodeButton) throw new Error();
+      if (!(runCodeButton instanceof HTMLButtonElement)) throw new Error();
       runCodeButton.addEventListener("click", runCode);
     }
   }
