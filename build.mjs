@@ -573,18 +573,18 @@ async function writeHTML({
           <script type="importmap">
             {
               "imports": {
-                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.0/dist/index.js",
-                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.1/dist/index.js",
-                "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.4/dist/index.js",
+                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.1/dist/index.js",
+                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.2/dist/index.js",
+                "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.5/dist/index.js",
                 "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
-                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.1/dist/index.js",
-                "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.5.4/dist/index.js",
-                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.39.11/dist/index.js",
+                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.2/dist/index.js",
+                "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.6.0/dist/index.js",
+                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.40.0/dist/index.js",
                 "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
               },
               "scopes": {
                 "https://ga.jspm.io/": {
-                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.0/dist/index.js",
+                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.1/dist/index.js",
                   "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
                   "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.8/dist/index.js",
                   "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
