@@ -315,15 +315,21 @@ async function runCode(event) {
     running.hidden = true;
   } else throw new Error();
 
-  let output = runnableCode.querySelector(".language-output");
+  let output =
+    Array.from(runnableCode.querySelectorAll("code")).find(
+      (code) => code.classList.length === 0,
+    ) ?? null;
   if (!output) {
     const highlight = runnableCode.querySelector(".highlight");
     if (!highlight) throw new Error();
     highlight.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre><code class="language-output"></code></pre>`,
+      /* HTML */ `<pre><code></code></pre>`,
     );
-    output = runnableCode.querySelector(".language-output");
+    output =
+      Array.from(runnableCode.querySelectorAll("code")).find(
+        (code) => code.classList.length === 0,
+      ) ?? null;
     if (!output) throw new Error();
   }
   if (version && !runnableCode.querySelector(".version")) {

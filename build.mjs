@@ -322,7 +322,7 @@ function insertClipboardCopy($, lc) {
     $element.wrap('<div class="highlight"></div>');
     const $code = $element.find("code");
 
-    if (!$code.hasClass("language-output")) {
+    if ($code.attr("class")) {
       $element.after(
         /* HTML */ `<p>
           <button type="button" class="clipboard-copy">
@@ -540,7 +540,7 @@ async function writeHTML({
               margin-bottom: var(--base-size-16);
             }
 
-            .language-output {
+            .markdown-body pre code {
               .warn {
                 color: var(--fgColor-attention);
               }
