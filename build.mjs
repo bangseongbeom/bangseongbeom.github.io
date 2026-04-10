@@ -881,7 +881,7 @@ const author = {
   name: "방성범 (Bang Seongbeom)",
   email: "bangseongbeom@gmail.com",
 };
-const baseURL = process.env.BASE_URL ?? fail("BASE_URL is required");
+const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
 const defaultLang = "en";
 
 const srcRoot = process.env.SRC_ROOT ?? ".";
