@@ -1,11 +1,13 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
 import { load } from "cheerio";
+import type { CheerioAPI } from "cheerio";
 import { markdownToHTML } from "comrak";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
 import { escape } from "html-escaper";
 import { fail } from "node:assert/strict";
+import type { BlogPosting, WithContext } from "schema-dts";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
@@ -20,14 +22,9 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import globWithGitignore from "./glob-with-gitignore.js";
+import globWithGitignore from "./glob-with-gitignore.ts";
 
-/**
- * @param {string} src
- * @param {string} srcRoot
- * @param {string} destRoot
- */
-function srcToDest(src, srcRoot, destRoot) {
+function srcToDest(src: string, srcRoot: string, destRoot: string) {
   return join(
     destRoot,
     dirname(relative(srcRoot, src)),
@@ -35,12 +32,7 @@ function srcToDest(src, srcRoot, destRoot) {
   );
 }
 
-/**
- * @param {string} src
- * @param {string} srcRoot
- * @param {string} baseURL
- */
-function srcToCanonical(src, srcRoot, baseURL) {
+function srcToCanonical(src: string, srcRoot: string, baseURL: string) {
   return new URL(
     pathToFileURL(
       join(
@@ -53,12 +45,11 @@ function srcToCanonical(src, srcRoot, baseURL) {
   ).toString();
 }
 
-/**
- * @param {string | undefined} fileLang
- * @param {string} src
- * @param {string} defaultLang
- */
-function getLang(fileLang, src, defaultLang) {
+function getLang(
+  fileLang: string | undefined,
+  src: string,
+  defaultLang: string,
+) {
   let lang;
   try {
     lang = Intl.getCanonicalLocales(fileLang)[0];
@@ -72,10 +63,7 @@ function getLang(fileLang, src, defaultLang) {
   return lang;
 }
 
-/**
- * @param {string} src
- */
-async function getGitLogDates(src) {
+async function getGitLogDates(src: string) {
   let gitLogDates = (
     await execFile("git", [
       "log",
@@ -97,10 +85,7 @@ async function getGitLogDates(src) {
   };
 }
 
-/**
- * @param {string} markdown
- */
-function markdownToCheerioAPI(markdown) {
+function markdownToCheerioAPI(markdown: string) {
   const html = markdownToHTML(markdown, {
     extension: {
       alerts: true,
@@ -131,10 +116,7 @@ function markdownToCheerioAPI(markdown) {
   return $;
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- */
-function convertLinks($) {
+function convertLinks($: CheerioAPI) {
   $("[href]").each(function () {
     const $element = $(this);
     const href = $element.attr("href") ?? fail();
@@ -145,22 +127,18 @@ function convertLinks($) {
   });
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- */
-function wrapWithHeader($) {
+function wrapWithHeader($: CheerioAPI) {
   $("h1").wrap(/* HTML */ `<header></header>`);
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {string} src
- * @param {string} srcRoot
- * @param {keyof typeof messages} lc
- * @param {string} baseURL
- * @param {string} repository
- */
-function insertNav($, src, srcRoot, lc, baseURL, repository) {
+function insertNav(
+  $: CheerioAPI,
+  src: string,
+  srcRoot: string,
+  lc: keyof Messages,
+  baseURL: string,
+  repository: string,
+) {
   $("header").append(/* HTML */ `
     <nav>
       <p>
@@ -206,14 +184,13 @@ function insertNav($, src, srcRoot, lc, baseURL, repository) {
   `);
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {Date | undefined} date
- * @param {Date | undefined} modifiedDate
- * @param {keyof typeof messages} lc
- * @param {string} lang
- */
-function insertDates($, date, modifiedDate, lc, lang) {
+function insertDates(
+  $: CheerioAPI,
+  date: Date | undefined,
+  modifiedDate: Date | undefined,
+  lc: keyof Messages,
+  lang: string,
+) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
     $("header").append(
@@ -246,10 +223,7 @@ function insertDates($, date, modifiedDate, lc, lang) {
   }
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- */
-function insertAlertOcticons($) {
+function insertAlertOcticons($: CheerioAPI) {
   $(".markdown-alert.markdown-alert-note .markdown-alert-title").prepend(
     /* HTML */ `<svg
       xmlns="http://www.w3.org/2000/svg"
@@ -312,11 +286,7 @@ function insertAlertOcticons($) {
   );
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {keyof typeof messages} lc
- */
-function insertClipboardCopy($, lc) {
+function insertClipboardCopy($: CheerioAPI, lc: keyof Messages) {
   $("pre").each(function () {
     const $element = $(this);
     $element.wrap('<div class="highlight"></div>');
@@ -339,11 +309,7 @@ function insertClipboardCopy($, lc) {
   });
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {keyof typeof messages} lc
- */
-function insertRunnableCodeChildren($, lc) {
+function insertRunnableCodeChildren($: CheerioAPI, lc: keyof Messages) {
   $("runnable-code").each(function () {
     const $element = $(this);
     const $code = $element.find("code");
@@ -371,11 +337,10 @@ function insertRunnableCodeChildren($, lc) {
   });
 }
 
-/**
- * @param {import("cheerio").CheerioAPI} $
- * @param {Awaited<ReturnType<typeof createStarryNight>>} starryNight
- */
-function highlight($, starryNight) {
+function highlight(
+  $: CheerioAPI,
+  starryNight: Awaited<ReturnType<typeof createStarryNight>>,
+) {
   $("code").each(function () {
     const $element = $(this);
     const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
@@ -386,27 +351,6 @@ function highlight($, starryNight) {
   });
 }
 
-/**
- * @param {{
- *   dest: string;
- *   lang?: string;
- *   title: string;
- *   description?: string;
- *   modifiedDate?: Date | undefined;
- *   date?: Date | undefined;
- *   canonical: string;
- *   baseURL: string;
- *   author: string;
- *   lc: keyof typeof messages;
- *   messages: typeof messages;
- *   categories?: string[];
- *   categoryData: { [key: string]: { name: string; href: string } };
- *   $: import("cheerio").CheerioAPI;
- *   src: string;
- *   srcRoot: string;
- *   repository: string;
- * }} param0
- */
 async function writeHTML({
   dest,
   lang,
@@ -425,6 +369,24 @@ async function writeHTML({
   src,
   srcRoot,
   repository,
+}: {
+  dest: string;
+  lang?: string;
+  title: string;
+  description?: string;
+  modifiedDate?: Date | undefined;
+  date?: Date | undefined;
+  canonical: string;
+  baseURL: string;
+  author: string;
+  lc: keyof Messages;
+  messages: Messages;
+  categories?: string[];
+  categoryData: { [key: string]: { name: string; href: string } };
+  $: CheerioAPI;
+  src: string;
+  srcRoot: string;
+  repository: string;
 }) {
   await mkdir(dirname(dest), { recursive: true });
   await writeFile(
@@ -551,20 +513,18 @@ async function writeHTML({
             }
           </style>
           <script type="application/ld+json">
-            ${JSON.stringify(
-              /** @satisfies {import("schema-dts").WithContext<import("schema-dts").BlogPosting>} */ ({
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                author: {
-                  "@type": "Person",
-                  name: author,
-                },
-                dateModified: modifiedDate?.toISOString(),
-                datePublished: date?.toISOString(),
-                headline: title,
-                image: new URL("ogp.png", baseURL).toString(),
-              }),
-            )}
+            ${JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              author: {
+                "@type": "Person",
+                name: author,
+              },
+              dateModified: modifiedDate?.toISOString(),
+              datePublished: date?.toISOString(),
+              headline: title,
+              image: new URL("ogp.png", baseURL).toString(),
+            } satisfies WithContext<BlogPosting>)}
           </script>
           <!--
             Import map generated with JSPM Generator
@@ -690,21 +650,13 @@ async function writeHTML({
   );
 }
 
-/**
- * @param {string[] | undefined} redirectFrom
- * @param {string} dest
- * @param {string} destRoot
- * @param {string} title
- * @param {string} canonical
- * @param {string} baseURL
- */
 async function writeRedirectHTMLs(
-  redirectFrom,
-  dest,
-  destRoot,
-  title,
-  canonical,
-  baseURL,
+  redirectFrom: string[] | undefined,
+  dest: string,
+  destRoot: string,
+  title: string,
+  canonical: string,
+  baseURL: string,
 ) {
   if (!redirectFrom) return;
 
@@ -747,11 +699,22 @@ async function writeRedirectHTMLs(
   }
 }
 
-/**
- * @param {string} destRoot
- * @param {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} sitemapURLs
- */
-async function writeSitemap(destRoot, sitemapURLs) {
+async function writeSitemap(
+  destRoot: string,
+  sitemapURLs: {
+    loc: string;
+    lastmod?: Date;
+    changefreq?:
+      | "always"
+      | "hourly"
+      | "daily"
+      | "weekly"
+      | "monthly"
+      | "yearly"
+      | "never";
+    priority?: number;
+  }[],
+) {
   await writeFile(
     join(destRoot, "sitemap.xml"),
     /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
@@ -772,24 +735,18 @@ ${sitemapURLs
   );
 }
 
-/**
- * @param {string} destRoot
- * @param {string | URL | undefined} baseURL
- */
-async function writeSitemapOnlyRobots(destRoot, baseURL) {
+async function writeSitemapOnlyRobots(
+  destRoot: string,
+  baseURL: string | URL | undefined,
+) {
   await writeFile(
     join(destRoot, "robots.txt"),
     `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
   );
 }
 
-/**
- * @param {string} destRoot
- * @param {{ title: string; link: string; description: string; language?: string; copyright?: string; managingEditor?: string | { email: string; name: string; }; webMaster?: string | { email: string; name: string; }; pubDate?: Date; categories?: string[]; generator?: string; }} param1
- * @param {{ title: string; link: string; description: string; categories?: string[]; pubDate?: Date; guid: string; content?: string; }[]} rssItems
- */
 async function writeRSS(
-  destRoot,
+  destRoot: string,
   {
     title,
     link,
@@ -801,8 +758,27 @@ async function writeRSS(
     pubDate,
     categories,
     generator,
+  }: {
+    title: string;
+    link: string;
+    description: string;
+    language?: string;
+    copyright?: string;
+    managingEditor?: string | { email: string; name: string };
+    webMaster?: string | { email: string; name: string };
+    pubDate?: Date;
+    categories?: string[];
+    generator?: string;
   },
-  rssItems,
+  rssItems: {
+    title: string;
+    link: string;
+    description: string;
+    categories?: string[];
+    pubDate?: Date;
+    guid: string;
+    content?: string;
+  }[],
 ) {
   rssItems = rssItems
     .toSorted(
@@ -966,11 +942,31 @@ const messages = {
   },
 };
 
-/** @type {{ loc: string; lastmod?: Date; changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"; priority?: number }[]} */
-const sitemapURLs = [];
+type Messages = typeof messages;
 
-/** @type {{ title: string; link: string; description: string; categories?: string[]; pubDate?: Date; guid: string; content?: string; }[]} */
-let rssItems = [];
+const sitemapURLs: {
+  loc: string;
+  lastmod?: Date;
+  changefreq?:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never";
+  priority?: number;
+}[] = [];
+
+let rssItems: {
+  title: string;
+  link: string;
+  description: string;
+  categories?: string[];
+  pubDate?: Date;
+  guid: string;
+  content?: string;
+}[] = [];
 
 await Promise.all(
   (await globWithGitignore(join(srcRoot, "**"))).map(async (src) => {
@@ -979,13 +975,28 @@ await Promise.all(
       const canonical = srcToCanonical(src, srcRoot, baseURL);
 
       const markdown = await readFile(src, "utf8");
-      /** @type {{ data: { lang?: string; categories?: string[]; title?: string; description?: string; date?: Date; modified_date?: Date; redirect_from?: string[]; }; content: string; }} */
-      const { data: frontMatter, content } = matter(markdown);
+      const {
+        data: frontMatter,
+        content,
+      }: {
+        data: {
+          lang?: string;
+          categories?: string[];
+          title?: string;
+          description?: string;
+          date?: Date;
+          modified_date?: Date;
+          redirect_from?: string[];
+        };
+        content: string;
+      } = matter(markdown);
 
       const lang = getLang(frontMatter.lang, src, defaultLang);
-      const lc = /** @type {keyof typeof messages} */ (
-        match([lang], Object.keys(messages), defaultLang)
-      );
+      const lc = match(
+        [lang],
+        Object.keys(messages),
+        defaultLang,
+      ) as keyof Messages;
 
       const gitLogDates = await getGitLogDates(src);
       const date = frontMatter.date ?? gitLogDates.date;

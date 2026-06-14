@@ -1,11 +1,10 @@
 import { execSync } from "node:child_process";
-import { glob, escapePath } from "tinyglobby";
+import { glob, escapePath, type GlobOptions } from "tinyglobby";
 
-/**
- * @param {string | readonly string[]} patterns
- * @param {Omit<import("tinyglobby").GlobOptions, "patterns">} options
- */
-export default async function globWithGitignore(patterns, options = {}) {
+export default async function globWithGitignore(
+  patterns: string | readonly string[],
+  options: Omit<GlobOptions, "patterns"> = {},
+) {
   const { cwd = process.cwd(), ...restOptions } = options;
 
   try {

@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node build.js",
-    "watch": "node watch.js",
+    "build": "node build.ts",
+    "watch": "node watch.ts",
     "start": "serve _site"
   },
   "dependencies": {
