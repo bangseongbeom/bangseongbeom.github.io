@@ -568,26 +568,26 @@ async function writeHTML({
           </script>
           <!--
             Import map generated with JSPM Generator
-            Edit here: https://generator.jspm.io/#ZY49DsIwDEYzMHARRtKEAhJbLsEBrMRKg/KnxC2ChauTdms7ePH7nj+fDowdf89IjjwapnQyGFwpqXQwUtIpZI+E6s4vgosVbyxANLUxKbhcMQ/Rnl8wQdXFZZp1ft0n8oeGFBe690ewc6/cskqwPHTbXJwcvtu6f3DZBI9fLN3g7ODbkJKto/8DSFlPF+4A
+            Edit here: https://generator.jspm.io/#ZY69EoMgEIQpUuRFUgZFEmtfwge4wRsgw9/gaSZp8uoBO7XYZr+73b1dGLv+xkCWHE5sUHFCb3OOuYGFooo+OSQcet61XO54YR7CNBcmjsxB0PcXrDCrbBPVd/48X6QPmRg2Kk50AV17RXfIngm2QT1vd/5q8V3sh6xZDr+YG2O1cUU0iFIh/2r/G7btAA
           -->
           <script type="importmap">
             {
               "imports": {
-                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.1/dist/index.js",
-                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.2/dist/index.js",
+                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.3/dist/index.js",
+                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.3/dist/index.js",
                 "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.5/dist/index.js",
                 "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
-                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.2/dist/index.js",
+                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.3/dist/index.js",
                 "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.6.0/dist/index.js",
-                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.40.0/dist/index.js",
+                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.43.1/dist/index.js",
                 "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
               },
               "scopes": {
                 "https://ga.jspm.io/": {
-                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.1/dist/index.js",
+                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.2/dist/index.js",
                   "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
-                  "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.8/dist/index.js",
-                  "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.18/dist/index.js",
+                  "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.10/dist/index.js",
+                  "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.19/dist/index.js",
                   "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
                   "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
                   "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
@@ -599,7 +599,7 @@ async function writeHTML({
           <script type="importmap">
             {
               "imports": {
-                "pyodide": "https://cdn.jsdelivr.net/pyodide/v0.29.3/full/pyodide.js"
+                "pyodide": "https://cdn.jsdelivr.net/pyodide/v314.0.0/full/pyodide.js"
               }
             }
           </script>
