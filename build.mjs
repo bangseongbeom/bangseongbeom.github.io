@@ -2,7 +2,6 @@ import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
 import { load } from "cheerio";
 import { markdownToHTML } from "comrak";
-import { globby } from "globby";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
 import { escape } from "html-escaper";
@@ -21,6 +20,7 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
+import globWithGitignore from "./glob-with-gitignore.mjs";
 
 /**
  * @param {string} src
@@ -973,7 +973,7 @@ const sitemapURLs = [];
 let rssItems = [];
 
 await Promise.all(
-  (await globby(join(srcRoot, "**"), { gitignore: true })).map(async (src) => {
+  (await globWithGitignore(join(srcRoot, "**"))).map(async (src) => {
     if (extname(src) === ".md") {
       const dest = srcToDest(src, srcRoot, destRoot);
       const canonical = srcToCanonical(src, srcRoot, baseURL);
