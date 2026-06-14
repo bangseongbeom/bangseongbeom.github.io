@@ -20,7 +20,7 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import globWithGitignore from "./glob-with-gitignore.mjs";
+import globWithGitignore from "./glob-with-gitignore.js";
 
 /**
  * @param {string} src
