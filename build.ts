@@ -1,7 +1,7 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
-import { load } from "cheerio";
-import type { CheerioAPI } from "cheerio";
+import { Window } from "happy-dom";
+import type { Document } from "happy-dom";
 import { markdownToHTML } from "comrak";
 import matter from "gray-matter";
 import { toHtml } from "hast-util-to-html";
@@ -85,7 +85,7 @@ async function getGitLogDates(src: string) {
   };
 }
 
-function markdownToCheerioAPI(markdown: string) {
+function markdownToDocument(markdown: string) {
   const html = markdownToHTML(markdown, {
     extension: {
       alerts: true,
@@ -101,91 +101,99 @@ function markdownToCheerioAPI(markdown: string) {
     },
   });
 
-  const $ = load(html, null, false);
+  const document = new Window().document;
+  document.body.innerHTML = html;
 
-  $("h1, h2, h3, h4, h5, h6").each(function () {
-    const $element = $(this);
-    const $anchor = $element.find(".anchor");
-    if ($anchor.length) {
-      const id = $anchor.attr("id") ?? fail();
-      $element.attr("id", id);
-      $anchor.remove();
+  for (const element of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
+    const anchor = element.querySelector(".anchor");
+    if (anchor) {
+      const id = anchor.getAttribute("id") ?? fail();
+      element.setAttribute("id", id);
+      anchor.remove();
     }
-  });
+  }
 
-  return $;
+  return document;
 }
 
-function convertLinks($: CheerioAPI) {
-  $("[href]").each(function () {
-    const $element = $(this);
-    const href = $element.attr("href") ?? fail();
+function convertLinks(document: Document) {
+  for (const element of document.querySelectorAll("[href]")) {
+    const href = element.getAttribute("href") ?? fail();
     if (href.endsWith("/README.md"))
-      $element.attr("href", href.slice(0, -"README.md".length));
+      element.setAttribute("href", href.slice(0, -"README.md".length));
     else if (href.endsWith(".md"))
-      $element.attr("href", href.slice(0, -".md".length));
-  });
+      element.setAttribute("href", href.slice(0, -".md".length));
+  }
 }
 
-function wrapWithHeader($: CheerioAPI) {
-  $("h1").wrap(/* HTML */ `<header></header>`);
+function wrapWithHeader(document: Document) {
+  for (const element of document.querySelectorAll("h1")) {
+    const header = document.createElement("header");
+    element.replaceWith(header);
+    header.append(element);
+  }
 }
 
 function insertNav(
-  $: CheerioAPI,
+  document: Document,
   src: string,
   srcRoot: string,
   lc: keyof Messages,
   baseURL: string,
   repository: string,
 ) {
-  $("header").append(/* HTML */ `
-    <nav>
-      <p>
-        <a
-          href="${escape(
-            pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
-          )}"
-          title="${escape(messages[lc].header.nav.markdown.title())}"
-          >${escape(messages[lc].header.nav.markdown.content())}</a
-        >
-        <span>·</span>
-        <a
-          href="${escape(
-            `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].header.nav.github.title())}"
-          >${escape(messages[lc].header.nav.github.content())}</a
-        >
-        <span>·</span>
-        <a
-          href="${escape(
-            `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].header.nav.edit.title())}"
-          >${escape(messages[lc].header.nav.edit.content())}</a
-        >
-        <span>·</span>
-        <a
-          href="${escape(
-            `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
-          )}"
-          title="${escape(messages[lc].header.nav.history.title())}"
-          >${escape(messages[lc].header.nav.history.content())}</a
-        >
-        <span>·</span>
-        <a
-          href="${escape(new URL("feed.xml", baseURL).toString())}"
-          title="${escape(messages[lc].header.nav.rss.title())}"
-          >${escape(messages[lc].header.nav.rss.content())}</a
-        >
-      </p>
-    </nav>
-  `);
+  for (const element of document.querySelectorAll("header")) {
+    element.insertAdjacentHTML(
+      "beforeend",
+      /* HTML */ `
+        <nav>
+          <p>
+            <a
+              href="${escape(
+                pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+              )}"
+              title="${escape(messages[lc].header.nav.markdown.title())}"
+              >${escape(messages[lc].header.nav.markdown.content())}</a
+            >
+            <span>·</span>
+            <a
+              href="${escape(
+                `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+              )}"
+              title="${escape(messages[lc].header.nav.github.title())}"
+              >${escape(messages[lc].header.nav.github.content())}</a
+            >
+            <span>·</span>
+            <a
+              href="${escape(
+                `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+              )}"
+              title="${escape(messages[lc].header.nav.edit.title())}"
+              >${escape(messages[lc].header.nav.edit.content())}</a
+            >
+            <span>·</span>
+            <a
+              href="${escape(
+                `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+              )}"
+              title="${escape(messages[lc].header.nav.history.title())}"
+              >${escape(messages[lc].header.nav.history.content())}</a
+            >
+            <span>·</span>
+            <a
+              href="${escape(new URL("feed.xml", baseURL).toString())}"
+              title="${escape(messages[lc].header.nav.rss.title())}"
+              >${escape(messages[lc].header.nav.rss.content())}</a
+            >
+          </p>
+        </nav>
+      `,
+    );
+  }
 }
 
 function insertDates(
-  $: CheerioAPI,
+  document: Document,
   date: Date | undefined,
   modifiedDate: Date | undefined,
   lc: keyof Messages,
@@ -193,107 +201,143 @@ function insertDates(
 ) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
-    $("header").append(
-      /* HTML */ `<p id="dates">
-        <span
-          >${escape(messages[lc].header.dates.published())}:
+    for (const element of document.querySelectorAll("header")) {
+      element.insertAdjacentHTML(
+        "beforeend",
+        /* HTML */ `<p id="dates">
+          <span
+            >${escape(messages[lc].header.dates.published())}:
+            <time id="date" datetime="${escape(date.toISOString())}"
+              >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
+            ></span
+          >
+          <span>·</span>
+          <span
+            >${escape(messages[lc].header.dates.modified())}:
+            <time
+              id="modified-date"
+              datetime="${escape(modifiedDate.toISOString())}"
+              >${escape(
+                new Intl.DateTimeFormat(lang).format(modifiedDate),
+              )}</time
+            ></span
+          >
+        </p>`,
+      );
+    }
+  } else {
+    for (const element of document.querySelectorAll("h1 + header")) {
+      element.insertAdjacentHTML(
+        "beforeend",
+        /* HTML */ `<p>
           <time id="date" datetime="${escape(date.toISOString())}"
             >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
-          ></span
-        >
-        <span>·</span>
-        <span
-          >${escape(messages[lc].header.dates.modified())}:
-          <time
-            id="modified-date"
-            datetime="${escape(modifiedDate.toISOString())}"
-            >${escape(new Intl.DateTimeFormat(lang).format(modifiedDate))}</time
-          ></span
-        >
-      </p>`,
+          >
+        </p>`,
+      );
+    }
+  }
+}
+
+function insertAlertOcticons(document: Document) {
+  for (const element of document.querySelectorAll(
+    ".markdown-alert.markdown-alert-note .markdown-alert-title",
+  )) {
+    element.insertAdjacentHTML(
+      "afterbegin",
+      /* HTML */ `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+        ></path>
+      </svg>`,
     );
-  } else {
-    $("h1 + header").append(
-      /* HTML */ `<p>
-        <time id="date" datetime="${escape(date.toISOString())}"
-          >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
-        >
-      </p>`,
+  }
+  for (const element of document.querySelectorAll(
+    ".markdown-alert.markdown-alert-tip .markdown-alert-title",
+  )) {
+    element.insertAdjacentHTML(
+      "afterbegin",
+      /* HTML */ `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"
+        ></path>
+      </svg>`,
+    );
+  }
+  for (const element of document.querySelectorAll(
+    ".markdown-alert.markdown-alert-important .markdown-alert-title",
+  )) {
+    element.insertAdjacentHTML(
+      "afterbegin",
+      /* HTML */ `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+        ></path>
+      </svg>`,
+    );
+  }
+  for (const element of document.querySelectorAll(
+    ".markdown-alert.markdown-alert-warning .markdown-alert-title",
+  )) {
+    element.insertAdjacentHTML(
+      "afterbegin",
+      /* HTML */ `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+        ></path>
+      </svg>`,
+    );
+  }
+  for (const element of document.querySelectorAll(
+    ".markdown-alert.markdown-alert-caution .markdown-alert-title",
+  )) {
+    element.insertAdjacentHTML(
+      "afterbegin",
+      /* HTML */ `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+      >
+        <path
+          d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+        ></path>
+      </svg>`,
     );
   }
 }
 
-function insertAlertOcticons($: CheerioAPI) {
-  $(".markdown-alert.markdown-alert-note .markdown-alert-title").prepend(
-    /* HTML */ `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-    >
-      <path
-        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-      ></path>
-    </svg>`,
-  );
-  $(".markdown-alert.markdown-alert-tip .markdown-alert-title").prepend(
-    /* HTML */ `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-    >
-      <path
-        d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"
-      ></path>
-    </svg>`,
-  );
-  $(".markdown-alert.markdown-alert-important .markdown-alert-title").prepend(
-    /* HTML */ `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-    >
-      <path
-        d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-      ></path>
-    </svg>`,
-  );
-  $(".markdown-alert.markdown-alert-warning .markdown-alert-title").prepend(
-    /* HTML */ `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-    >
-      <path
-        d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-      ></path>
-    </svg>`,
-  );
-  $(".markdown-alert.markdown-alert-caution .markdown-alert-title").prepend(
-    /* HTML */ `<svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-    >
-      <path
-        d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-      ></path>
-    </svg>`,
-  );
-}
+function insertClipboardCopy(document: Document, lc: keyof Messages) {
+  for (const element of document.querySelectorAll("pre")) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "highlight";
+    element.replaceWith(wrapper);
+    wrapper.append(element);
+    const code = element.querySelector("code");
 
-function insertClipboardCopy($: CheerioAPI, lc: keyof Messages) {
-  $("pre").each(function () {
-    const $element = $(this);
-    $element.wrap('<div class="highlight"></div>');
-    const $code = $element.find("code");
-
-    if ($code.attr("class")) {
-      $element.after(
+    if (code?.getAttribute("class")) {
+      element.insertAdjacentHTML(
+        "afterend",
         /* HTML */ `<p>
           <button type="button" class="clipboard-copy">
             <span class="normal"
@@ -306,49 +350,56 @@ function insertClipboardCopy($: CheerioAPI, lc: keyof Messages) {
         </p>`,
       );
     }
-  });
+  }
 }
 
-function insertRunnableCodeChildren($: CheerioAPI, lc: keyof Messages) {
-  $("runnable-code").each(function () {
-    const $element = $(this);
-    const $code = $element.find("code");
-    const flag = $code.attr("class")?.match(/language-(.+)/)?.[1];
-    if (!flag) return;
-    const $clipboardCopy = $element.find(".clipboard-copy");
+function insertRunnableCodeChildren(document: Document, lc: keyof Messages) {
+  for (const element of document.querySelectorAll("runnable-code")) {
+    const code = element.querySelector("code");
+    const flag = code?.getAttribute("class")?.match(/language-(.+)/)?.[1];
+    if (!flag) continue;
+    const clipboardCopy = element.querySelector(".clipboard-copy");
+    if (!clipboardCopy) continue;
 
     if (["js", "ts", "py"].includes(flag)) {
-      $clipboardCopy.after(/* HTML */ `
-        <button type="button" class="run-code">
-          <span class="normal">${escape(messages[lc].runCode.normal())}</span>
-          <span class="running" hidden
-            >${escape(messages[lc].runCode.running())}</span
-          >
-        </button>
-      `);
+      clipboardCopy.insertAdjacentHTML(
+        "afterend",
+        /* HTML */ `
+          <button type="button" class="run-code">
+            <span class="normal">${escape(messages[lc].runCode.normal())}</span>
+            <span class="running" hidden
+              >${escape(messages[lc].runCode.running())}</span
+            >
+          </button>
+        `,
+      );
     } else if (["java"].includes(flag)) {
-      $clipboardCopy.after(/* HTML */ `
-        Paste and run in
-        <a href="https://dev.java/playground/" target="_blank"
-          >The Java Playground</a
-        >
-      `);
+      clipboardCopy.insertAdjacentHTML(
+        "afterend",
+        /* HTML */ `
+          Paste and run in
+          <a href="https://dev.java/playground/" target="_blank"
+            >The Java Playground</a
+          >
+        `,
+      );
     }
-  });
+  }
 }
 
 function highlight(
-  $: CheerioAPI,
+  document: Document,
   starryNight: Awaited<ReturnType<typeof createStarryNight>>,
 ) {
-  $("code").each(function () {
-    const $element = $(this);
-    const flag = $element.attr("class")?.match(/language-(.+)/)?.[1];
-    if (!flag) return;
+  for (const element of document.querySelectorAll("code")) {
+    const flag = element.getAttribute("class")?.match(/language-(.+)/)?.[1];
+    if (!flag) continue;
     const codeScope = starryNight.flagToScope(flag);
-    if (!codeScope) return;
-    $element.html(toHtml(starryNight.highlight($element.text(), codeScope)));
-  });
+    if (!codeScope) continue;
+    element.innerHTML = toHtml(
+      starryNight.highlight(element.textContent, codeScope),
+    );
+  }
 }
 
 async function writeHTML({
@@ -365,7 +416,7 @@ async function writeHTML({
   messages,
   categories,
   categoryData,
-  $,
+  document,
   src,
   srcRoot,
   repository,
@@ -383,7 +434,7 @@ async function writeHTML({
   messages: Messages;
   categories?: string[];
   categoryData: { [key: string]: { name: string; href: string } };
-  $: CheerioAPI;
+  document: Document;
   src: string;
   srcRoot: string;
   repository: string;
@@ -639,7 +690,7 @@ async function writeHTML({
                 .join(/* HTML */ `<span>·</span>`) ?? ""}
             </p>
           </nav>
-          <main>${$.html()}</main>
+          <main>${document.body.innerHTML}</main>
           ${["/README.md", "/404.md"].includes(
             pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
           )
@@ -1003,26 +1054,27 @@ await Promise.all(
       const modifiedDate =
         frontMatter.modified_date ?? gitLogDates.modifiedDate;
 
-      const $ = markdownToCheerioAPI(content);
+      const document = markdownToDocument(content);
 
-      convertLinks($);
+      convertLinks(document);
 
       const title =
         frontMatter.title ??
-        $("h1").first().prop("textContent") ??
+        document.querySelector("h1")?.textContent ??
         fail("title is required");
       const description =
-        frontMatter.description ?? $("h1 + p").prop("textContent") ?? undefined;
+        frontMatter.description ??
+        document.querySelector("h1 + p")?.textContent;
 
-      const rssDescription = $.html();
+      const rssDescription = document.body.innerHTML;
 
-      wrapWithHeader($);
-      insertNav($, src, srcRoot, lc, baseURL, repository);
-      insertDates($, frontMatter.date, modifiedDate, lc, lang);
-      insertAlertOcticons($);
-      insertClipboardCopy($, lc);
-      insertRunnableCodeChildren($, lc);
-      highlight($, starryNight);
+      wrapWithHeader(document);
+      insertNav(document, src, srcRoot, lc, baseURL, repository);
+      insertDates(document, frontMatter.date, modifiedDate, lc, lang);
+      insertAlertOcticons(document);
+      insertClipboardCopy(document, lc);
+      insertRunnableCodeChildren(document, lc);
+      highlight(document, starryNight);
 
       const categoryData = {
         android: {
@@ -1057,7 +1109,7 @@ await Promise.all(
         messages,
         categories,
         categoryData,
-        $,
+        document,
         src,
         srcRoot,
         repository,
