@@ -776,16 +776,6 @@ ${sitemapURLs
   );
 }
 
-async function writeSitemapOnlyRobots(
-  destRoot: string,
-  baseURL: string | URL | undefined,
-) {
-  await writeFile(
-    join(destRoot, "robots.txt"),
-    `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
-  );
-}
-
 async function writeRSS(
   destRoot: string,
   {
@@ -1149,7 +1139,10 @@ await Promise.all(
 );
 
 await writeSitemap(destRoot, sitemapURLs);
-await writeSitemapOnlyRobots(destRoot, baseURL);
+await writeFile(
+  join(destRoot, "robots.txt"),
+  `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
+);
 await writeRSS(
   destRoot,
   {
