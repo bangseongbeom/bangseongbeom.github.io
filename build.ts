@@ -1033,7 +1033,7 @@ await Promise.all(
       const modifiedDate =
         frontMatter.modified_date ?? gitLogDates.modifiedDate;
 
-      const html = markdownToHTML(markdown, {
+      const html = markdownToHTML(content, {
         extension: {
           alerts: true,
           autolink: true,
