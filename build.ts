@@ -123,6 +123,7 @@ function insertNav(
   document: Document,
   src: string,
   srcRoot: string,
+  messages: Messages,
   lc: keyof Messages,
   baseURL: string,
   repository: string,
@@ -181,6 +182,7 @@ function insertDates(
   document: Document,
   date: Date | undefined,
   modifiedDate: Date | undefined,
+  messages: Messages,
   lc: keyof Messages,
   lang: string,
 ) {
@@ -312,7 +314,11 @@ function insertAlertOcticons(document: Document) {
   }
 }
 
-function insertClipboardCopy(document: Document, lc: keyof Messages) {
+function insertClipboardCopy(
+  document: Document,
+  messages: Messages,
+  lc: keyof Messages,
+) {
   for (const element of document.querySelectorAll("pre")) {
     const wrapper = document.createElement("div");
     wrapper.className = "highlight";
@@ -338,7 +344,11 @@ function insertClipboardCopy(document: Document, lc: keyof Messages) {
   }
 }
 
-function insertRunnableCodeChildren(document: Document, lc: keyof Messages) {
+function insertRunnableCodeChildren(
+  document: Document,
+  messages: Messages,
+  lc: keyof Messages,
+) {
   for (const element of document.querySelectorAll("runnable-code")) {
     const code = element.querySelector("code");
     const flag = code?.getAttribute("class")?.match(/language-(.+)/)?.[1];
@@ -415,8 +425,8 @@ async function writeHTML({
   canonical: string;
   baseURL: string;
   author: string;
-  lc: keyof Messages;
   messages: Messages;
+  lc: keyof Messages;
   categories?: string[];
   categoryData: { [key: string]: { name: string; href: string } };
   document: Document;
@@ -1063,11 +1073,11 @@ await Promise.all(
       const rssDescription = document.body.innerHTML;
 
       wrapWithHeader(document);
-      insertNav(document, src, srcRoot, lc, baseURL, repository);
-      insertDates(document, frontMatter.date, modifiedDate, lc, lang);
+      insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
+      insertDates(document, frontMatter.date, modifiedDate, messages, lc, lang);
       insertAlertOcticons(document);
-      insertClipboardCopy(document, lc);
-      insertRunnableCodeChildren(document, lc);
+      insertClipboardCopy(document, messages, lc);
+      insertRunnableCodeChildren(document, messages, lc);
       highlight(document, starryNight);
 
       const categoryData = {
@@ -1099,8 +1109,8 @@ await Promise.all(
         canonical,
         baseURL,
         author: author.name,
-        lc,
         messages,
+        lc,
         categories,
         categoryData,
         document,
