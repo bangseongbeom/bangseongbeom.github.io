@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const srcRoot = process.env.SRC_ROOT ?? ".";
 const paths = await Array.fromAsync(
   glob(join(srcRoot, "**"), {
-    exclude: ["**/_*", "**/.*", "**/node_modules/**"],
+    exclude: ["**/_*", "**/.*", "**/node_modules"],
   }),
 );
 

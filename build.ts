@@ -1006,7 +1006,7 @@ await Promise.all(
   (
     await Array.fromAsync(
       glob(join(srcRoot, "**"), {
-        exclude: ["**/_*", "**/.*", "**/node_modules/**"],
+        exclude: ["**/_*", "**/.*", "**/node_modules"],
       }),
     )
   ).map(async (src) => {
