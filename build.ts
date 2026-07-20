@@ -85,22 +85,7 @@ async function getGitLogDates(src: string) {
   };
 }
 
-function markdownToDocument(markdown: string) {
-  const html = markdownToHTML(markdown, {
-    extension: {
-      alerts: true,
-      autolink: true,
-      footnotes: true,
-      strikethrough: true,
-      headerIDs: "",
-      table: true,
-      tasklist: true,
-    },
-    render: {
-      unsafe: true,
-    },
-  });
-
+function htmlToDocument(html: string) {
   const document = new Window().document;
   document.body.innerHTML = html;
 
@@ -1054,7 +1039,21 @@ await Promise.all(
       const modifiedDate =
         frontMatter.modified_date ?? gitLogDates.modifiedDate;
 
-      const document = markdownToDocument(content);
+      const html = markdownToHTML(markdown, {
+        extension: {
+          alerts: true,
+          autolink: true,
+          footnotes: true,
+          strikethrough: true,
+          headerIDs: "",
+          table: true,
+          tasklist: true,
+        },
+        render: {
+          unsafe: true,
+        },
+      });
+      const document = htmlToDocument(html);
 
       convertLinks(document);
 
