@@ -436,9 +436,11 @@ async function writeHTML({
         <head>
           <meta charset="utf-8" />
           <title>${escape(title)}</title>
-          ${description
-            ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
-            : ""}
+          ${
+            description
+              ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
+              : ""
+          }
           <meta name="author" content="${escape(author)}" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="color-scheme" content="light dark" />
@@ -449,9 +451,11 @@ async function writeHTML({
             content="${escape(new URL("ogp.png", baseURL).toString())}"
           />
           <meta property="og:url" content="${escape(canonical)}" />
-          ${description
-            ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
-            : ""}
+          ${
+            description
+              ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
+              : ""
+          }
           <link rel="canonical" href="${escape(canonical)}" />
           <link
             rel="icon"
@@ -651,37 +655,43 @@ async function writeHTML({
               <a href="${new URL(".", baseURL).toString()}"
                 >${escape(messages[lc].title())}</a
               >
-              ${categories && categories.length >= 1
-                ? /* HTML */ `<span>/</span>`
-                : ""}${categories
-                ?.map((category) =>
-                  category
-                    .split("/")
-                    .map(
-                      (_, i, segments) => /* HTML */ `
-                        <a
-                          href="${escape(
+              ${
+                categories && categories.length >= 1
+                  ? /* HTML */ `<span>/</span>`
+                  : ""
+              }${
+                categories
+                  ?.map((category) =>
+                    category
+                      .split("/")
+                      .map(
+                        (_, i, segments) => /* HTML */ `
+                          <a
+                            href="${escape(
                             categoryData[segments.slice(0, i + 1).join("/")]
                               .href,
                           )}"
-                          >${escape(
+                            >${escape(
                             categoryData[segments.slice(0, i + 1).join("/")]
                               .name,
                           )}</a
-                        >
-                      `,
-                    )
-                    .join(/* HTML */ `<span>/</span>`),
-                )
-                .join(/* HTML */ `<span>·</span>`) ?? ""}
+                          >
+                        `,
+                      )
+                      .join(/* HTML */ `<span>/</span>`),
+                  )
+                  .join(/* HTML */ `<span>·</span>`) ?? ""
+              }
             </p>
           </nav>
           <main>${document.body.innerHTML}</main>
-          ${["/README.md", "/404.md"].includes(
-            pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
-          )
-            ? ""
-            : /* HTML */ `<section id="comments" class="giscus"></section>`}
+          ${
+            ["/README.md", "/404.md"].includes(
+              pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+            )
+              ? ""
+              : /* HTML */ `<section id="comments" class="giscus"></section>`
+          }
         </body>
       </html>`,
   );
@@ -742,13 +752,7 @@ async function writeSitemap(
     loc: string;
     lastmod?: Date;
     changefreq?:
-      | "always"
-      | "hourly"
-      | "daily"
-      | "weekly"
-      | "monthly"
-      | "yearly"
-      | "never";
+      "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
     priority?: number;
   }[],
 ) {
@@ -985,13 +989,7 @@ const sitemapURLs: {
   loc: string;
   lastmod?: Date;
   changefreq?:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
+    "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   priority?: number;
 }[] = [];
 
