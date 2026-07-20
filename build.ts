@@ -1,13 +1,12 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
-import { Window } from "happy-dom";
-import type { Document } from "happy-dom";
 import { markdownToHTML } from "comrak";
+import escape from "escape-html";
 import matter from "gray-matter";
+import type { Document } from "happy-dom";
+import { Window } from "happy-dom";
 import { toHtml } from "hast-util-to-html";
-import { escape } from "html-escaper";
 import { fail } from "node:assert/strict";
-import type { BlogPosting, WithContext } from "schema-dts";
 import child_process from "node:child_process";
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
@@ -22,6 +21,7 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
+import type { BlogPosting, WithContext } from "schema-dts";
 import globWithGitignore from "./glob-with-gitignore.ts";
 
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
@@ -668,13 +668,13 @@ async function writeHTML({
                         (_, i, segments) => /* HTML */ `
                           <a
                             href="${escape(
-                            categoryData[segments.slice(0, i + 1).join("/")]
-                              .href,
-                          )}"
+                              categoryData[segments.slice(0, i + 1).join("/")]
+                                .href,
+                            )}"
                             >${escape(
-                            categoryData[segments.slice(0, i + 1).join("/")]
-                              .name,
-                          )}</a
+                              categoryData[segments.slice(0, i + 1).join("/")]
+                                .name,
+                            )}</a
                           >
                         `,
                       )
