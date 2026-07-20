@@ -906,7 +906,7 @@ const destRoot = process.env.DEST_ROOT ?? "_site";
 const messages = {
   en: {
     title: () => title,
-    categoryNames: {
+    categories: {
       android: () => "Android",
       git: () => "Git",
       iot: () => "IoT",
@@ -944,7 +944,7 @@ const messages = {
   },
   ko: {
     title: () => "방성범",
-    categoryNames: {
+    categories: {
       android: () => "안드로이드",
       git: () => "깃",
       iot: () => "IoT",
@@ -1082,20 +1082,20 @@ await Promise.all(
 
       const categoryData = {
         android: {
-          name: messages[lc].categoryNames.android(),
+          name: messages[lc].categories.android(),
           href: "/android",
         },
-        git: { name: messages[lc].categoryNames.git(), href: "/git" },
-        iot: { name: messages[lc].categoryNames.iot(), href: "/iot" },
-        java: { name: messages[lc].categoryNames.java(), href: "/java" },
-        linux: { name: messages[lc].categoryNames.linux(), href: "/linux" },
+        git: { name: messages[lc].categories.git(), href: "/git" },
+        iot: { name: messages[lc].categories.iot(), href: "/iot" },
+        java: { name: messages[lc].categories.java(), href: "/java" },
+        linux: { name: messages[lc].categories.linux(), href: "/linux" },
         "machine-learning": {
-          name: messages[lc].categoryNames.machineLearning(),
+          name: messages[lc].categories.machineLearning(),
           href: "/machine-learning",
         },
-        misc: { name: messages[lc].categoryNames.misc(), href: "/misc" },
-        python: { name: messages[lc].categoryNames.python(), href: "/python" },
-        web: { name: messages[lc].categoryNames.web(), href: "/web" },
+        misc: { name: messages[lc].categories.misc(), href: "/misc" },
+        python: { name: messages[lc].categories.python(), href: "/python" },
+        web: { name: messages[lc].categories.web(), href: "/web" },
       };
       const categories = frontMatter.categories;
 
