@@ -88,7 +88,10 @@ async function getGitLogDates(src: string) {
 function htmlToDocument(html: string) {
   const document = new Window().document;
   document.body.innerHTML = html;
+  return document;
+}
 
+function moveHeadingAnchorIds(document: Document) {
   for (const element of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
     const anchor = element.querySelector(".anchor");
     if (anchor) {
@@ -97,8 +100,6 @@ function htmlToDocument(html: string) {
       anchor.remove();
     }
   }
-
-  return document;
 }
 
 function convertLinks(document: Document) {
@@ -1054,6 +1055,7 @@ await Promise.all(
         },
       });
       const document = htmlToDocument(html);
+      moveHeadingAnchorIds(document);
 
       convertLinks(document);
 
