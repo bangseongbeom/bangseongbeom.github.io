@@ -15,8 +15,7 @@
     "gray-matter": "^4.0.3",
     "happy-dom": "^20.10.6",
     "hast-util-to-html": "^9.0.5",
-    "messageformat": "^4.0.0",
-    "tinyglobby": "^0.2.17"
+    "messageformat": "^4.0.0"
   },
   "devDependencies": {
     "@codemirror/autocomplete": "^6.20.3",

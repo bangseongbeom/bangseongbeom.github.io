@@ -1,11 +1,14 @@
 import { spawnSync } from "node:child_process";
-import { watch } from "node:fs/promises";
+import { glob, watch } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import globWithGitignore from "./glob-with-gitignore.ts";
 
 const srcRoot = process.env.SRC_ROOT ?? ".";
-const paths = await globWithGitignore(join(srcRoot, "**"));
+const paths = await Array.fromAsync(
+  glob(join(srcRoot, "**"), {
+    exclude: ["**/_*", "**/.*", "**/node_modules/**"],
+  }),
+);
 
 const watcher = watch(dirname(fileURLToPath(import.meta.url)), {
   recursive: true,

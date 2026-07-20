@@ -8,7 +8,7 @@ import { Window } from "happy-dom";
 import { toHtml } from "hast-util-to-html";
 import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { copyFile, glob, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
   basename,
   dirname,
@@ -22,7 +22,6 @@ import {
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import type { BlogPosting, WithContext } from "schema-dts";
-import globWithGitignore from "./glob-with-gitignore.ts";
 
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
   return join(
@@ -994,7 +993,13 @@ let rssItems: {
 }[] = [];
 
 await Promise.all(
-  (await globWithGitignore(join(srcRoot, "**"))).map(async (src) => {
+  (
+    await Array.fromAsync(
+      glob(join(srcRoot, "**"), {
+        exclude: ["**/_*", "**/.*", "**/node_modules/**"],
+      }),
+    )
+  ).map(async (src) => {
     if (extname(src) === ".md") {
       const dest = srcToDest(src, srcRoot, destRoot);
       const canonical = srcToCanonical(src, srcRoot, baseURL);
@@ -1138,7 +1143,10 @@ await Promise.all(
   }),
 );
 
-await writeSitemap(destRoot, sitemapURLs);
+await writeSitemap(
+  destRoot,
+  sitemapURLs.toSorted((a, b) => a.loc.localeCompare(b.loc)),
+);
 await writeFile(
   join(destRoot, "robots.txt"),
   `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
