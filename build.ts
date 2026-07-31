@@ -1,6 +1,6 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
-import { markdownToHTML } from "comrak";
+import * as comrak from "comrak";
 import escape from "escape-html";
 import matter from "gray-matter";
 import type { Document } from "happy-dom";
@@ -39,6 +39,23 @@ function extractFrontMatter(markdown: string): {
 } {
   const { data: frontMatter, content } = matter(markdown);
   return { frontMatter, content };
+}
+
+function markdownToHTML(markdown: string) {
+  return comrak.markdownToHTML(markdown, {
+    extension: {
+      alerts: true,
+      autolink: true,
+      footnotes: true,
+      strikethrough: true,
+      headerIDs: "",
+      table: true,
+      tasklist: true,
+    },
+    render: {
+      unsafe: true,
+    },
+  });
 }
 
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
@@ -1044,20 +1061,7 @@ await Promise.all(
       const modifiedDate =
         frontMatter.modified_date ?? gitLogDates.modifiedDate;
 
-      const html = markdownToHTML(content, {
-        extension: {
-          alerts: true,
-          autolink: true,
-          footnotes: true,
-          strikethrough: true,
-          headerIDs: "",
-          table: true,
-          tasklist: true,
-        },
-        render: {
-          unsafe: true,
-        },
-      });
+      const html = markdownToHTML(content);
       const document = htmlToDocument(html);
       moveHeadingAnchorIds(document);
 
