@@ -23,6 +23,24 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import type { BlogPosting, WithContext } from "schema-dts";
 
+interface FrontMatter {
+  lang?: string;
+  categories?: string[];
+  title?: string;
+  description?: string;
+  date?: Date;
+  modified_date?: Date;
+  redirect_from?: string[];
+}
+
+function extractFrontMatter(markdown: string): {
+  frontMatter: FrontMatter;
+  content: string;
+} {
+  const { data: frontMatter, content } = matter(markdown);
+  return { frontMatter, content };
+}
+
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
   return join(
     destRoot,
@@ -1013,22 +1031,7 @@ await Promise.all(
       const canonical = srcToCanonical(src, srcRoot, baseURL);
 
       const markdown = await readFile(src, "utf8");
-      const {
-        data: frontMatter,
-        content,
-      }: {
-        data: {
-          lang?: string;
-          categories?: string[];
-          title?: string;
-          description?: string;
-          date?: Date;
-          modified_date?: Date;
-          redirect_from?: string[];
-        };
-        content: string;
-      } = matter(markdown);
-
+      const { frontMatter, content } = extractFrontMatter(markdown);
       const lang = getLang(frontMatter.lang, src, defaultLang);
       const lc = match(
         [lang],
