@@ -1084,6 +1084,7 @@ await Promise.all(
       const description =
         frontMatter.description ??
         document.querySelector("h1 + p")?.textContent;
+      const categories = frontMatter.categories;
       const categoryData = {
         android: {
           name: messages[lc].categories.android(),
@@ -1101,7 +1102,6 @@ await Promise.all(
         python: { name: messages[lc].categories.python(), href: "/python" },
         web: { name: messages[lc].categories.web(), href: "/web" },
       };
-      const categories = frontMatter.categories;
 
       await writeHTML({
         dest,
