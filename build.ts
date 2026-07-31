@@ -91,31 +91,31 @@ function htmlToDocument(html: string) {
 }
 
 function moveHeadingAnchorIds(document: Document) {
-  for (const element of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
-    const anchor = element.querySelector(".anchor");
+  for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
+    const anchor = heading.querySelector(".anchor");
     if (anchor) {
       const id = anchor.getAttribute("id") ?? fail();
-      element.setAttribute("id", id);
+      heading.setAttribute("id", id);
       anchor.remove();
     }
   }
 }
 
 function convertLinks(document: Document) {
-  for (const element of document.querySelectorAll("[href]")) {
-    const href = element.getAttribute("href") ?? fail();
+  for (const link of document.querySelectorAll("[href]")) {
+    const href = link.getAttribute("href") ?? fail();
     if (href.endsWith("/README.md"))
-      element.setAttribute("href", href.slice(0, -"README.md".length));
+      link.setAttribute("href", href.slice(0, -"README.md".length));
     else if (href.endsWith(".md"))
-      element.setAttribute("href", href.slice(0, -".md".length));
+      link.setAttribute("href", href.slice(0, -".md".length));
   }
 }
 
 function wrapWithHeader(document: Document) {
-  for (const element of document.querySelectorAll("h1")) {
+  for (const heading of document.querySelectorAll("h1")) {
     const header = document.createElement("header");
-    element.replaceWith(header);
-    header.append(element);
+    heading.replaceWith(header);
+    header.append(heading);
   }
 }
 
@@ -128,8 +128,8 @@ function insertNav(
   baseURL: string,
   repository: string,
 ) {
-  for (const element of document.querySelectorAll("header")) {
-    element.insertAdjacentHTML(
+  for (const header of document.querySelectorAll("header")) {
+    header.insertAdjacentHTML(
       "beforeend",
       /* HTML */ `
         <nav>
@@ -188,8 +188,8 @@ function insertDates(
 ) {
   if (!date) return;
   if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
-    for (const element of document.querySelectorAll("header")) {
-      element.insertAdjacentHTML(
+    for (const header of document.querySelectorAll("header")) {
+      header.insertAdjacentHTML(
         "beforeend",
         /* HTML */ `<p id="dates">
           <span
@@ -213,8 +213,8 @@ function insertDates(
       );
     }
   } else {
-    for (const element of document.querySelectorAll("h1 + header")) {
-      element.insertAdjacentHTML(
+    for (const header of document.querySelectorAll("h1 + header")) {
+      header.insertAdjacentHTML(
         "beforeend",
         /* HTML */ `<p>
           <time id="date" datetime="${escape(date.toISOString())}"
@@ -227,10 +227,10 @@ function insertDates(
 }
 
 function insertAlertOcticons(document: Document) {
-  for (const element of document.querySelectorAll(
+  for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-note .markdown-alert-title",
   )) {
-    element.insertAdjacentHTML(
+    alertTitle.insertAdjacentHTML(
       "afterbegin",
       /* HTML */ `<svg
         xmlns="http://www.w3.org/2000/svg"
@@ -244,10 +244,10 @@ function insertAlertOcticons(document: Document) {
       </svg>`,
     );
   }
-  for (const element of document.querySelectorAll(
+  for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-tip .markdown-alert-title",
   )) {
-    element.insertAdjacentHTML(
+    alertTitle.insertAdjacentHTML(
       "afterbegin",
       /* HTML */ `<svg
         xmlns="http://www.w3.org/2000/svg"
@@ -261,10 +261,10 @@ function insertAlertOcticons(document: Document) {
       </svg>`,
     );
   }
-  for (const element of document.querySelectorAll(
+  for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-important .markdown-alert-title",
   )) {
-    element.insertAdjacentHTML(
+    alertTitle.insertAdjacentHTML(
       "afterbegin",
       /* HTML */ `<svg
         xmlns="http://www.w3.org/2000/svg"
@@ -278,10 +278,10 @@ function insertAlertOcticons(document: Document) {
       </svg>`,
     );
   }
-  for (const element of document.querySelectorAll(
+  for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-warning .markdown-alert-title",
   )) {
-    element.insertAdjacentHTML(
+    alertTitle.insertAdjacentHTML(
       "afterbegin",
       /* HTML */ `<svg
         xmlns="http://www.w3.org/2000/svg"
@@ -295,10 +295,10 @@ function insertAlertOcticons(document: Document) {
       </svg>`,
     );
   }
-  for (const element of document.querySelectorAll(
+  for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-caution .markdown-alert-title",
   )) {
-    element.insertAdjacentHTML(
+    alertTitle.insertAdjacentHTML(
       "afterbegin",
       /* HTML */ `<svg
         xmlns="http://www.w3.org/2000/svg"
@@ -319,15 +319,15 @@ function insertClipboardCopy(
   messages: Messages,
   lc: keyof Messages,
 ) {
-  for (const element of document.querySelectorAll("pre")) {
+  for (const pre of document.querySelectorAll("pre")) {
     const wrapper = document.createElement("div");
     wrapper.className = "highlight";
-    element.replaceWith(wrapper);
-    wrapper.append(element);
-    const code = element.querySelector("code");
+    pre.replaceWith(wrapper);
+    wrapper.append(pre);
+    const code = pre.querySelector("code");
 
     if (code?.getAttribute("class")) {
-      element.insertAdjacentHTML(
+      pre.insertAdjacentHTML(
         "afterend",
         /* HTML */ `<p>
           <button type="button" class="clipboard-copy">
@@ -349,11 +349,11 @@ function insertRunnableCodeChildren(
   messages: Messages,
   lc: keyof Messages,
 ) {
-  for (const element of document.querySelectorAll("runnable-code")) {
-    const code = element.querySelector("code");
+  for (const runnableCode of document.querySelectorAll("runnable-code")) {
+    const code = runnableCode.querySelector("code");
     const flag = code?.getAttribute("class")?.match(/language-(.+)/)?.[1];
     if (!flag) continue;
-    const clipboardCopy = element.querySelector(".clipboard-copy");
+    const clipboardCopy = runnableCode.querySelector(".clipboard-copy");
     if (!clipboardCopy) continue;
 
     if (["js", "ts", "py"].includes(flag)) {
@@ -386,14 +386,12 @@ function highlight(
   document: Document,
   starryNight: Awaited<ReturnType<typeof createStarryNight>>,
 ) {
-  for (const element of document.querySelectorAll("code")) {
-    const flag = element.getAttribute("class")?.match(/language-(.+)/)?.[1];
+  for (const code of document.querySelectorAll("code")) {
+    const flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
     if (!flag) continue;
     const codeScope = starryNight.flagToScope(flag);
     if (!codeScope) continue;
-    element.innerHTML = toHtml(
-      starryNight.highlight(element.textContent, codeScope),
-    );
+    code.innerHTML = toHtml(starryNight.highlight(code.textContent, codeScope));
   }
 }
 
