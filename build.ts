@@ -1067,14 +1067,6 @@ await Promise.all(
 
       convertLinks(document);
 
-      const title =
-        frontMatter.title ??
-        document.querySelector("h1")?.textContent ??
-        fail("title is required");
-      const description =
-        frontMatter.description ??
-        document.querySelector("h1 + p")?.textContent;
-
       const rssDescription = document.body.innerHTML;
 
       wrapWithHeader(document);
@@ -1085,6 +1077,13 @@ await Promise.all(
       insertRunnableCodeChildren(document, messages, lc);
       highlight(document, starryNight);
 
+      const title =
+        frontMatter.title ??
+        document.querySelector("h1")?.textContent ??
+        fail("title is required");
+      const description =
+        frontMatter.description ??
+        document.querySelector("h1 + p")?.textContent;
       const categoryData = {
         android: {
           name: messages[lc].categories.android(),
