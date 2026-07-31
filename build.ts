@@ -97,7 +97,7 @@ function getLang(
   return lang;
 }
 
-async function getGitLogDates(src: string) {
+async function getGitModifiedDate(src: string) {
   let gitLogDates = (
     await execFile("git", [
       "log",
@@ -111,12 +111,9 @@ async function getGitLogDates(src: string) {
     .split("\n");
   if (gitLogDates[0] === "") gitLogDates = [];
 
-  const date = gitLogDates.at(-1);
+  // const date = gitLogDates.at(-1);
   const modifiedDate = gitLogDates.at(0);
-  return {
-    date: date ? new Date(date) : undefined,
-    modifiedDate: modifiedDate ? new Date(modifiedDate) : undefined,
-  };
+  return modifiedDate ? new Date(modifiedDate) : undefined;
 }
 
 function htmlToDocument(html: string) {
@@ -1056,10 +1053,8 @@ await Promise.all(
         defaultLang,
       ) as keyof Messages;
 
-      const gitLogDates = await getGitLogDates(src);
-      const date = frontMatter.date ?? gitLogDates.date;
-      const modifiedDate =
-        frontMatter.modified_date ?? gitLogDates.modifiedDate;
+      const gitModifiedDate = await getGitModifiedDate(src);
+      const modifiedDate = frontMatter.modified_date ?? gitModifiedDate;
 
       const html = markdownToHTML(content);
       const document = htmlToDocument(html);
@@ -1109,7 +1104,7 @@ await Promise.all(
         title,
         description,
         modifiedDate,
-        date,
+        date: frontMatter.date,
         canonical,
         baseURL,
         author: author.name,
@@ -1132,7 +1127,7 @@ await Promise.all(
         link: canonical,
         description: rssDescription,
         categories,
-        pubDate: date,
+        pubDate: frontMatter.date,
         guid: canonical,
       });
 
