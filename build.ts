@@ -1052,18 +1052,13 @@ await Promise.all(
         Object.keys(messages),
         defaultLang,
       ) as keyof Messages;
-
       const gitModifiedDate = await getGitModifiedDate(src);
       const modifiedDate = frontMatter.modified_date ?? gitModifiedDate;
-
       const html = markdownToHTML(content);
       const document = htmlToDocument(html);
       moveHeadingAnchorIds(document);
-
       convertLinks(document);
-
       const rssDescription = document.body.innerHTML;
-
       wrapWithHeader(document);
       insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
       insertDates(document, frontMatter.date, modifiedDate, messages, lc, lang);
@@ -1071,7 +1066,6 @@ await Promise.all(
       insertClipboardCopy(document, messages, lc);
       insertRunnableCodeChildren(document, messages, lc);
       highlight(document, starryNight);
-
       const title =
         frontMatter.title ??
         document.querySelector("h1")?.textContent ??
