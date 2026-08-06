@@ -4,15 +4,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const srcRoot = process.env.SRC_ROOT ?? ".";
-const paths = await Array.fromAsync(
+const filenames = await Array.fromAsync(
   glob(join(srcRoot, "**"), {
     exclude: ["**/_*", "**/.*", "**/node_modules"],
   }),
 );
-
 const watcher = watch(dirname(fileURLToPath(import.meta.url)), {
   recursive: true,
 });
 for await (const { filename } of watcher)
-  if (filename && paths.includes(filename))
+  if (filename && filenames.includes(filename))
     spawnSync(process.execPath, ["--run", "build"], { stdio: "inherit" });
