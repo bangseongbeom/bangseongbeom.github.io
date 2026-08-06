@@ -1032,119 +1032,112 @@ let rssItems: {
   content?: string;
 }[] = [];
 
-await Promise.all(
-  (
-    await Array.fromAsync(
-      glob(join(srcRoot, "**"), {
-        exclude: ["**/_*", "**/.*", "**/node_modules"],
-      }),
+for await (const src of glob(join(srcRoot, "**"), {
+  exclude: ["**/_*", "**/.*", "**/node_modules"],
+})) {
+  if (extname(src) === ".md") {
+    const dest = srcToDest(src, srcRoot, destRoot);
+    const canonical = srcToCanonical(src, srcRoot, baseURL);
+
+    const markdown = await readFile(src, "utf8");
+    const { frontMatter, content } = extractFrontMatter(markdown);
+    const lang = getLang(frontMatter.lang, src, defaultLang);
+    const lc = match(
+      [lang],
+      Object.keys(messages),
+      defaultLang,
+    ) as keyof Messages;
+    const gitModifiedDate = await getGitModifiedDate(src);
+    const modifiedDate = frontMatter.modified_date ?? gitModifiedDate;
+    const html = markdownToHTML(content);
+    const document = htmlToDocument(html);
+    moveHeadingAnchorIds(document);
+    convertLinks(document);
+    const rssDescription = document.body.innerHTML;
+    wrapWithHeader(document);
+    insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
+    insertDates(document, frontMatter.date, modifiedDate, messages, lc, lang);
+    insertAlertOcticons(document);
+    insertClipboardCopy(document, messages, lc);
+    insertRunnableCodeChildren(document, messages, lc);
+    highlight(document, starryNight);
+    const title =
+      frontMatter.title ??
+      document.querySelector("h1")?.textContent ??
+      fail("title is required");
+    const description =
+      frontMatter.description ?? document.querySelector("h1 + p")?.textContent;
+    const categories = frontMatter.categories;
+    const categoryData = {
+      android: {
+        name: messages[lc].categories.android(),
+        href: "/android",
+      },
+      git: { name: messages[lc].categories.git(), href: "/git" },
+      iot: { name: messages[lc].categories.iot(), href: "/iot" },
+      java: { name: messages[lc].categories.java(), href: "/java" },
+      linux: { name: messages[lc].categories.linux(), href: "/linux" },
+      "machine-learning": {
+        name: messages[lc].categories.machineLearning(),
+        href: "/machine-learning",
+      },
+      misc: { name: messages[lc].categories.misc(), href: "/misc" },
+      python: { name: messages[lc].categories.python(), href: "/python" },
+      web: { name: messages[lc].categories.web(), href: "/web" },
+    };
+
+    await writeHTML({
+      dest,
+      lang,
+      title,
+      description,
+      modifiedDate,
+      date: frontMatter.date,
+      canonical,
+      baseURL,
+      author: author.name,
+      messages,
+      lc,
+      categories,
+      categoryData,
+      document,
+      src,
+      srcRoot,
+      repository,
+    });
+
+    sitemapURLs.push({
+      loc: canonical,
+      lastmod: modifiedDate,
+    });
+    rssItems.push({
+      title,
+      link: canonical,
+      description: rssDescription,
+      categories,
+      pubDate: frontMatter.date,
+      guid: canonical,
+    });
+
+    await writeRedirectHTMLs(
+      frontMatter.redirect_from,
+      dest,
+      destRoot,
+      title,
+      canonical,
+      baseURL,
+    );
+  }
+  if (
+    [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
+      extname(src),
     )
-  ).map(async (src) => {
-    if (extname(src) === ".md") {
-      const dest = srcToDest(src, srcRoot, destRoot);
-      const canonical = srcToCanonical(src, srcRoot, baseURL);
-
-      const markdown = await readFile(src, "utf8");
-      const { frontMatter, content } = extractFrontMatter(markdown);
-      const lang = getLang(frontMatter.lang, src, defaultLang);
-      const lc = match(
-        [lang],
-        Object.keys(messages),
-        defaultLang,
-      ) as keyof Messages;
-      const gitModifiedDate = await getGitModifiedDate(src);
-      const modifiedDate = frontMatter.modified_date ?? gitModifiedDate;
-      const html = markdownToHTML(content);
-      const document = htmlToDocument(html);
-      moveHeadingAnchorIds(document);
-      convertLinks(document);
-      const rssDescription = document.body.innerHTML;
-      wrapWithHeader(document);
-      insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
-      insertDates(document, frontMatter.date, modifiedDate, messages, lc, lang);
-      insertAlertOcticons(document);
-      insertClipboardCopy(document, messages, lc);
-      insertRunnableCodeChildren(document, messages, lc);
-      highlight(document, starryNight);
-      const title =
-        frontMatter.title ??
-        document.querySelector("h1")?.textContent ??
-        fail("title is required");
-      const description =
-        frontMatter.description ??
-        document.querySelector("h1 + p")?.textContent;
-      const categories = frontMatter.categories;
-      const categoryData = {
-        android: {
-          name: messages[lc].categories.android(),
-          href: "/android",
-        },
-        git: { name: messages[lc].categories.git(), href: "/git" },
-        iot: { name: messages[lc].categories.iot(), href: "/iot" },
-        java: { name: messages[lc].categories.java(), href: "/java" },
-        linux: { name: messages[lc].categories.linux(), href: "/linux" },
-        "machine-learning": {
-          name: messages[lc].categories.machineLearning(),
-          href: "/machine-learning",
-        },
-        misc: { name: messages[lc].categories.misc(), href: "/misc" },
-        python: { name: messages[lc].categories.python(), href: "/python" },
-        web: { name: messages[lc].categories.web(), href: "/web" },
-      };
-
-      await writeHTML({
-        dest,
-        lang,
-        title,
-        description,
-        modifiedDate,
-        date: frontMatter.date,
-        canonical,
-        baseURL,
-        author: author.name,
-        messages,
-        lc,
-        categories,
-        categoryData,
-        document,
-        src,
-        srcRoot,
-        repository,
-      });
-
-      sitemapURLs.push({
-        loc: canonical,
-        lastmod: modifiedDate,
-      });
-      rssItems.push({
-        title,
-        link: canonical,
-        description: rssDescription,
-        categories,
-        pubDate: frontMatter.date,
-        guid: canonical,
-      });
-
-      await writeRedirectHTMLs(
-        frontMatter.redirect_from,
-        dest,
-        destRoot,
-        title,
-        canonical,
-        baseURL,
-      );
-    }
-    if (
-      [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
-        extname(src),
-      )
-    ) {
-      const dest = join(destRoot, relative(srcRoot, src));
-      await mkdir(dirname(dest), { recursive: true });
-      await copyFile(src, dest);
-    }
-  }),
-);
+  ) {
+    const dest = join(destRoot, relative(srcRoot, src));
+    await mkdir(dirname(dest), { recursive: true });
+    await copyFile(src, dest);
+  }
+}
 
 await writeSitemap(
   destRoot,
