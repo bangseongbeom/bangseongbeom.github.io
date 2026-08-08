@@ -1,8 +1,8 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
-import * as comrak from "comrak";
 import escape from "escape-html";
 import matter from "gray-matter";
+import GithubSlugger from "github-slugger";
 import type { Document } from "happy-dom";
 import { Window } from "happy-dom";
 import { toHtml } from "hast-util-to-html";
@@ -21,6 +21,7 @@ import {
 } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
+import { markdownToHtml } from "satteri";
 import type { BlogPosting, WithContext } from "schema-dts";
 
 interface FrontMatter {
@@ -42,20 +43,12 @@ function extractFrontMatter(markdown: string): {
 }
 
 function markdownToHTML(markdown: string) {
-  return comrak.markdownToHTML(markdown, {
-    extension: {
-      alerts: true,
-      autolink: true,
-      footnotes: true,
-      strikethrough: true,
-      headerIDs: "",
-      table: true,
-      tasklist: true,
+  return markdownToHtml(markdown, {
+    features: {
+      gfm: true,
+      frontmatter: false,
     },
-    render: {
-      unsafe: true,
-    },
-  });
+  }).html;
 }
 
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
@@ -126,14 +119,40 @@ function htmlToDocument(html: string) {
   return document;
 }
 
-function moveHeadingAnchorIds(document: Document) {
+function insertHeadingIds(document: Document) {
+  const slugger = new GithubSlugger();
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
-    const anchor = heading.querySelector(".anchor");
-    if (anchor) {
-      const id = anchor.getAttribute("id") ?? fail();
-      heading.setAttribute("id", id);
-      anchor.remove();
-    }
+    if (!heading.hasAttribute("id"))
+      heading.setAttribute("id", slugger.slug(heading.textContent));
+  }
+}
+
+function convertAlerts(document: Document) {
+  for (const blockquote of document.querySelectorAll("blockquote")) {
+    const firstParagraph = blockquote.firstElementChild;
+    if (firstParagraph?.tagName !== "P") continue;
+    const match = firstParagraph.innerHTML.match(
+      /^\[!(?<type>NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\n|$)/,
+    );
+    if (!match) continue;
+    const type = match.groups!.type as
+      "NOTE" | "TIP" | "IMPORTANT" | "WARNING" | "CAUTION";
+    firstParagraph.innerHTML = firstParagraph.innerHTML.slice(match[0].length);
+    if (firstParagraph.innerHTML.length === 0) firstParagraph.remove();
+
+    const alert = document.createElement("div");
+    alert.className = `markdown-alert markdown-alert-${type.toLowerCase()}`;
+    const title = document.createElement("p");
+    title.className = "markdown-alert-title";
+    title.textContent = {
+      NOTE: "Note",
+      TIP: "Tip",
+      IMPORTANT: "Important",
+      WARNING: "Warning",
+      CAUTION: "Caution",
+    }[type];
+    alert.append(title, ...blockquote.childNodes);
+    blockquote.replaceWith(alert);
   }
 }
 
@@ -1055,7 +1074,8 @@ for await (const src of glob(join(srcRoot, "**"), {
     const modifiedDate = frontMatter.modified_date ?? lastGitLogDate;
     const html = markdownToHTML(content);
     const document = htmlToDocument(html);
-    moveHeadingAnchorIds(document);
+    insertHeadingIds(document);
+    convertAlerts(document);
     convertLinks(document);
     const rssDescription = document.body.innerHTML;
     wrapWithHeader(document);
