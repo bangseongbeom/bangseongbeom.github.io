@@ -99,16 +99,8 @@ function getLang(
 
 async function getGitModifiedDate(src: string) {
   let gitLogDates = (
-    await execFile("git", [
-      "log",
-      "--follow",
-      "--pretty=tformat:%cI",
-      "--",
-      src,
-    ])
-  ).stdout
-    .trim()
-    .split("\n");
+    await execFile("git", ["log", "--follow", "--pretty=format:%cI", "--", src])
+  ).stdout.split("\n");
   if (gitLogDates[0] === "") gitLogDates = [];
 
   // const date = gitLogDates.at(-1);
