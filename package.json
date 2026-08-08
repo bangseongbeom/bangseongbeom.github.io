@@ -11,9 +11,9 @@
     "escape-html": "^1.0.3",
     "github-markdown-css": "^5.9.0",
     "github-slugger": "^2.0.0",
-    "gray-matter": "^4.0.3",
     "happy-dom": "^20.10.6",
     "hast-util-to-html": "^9.0.5",
+    "js-yaml": "^5.2.3",
     "messageformat": "^4.0.0",
     "satteri": "^0.9.5"
   },

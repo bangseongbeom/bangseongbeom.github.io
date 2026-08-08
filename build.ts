@@ -1,11 +1,11 @@
 import { match } from "@formatjs/intl-localematcher";
 import { all, createStarryNight } from "@wooorm/starry-night";
 import escape from "escape-html";
-import matter from "gray-matter";
 import GithubSlugger from "github-slugger";
 import type { Document } from "happy-dom";
 import { Window } from "happy-dom";
 import { toHtml } from "hast-util-to-html";
+import { load } from "js-yaml";
 import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, glob, mkdir, readFile, writeFile } from "node:fs/promises";
@@ -29,26 +29,19 @@ interface FrontMatter {
   categories?: string[];
   title?: string;
   description?: string;
-  date?: Date;
-  modified_date?: Date;
+  date?: string;
+  modified_date?: string;
   redirect_from?: string[];
 }
 
-function extractFrontMatter(markdown: string): {
-  frontMatter: FrontMatter;
-  content: string;
-} {
-  const { data: frontMatter, content } = matter(markdown);
-  return { frontMatter, content };
-}
-
 function markdownToHTML(markdown: string) {
-  return markdownToHtml(markdown, {
-    features: {
-      gfm: true,
-      frontmatter: false,
-    },
-  }).html;
+  const result = markdownToHtml(markdown);
+  return {
+    html: result.html,
+    frontmatter: (result.frontmatter
+      ? load(result.frontmatter.value)
+      : {}) as FrontMatter,
+  };
 }
 
 function srcToDest(src: string, srcRoot: string, destRoot: string) {
@@ -1063,16 +1056,18 @@ for await (const src of glob(join(srcRoot, "**"), {
     const canonical = srcToCanonical(src, srcRoot, baseURL);
 
     const markdown = await readFile(src, "utf8");
-    const { frontMatter, content } = extractFrontMatter(markdown);
-    const lang = getLang(frontMatter.lang, src, defaultLang);
+    const { frontmatter, html } = markdownToHTML(markdown);
+    const lang = getLang(frontmatter.lang, src, defaultLang);
     const lc = match(
       [lang],
       Object.keys(messages),
       defaultLang,
     ) as keyof Messages;
+    const date = frontmatter.date ? new Date(frontmatter.date) : undefined;
     const lastGitLogDate = await getLastGitLogDate(src);
-    const modifiedDate = frontMatter.modified_date ?? lastGitLogDate;
-    const html = markdownToHTML(content);
+    const modifiedDate = frontmatter.modified_date
+      ? new Date(frontmatter.modified_date)
+      : lastGitLogDate;
     const document = htmlToDocument(html);
     insertHeadingIds(document);
     convertAlerts(document);
@@ -1080,18 +1075,18 @@ for await (const src of glob(join(srcRoot, "**"), {
     const rssDescription = document.body.innerHTML;
     wrapWithHeader(document);
     insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
-    insertDates(document, frontMatter.date, modifiedDate, messages, lc, lang);
+    insertDates(document, date, modifiedDate, messages, lc, lang);
     insertAlertOcticons(document);
     insertClipboardCopy(document, messages, lc);
     insertRunnableCodeChildren(document, messages, lc);
     highlight(document, starryNight);
     const title =
-      frontMatter.title ??
+      frontmatter.title ??
       document.querySelector("h1")?.textContent ??
       fail("title is required");
     const description =
-      frontMatter.description ?? document.querySelector("h1 + p")?.textContent;
-    const categories = frontMatter.categories;
+      frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
+    const categories = frontmatter.categories;
     const categoryData = {
       android: {
         name: messages[lc].categories.android(),
@@ -1116,7 +1111,7 @@ for await (const src of glob(join(srcRoot, "**"), {
       title,
       description,
       modifiedDate,
-      date: frontMatter.date,
+      date,
       canonical,
       baseURL,
       author: author.name,
@@ -1139,12 +1134,12 @@ for await (const src of glob(join(srcRoot, "**"), {
       link: canonical,
       description: rssDescription,
       categories,
-      pubDate: frontMatter.date,
+      pubDate: date,
       guid: canonical,
     });
 
     await writeRedirectHTMLs(
-      frontMatter.redirect_from,
+      frontmatter.redirect_from,
       dest,
       destRoot,
       title,
