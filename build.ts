@@ -97,15 +97,27 @@ function getLang(
   return lang;
 }
 
-async function getGitModifiedDate(src: string) {
-  let gitLogDates = (
-    await execFile("git", ["log", "--follow", "--pretty=format:%cI", "--", src])
-  ).stdout.split("\n");
-  if (gitLogDates[0] === "") gitLogDates = [];
+async function getFirstGitLogDate(path: string) {
+  const { stdout } = await execFile("git", [
+    "log",
+    "--follow",
+    "--max-count-oldest=1",
+    "--pretty=format:%cI",
+    "--",
+    path,
+  ]);
+  if (stdout) return new Date(stdout);
+}
 
-  // const date = gitLogDates.at(-1);
-  const modifiedDate = gitLogDates.at(0);
-  return modifiedDate ? new Date(modifiedDate) : undefined;
+async function getLastGitLogDate(path: string) {
+  const { stdout } = await execFile("git", [
+    "log",
+    "--max-count=1",
+    "--pretty=format:%cI",
+    "--",
+    path,
+  ]);
+  if (stdout) return new Date(stdout);
 }
 
 function htmlToDocument(html: string) {
@@ -1039,8 +1051,8 @@ for await (const src of glob(join(srcRoot, "**"), {
       Object.keys(messages),
       defaultLang,
     ) as keyof Messages;
-    const gitModifiedDate = await getGitModifiedDate(src);
-    const modifiedDate = frontMatter.modified_date ?? gitModifiedDate;
+    const lastGitLogDate = await getLastGitLogDate(src);
+    const modifiedDate = frontMatter.modified_date ?? lastGitLogDate;
     const html = markdownToHTML(content);
     const document = htmlToDocument(html);
     moveHeadingAnchorIds(document);
