@@ -9,7 +9,6 @@
     "@formatjs/intl-localematcher": "^0.8.10",
     "@wooorm/starry-night": "^3.10.0",
     "escape-html": "^1.0.3",
-    "github-markdown-css": "^5.9.0",
     "github-slugger": "^2.0.0",
     "happy-dom": "^20.10.6",
     "hast-util-to-html": "^9.0.5",

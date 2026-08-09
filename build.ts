@@ -19,7 +19,7 @@ import {
   relative,
   sep,
 } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import { markdownToHtml } from "satteri";
 import type { BlogPosting, WithContext } from "schema-dts";
@@ -551,7 +551,7 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(new URL("github-markdown.css", baseURL).toString())}"
+            href="${escape(new URL("auto.css", baseURL).toString())}"
           />
           <link
             rel="stylesheet"
@@ -1197,10 +1197,8 @@ await writeRSS(
   rssItems,
 );
 
-await copyFile(
-  fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
-  join(destRoot, "github-markdown.css"),
-);
+await copyFile(join(srcRoot, "auto.css"), join(destRoot, "auto.css"));
+await copyFile(join(srcRoot, "auto.css.map"), join(destRoot, "auto.css.map"));
 await copyFile(
   join(srcRoot, "heading-links.js"),
   join(destRoot, "heading-links.js"),
