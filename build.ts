@@ -568,12 +568,32 @@ async function writeHTML({
             href="${escape(new URL("codemirror.css", baseURL).toString())}"
           />
           <style>
+            .heading-link {
+              display: inline-block;
+              vertical-align: middle;
+              margin-inline-start: 0.25em;
+              opacity: 0;
+            }
+
+            :hover > .heading-link,
+            .heading-link:focus {
+              opacity: 1;
+            }
+
+            .heading-link svg {
+              display: block;
+              width: 1em;
+              height: 1em;
+              fill: currentcolor;
+            }
+
             @media (hover: none) {
-              .anchorjs-link {
+              .heading-link {
                 opacity: 1;
               }
             }
-
+          </style>
+          <style>
             .markdown-body {
               box-sizing: border-box;
               min-width: 200px;
@@ -661,6 +681,10 @@ async function writeHTML({
           </script>
           <script
             type="module"
+            src="${escape(new URL("heading-links.js", baseURL).toString())}"
+          ></script>
+          <script
+            type="module"
             src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
           ></script>
           <script
@@ -697,12 +721,6 @@ async function writeHTML({
             crossorigin="anonymous"
             async
           ></script>
-          <script src="https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js"></script>
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              anchors.add();
-            });
-          </script>
         </head>
         <body class="markdown-body">
           <nav id="breadcrumb">
@@ -1182,6 +1200,10 @@ await writeRSS(
 await copyFile(
   fileURLToPath(import.meta.resolve("github-markdown-css/github-markdown.css")),
   join(destRoot, "github-markdown.css"),
+);
+await copyFile(
+  join(srcRoot, "heading-links.js"),
+  join(destRoot, "heading-links.js"),
 );
 await copyFile(
   join(srcRoot, "clipboard-copy.js"),
