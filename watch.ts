@@ -1,17 +1,14 @@
 import { spawnSync } from "node:child_process";
 import { glob, watch } from "node:fs/promises";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 
-const srcRoot = process.env.SRC_ROOT ?? ".";
-const filenames = await Array.fromAsync(
-  glob(join(srcRoot, "**"), {
+const source = process.env.SOURCE ?? ".";
+const paths = await Array.fromAsync(
+  glob("**", {
+    cwd: source,
     exclude: ["**/_*", "**/.*", "**/node_modules"],
   }),
 );
-const watcher = watch(dirname(fileURLToPath(import.meta.url)), {
-  recursive: true,
-});
+const watcher = watch(source, { recursive: true });
 for await (const { filename } of watcher)
-  if (filename && filenames.includes(filename))
+  if (filename && paths.includes(filename))
     spawnSync(process.execPath, ["--run", "build"], { stdio: "inherit" });

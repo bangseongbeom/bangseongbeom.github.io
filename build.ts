@@ -16,7 +16,6 @@ import {
   isAbsolute,
   join,
   parse,
-  relative,
   sep,
 } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -44,21 +43,20 @@ function markdownToHTML(markdown: string) {
   };
 }
 
-function srcToDest(src: string, srcRoot: string, destRoot: string) {
+function markdownToHTMLPath(path: string) {
   return join(
-    destRoot,
-    dirname(relative(srcRoot, src)),
-    basename(src) === "README.md" ? "index.html" : `${parse(src).name}.html`,
+    dirname(path),
+    basename(path) === "README.md" ? "index.html" : `${parse(path).name}.html`,
   );
 }
 
-function srcToCanonical(src: string, srcRoot: string, baseURL: string) {
+function pathToCanonical(path: string, baseURL: string) {
   return new URL(
     pathToFileURL(
       join(
         sep,
-        dirname(relative(srcRoot, src)),
-        basename(src) === "README.md" ? sep : parse(src).name,
+        dirname(path),
+        basename(path) === "README.md" ? sep : parse(path).name,
       ),
     ).pathname.substring(1),
     baseURL,
@@ -67,7 +65,7 @@ function srcToCanonical(src: string, srcRoot: string, baseURL: string) {
 
 function getLang(
   fileLang: string | undefined,
-  src: string,
+  path: string,
   defaultLang: string,
 ) {
   let lang;
@@ -76,7 +74,7 @@ function getLang(
   } catch {}
   if (!lang) {
     try {
-      lang = Intl.getCanonicalLocales(src.split(sep)[0])[0];
+      lang = Intl.getCanonicalLocales(path.split(sep)[0])[0];
     } catch {}
   }
   if (!lang) lang = Intl.getCanonicalLocales(defaultLang)[0];
@@ -169,8 +167,7 @@ function wrapWithHeader(document: Document) {
 
 function insertNav(
   document: Document,
-  src: string,
-  srcRoot: string,
+  path: string,
   messages: Messages,
   lc: keyof Messages,
   baseURL: string,
@@ -183,16 +180,14 @@ function insertNav(
         <nav>
           <p>
             <a
-              href="${escape(
-                pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
-              )}"
+              href="${escape(pathToFileURL(join(sep, path)).pathname)}"
               title="${escape(messages[lc].header.nav.markdown.title())}"
               >${escape(messages[lc].header.nav.markdown.content())}</a
             >
             <span>·</span>
             <a
               href="${escape(
-                `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+                `https://github.com/${repository}/blob/main${pathToFileURL(join(sep, path)).pathname}`,
               )}"
               title="${escape(messages[lc].header.nav.github.title())}"
               >${escape(messages[lc].header.nav.github.content())}</a
@@ -200,7 +195,7 @@ function insertNav(
             <span>·</span>
             <a
               href="${escape(
-                `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+                `https://github.com/${repository}/edit/main${pathToFileURL(join(sep, path)).pathname}`,
               )}"
               title="${escape(messages[lc].header.nav.edit.title())}"
               >${escape(messages[lc].header.nav.edit.content())}</a
@@ -208,7 +203,7 @@ function insertNav(
             <span>·</span>
             <a
               href="${escape(
-                `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, relative(srcRoot, src))).pathname}`,
+                `https://github.com/${repository}/commits/main${pathToFileURL(join(sep, path)).pathname}`,
               )}"
               title="${escape(messages[lc].header.nav.history.title())}"
               >${escape(messages[lc].header.nav.history.content())}</a
@@ -444,7 +439,8 @@ function highlight(
 }
 
 async function writeHTML({
-  dest,
+  path,
+  destination,
   lang,
   title,
   description,
@@ -458,11 +454,10 @@ async function writeHTML({
   categories,
   categoryData,
   document,
-  src,
-  srcRoot,
   repository,
 }: {
-  dest: string;
+  path: string;
+  destination: string;
   lang?: string;
   title: string;
   description?: string;
@@ -476,13 +471,13 @@ async function writeHTML({
   categories?: string[];
   categoryData: { [key: string]: { name: string; href: string } };
   document: Document;
-  src: string;
-  srcRoot: string;
   repository: string;
 }) {
-  await mkdir(dirname(dest), { recursive: true });
+  await mkdir(dirname(join(destination, markdownToHTMLPath(path))), {
+    recursive: true,
+  });
   await writeFile(
-    dest,
+    join(destination, markdownToHTMLPath(path)),
     /* HTML */ `<!DOCTYPE html>
       <html
         ${lang ? `lang="${escape(lang)}"` : ""}
@@ -531,16 +526,14 @@ async function writeHTML({
           <link
             rel="alternate"
             type="text/markdown"
-            href="${escape(
-              pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
-            )}"
+            href="${escape(pathToFileURL(join(sep, path)).pathname)}"
           />
           <link
             rel="alternate"
             type="text/html"
             href="${escape(
               `https://github.com/${repository}/blob/main${
-                pathToFileURL(join(sep, relative(srcRoot, src))).pathname
+                pathToFileURL(join(sep, path)).pathname
               }`,
             )}"
           />
@@ -760,7 +753,7 @@ async function writeHTML({
           <main>${document.body.innerHTML}</main>
           ${
             ["/README.md", "/404.md"].includes(
-              pathToFileURL(join(sep, relative(srcRoot, src))).pathname,
+              pathToFileURL(join(sep, path)).pathname,
             )
               ? ""
               : /* HTML */ `<section id="comments" class="giscus"></section>`
@@ -772,8 +765,8 @@ async function writeHTML({
 
 async function writeRedirectHTMLs(
   redirectFrom: string[] | undefined,
-  dest: string,
-  destRoot: string,
+  path: string,
+  destination: string,
   title: string,
   canonical: string,
   baseURL: string,
@@ -782,8 +775,8 @@ async function writeRedirectHTMLs(
 
   for (const redirectFromPath of redirectFrom) {
     const resolvedPath = isAbsolute(redirectFromPath)
-      ? join(destRoot, redirectFromPath)
-      : join(dest, "..", redirectFromPath);
+      ? join(destination, redirectFromPath)
+      : join(destination, markdownToHTMLPath(path), "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
     await writeFile(
       resolvedPath,
@@ -820,7 +813,7 @@ async function writeRedirectHTMLs(
 }
 
 async function writeSitemap(
-  destRoot: string,
+  destination: string,
   sitemapURLs: {
     loc: string;
     lastmod?: Date;
@@ -830,7 +823,7 @@ async function writeSitemap(
   }[],
 ) {
   await writeFile(
-    join(destRoot, "sitemap.xml"),
+    join(destination, "sitemap.xml"),
     /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
@@ -850,7 +843,7 @@ ${sitemapURLs
 }
 
 async function writeRSS(
-  destRoot: string,
+  destination: string,
   {
     title,
     link,
@@ -891,7 +884,7 @@ async function writeRSS(
     .slice(0, 10);
 
   await writeFile(
-    join(destRoot, "feed.xml"),
+    join(destination, "feed.xml"),
     /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
@@ -964,8 +957,8 @@ const author = {
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
 const defaultLang = "en";
 
-const srcRoot = process.env.SRC_ROOT ?? ".";
-const destRoot = process.env.DEST_ROOT ?? "_site";
+const source = process.env.SOURCE ?? ".";
+const destination = process.env.DESTINATION ?? "_site";
 
 const messages = {
   en: {
@@ -1066,23 +1059,23 @@ let rssItems: {
   content?: string;
 }[] = [];
 
-for await (const src of glob(join(srcRoot, "**"), {
+for await (const path of glob("**", {
+  cwd: source,
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
-  if (extname(src) === ".md") {
-    const dest = srcToDest(src, srcRoot, destRoot);
-    const canonical = srcToCanonical(src, srcRoot, baseURL);
+  if (extname(path) === ".md") {
+    const canonical = pathToCanonical(path, baseURL);
 
-    const markdown = await readFile(src, "utf8");
+    const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
-    const lang = getLang(frontmatter.lang, src, defaultLang);
+    const lang = getLang(frontmatter.lang, path, defaultLang);
     const lc = match(
       [lang],
       Object.keys(messages),
       defaultLang,
     ) as keyof Messages;
     const date = frontmatter.date ? new Date(frontmatter.date) : undefined;
-    const lastGitLogDate = await getLastGitLogDate(src);
+    const lastGitLogDate = await getLastGitLogDate(join(source, path));
     const modifiedDate = frontmatter.modified_date
       ? new Date(frontmatter.modified_date)
       : lastGitLogDate;
@@ -1092,7 +1085,7 @@ for await (const src of glob(join(srcRoot, "**"), {
     convertLinks(document);
     const rssDescription = document.body.innerHTML;
     wrapWithHeader(document);
-    insertNav(document, src, srcRoot, messages, lc, baseURL, repository);
+    insertNav(document, path, messages, lc, baseURL, repository);
     insertDates(document, date, modifiedDate, messages, lc, lang);
     insertAlertOcticons(document);
     insertClipboardCopy(document, messages, lc);
@@ -1124,7 +1117,8 @@ for await (const src of glob(join(srcRoot, "**"), {
     };
 
     await writeHTML({
-      dest,
+      path,
+      destination,
       lang,
       title,
       description,
@@ -1138,8 +1132,6 @@ for await (const src of glob(join(srcRoot, "**"), {
       categories,
       categoryData,
       document,
-      src,
-      srcRoot,
       repository,
     });
 
@@ -1158,8 +1150,8 @@ for await (const src of glob(join(srcRoot, "**"), {
 
     await writeRedirectHTMLs(
       frontmatter.redirect_from,
-      dest,
-      destRoot,
+      path,
+      destination,
       title,
       canonical,
       baseURL,
@@ -1167,25 +1159,24 @@ for await (const src of glob(join(srcRoot, "**"), {
   }
   if (
     [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
-      extname(src),
+      extname(path),
     )
   ) {
-    const dest = join(destRoot, relative(srcRoot, src));
-    await mkdir(dirname(dest), { recursive: true });
-    await copyFile(src, dest);
+    await mkdir(dirname(join(destination, path)), { recursive: true });
+    await copyFile(join(source, path), join(destination, path));
   }
 }
 
 await writeSitemap(
-  destRoot,
+  destination,
   sitemapURLs.toSorted((a, b) => a.loc.localeCompare(b.loc)),
 );
 await writeFile(
-  join(destRoot, "robots.txt"),
+  join(destination, "robots.txt"),
   `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
 );
 await writeRSS(
-  destRoot,
+  destination,
   {
     title,
     link: baseURL,
@@ -1197,17 +1188,17 @@ await writeRSS(
   rssItems,
 );
 
-await copyFile(join(srcRoot, "auto.css"), join(destRoot, "auto.css"));
-await copyFile(join(srcRoot, "auto.css.map"), join(destRoot, "auto.css.map"));
+await copyFile(join(source, "auto.css"), join(destination, "auto.css"));
+await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
-  join(srcRoot, "heading-links.js"),
-  join(destRoot, "heading-links.js"),
+  join(source, "heading-links.js"),
+  join(destination, "heading-links.js"),
 );
 await copyFile(
-  join(srcRoot, "clipboard-copy.js"),
-  join(destRoot, "clipboard-copy.js"),
+  join(source, "clipboard-copy.js"),
+  join(destination, "clipboard-copy.js"),
 );
 await copyFile(
-  join(srcRoot, "runnable-code.js"),
-  join(destRoot, "runnable-code.js"),
+  join(source, "runnable-code.js"),
+  join(destination, "runnable-code.js"),
 );
