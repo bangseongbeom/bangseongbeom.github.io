@@ -1049,7 +1049,7 @@ const sitemapURLs: {
   priority?: number;
 }[] = [];
 
-let rssItems: {
+const rssItems: {
   title: string;
   link: string;
   description: string;
