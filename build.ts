@@ -50,7 +50,7 @@ function markdownToHTMLPath(path: string) {
   );
 }
 
-function pathToCanonical(path: string, baseURL: string) {
+function pathToURL(path: string, baseURL: string) {
   return new URL(
     pathToFileURL(
       join(
@@ -446,7 +446,7 @@ async function writeHTML({
   description,
   modifiedDate,
   date,
-  canonical,
+  url,
   baseURL,
   author,
   lc,
@@ -463,7 +463,7 @@ async function writeHTML({
   description?: string;
   modifiedDate?: Date | undefined;
   date?: Date | undefined;
-  canonical: string;
+  url: string;
   baseURL: string;
   author: string;
   messages: Messages;
@@ -500,13 +500,13 @@ async function writeHTML({
             property="og:image"
             content="${escape(new URL("ogp.png", baseURL).toString())}"
           />
-          <meta property="og:url" content="${escape(canonical)}" />
+          <meta property="og:url" content="${escape(url)}" />
           ${
             description
               ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
               : ""
           }
-          <link rel="canonical" href="${escape(canonical)}" />
+          <link rel="canonical" href="${escape(url)}" />
           <link
             rel="icon"
             href="${escape(new URL("favicon.ico", baseURL).toString())}"
@@ -768,7 +768,7 @@ async function writeRedirectHTMLs(
   path: string,
   destination: string,
   title: string,
-  canonical: string,
+  url: string,
   baseURL: string,
 ) {
   if (!redirectFrom) return;
@@ -785,8 +785,8 @@ async function writeRedirectHTMLs(
           <head>
             <meta charset="utf-8" />
             <title>${escape(title)}</title>
-            <meta http-equiv="refresh" content="0; URL=${escape(canonical)}" />
-            <link rel="canonical" href="${escape(canonical)}" />
+            <meta http-equiv="refresh" content="0; URL=${escape(url)}" />
+            <link rel="canonical" href="${escape(url)}" />
             <link
               rel="icon"
               href="${escape(new URL("favicon.ico", baseURL).toString())}"
@@ -805,7 +805,7 @@ async function writeRedirectHTMLs(
             />
           </head>
           <body>
-            <a href="${escape(canonical)}">${escape(canonical)}</a>
+            <a href="${escape(url)}">${escape(url)}</a>
           </body>
         </html> `,
     );
@@ -1064,7 +1064,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const canonical = pathToCanonical(path, baseURL);
+    const url = pathToURL(path, baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
@@ -1124,7 +1124,7 @@ for await (const path of glob("**", {
       description,
       modifiedDate,
       date,
-      canonical,
+      url,
       baseURL,
       author: author.name,
       messages,
@@ -1136,16 +1136,16 @@ for await (const path of glob("**", {
     });
 
     sitemapURLs.push({
-      loc: canonical,
+      loc: url,
       lastmod: modifiedDate,
     });
     rssItems.push({
       title,
-      link: canonical,
+      link: url,
       description: rssDescription,
       categories,
       pubDate: date,
-      guid: canonical,
+      guid: url,
     });
 
     await writeRedirectHTMLs(
@@ -1153,7 +1153,7 @@ for await (const path of glob("**", {
       path,
       destination,
       title,
-      canonical,
+      url,
       baseURL,
     );
   }
