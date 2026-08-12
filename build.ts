@@ -674,7 +674,7 @@ async function writeHTML({
           </script>
           <script
             type="module"
-            src="${escape(new URL("heading-links.js", baseURL).toString())}"
+            src="${escape(new URL("anchor-links.js", baseURL).toString())}"
           ></script>
           <script
             type="module"
@@ -1191,8 +1191,8 @@ await writeRSS(
 await copyFile(join(source, "auto.css"), join(destination, "auto.css"));
 await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
-  join(source, "heading-links.js"),
-  join(destination, "heading-links.js"),
+  join(source, "anchor-links.js"),
+  join(destination, "anchor-links.js"),
 );
 await copyFile(
   join(source, "clipboard-copy.js"),
