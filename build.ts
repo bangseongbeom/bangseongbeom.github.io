@@ -44,7 +44,7 @@ function markdownToHTML(markdown: string) {
   };
 }
 
-function markdownToHTMLPath(path: string) {
+function markdownPathToHTMLPath(path: string) {
   return join(
     dirname(path),
     basename(path) === "README.md" ? "index.html" : `${parse(path).name}.html`,
@@ -695,11 +695,11 @@ async function writeHTML({
   siteDescription: string;
   siteAuthor?: { name?: string; email?: string };
 }) {
-  await mkdir(dirname(join(destination, markdownToHTMLPath(path))), {
+  await mkdir(dirname(join(destination, markdownPathToHTMLPath(path))), {
     recursive: true,
   });
   await writeFile(
-    join(destination, markdownToHTMLPath(path)),
+    join(destination, markdownPathToHTMLPath(path)),
     /* HTML */ `<!DOCTYPE html>
       <html
         ${lang ? `lang="${escape(lang)}"` : ""}
@@ -982,7 +982,7 @@ async function writeRedirectHTMLs(
   for (const redirectFromPath of redirectFrom) {
     const resolvedPath = isAbsolute(redirectFromPath)
       ? join(destination, redirectFromPath)
-      : join(destination, markdownToHTMLPath(path), "..", redirectFromPath);
+      : join(destination, markdownPathToHTMLPath(path), "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
     await writeFile(
       resolvedPath,
