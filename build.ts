@@ -54,7 +54,7 @@ function pathToURLPathName(path: string) {
   return path.split(sep).map(encodeURIComponent).join("/");
 }
 
-function markdownPathToURL(path: string, baseURL: string) {
+function markdownPathToCanonicalURL(path: string, baseURL: string) {
   return new URL(
     pathToURLPathName(
       join(
@@ -1286,7 +1286,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = markdownPathToURL(path, baseURL);
+    const url = markdownPathToCanonicalURL(path, baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
