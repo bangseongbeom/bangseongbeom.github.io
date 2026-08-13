@@ -51,7 +51,7 @@ function markdownToHTMLPath(path: string) {
   );
 }
 
-function pathToURL(path: string, baseURL: string) {
+function markdownPathToURL(path: string, baseURL: string) {
   return new URL(
     pathToFileURL(
       join(
@@ -1270,7 +1270,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = pathToURL(path, baseURL);
+    const url = markdownPathToURL(path, baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
