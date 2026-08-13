@@ -51,15 +51,18 @@ function markdownPathToHTMLPath(path: string) {
   );
 }
 
+function pathToURLPathName(path: string) {
+  return path.split(sep).map(encodeURIComponent).join("/");
+}
+
 function markdownPathToURL(path: string, baseURL: string) {
   return new URL(
-    pathToFileURL(
+    pathToURLPathName(
       join(
-        sep,
         dirname(path),
         basename(path) === "README.md" ? sep : parse(path).name,
       ),
-    ).pathname.substring(1),
+    ),
     baseURL,
   ).toString();
 }
