@@ -438,12 +438,27 @@ function page(title: string, content: string) {
   </article>`;
 }
 
-function commentsSection(path: string) {
+function commentsSection(path: string, lang: string) {
   return ["/README.md", "/404.md"].includes(
     pathToFileURL(join(sep, path)).pathname,
   )
     ? ""
-    : /* HTML */ `<section id="comments" class="giscus"></section>`;
+    : /* HTML */ ` <script
+        src="https://giscus.app/client.js"
+        data-repo="bangseongbeom/bangseongbeom.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ=="
+        data-category="Comments"
+        data-category-id="DIC_kwDOBYE9uc4Ct9yc"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        ${lang ? `data-lang="${escape(lang)}"` : ""}
+        crossorigin="anonymous"
+        async
+      ></script>`;
 }
 
 function post(
@@ -531,7 +546,7 @@ function post(
           ? /* HTML */ `<div class="comments-disabled-message">
               Comments have been disabled for this post.
             </div>`
-          : commentsSection(path)
+          : commentsSection(path, lang)
         : ""
     }
 
@@ -907,22 +922,6 @@ async function writeHTML({
 
             gtag("config", "G-P5S28YZ348");
           </script>
-          <script
-            src="https://giscus.app/client.js"
-            data-repo="${escape(repository)}"
-            data-repo-id="MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==="
-            data-category="Comments"
-            data-category-id="DIC_kwDOBYE9uc4Ct9yc"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="preferred_color_scheme"
-            ${lang ? `data-lang="${escape(lang)}"` : ""}
-            crossorigin="anonymous"
-            async
-          ></script>
         </head>
         <body>
           ${header(baseURL, escape(messages[lc].title()), [
