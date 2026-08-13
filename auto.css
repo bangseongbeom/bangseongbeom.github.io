@@ -795,6 +795,9 @@ table td {
     color: var(--minima-text-color);
     line-height: 1.5;
   }
+  .site-nav .nav-item:not(:last-child) {
+    margin-right: 0;
+  }
 }
 
 /**
