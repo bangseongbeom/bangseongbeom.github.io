@@ -785,19 +785,19 @@ async function writeHTML({
             href="${escape(new URL("codemirror.css", baseURL).toString())}"
           />
           <style>
-            .heading-link {
+            .header-link {
               display: inline-block;
               vertical-align: middle;
               margin-inline-start: 0.25em;
               opacity: 0;
             }
 
-            :hover > .heading-link,
-            .heading-link:focus {
+            :hover > .header-link,
+            .header-link:focus {
               opacity: 1;
             }
 
-            .heading-link svg {
+            .header-link svg {
               display: block;
               width: 1em;
               height: 1em;
@@ -805,7 +805,7 @@ async function writeHTML({
             }
 
             @media (hover: none) {
-              .heading-link {
+              .header-link {
                 opacity: 1;
               }
             }

@@ -1,10 +1,10 @@
 for (const heading of document.querySelectorAll(
   "h2[id], h3[id], h4[id], h5[id], h6[id]",
 )) {
-  if (heading.querySelector(":scope > .heading-link")) continue;
+  if (heading.querySelector(":scope > .header-link")) continue;
 
   const anchor = document.createElement("a");
-  anchor.className = "heading-link";
+  anchor.className = "header-link";
   anchor.setAttribute("href", `#${heading.id}`);
   anchor.setAttribute("aria-label", "Link");
   anchor.innerHTML = /* HTML */ `
