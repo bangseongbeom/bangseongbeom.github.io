@@ -30,6 +30,7 @@ interface FrontMatter {
   description?: string;
   date?: string;
   modified_date?: string;
+  comments?: boolean;
   redirect_from?: string[];
 }
 
@@ -438,6 +439,251 @@ function highlight(
   }
 }
 
+function navItems(pages: { title?: string; url: string }[]) {
+  return /* HTML */ `<div class="nav-items">
+    ${pages
+      .map((page) =>
+        page.title
+          ? /* HTML */ `
+              <a class="nav-item" href="${page.url}">${escape(page.title)}</a>
+            `
+          : "",
+      )
+      .join("")}
+  </div>`;
+}
+
+function header(
+  baseURL: string,
+  siteTitle: string,
+  navPages: { title?: string; url: string }[],
+) {
+  return /* HTML */ `<header class="site-header">
+    <div class="wrapper">
+      <a class="site-title" rel="author" href="${escape(baseURL)}"
+        >${escape(siteTitle)}</a
+      >
+
+      ${
+        navPages.length === 0
+          ? ""
+          : /* HTML */ `<nav class="site-nav">
+              <input type="checkbox" id="nav-trigger" />
+              <label for="nav-trigger">
+                <span class="menu-icon"></span>
+              </label>
+
+              ${navItems(navPages)}
+            </nav>`
+      }
+    </div>
+  </header>`;
+}
+
+function page(title: string, content: string) {
+  return /* HTML */ `<article class="post">
+    <header class="post-header">
+      <h1 class="post-title">${escape(title)}</h1>
+    </header>
+
+    <div class="post-content">${content}</div>
+  </article>`;
+}
+
+function commentsSection(path: string) {
+  return ["/README.md", "/404.md"].includes(
+    pathToFileURL(join(sep, path)).pathname,
+  )
+    ? ""
+    : /* HTML */ `<section id="comments" class="giscus"></section>`;
+}
+
+function post(
+  title: string,
+  modifiedDate: Date | undefined,
+  date: Date,
+  authors: string[],
+  content: string,
+  comments: boolean | undefined,
+  path: string,
+  url: string,
+) {
+  return /* HTML */ `<article
+    class="post h-entry"
+    itemscope
+    itemtype="http://schema.org/BlogPosting"
+  >
+    <header class="post-header">
+      <h1 class="post-title p-name" itemprop="name headline">
+        ${escape(title)}
+      </h1>
+      <div class="post-meta">
+        ${modifiedDate ? /* HTML */ `<span class="meta-label">Published:</span>` : ""}
+        <time
+          class="dt-published"
+          datetime="${escape(date.toISOString())}"
+          itemprop="datePublished"
+        >
+          ${escape(date.toLocaleDateString())}
+        </time>
+        ${
+          modifiedDate
+            ? /* HTML */ `<span class="bullet-divider">•</span>
+                <span class="meta-label">Updated:</span>
+                <time
+                  class="dt-modified"
+                  datetime="${escape(modifiedDate.toISOString())}"
+                  itemprop="dateModified"
+                >
+                  ${escape(modifiedDate.toLocaleDateString())}
+                </time>`
+            : ""
+        }
+        ${
+          authors.length >= 1
+            ? /* HTML */ `<div
+                class="${modifiedDate ? "" : "force-inline "}post-authors"
+              >
+                ${authors
+                  .map(
+                    (author) =>
+                      /* HTML */ `<span
+                        itemprop="author"
+                        itemscope
+                        itemtype="http://schema.org/Person"
+                      >
+                        <span class="p-author h-card" itemprop="name"
+                          >${escape(author)}</span
+                        >
+                      </span>`,
+                  )
+                  .join(", ")}
+              </div>`
+            : ""
+        }
+      </div>
+    </header>
+
+    <div class="post-content e-content" itemprop="articleBody">${content}</div>
+
+    ${
+      process.env.NODE_ENV === "production"
+        ? comments === false
+          ? /* HTML */ `<div class="comments-disabled-message">
+              Comments have been disabled for this post.
+            </div>`
+          : commentsSection(path)
+        : ""
+    }
+
+    <a class="u-url" href="${escape(url)}" hidden></a>
+  </article>`;
+}
+
+function social(
+  socialLinks: { url: string; title: string; icon: string }[],
+  hideSiteFeedLink: boolean | undefined,
+  feedPath = "feed.xml",
+  baseURL: string,
+) {
+  return /* HTML */ `<ul class="social-media-list">
+    ${socialLinks
+      .map(
+        (entry) =>
+          /* HTML */ `<li>
+            <a
+              rel="me"
+              href="${escape(entry.url)}"
+              target="_blank"
+              title="${escape(entry.title)}"
+            >
+              <span
+                class="grey fa-brands fa-${escape(entry.icon)} fa-lg"
+              ></span>
+            </a>
+          </li>`,
+      )
+      .join("")}
+    ${
+      hideSiteFeedLink
+        ? ""
+        : /* HTML */ `<li>
+            <a
+              href="${escape(new URL(feedPath, baseURL).toString())}"
+              target="_blank"
+              title="Subscribe to syndication feed"
+            >
+              <svg class="svg-icon grey" viewbox="0 0 16 16">
+                <path
+                  d="M12.8 16C12.8 8.978 7.022 3.2 0 3.2V0c8.777 0 16 7.223 16 16h-3.2zM2.194
+          11.61c1.21 0 2.195.985 2.195 2.196 0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017 0
+          13.806c0-1.21.983-2.195 2.194-2.195zM10.606
+          16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818 0 10.606 4.79 10.606 10.607z"
+                />
+              </svg>
+            </a>
+          </li>`
+    }
+  </ul>`;
+}
+
+function footer(
+  baseURL: string,
+  siteAuthor: { name?: string; email?: string } | undefined,
+  siteDescription: string,
+  socialLinks: { url: string; title: string; icon: string }[],
+  hideSiteFeedLink?: boolean,
+  feedPath?: string,
+) {
+  return /* HTML */ `<link
+      id="fa-stylesheet"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.0.0/css/all.min.css"
+    />
+
+    <footer class="site-footer h-card">
+      <data class="u-url" value="${escape(baseURL)}"></data>
+
+      <div class="wrapper">
+        <div class="footer-col-wrapper">
+          <div class="footer-col">
+            ${
+              siteAuthor
+                ? /* HTML */ `<ul class="contact-list">
+                    ${
+                      siteAuthor.name
+                        ? /* HTML */ `<li class="p-name">
+                            ${escape(siteAuthor.name)}
+                          </li>`
+                        : ""
+                    }
+                    ${
+                      siteAuthor.email
+                        ? /* HTML */ `<li>
+                            <a
+                              class="u-email"
+                              href="${escape(`mailto:${siteAuthor.email}`)}"
+                              >${escape(siteAuthor.email)}</a
+                            >
+                          </li>`
+                        : ""
+                    }
+                  </ul>`
+                : ""
+            }
+          </div>
+          <div class="footer-col">
+            <p>${escape(siteDescription)}</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          ${social(socialLinks, hideSiteFeedLink, feedPath, baseURL)}
+        </div>
+      </div>
+    </footer>`;
+}
+
 async function writeHTML({
   path,
   destination,
@@ -453,8 +699,10 @@ async function writeHTML({
   messages,
   categories,
   categoryData,
-  document,
+  content,
   repository,
+  siteDescription,
+  siteAuthor,
 }: {
   path: string;
   destination: string;
@@ -470,8 +718,10 @@ async function writeHTML({
   lc: keyof Messages;
   categories?: string[];
   categoryData: { [key: string]: { name: string; href: string } };
-  document: Document;
+  content: string;
   repository: string;
+  siteDescription: string;
+  siteAuthor?: { name?: string; email?: string };
 }) {
   await mkdir(dirname(join(destination, markdownToHTMLPath(path))), {
     recursive: true,
@@ -715,49 +965,49 @@ async function writeHTML({
             async
           ></script>
         </head>
-        <body class="markdown-body">
-          <nav id="breadcrumb">
-            <p>
-              <a href="${new URL(".", baseURL).toString()}"
-                >${escape(messages[lc].title())}</a
-              >
-              ${
-                categories && categories.length >= 1
-                  ? /* HTML */ `<span>/</span>`
-                  : ""
-              }${
-                categories
-                  ?.map((category) =>
-                    category
-                      .split("/")
-                      .map(
-                        (_, i, segments) => /* HTML */ `
-                          <a
-                            href="${escape(
-                              categoryData[segments.slice(0, i + 1).join("/")]
-                                .href,
-                            )}"
-                            >${escape(
-                              categoryData[segments.slice(0, i + 1).join("/")]
-                                .name,
-                            )}</a
-                          >
-                        `,
-                      )
-                      .join(/* HTML */ `<span>/</span>`),
-                  )
-                  .join(/* HTML */ `<span>·</span>`) ?? ""
-              }
-            </p>
-          </nav>
-          <main>${document.body.innerHTML}</main>
-          ${
-            ["/README.md", "/404.md"].includes(
-              pathToFileURL(join(sep, path)).pathname,
-            )
-              ? ""
-              : /* HTML */ `<section id="comments" class="giscus"></section>`
-          }
+        <body>
+          ${header(baseURL, escape(messages[lc].title()), [
+            {
+              title: messages[lc].categories.android(),
+              url: new URL("android", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.git(),
+              url: new URL("git", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.iot(),
+              url: new URL("iot", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.java(),
+              url: new URL("java", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.linux(),
+              url: new URL("linux", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.machineLearning(),
+              url: new URL("machine-learning", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.misc(),
+              url: new URL("misc", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.python(),
+              url: new URL("python", baseURL).toString(),
+            },
+            {
+              title: messages[lc].categories.web(),
+              url: new URL("web", baseURL).toString(),
+            },
+          ])}
+          <main class="page-content" aria-label="Content">
+            <div class="wrapper">${content}</div>
+          </main>
+          ${footer(baseURL, siteAuthor, siteDescription, [])}
         </body>
       </html>`,
   );
@@ -948,9 +1198,9 @@ const execFile = promisify(child_process.execFile);
 const starryNight = await createStarryNight(all);
 
 const repository = "bangseongbeom/bangseongbeom.github.io";
-const title = "Bang Seongbeom";
-const description = "Developer Bang Seongbeom's technical documentation.";
-const author = {
+const siteTitle = "Bang Seongbeom";
+const siteDescription = "Developer Bang Seongbeom's technical documentation.";
+const siteAuthor = {
   name: "방성범 (Bang Seongbeom)",
   email: "bangseongbeom@gmail.com",
 };
@@ -962,7 +1212,7 @@ const destination = process.env.DESTINATION ?? "_site";
 
 const messages = {
   en: {
-    title: () => title,
+    title: () => siteTitle,
     categories: {
       android: () => "Android",
       git: () => "Git",
@@ -1126,13 +1376,26 @@ for await (const path of glob("**", {
       date,
       url,
       baseURL,
-      author: author.name,
+      author: siteAuthor.name,
       messages,
       lc,
       categories,
       categoryData,
-      document,
+      content: date
+        ? post(
+            title,
+            modifiedDate,
+            date,
+            [siteAuthor.name],
+            document.body.innerHTML,
+            frontmatter.comments,
+            path,
+            url,
+          )
+        : page(title, document.body.innerHTML),
       repository,
+      siteDescription,
+      siteAuthor,
     });
 
     sitemapURLs.push({
@@ -1178,12 +1441,12 @@ await writeFile(
 await writeRSS(
   destination,
   {
-    title,
+    title: siteTitle,
     link: baseURL,
-    description,
+    description: siteDescription,
     language: defaultLang,
-    managingEditor: author,
-    webMaster: author,
+    managingEditor: siteAuthor,
+    webMaster: siteAuthor,
   },
   rssItems,
 );
