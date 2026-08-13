@@ -158,12 +158,8 @@ function convertLinks(document: Document) {
   }
 }
 
-function wrapWithHeader(document: Document) {
-  for (const heading of document.querySelectorAll("h1")) {
-    const header = document.createElement("header");
-    heading.replaceWith(header);
-    header.append(heading);
-  }
+function removeFirstHeading(document: Document) {
+  document.querySelector("h1")?.remove();
 }
 
 function insertNav(
@@ -1333,20 +1329,20 @@ for await (const path of glob("**", {
     insertHeadingIds(document);
     convertAlerts(document);
     convertLinks(document);
-    const rssDescription = document.body.innerHTML;
-    wrapWithHeader(document);
-    insertNav(document, path, messages, lc, baseURL, repository);
-    insertDates(document, date, modifiedDate, messages, lc, lang);
-    insertAlertOcticons(document);
-    insertClipboardCopy(document, messages, lc);
-    insertRunnableCodeChildren(document, messages, lc);
-    highlight(document, starryNight);
     const title =
       frontmatter.title ??
       document.querySelector("h1")?.textContent ??
       fail("title is required");
     const description =
       frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
+    const rssDescription = document.body.innerHTML;
+    removeFirstHeading(document);
+    insertNav(document, path, messages, lc, baseURL, repository);
+    insertDates(document, date, modifiedDate, messages, lc, lang);
+    insertAlertOcticons(document);
+    insertClipboardCopy(document, messages, lc);
+    insertRunnableCodeChildren(document, messages, lc);
+    highlight(document, starryNight);
     const categories = frontmatter.categories;
     const categoryData = {
       android: {
