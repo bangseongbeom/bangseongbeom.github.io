@@ -439,9 +439,7 @@ function page(title: string, content: string) {
 }
 
 function commentsSection(path: string, lang: string) {
-  return ["/README.md", "/404.md"].includes(
-    pathToFileURL(join(sep, path)).pathname,
-  )
+  return ["README.md", "404.md"].includes(path)
     ? ""
     : /* HTML */ ` <script
         src="https://giscus.app/client.js"
