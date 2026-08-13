@@ -218,54 +218,6 @@ function insertNav(
   }
 }
 
-function insertDates(
-  document: Document,
-  date: Date | undefined,
-  modifiedDate: Date | undefined,
-  messages: Messages,
-  lc: keyof Messages,
-  lang: string,
-) {
-  if (!date) return;
-  if (modifiedDate && modifiedDate.toISOString() !== date.toISOString()) {
-    for (const header of document.querySelectorAll("header")) {
-      header.insertAdjacentHTML(
-        "beforeend",
-        /* HTML */ `<p id="dates">
-          <span
-            >${escape(messages[lc].header.dates.published())}:
-            <time id="date" datetime="${escape(date.toISOString())}"
-              >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
-            ></span
-          >
-          <span>·</span>
-          <span
-            >${escape(messages[lc].header.dates.modified())}:
-            <time
-              id="modified-date"
-              datetime="${escape(modifiedDate.toISOString())}"
-              >${escape(
-                new Intl.DateTimeFormat(lang).format(modifiedDate),
-              )}</time
-            ></span
-          >
-        </p>`,
-      );
-    }
-  } else {
-    for (const header of document.querySelectorAll("h1 + header")) {
-      header.insertAdjacentHTML(
-        "beforeend",
-        /* HTML */ `<p>
-          <time id="date" datetime="${escape(date.toISOString())}"
-            >${escape(new Intl.DateTimeFormat(lang).format(date))}</time
-          >
-        </p>`,
-      );
-    }
-  }
-}
-
 function insertAlertOcticons(document: Document) {
   for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-note .markdown-alert-title",
@@ -498,6 +450,9 @@ function post(
   title: string,
   modifiedDate: Date | undefined,
   date: Date,
+  messages: Messages,
+  lc: keyof Messages,
+  lang: string,
   authors: string[],
   content: string,
   comments: boolean | undefined,
@@ -514,24 +469,32 @@ function post(
         ${escape(title)}
       </h1>
       <div class="post-meta">
-        ${modifiedDate ? /* HTML */ `<span class="meta-label">Published:</span>` : ""}
+        ${
+          modifiedDate
+            ? /* HTML */ `<span class="meta-label"
+                >${escape(messages[lc].header.dates.published())}:</span
+              >`
+            : ""
+        }
         <time
           class="dt-published"
           datetime="${escape(date.toISOString())}"
           itemprop="datePublished"
         >
-          ${escape(date.toLocaleDateString())}
+          ${escape(date.toLocaleDateString(lang))}
         </time>
         ${
           modifiedDate
             ? /* HTML */ `<span class="bullet-divider">•</span>
-                <span class="meta-label">Updated:</span>
+                <span class="meta-label"
+                  >${escape(messages[lc].header.dates.modified())}:</span
+                >
                 <time
                   class="dt-modified"
                   datetime="${escape(modifiedDate.toISOString())}"
                   itemprop="dateModified"
                 >
-                  ${escape(modifiedDate.toLocaleDateString())}
+                  ${escape(modifiedDate.toLocaleDateString(lang))}
                 </time>`
             : ""
         }
@@ -1233,7 +1196,7 @@ const messages = {
       },
       dates: {
         published: () => "Published",
-        modified: () => "Modified",
+        modified: () => "Updated",
       },
     },
     clipboardCopy: {
@@ -1338,7 +1301,6 @@ for await (const path of glob("**", {
     const rssDescription = document.body.innerHTML;
     removeFirstHeading(document);
     insertNav(document, path, messages, lc, baseURL, repository);
-    insertDates(document, date, modifiedDate, messages, lc, lang);
     insertAlertOcticons(document);
     insertClipboardCopy(document, messages, lc);
     insertRunnableCodeChildren(document, messages, lc);
@@ -1382,6 +1344,9 @@ for await (const path of glob("**", {
             title,
             modifiedDate,
             date,
+            messages,
+            lc,
+            lang,
             [siteAuthor.name],
             document.body.innerHTML,
             frontmatter.comments,
