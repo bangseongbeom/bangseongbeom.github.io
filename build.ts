@@ -753,6 +753,10 @@ async function writeHTML({
               ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
               : ""
           }
+          <meta
+            property="og:site_name"
+            content="${escape(messages[lc].title())}"
+          />
           <link rel="canonical" href="${escape(url)}" />
           <link
             rel="icon"
