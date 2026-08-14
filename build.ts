@@ -710,6 +710,11 @@ async function writeHTML({
   siteDescription: string;
   siteAuthor?: { name?: string; email?: string };
 }) {
+  function toOGLocale(tag: string) {
+    const locale = new Intl.Locale(tag).maximize();
+    return `${locale.language}_${locale.region}`;
+  }
+
   await mkdir(dirname(join(destination, markdownPathToHTMLPath(path))), {
     recursive: true,
   });
@@ -741,6 +746,11 @@ async function writeHTML({
           ${
             description
               ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
+              : ""
+          }
+          ${
+            lang
+              ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
               : ""
           }
           <link rel="canonical" href="${escape(url)}" />
