@@ -684,8 +684,7 @@ async function writeHTML({
   author,
   lc,
   messages,
-  categories,
-  categoryData,
+  navPages,
   content,
   repository,
   siteDescription,
@@ -703,8 +702,7 @@ async function writeHTML({
   author: string;
   messages: Messages;
   lc: keyof Messages;
-  categories?: string[];
-  categoryData: { [key: string]: { name: string; href: string } };
+  navPages: { title?: string; url: string }[];
   content: string;
   repository: string;
   siteDescription: string;
@@ -952,44 +950,7 @@ async function writeHTML({
           </script>
         </head>
         <body>
-          ${header(baseURL, escape(messages[lc].title()), [
-            {
-              title: messages[lc].categories.android(),
-              url: new URL("android", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.git(),
-              url: new URL("git", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.iot(),
-              url: new URL("iot", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.java(),
-              url: new URL("java", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.linux(),
-              url: new URL("linux", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.machineLearning(),
-              url: new URL("machine-learning", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.misc(),
-              url: new URL("misc", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.python(),
-              url: new URL("python", baseURL).toString(),
-            },
-            {
-              title: messages[lc].categories.web(),
-              url: new URL("web", baseURL).toString(),
-            },
-          ])}
+          ${header(baseURL, escape(messages[lc].title()), navPages)}
           <main class="page-content" aria-label="Content">
             <div class="wrapper">${content}</div>
           </main>
@@ -1332,24 +1293,44 @@ for await (const path of glob("**", {
     insertClipboardCopy(document, messages, lc);
     insertRunnableCodeChildren(document, messages, lc);
     highlight(document, starryNight);
-    const categories = frontmatter.categories;
-    const categoryData = {
-      android: {
-        name: messages[lc].categories.android(),
-        href: "/android",
+    const navPages = [
+      {
+        title: messages[lc].categories.android(),
+        url: new URL("android", baseURL).toString(),
       },
-      git: { name: messages[lc].categories.git(), href: "/git" },
-      iot: { name: messages[lc].categories.iot(), href: "/iot" },
-      java: { name: messages[lc].categories.java(), href: "/java" },
-      linux: { name: messages[lc].categories.linux(), href: "/linux" },
-      "machine-learning": {
-        name: messages[lc].categories.machineLearning(),
-        href: "/machine-learning",
+      {
+        title: messages[lc].categories.git(),
+        url: new URL("git", baseURL).toString(),
       },
-      misc: { name: messages[lc].categories.misc(), href: "/misc" },
-      python: { name: messages[lc].categories.python(), href: "/python" },
-      web: { name: messages[lc].categories.web(), href: "/web" },
-    };
+      {
+        title: messages[lc].categories.iot(),
+        url: new URL("iot", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.java(),
+        url: new URL("java", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.linux(),
+        url: new URL("linux", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.machineLearning(),
+        url: new URL("machine-learning", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.misc(),
+        url: new URL("misc", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.python(),
+        url: new URL("python", baseURL).toString(),
+      },
+      {
+        title: messages[lc].categories.web(),
+        url: new URL("web", baseURL).toString(),
+      },
+    ];
 
     await writeHTML({
       path,
@@ -1364,8 +1345,7 @@ for await (const path of glob("**", {
       author: siteAuthor.name,
       messages,
       lc,
-      categories,
-      categoryData,
+      navPages,
       content: date
         ? post(
             title,
@@ -1394,7 +1374,7 @@ for await (const path of glob("**", {
       title,
       link: url,
       description: rssDescription,
-      categories,
+      categories: frontmatter.categories,
       pubDate: date,
       guid: url,
     });
