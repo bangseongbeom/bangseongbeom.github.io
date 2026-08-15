@@ -20,7 +20,7 @@ import {
 } from "node:path";
 import { promisify } from "node:util";
 import { markdownToHtml } from "satteri";
-import type { BlogPosting, WithContext } from "schema-dts";
+import type { Article, WithContext } from "schema-dts";
 
 interface FrontMatter {
   lang?: string;
@@ -903,7 +903,7 @@ async function writeHTML({
               ? /* HTML */ `<script type="application/ld+json">
                   ${JSON.stringify({
                     "@context": "https://schema.org",
-                    "@type": "BlogPosting",
+                    "@type": "Article",
                     author: {
                       "@type": "Person",
                       name: author,
@@ -912,7 +912,7 @@ async function writeHTML({
                     datePublished: date.toISOString(),
                     headline: title,
                     image: new URL("ogp.png", baseURL).toString(),
-                  } satisfies WithContext<BlogPosting>)}
+                  } satisfies WithContext<Article>)}
                 </script>`
               : ""
           }
