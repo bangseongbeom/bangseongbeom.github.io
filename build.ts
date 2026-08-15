@@ -898,20 +898,24 @@ async function writeHTML({
               }
             }
           </style>
-          <script type="application/ld+json">
-            ${JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              author: {
-                "@type": "Person",
-                name: author,
-              },
-              dateModified: modifiedDate?.toISOString(),
-              datePublished: date?.toISOString(),
-              headline: title,
-              image: new URL("ogp.png", baseURL).toString(),
-            } satisfies WithContext<BlogPosting>)}
-          </script>
+          ${
+            date
+              ? /* HTML */ `<script type="application/ld+json">
+                  ${JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    author: {
+                      "@type": "Person",
+                      name: author,
+                    },
+                    dateModified: modifiedDate?.toISOString(),
+                    datePublished: date.toISOString(),
+                    headline: title,
+                    image: new URL("ogp.png", baseURL).toString(),
+                  } satisfies WithContext<BlogPosting>)}
+                </script>`
+              : ""
+          }
           <!--
             Import map generated with JSPM Generator
             Edit here: https://generator.jspm.io/#ZY69EoMgEIQpUuRFUgZFEmtfwge4wRsgw9/gaSZp8uoBO7XYZr+73b1dGLv+xkCWHE5sUHFCb3OOuYGFooo+OSQcet61XO54YR7CNBcmjsxB0PcXrDCrbBPVd/48X6QPmRg2Kk50AV17RXfIngm2QT1vd/5q8V3sh6xZDr+YG2O1cUU0iFIh/2r/G7btAA
