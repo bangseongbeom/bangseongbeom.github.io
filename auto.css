@@ -755,31 +755,32 @@ table td {
     cursor: pointer;
   }
   .site-nav .menu-icon {
+    display: flex;
     float: right;
+    align-items: center;
+    justify-content: center;
     width: 36px;
-    height: 26px;
-    line-height: 0;
-    padding-top: 18px;
-    text-align: center;
+    height: 36px;
   }
-  .site-nav .menu-icon::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
+  .site-nav .menu-icon > svg {
+    width: 1.5em;
+    height: 1.5em;
   }
   .site-nav .menu-icon > svg path {
     fill: var(--minima-border-color-03);
   }
-  .site-nav #nav-trigger ~ label[for=nav-trigger] .menu-icon::before {
-    content: "\f0c9";
-    font-size: 1.25em;
+  .site-nav .menu-icon > .menu-icon-close {
+    display: none;
   }
   .site-nav #nav-trigger ~ .nav-items {
     clear: both;
     display: none;
   }
-  .site-nav #nav-trigger:checked ~ label[for=nav-trigger] .menu-icon::before {
-    content: "\f00d";
-    font-size: 1.5em;
+  .site-nav #nav-trigger:checked ~ label[for=nav-trigger] .menu-icon > .menu-icon-open {
+    display: none;
+  }
+  .site-nav #nav-trigger:checked ~ label[for=nav-trigger] .menu-icon > .menu-icon-close {
+    display: block;
   }
   .site-nav #nav-trigger:checked ~ .nav-items {
     display: block;
