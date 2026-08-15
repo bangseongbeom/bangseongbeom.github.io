@@ -24,6 +24,7 @@ import type { Article, WithContext } from "schema-dts";
 
 interface FrontMatter {
   lang?: string;
+  tags?: string[];
   categories?: string[];
   title?: string;
   description?: string;
@@ -680,6 +681,7 @@ async function writeHTML({
   modifiedDate,
   date,
   categories,
+  tags,
   url,
   baseURL,
   author,
@@ -699,6 +701,7 @@ async function writeHTML({
   modifiedDate?: Date | undefined;
   date?: Date | undefined;
   categories?: string[] | undefined;
+  tags?: string[] | undefined;
   url: string;
   baseURL: string;
   author: string;
@@ -779,7 +782,16 @@ async function writeHTML({
                           content="${escape(categories[0].split("/")[0])}"
                         />`
                       : ""
-                  }`
+                  }
+                  ${(tags ?? [])
+                    .map(
+                      (tag) =>
+                        /* HTML */ `<meta
+                          property="article:tag"
+                          content="${escape(tag)}"
+                        />`,
+                    )
+                    .join("")}`
               : ""
           }
           <link rel="canonical" href="${escape(url)}" />
@@ -1372,6 +1384,7 @@ for await (const path of glob("**", {
       modifiedDate,
       date,
       categories: frontmatter.categories,
+      tags: frontmatter.tags,
       url,
       baseURL,
       author: siteAuthor.name,
@@ -1406,7 +1419,10 @@ for await (const path of glob("**", {
       title,
       link: url,
       description: rssDescription,
-      categories: frontmatter.categories,
+      categories: [
+        ...(frontmatter.categories ?? []),
+        ...(frontmatter.tags ?? []),
+      ],
       pubDate: date,
       guid: url,
     });
