@@ -679,6 +679,7 @@ async function writeHTML({
   description,
   modifiedDate,
   date,
+  categories,
   url,
   baseURL,
   author,
@@ -697,6 +698,7 @@ async function writeHTML({
   description?: string;
   modifiedDate?: Date | undefined;
   date?: Date | undefined;
+  categories?: string[] | undefined;
   url: string;
   baseURL: string;
   author: string;
@@ -721,7 +723,7 @@ async function writeHTML({
     /* HTML */ `<!DOCTYPE html>
       <html
         ${lang ? `lang="${escape(lang)}"` : ""}
-        prefix="og: https://ogp.me/ns#"
+        prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#"
       >
         <head>
           <meta charset="utf-8" />
@@ -735,7 +737,7 @@ async function writeHTML({
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="color-scheme" content="light dark" />
           <meta property="og:title" content="${escape(title)}" />
-          <meta property="og:type" content="article" />
+          <meta property="og:type" content="${date ? "article" : "website"}" />
           <meta
             property="og:image"
             content="${escape(new URL("ogp.png", baseURL).toString())}"
@@ -755,6 +757,31 @@ async function writeHTML({
             property="og:site_name"
             content="${escape(messages[lc].title())}"
           />
+          ${
+            date
+              ? /* HTML */ `<meta
+                    property="article:published_time"
+                    content="${escape(date.toISOString())}"
+                  />
+                  ${
+                    modifiedDate
+                      ? /* HTML */ `<meta
+                          property="article:modified_time"
+                          content="${escape(modifiedDate.toISOString())}"
+                        />`
+                      : ""
+                  }
+                  <meta property="article:author" content="${escape(author)}" />
+                  ${
+                    categories?.[0]
+                      ? /* HTML */ `<meta
+                          property="article:section"
+                          content="${escape(categories[0].split("/")[0])}"
+                        />`
+                      : ""
+                  }`
+              : ""
+          }
           <link rel="canonical" href="${escape(url)}" />
           <link
             rel="icon"
@@ -1340,6 +1367,7 @@ for await (const path of glob("**", {
       description,
       modifiedDate,
       date,
+      categories: frontmatter.categories,
       url,
       baseURL,
       author: siteAuthor.name,
