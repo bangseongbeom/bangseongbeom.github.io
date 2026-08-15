@@ -1354,7 +1354,7 @@ for await (const path of glob("**", {
             messages,
             lc,
             lang,
-            [siteAuthor.name],
+            [],
             document.body.innerHTML,
             frontmatter.comments,
             path,
