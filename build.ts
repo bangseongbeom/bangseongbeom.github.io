@@ -873,8 +873,8 @@ async function writeHTML({
           <style>
             .header-link {
               display: inline-block;
-              vertical-align: middle;
-              margin-inline-start: 0.25em;
+              position: relative;
+              left: 0.5em;
               opacity: 0;
             }
 
@@ -885,8 +885,8 @@ async function writeHTML({
 
             .header-link svg {
               display: block;
-              width: 1em;
-              height: 1em;
+              width: 0.8em;
+              height: 0.8em;
               fill: currentcolor;
             }
 
