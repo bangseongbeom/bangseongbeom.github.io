@@ -329,8 +329,8 @@ function insertRunnableCodeChildren(
     const language = pre?.dataset.language ?? "";
 
     if (["javascript", "js", "python", "py"].includes(language)) {
-      runnableCode.insertAdjacentHTML(
-        "beforeend",
+      expressiveCode.insertAdjacentHTML(
+        "afterend",
         /* HTML */ `<p>
           <button type="button" class="run-code">
             <span class="normal">${escape(messages[lc].runCode.normal())}</span>
@@ -341,8 +341,8 @@ function insertRunnableCodeChildren(
         </p>`,
       );
     } else if (language === "java") {
-      runnableCode.insertAdjacentHTML(
-        "beforeend",
+      expressiveCode.insertAdjacentHTML(
+        "afterend",
         /* HTML */ `<p>
           Paste and run in
           <a href="https://dev.java/playground/" target="_blank"
