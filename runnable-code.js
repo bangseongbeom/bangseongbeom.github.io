@@ -11,12 +11,14 @@ export class RunnableCode extends HTMLElement {
       this.querySelector(".expressive-code")
     );
     if (!expressiveCode) throw new Error();
-    const pre = expressiveCode.querySelector("pre[data-language]");
-    if (!(pre instanceof HTMLPreElement)) throw new Error();
-    const copyButton = expressiveCode.querySelector(".copy button[data-code]");
-    if (!(copyButton instanceof HTMLButtonElement)) throw new Error();
+    const pre = /** @type {HTMLPreElement} */ (
+      expressiveCode.querySelector("pre[data-language]")
+    );
     const language = pre.dataset.language;
     this.language = language;
+    const copyButton = /** @type {HTMLButtonElement} */ (
+      expressiveCode.querySelector(".copy button[data-code]")
+    );
     if (copyButton.dataset.code === undefined) throw new Error();
     const code = copyButton.dataset.code.replaceAll("\u007f", "\n");
 
@@ -82,8 +84,9 @@ export class RunnableCode extends HTMLElement {
       this.view = new EditorView({ state: startState });
       expressiveCode.insertAdjacentElement("afterend", this.view.dom);
       expressiveCode.hidden = true;
-      const runCodeButton = this.querySelector("button.run-code");
-      if (!(runCodeButton instanceof HTMLButtonElement)) throw new Error();
+      const runCodeButton = /** @type {HTMLButtonElement} */ (
+        this.querySelector("button.run-code")
+      );
       runCodeButton.addEventListener("click", runCode);
     }
   }
@@ -97,10 +100,10 @@ let pyodide;
  * @param {Event} event
  */
 async function runCode(event) {
-  const button = event.currentTarget;
-  if (!(button instanceof HTMLButtonElement)) throw new Error();
-  const runnableCode = button.closest("runnable-code");
-  if (!(runnableCode instanceof RunnableCode)) throw new Error();
+  const button = /** @type {HTMLButtonElement} */ (event.currentTarget);
+  const runnableCode = /** @type {RunnableCode} */ (
+    button.closest("runnable-code")
+  );
   if (!runnableCode.view) throw new Error();
   const doc = runnableCode.view.state.doc;
 
@@ -263,10 +266,10 @@ async function runCode(event) {
     runnableCode.language === "py"
   ) {
     button.disabled = true;
-    const normal = button.querySelector(".normal");
-    if (!(normal instanceof HTMLElement)) throw new Error();
-    const running = button.querySelector(".running");
-    if (!(running instanceof HTMLElement)) throw new Error();
+    const normal = /** @type {HTMLElement} */ (button.querySelector(".normal"));
+    const running = /** @type {HTMLElement} */ (
+      button.querySelector(".running")
+    );
     normal.hidden = true;
     running.hidden = false;
 
