@@ -493,9 +493,7 @@ function social(
               target="_blank"
               title="${escape(entry.title)}"
             >
-              <span
-                class="grey fa-brands fa-${escape(entry.icon)} fa-lg"
-              ></span>
+              ${entry.icon}
             </a>
           </li>`,
       )
@@ -531,13 +529,7 @@ function footer(
   hideSiteFeedLink?: boolean,
   feedPath?: string,
 ) {
-  return /* HTML */ `<link
-      id="fa-stylesheet"
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.0.0/css/all.min.css"
-    />
-
-    <footer class="site-footer h-card">
+  return /* HTML */ `<footer class="site-footer h-card">
       <data class="u-url" value="${escape(baseURL)}"></data>
 
       <div class="wrapper">
