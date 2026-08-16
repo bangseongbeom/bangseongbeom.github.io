@@ -813,10 +813,6 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(new URL("github-button.css", baseURL).toString())}"
-          />
-          <link
-            rel="stylesheet"
             href="${escape(new URL("runnable-code.css", baseURL).toString())}"
           />
           <style>
@@ -843,6 +839,18 @@ async function writeHTML({
               .header-link {
                 opacity: 1;
               }
+            }
+          </style>
+          <style>
+            button {
+              background-color: var(--minima-background-color);
+              border: 1px solid var(--minima-border-color-01);
+              border-radius: 5px;
+              padding: 8px 15px;
+            }
+
+            button:hover {
+              background-color: var(--minima-code-background-color);
             }
           </style>
           ${
