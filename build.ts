@@ -160,71 +160,6 @@ function removeFirstHeading(document: Document) {
   document.querySelector("h1")?.remove();
 }
 
-function insertNav(
-  document: Document,
-  path: string,
-  messages: Messages,
-  lc: keyof Messages,
-  baseURL: string,
-  repository: string,
-) {
-  for (const header of document.querySelectorAll("header")) {
-    header.insertAdjacentHTML(
-      "beforeend",
-      /* HTML */ `
-        <nav>
-          <p>
-            <a
-              href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
-              title="${escape(messages[lc].header.nav.markdown.title())}"
-              >${escape(messages[lc].header.nav.markdown.content())}</a
-            >
-            <span>·</span>
-            <a
-              href="${escape(
-                new URL(
-                  toURLPathname(path),
-                  `https://github.com/${repository}/blob/main/`,
-                ).toString(),
-              )}"
-              title="${escape(messages[lc].header.nav.github.title())}"
-              >${escape(messages[lc].header.nav.github.content())}</a
-            >
-            <span>·</span>
-            <a
-              href="${escape(
-                new URL(
-                  toURLPathname(path),
-                  `https://github.com/${repository}/edit/main/`,
-                ).toString(),
-              )}"
-              title="${escape(messages[lc].header.nav.edit.title())}"
-              >${escape(messages[lc].header.nav.edit.content())}</a
-            >
-            <span>·</span>
-            <a
-              href="${escape(
-                new URL(
-                  toURLPathname(path),
-                  `https://github.com/${repository}/commits/main/`,
-                ).toString(),
-              )}"
-              title="${escape(messages[lc].header.nav.history.title())}"
-              >${escape(messages[lc].header.nav.history.content())}</a
-            >
-            <span>·</span>
-            <a
-              href="${escape(new URL("feed.xml", baseURL).toString())}"
-              title="${escape(messages[lc].header.nav.rss.title())}"
-              >${escape(messages[lc].header.nav.rss.content())}</a
-            >
-          </p>
-        </nav>
-      `,
-    );
-  }
-}
-
 function insertAlertOcticons(document: Document) {
   for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-note .markdown-alert-title",
@@ -1156,16 +1091,6 @@ const messages = {
       web: () => "Web",
     },
     header: {
-      nav: {
-        markdown: {
-          title: () => "View as Markdown",
-          content: () => "Markdown",
-        },
-        github: { title: () => "View on GitHub", content: () => "GitHub" },
-        edit: { title: () => "Suggest an edit", content: () => "Edit" },
-        history: { title: () => "View history", content: () => "History" },
-        rss: { title: () => "RSS feed", content: () => "RSS" },
-      },
       dates: {
         published: () => "Published",
         modified: () => "Updated",
@@ -1190,16 +1115,6 @@ const messages = {
       web: () => "웹",
     },
     header: {
-      nav: {
-        markdown: {
-          title: () => "마크다운으로 보기",
-          content: () => "마크다운",
-        },
-        github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
-        edit: { title: () => "편집 제안", content: () => "편집" },
-        history: { title: () => "역사 보기", content: () => "역사" },
-        rss: { title: () => "RSS 피드", content: () => "RSS" },
-      },
       dates: {
         published: () => "게시일",
         modified: () => "수정일",
@@ -1264,7 +1179,6 @@ for await (const path of glob("**", {
       frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
     const rssDescription = document.body.innerHTML;
     removeFirstHeading(document);
-    insertNav(document, path, messages, lc, baseURL, repository);
     insertAlertOcticons(document);
     insertRunnableCodeChildren(document, messages, lc);
     const navPages = [
