@@ -51,13 +51,13 @@ function markdownPathToHTMLPath(path: string) {
   );
 }
 
-function pathToURLPathName(path: string) {
+function pathToURLPathname(path: string) {
   return path.split(sep).map(encodeURIComponent).join("/");
 }
 
 function markdownPathToCanonicalURL(path: string, baseURL: string) {
   return new URL(
-    pathToURLPathName(
+    pathToURLPathname(
       join(
         dirname(path),
         basename(path) === "README.md" ? sep : parse(path).name,
@@ -68,7 +68,7 @@ function markdownPathToCanonicalURL(path: string, baseURL: string) {
 }
 
 function markdownPathToMarkdownURL(path: string, baseURL: string) {
-  return new URL(pathToURLPathName(path), baseURL).toString();
+  return new URL(pathToURLPathname(path), baseURL).toString();
 }
 
 function getLang(
