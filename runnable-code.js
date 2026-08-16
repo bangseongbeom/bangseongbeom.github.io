@@ -328,13 +328,17 @@ async function runCode(event) {
     running.hidden = true;
   } else throw new Error();
 
-  let output = runnableCode.querySelector('pre[data-language="output"] > code');
+  let output = runnableCode.querySelector(
+    'pre[data-language="plaintext"] > code',
+  );
   if (!output) {
     runnableCode.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre data-language="output"><code></code></pre>`,
+      /* HTML */ `<pre data-language="plaintext"><code></code></pre>`,
     );
-    output = runnableCode.querySelector('pre[data-language="output"] > code');
+    output = runnableCode.querySelector(
+      'pre[data-language="plaintext"] > code',
+    );
     if (!output) throw new Error();
   }
   if (version && !runnableCode.querySelector(".version")) {

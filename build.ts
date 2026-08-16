@@ -819,7 +819,7 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(new URL("codemirror.css", baseURL).toString())}"
+            href="${escape(new URL("runnable-code.css", baseURL).toString())}"
           />
           <style>
             .header-link {
