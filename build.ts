@@ -348,10 +348,65 @@ function header(
   </header>`;
 }
 
-function page(title: string, content: string) {
+function postLinks(
+  path: string,
+  baseURL: string,
+  messages: Messages,
+  repository: string,
+) {
+  return /* HTML */ `<div class="post-links">
+    <a
+      href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
+      title="${escape(messages.header.nav.markdown.title())}"
+      >${escape(messages.header.nav.markdown.content())}</a
+    >,
+    <a
+      href="${escape(
+        new URL(
+          toURLPathname(path),
+          `https://github.com/${repository}/blob/main/`,
+        ).toString(),
+      )}"
+      title="${escape(messages.header.nav.github.title())}"
+      >${escape(messages.header.nav.github.content())}</a
+    >,
+    <a
+      href="${escape(
+        new URL(
+          toURLPathname(path),
+          `https://github.com/${repository}/edit/main/`,
+        ).toString(),
+      )}"
+      title="${escape(messages.header.nav.edit.title())}"
+      >${escape(messages.header.nav.edit.content())}</a
+    >,
+    <a
+      href="${escape(
+        new URL(
+          toURLPathname(path),
+          `https://github.com/${repository}/commits/main/`,
+        ).toString(),
+      )}"
+      title="${escape(messages.header.nav.history.title())}"
+      >${escape(messages.header.nav.history.content())}</a
+    >
+  </div>`;
+}
+
+function page(
+  title: string,
+  content: string,
+  messages: Messages,
+  path: string,
+  baseURL: string,
+  repository: string,
+) {
   return /* HTML */ `<article class="post">
     <header class="post-header">
       <h1 class="post-title">${escape(title)}</h1>
+      <div class="post-meta">
+        ${postLinks(path, baseURL, messages, repository)}
+      </div>
     </header>
 
     <div class="post-content">${content}</div>
@@ -390,6 +445,8 @@ function post(
   comments: boolean | undefined,
   path: string,
   url: string,
+  baseURL: string,
+  repository: string,
 ) {
   return /* HTML */ `<article
     class="post h-entry"
@@ -452,6 +509,7 @@ function post(
               </div>`
             : ""
         }
+        ${postLinks(path, baseURL, messages, repository)}
       </div>
     </header>
 
@@ -1074,6 +1132,15 @@ const msgData = {
       web: () => "Web",
     },
     header: {
+      nav: {
+        markdown: {
+          title: () => "View as Markdown",
+          content: () => "Markdown",
+        },
+        github: { title: () => "View on GitHub", content: () => "GitHub" },
+        edit: { title: () => "Suggest an edit", content: () => "Edit" },
+        history: { title: () => "View history", content: () => "History" },
+      },
       dates: {
         published: () => "Published",
         modified: () => "Updated",
@@ -1098,6 +1165,15 @@ const msgData = {
       web: () => "웹",
     },
     header: {
+      nav: {
+        markdown: {
+          title: () => "마크다운으로 보기",
+          content: () => "마크다운",
+        },
+        github: { title: () => "GitHub에서 보기", content: () => "GitHub" },
+        edit: { title: () => "편집 제안", content: () => "편집" },
+        history: { title: () => "역사 보기", content: () => "역사" },
+      },
       dates: {
         published: () => "게시일",
         modified: () => "수정일",
@@ -1230,8 +1306,17 @@ for await (const path of glob("**", {
             frontmatter.comments,
             path,
             url,
+            baseURL,
+            repository,
           )
-        : page(title, document.body.innerHTML),
+        : page(
+            title,
+            document.body.innerHTML,
+            messages,
+            path,
+            baseURL,
+            repository,
+          ),
       repository,
       siteDescription,
       siteAuthor,

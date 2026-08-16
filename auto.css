@@ -931,8 +931,12 @@ table td {
   content: "•";
   padding-inline: 5px;
 }
-.post-meta .post-authors {
+.post-meta .post-authors,
+.post-meta .post-links {
   margin-top: 3px;
+}
+.post-meta .post-links:first-child {
+  margin-top: 0;
 }
 
 .post-title,
