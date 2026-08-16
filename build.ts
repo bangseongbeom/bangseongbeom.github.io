@@ -817,18 +817,6 @@ async function writeHTML({
               }
             }
           </style>
-          <style>
-            button {
-              background-color: var(--minima-background-color);
-              border: 1px solid var(--minima-border-color-01);
-              border-radius: 5px;
-              padding: 8px 15px;
-            }
-
-            button:hover {
-              background-color: var(--minima-code-background-color);
-            }
-          </style>
           ${
             date
               ? /* HTML */ `<script type="application/ld+json">

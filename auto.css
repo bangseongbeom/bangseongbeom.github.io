@@ -544,6 +544,19 @@ a:hover {
 }
 
 /**
+ * Buttons
+ */
+button {
+  padding: 8px 15px;
+  border: 1px solid var(--minima-border-color-01);
+  border-radius: 5px;
+  background-color: var(--minima-background-color);
+}
+button:hover {
+  background-color: var(--minima-code-background-color);
+}
+
+/**
  * Blockquotes
  */
 blockquote {
