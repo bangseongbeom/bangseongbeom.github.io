@@ -847,41 +847,6 @@ async function writeHTML({
               }
             }
           </style>
-          <style>
-            .markdown-body {
-              box-sizing: border-box;
-              min-width: 200px;
-              max-width: 980px;
-              margin: 0 auto;
-              padding: 45px;
-            }
-
-            @media (max-width: 767px) {
-              .markdown-body {
-                padding: 15px;
-              }
-            }
-
-            .markdown-body > *:first-child > *:first-child,
-            .markdown-body > *:first-child > *:first-child > *:first-child {
-              margin-top: 0 !important;
-            }
-
-            .markdown-body .highlight pre,
-            .markdown-body .highlight .cm-editor {
-              margin-bottom: var(--base-size-16);
-            }
-
-            .markdown-body pre code {
-              .warn {
-                color: var(--fgColor-attention);
-              }
-
-              .error {
-                color: var(--fgColor-danger);
-              }
-            }
-          </style>
           ${
             date
               ? /* HTML */ `<script type="application/ld+json">
