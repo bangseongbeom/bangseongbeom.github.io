@@ -122,7 +122,7 @@
   }
 }
 
-runnable-code pre[data-language="plaintext"] {
+runnable-code > pre[data-language="plaintext"] {
   padding: var(--ec-codePadBlk) var(--ec-codePadInl);
   overflow-x: auto;
   color: var(--ec-codeFg);

@@ -328,8 +328,15 @@ async function runCode(event) {
     running.hidden = true;
   } else throw new Error();
 
+  const expectedOutput = /** @type {HTMLElement | null} */ (
+    runnableCode.querySelector(
+      '.expressive-code:has(pre[data-language="plaintext"])',
+    )
+  );
+  if (expectedOutput) expectedOutput.hidden = true;
+
   let output = runnableCode.querySelector(
-    'pre[data-language="plaintext"] > code',
+    ':scope > pre[data-language="plaintext"] > code',
   );
   if (!output) {
     runnableCode.insertAdjacentHTML(
@@ -337,7 +344,7 @@ async function runCode(event) {
       /* HTML */ `<pre data-language="plaintext"><code></code></pre>`,
     );
     output = runnableCode.querySelector(
-      'pre[data-language="plaintext"] > code',
+      ':scope > pre[data-language="plaintext"] > code',
     );
     if (!output) throw new Error();
   }
