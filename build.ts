@@ -249,11 +249,7 @@ function insertAlertOcticons(document: Document) {
   }
 }
 
-function insertRunnableCodeChildren(
-  document: Document,
-  messages: Messages,
-  lc: keyof Messages,
-) {
+function insertRunnableCodeChildren(document: Document, messages: Messages) {
   for (const runnableCode of document.querySelectorAll(
     "runnable-code",
   ) as NodeList<HTMLElement>) {
@@ -269,9 +265,9 @@ function insertRunnableCodeChildren(
         "afterend",
         /* HTML */ `<p>
           <button type="button" class="run-code">
-            <span class="normal">${escape(messages[lc].runCode.normal())}</span>
+            <span class="normal">${escape(messages.runCode.normal())}</span>
             <span class="running" hidden
-              >${escape(messages[lc].runCode.running())}</span
+              >${escape(messages.runCode.running())}</span
             >
           </button>
         </p>`,
@@ -388,7 +384,6 @@ function post(
   modifiedDate: Date | undefined,
   date: Date,
   messages: Messages,
-  lc: keyof Messages,
   lang: string,
   authors: string[],
   content: string,
@@ -409,7 +404,7 @@ function post(
         ${
           modifiedDate
             ? /* HTML */ `<span class="meta-label"
-                >${escape(messages[lc].header.dates.published())}:</span
+                >${escape(messages.header.dates.published())}:</span
               >`
             : ""
         }
@@ -424,7 +419,7 @@ function post(
           modifiedDate
             ? /* HTML */ `<span class="bullet-divider">•</span>
                 <span class="meta-label"
-                  >${escape(messages[lc].header.dates.modified())}:</span
+                  >${escape(messages.header.dates.modified())}:</span
                 >
                 <time
                   class="dt-modified"
@@ -530,46 +525,46 @@ function footer(
   feedPath?: string,
 ) {
   return /* HTML */ `<footer class="site-footer h-card">
-      <data class="u-url" value="${escape(baseURL)}"></data>
+    <data class="u-url" value="${escape(baseURL)}"></data>
 
-      <div class="wrapper">
-        <div class="footer-col-wrapper">
-          <div class="footer-col">
-            ${
-              siteAuthor
-                ? /* HTML */ `<ul class="contact-list">
-                    ${
-                      siteAuthor.name
-                        ? /* HTML */ `<li class="p-name">
-                            ${escape(siteAuthor.name)}
-                          </li>`
-                        : ""
-                    }
-                    ${
-                      siteAuthor.email
-                        ? /* HTML */ `<li>
-                            <a
-                              class="u-email"
-                              href="${escape(`mailto:${siteAuthor.email}`)}"
-                              >${escape(siteAuthor.email)}</a
-                            >
-                          </li>`
-                        : ""
-                    }
-                  </ul>`
-                : ""
-            }
-          </div>
-          <div class="footer-col">
-            <p>${escape(siteDescription)}</p>
-          </div>
+    <div class="wrapper">
+      <div class="footer-col-wrapper">
+        <div class="footer-col">
+          ${
+            siteAuthor
+              ? /* HTML */ `<ul class="contact-list">
+                  ${
+                    siteAuthor.name
+                      ? /* HTML */ `<li class="p-name">
+                          ${escape(siteAuthor.name)}
+                        </li>`
+                      : ""
+                  }
+                  ${
+                    siteAuthor.email
+                      ? /* HTML */ `<li>
+                          <a
+                            class="u-email"
+                            href="${escape(`mailto:${siteAuthor.email}`)}"
+                            >${escape(siteAuthor.email)}</a
+                          >
+                        </li>`
+                      : ""
+                  }
+                </ul>`
+              : ""
+          }
         </div>
-
-        <div class="social-links">
-          ${social(socialLinks, hideSiteFeedLink, feedPath, baseURL)}
+        <div class="footer-col">
+          <p>${escape(siteDescription)}</p>
         </div>
       </div>
-    </footer>`;
+
+      <div class="social-links">
+        ${social(socialLinks, hideSiteFeedLink, feedPath, baseURL)}
+      </div>
+    </div>
+  </footer>`;
 }
 
 async function writeHTML({
@@ -585,7 +580,6 @@ async function writeHTML({
   url,
   baseURL,
   author,
-  lc,
   messages,
   navPages,
   content,
@@ -606,7 +600,6 @@ async function writeHTML({
   baseURL: string;
   author: string;
   messages: Messages;
-  lc: keyof Messages;
   navPages: { title?: string; url: string }[];
   content: string;
   repository: string;
@@ -656,10 +649,7 @@ async function writeHTML({
               ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
               : ""
           }
-          <meta
-            property="og:site_name"
-            content="${escape(messages[lc].title())}"
-          />
+          <meta property="og:site_name" content="${escape(messages.title())}" />
           ${
             date
               ? /* HTML */ `<meta
@@ -864,7 +854,7 @@ async function writeHTML({
           }
         </head>
         <body>
-          ${header(baseURL, escape(messages[lc].title()), navPages)}
+          ${header(baseURL, escape(messages.title()), navPages)}
           <main class="page-content" aria-label="Content">
             <div class="wrapper">${content}</div>
           </main>
@@ -1069,7 +1059,7 @@ const defaultLang = "en";
 const source = process.env.SOURCE ?? ".";
 const destination = process.env.DESTINATION ?? "_site";
 
-const messages = {
+const msgData = {
   en: {
     title: () => siteTitle,
     categories: {
@@ -1120,7 +1110,8 @@ const messages = {
   },
 };
 
-type Messages = typeof messages;
+type MessageData = typeof msgData;
+type Messages = MessageData[keyof MessageData];
 
 const sitemapURLs: {
   loc: string;
@@ -1150,11 +1141,10 @@ for await (const path of glob("**", {
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = await markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
-    const lc = match(
-      [lang],
-      Object.keys(messages),
-      defaultLang,
-    ) as keyof Messages;
+    const messages =
+      msgData[
+        match([lang], Object.keys(msgData), defaultLang) as keyof MessageData
+      ];
     const date = frontmatter.date ? new Date(frontmatter.date) : undefined;
     const lastGitLogDate = await getLastGitLogDate(join(source, path));
     const modifiedDate = frontmatter.modified_date
@@ -1173,42 +1163,42 @@ for await (const path of glob("**", {
     const rssDescription = document.body.innerHTML;
     removeFirstHeading(document);
     insertAlertOcticons(document);
-    insertRunnableCodeChildren(document, messages, lc);
+    insertRunnableCodeChildren(document, messages);
     const navPages = [
       {
-        title: messages[lc].categories.android(),
+        title: messages.categories.android(),
         url: new URL("android", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.git(),
+        title: messages.categories.git(),
         url: new URL("git", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.iot(),
+        title: messages.categories.iot(),
         url: new URL("iot", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.java(),
+        title: messages.categories.java(),
         url: new URL("java", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.linux(),
+        title: messages.categories.linux(),
         url: new URL("linux", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.machineLearning(),
+        title: messages.categories.machineLearning(),
         url: new URL("machine-learning", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.misc(),
+        title: messages.categories.misc(),
         url: new URL("misc", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.python(),
+        title: messages.categories.python(),
         url: new URL("python", baseURL).toString(),
       },
       {
-        title: messages[lc].categories.web(),
+        title: messages.categories.web(),
         url: new URL("web", baseURL).toString(),
       },
     ];
@@ -1227,7 +1217,6 @@ for await (const path of glob("**", {
       baseURL,
       author: siteAuthor.name,
       messages,
-      lc,
       navPages,
       content: date
         ? post(
@@ -1235,7 +1224,6 @@ for await (const path of glob("**", {
             modifiedDate,
             date,
             messages,
-            lc,
             lang,
             [],
             document.body.innerHTML,
