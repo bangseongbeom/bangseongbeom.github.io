@@ -998,20 +998,24 @@ async function writeHTML({
             type="module"
             src="${escape(new URL("runnable-code.js", baseURL).toString())}"
           ></script>
-          <!-- Google tag (gtag.js) -->
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
-          ></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
+          ${
+            process.env.NODE_ENV === "production"
+              ? /* HTML */ `<!-- Google tag (gtag.js) -->
+                  <script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
+                  ></script>
+                  <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag() {
+                      dataLayer.push(arguments);
+                    }
+                    gtag("js", new Date());
 
-            gtag("config", "G-P5S28YZ348");
-          </script>
+                    gtag("config", "G-P5S28YZ348");
+                  </script>`
+              : ""
+          }
         </head>
         <body>
           ${header(baseURL, escape(messages[lc].title()), navPages)}
