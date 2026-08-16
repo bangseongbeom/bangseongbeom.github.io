@@ -766,14 +766,16 @@ table td {
     height: 36px;
   }
   .site-nav .menu-icon > svg {
-    width: 1.5em;
-    height: 1.5em;
+    fill: currentcolor;
   }
-  .site-nav .menu-icon > svg path {
-    fill: var(--minima-border-color-03);
+  .site-nav .menu-icon > .menu-icon-open {
+    width: 1.25em;
+    height: 1.25em;
   }
   .site-nav .menu-icon > .menu-icon-close {
     display: none;
+    width: 1.5em;
+    height: 1.5em;
   }
   .site-nav #nav-trigger ~ .nav-items {
     clear: both;
