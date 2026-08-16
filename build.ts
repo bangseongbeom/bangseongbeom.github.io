@@ -151,8 +151,9 @@ function convertAlerts(document: Document) {
 
 function resolveLinks(document: Document, url: string) {
   for (const link of document.querySelectorAll("a")) {
-    if (!link.href) continue;
-    link.href = toHTMLURL(link.href, url);
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#")) continue;
+    link.setAttribute("href", toHTMLURL(href, url));
   }
 }
 
