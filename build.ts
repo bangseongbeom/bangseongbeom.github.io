@@ -1,10 +1,8 @@
 import { match } from "@formatjs/intl-localematcher";
-import { all, createStarryNight } from "@wooorm/starry-night";
 import escape from "escape-html";
 import GithubSlugger from "github-slugger";
 import type { Document } from "happy-dom";
 import { Window } from "happy-dom";
-import { toHtml } from "hast-util-to-html";
 import { load } from "js-yaml";
 import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
@@ -20,6 +18,7 @@ import {
 } from "node:path";
 import { promisify } from "node:util";
 import { markdownToHtml } from "satteri";
+import expressiveCode from "satteri-expressive-code";
 import type { Article, WithContext } from "schema-dts";
 
 interface FrontMatter {
@@ -34,8 +33,10 @@ interface FrontMatter {
   redirect_from?: string[];
 }
 
-function markdownToHTML(markdown: string) {
-  const result = markdownToHtml(markdown);
+async function markdownToHTML(markdown: string) {
+  const result = await markdownToHtml(markdown, {
+    hastPlugins: [expressiveCode()],
+  });
   return {
     html: result.html,
     frontmatter: (result.frontmatter
@@ -377,19 +378,6 @@ function insertRunnableCodeChildren(
         `,
       );
     }
-  }
-}
-
-function highlight(
-  document: Document,
-  starryNight: Awaited<ReturnType<typeof createStarryNight>>,
-) {
-  for (const code of document.querySelectorAll("code")) {
-    const flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
-    if (!flag) continue;
-    const codeScope = starryNight.flagToScope(flag);
-    if (!codeScope) continue;
-    code.innerHTML = toHtml(starryNight.highlight(code.textContent, codeScope));
   }
 }
 
@@ -1200,8 +1188,6 @@ async function writeRSS(
 
 const execFile = promisify(child_process.execFile);
 
-const starryNight = await createStarryNight(all);
-
 const repository = "bangseongbeom/bangseongbeom.github.io";
 const siteTitle = "Bang Seongbeom";
 const siteDescription = "Developer Bang Seongbeom's technical documentation.";
@@ -1322,7 +1308,7 @@ for await (const path of glob("**", {
     const url = toHTMLURL(toURLPathname(path), baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
-    const { frontmatter, html } = markdownToHTML(markdown);
+    const { frontmatter, html } = await markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
     const lc = match(
       [lang],
@@ -1350,7 +1336,6 @@ for await (const path of glob("**", {
     insertAlertOcticons(document);
     insertClipboardCopy(document, messages, lc);
     insertRunnableCodeChildren(document, messages, lc);
-    highlight(document, starryNight);
     const navPages = [
       {
         title: messages[lc].categories.android(),
