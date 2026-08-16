@@ -1,8 +1,9 @@
 import { match } from "@formatjs/intl-localematcher";
 import escape from "escape-html";
 import GithubSlugger from "github-slugger";
-import type { Document } from "happy-dom";
+import type { Document, HTMLElement } from "happy-dom";
 import { Window } from "happy-dom";
+import type NodeList from "happy-dom/lib/nodes/node/NodeList.js";
 import { load } from "js-yaml";
 import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
@@ -318,15 +319,19 @@ function insertRunnableCodeChildren(
   messages: Messages,
   lc: keyof Messages,
 ) {
-  for (const runnableCode of document.querySelectorAll("runnable-code")) {
-    const code = runnableCode.querySelector("code");
-    const flag = code?.getAttribute("class")?.match(/language-(.+)/)?.[1];
-    if (!flag) continue;
-    const highlight = runnableCode.querySelector(".highlight");
-    if (!highlight) continue;
+  for (const runnableCode of document.querySelectorAll(
+    "runnable-code",
+  ) as NodeList<HTMLElement>) {
+    const expressiveCode = runnableCode.querySelector(".expressive-code");
+    const language =
+      (
+        expressiveCode?.querySelector(
+          "pre[data-language]",
+        ) as HTMLPreElement | null
+      )?.dataset.language ?? "";
 
-    if (["js", "ts", "py"].includes(flag)) {
-      highlight.insertAdjacentHTML(
+    if (["javascript", "js", "python", "py"].includes(language)) {
+      runnableCode.insertAdjacentHTML(
         "beforeend",
         /* HTML */ `<p>
           <button type="button" class="run-code">
@@ -337,8 +342,8 @@ function insertRunnableCodeChildren(
           </button>
         </p>`,
       );
-    } else if (["java"].includes(flag)) {
-      highlight.insertAdjacentHTML(
+    } else if (language === "java") {
+      runnableCode.insertAdjacentHTML(
         "beforeend",
         /* HTML */ `<p>
           Paste and run in

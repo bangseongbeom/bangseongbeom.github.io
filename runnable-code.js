@@ -3,22 +3,28 @@ import { EditorView } from "@codemirror/view";
 export class RunnableCode extends HTMLElement {
   /** @type {EditorView | undefined} */
   view;
-  /** @type {string | null | undefined} */
-  flag;
+  /** @type {string | undefined} */
+  language;
 
   async connectedCallback() {
-    const highlight = this.querySelector(".highlight");
-    if (!highlight) throw new Error();
-    const code = highlight.querySelector("code");
-    if (!code) throw new Error();
-    const flag = code.getAttribute("class")?.match(/language-(.+)/)?.[1];
-    this.flag = flag ?? null;
+    const expressiveCode = /** @type {HTMLElement | null} */ (
+      this.querySelector(".expressive-code")
+    );
+    if (!expressiveCode) throw new Error();
+    const pre = expressiveCode.querySelector("pre[data-language]");
+    if (!(pre instanceof HTMLPreElement)) throw new Error();
+    const copyButton = expressiveCode.querySelector(".copy button[data-code]");
+    if (!(copyButton instanceof HTMLButtonElement)) throw new Error();
+    const language = pre.dataset.language;
+    this.language = language;
+    if (copyButton.dataset.code === undefined) throw new Error();
+    const code = copyButton.dataset.code.replaceAll("\u007f", "\n");
 
     if (
-      flag === "javascript" ||
-      flag === "js" ||
-      flag === "python" ||
-      flag === "py"
+      language === "javascript" ||
+      language === "js" ||
+      language === "python" ||
+      language === "py"
     ) {
       const [
         { EditorState },
@@ -42,18 +48,18 @@ export class RunnableCode extends HTMLElement {
         import("@lezer/highlight"),
       ]);
       const languageExtension = [];
-      if (flag === "javascript" || flag === "js")
+      if (language === "javascript" || language === "js")
         languageExtension.push(
           (await import("@codemirror/lang-javascript")).javascript(),
         );
-      else if (flag === "python" || flag === "py")
+      else if (language === "python" || language === "py")
         languageExtension.push(
           (await import("@codemirror/lang-python")).python(),
           indentUnit.of("    "),
         );
 
       const startState = EditorState.create({
-        doc: code.textContent.slice(0, -1),
+        doc: code,
         extensions: [
           highlightSpecialChars(),
           history(),
@@ -73,11 +79,9 @@ export class RunnableCode extends HTMLElement {
           languageExtension,
         ],
       });
-      const pre = highlight.querySelector("pre");
-      if (!pre) throw new Error();
-      pre.remove();
       this.view = new EditorView({ state: startState });
-      highlight.prepend(this.view.dom);
+      expressiveCode.insertAdjacentElement("afterend", this.view.dom);
+      expressiveCode.hidden = true;
       const runCodeButton = this.querySelector("button.run-code");
       if (!(runCodeButton instanceof HTMLButtonElement)) throw new Error();
       runCodeButton.addEventListener("click", runCode);
@@ -105,7 +109,10 @@ async function runCode(event) {
   /** @type {string | null} */
   let version = null;
 
-  if (runnableCode.flag === "javascript" || runnableCode.flag === "js") {
+  if (
+    runnableCode.language === "javascript" ||
+    runnableCode.language === "js"
+  ) {
     const originalConsole = console;
     console = {
       ...originalConsole,
@@ -251,7 +258,10 @@ async function runCode(event) {
       messages.push(message);
     }
     console = originalConsole;
-  } else if (runnableCode.flag === "python" || runnableCode.flag === "py") {
+  } else if (
+    runnableCode.language === "python" ||
+    runnableCode.language === "py"
+  ) {
     button.disabled = true;
     const normal = button.querySelector(".normal");
     if (!(normal instanceof HTMLElement)) throw new Error();
@@ -315,21 +325,13 @@ async function runCode(event) {
     running.hidden = true;
   } else throw new Error();
 
-  let output =
-    Array.from(runnableCode.querySelectorAll("code")).find(
-      (code) => code.classList.length === 0,
-    ) ?? null;
+  let output = runnableCode.querySelector('pre[data-language="output"] > code');
   if (!output) {
-    const highlight = runnableCode.querySelector(".highlight");
-    if (!highlight) throw new Error();
-    highlight.insertAdjacentHTML(
+    runnableCode.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre><code></code></pre>`,
+      /* HTML */ `<pre data-language="output"><code></code></pre>`,
     );
-    output =
-      Array.from(runnableCode.querySelectorAll("code")).find(
-        (code) => code.classList.length === 0,
-      ) ?? null;
+    output = runnableCode.querySelector('pre[data-language="output"] > code');
     if (!output) throw new Error();
   }
   if (version && !runnableCode.querySelector(".version")) {
