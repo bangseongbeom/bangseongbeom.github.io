@@ -1,7 +1,7 @@
 import { match } from "@formatjs/intl-localematcher";
 import escape from "escape-html";
 import GithubSlugger from "github-slugger";
-import type { Document, HTMLElement } from "happy-dom";
+import type { Document, HTMLElement, HTMLPreElement } from "happy-dom";
 import { Window } from "happy-dom";
 import type NodeList from "happy-dom/lib/nodes/node/NodeList.js";
 import { load } from "js-yaml";
@@ -322,12 +322,11 @@ function insertRunnableCodeChildren(
     "runnable-code",
   ) as NodeList<HTMLElement>) {
     const expressiveCode = runnableCode.querySelector(".expressive-code");
-    const language =
-      (
-        expressiveCode?.querySelector(
-          "pre[data-language]",
-        ) as HTMLPreElement | null
-      )?.dataset.language ?? "";
+    if (!expressiveCode) throw new Error();
+    const pre = expressiveCode.querySelector(
+      "pre[data-language]",
+    ) as HTMLPreElement;
+    const language = pre?.dataset.language ?? "";
 
     if (["javascript", "js", "python", "py"].includes(language)) {
       runnableCode.insertAdjacentHTML(
