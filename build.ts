@@ -313,36 +313,6 @@ function insertAlertOcticons(document: Document) {
   }
 }
 
-function insertClipboardCopy(
-  document: Document,
-  messages: Messages,
-  lc: keyof Messages,
-) {
-  for (const pre of document.querySelectorAll("pre")) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "highlight";
-    pre.replaceWith(wrapper);
-    wrapper.append(pre);
-    const code = pre.querySelector("code");
-
-    if (code?.getAttribute("class")) {
-      pre.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ `<p>
-          <button type="button" class="clipboard-copy">
-            <span class="normal"
-              >${escape(messages[lc].clipboardCopy.normal())}</span
-            >
-            <span class="copied" hidden
-              >${escape(messages[lc].clipboardCopy.copied())}</span
-            >
-          </button>
-        </p>`,
-      );
-    }
-  }
-}
-
 function insertRunnableCodeChildren(
   document: Document,
   messages: Messages,
@@ -352,30 +322,30 @@ function insertRunnableCodeChildren(
     const code = runnableCode.querySelector("code");
     const flag = code?.getAttribute("class")?.match(/language-(.+)/)?.[1];
     if (!flag) continue;
-    const clipboardCopy = runnableCode.querySelector(".clipboard-copy");
-    if (!clipboardCopy) continue;
+    const highlight = runnableCode.querySelector(".highlight");
+    if (!highlight) continue;
 
     if (["js", "ts", "py"].includes(flag)) {
-      clipboardCopy.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ `
+      highlight.insertAdjacentHTML(
+        "beforeend",
+        /* HTML */ `<p>
           <button type="button" class="run-code">
             <span class="normal">${escape(messages[lc].runCode.normal())}</span>
             <span class="running" hidden
               >${escape(messages[lc].runCode.running())}</span
             >
           </button>
-        `,
+        </p>`,
       );
     } else if (["java"].includes(flag)) {
-      clipboardCopy.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ `
+      highlight.insertAdjacentHTML(
+        "beforeend",
+        /* HTML */ `<p>
           Paste and run in
           <a href="https://dev.java/playground/" target="_blank"
             >The Java Playground</a
           >
-        `,
+        </p>`,
       );
     }
   }
@@ -970,10 +940,6 @@ async function writeHTML({
           ></script>
           <script
             type="module"
-            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
-          ></script>
-          <script
-            type="module"
             src="${escape(new URL("runnable-code.js", baseURL).toString())}"
           ></script>
           ${
@@ -1231,10 +1197,6 @@ const messages = {
         modified: () => "Updated",
       },
     },
-    clipboardCopy: {
-      normal: () => "Copy",
-      copied: () => "Copied!",
-    },
     runCode: {
       normal: () => "Run",
       running: () => "Running...",
@@ -1268,10 +1230,6 @@ const messages = {
         published: () => "게시일",
         modified: () => "수정일",
       },
-    },
-    clipboardCopy: {
-      normal: () => "복사",
-      copied: () => "복사 완료!",
     },
     runCode: {
       normal: () => "실행",
@@ -1334,7 +1292,6 @@ for await (const path of glob("**", {
     removeFirstHeading(document);
     insertNav(document, path, messages, lc, baseURL, repository);
     insertAlertOcticons(document);
-    insertClipboardCopy(document, messages, lc);
     insertRunnableCodeChildren(document, messages, lc);
     const navPages = [
       {
@@ -1472,10 +1429,6 @@ await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
   join(source, "anchor-links.js"),
   join(destination, "anchor-links.js"),
-);
-await copyFile(
-  join(source, "clipboard-copy.js"),
-  join(destination, "clipboard-copy.js"),
 );
 await copyFile(
   join(source, "runnable-code.js"),
