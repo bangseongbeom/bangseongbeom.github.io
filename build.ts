@@ -55,16 +55,13 @@ function toURLPathname(path: string) {
   return path.split(sep).map(encodeURIComponent).join("/");
 }
 
-function markdownPathToCanonicalURL(path: string, baseURL: string) {
-  return new URL(
-    toURLPathname(
-      join(
-        dirname(path),
-        basename(path) === "README.md" ? sep : parse(path).name,
-      ),
-    ),
-    baseURL,
-  ).toString();
+function toHTMLURL(url: string, base: string) {
+  const htmlURL = new URL(url, base);
+  if (htmlURL.pathname.endsWith("/README.md"))
+    htmlURL.pathname = htmlURL.pathname.slice(0, -"README.md".length);
+  else if (htmlURL.pathname.endsWith(".md"))
+    htmlURL.pathname = htmlURL.pathname.slice(0, -".md".length);
+  return htmlURL.toString();
 }
 
 function getLang(
@@ -151,13 +148,10 @@ function convertAlerts(document: Document) {
   }
 }
 
-function convertLinks(document: Document) {
+function resolveLinks(document: Document, url: string) {
   for (const link of document.querySelectorAll("[href]")) {
     const href = link.getAttribute("href") ?? fail();
-    if (href.endsWith("/README.md"))
-      link.setAttribute("href", href.slice(0, -"README.md".length));
-    else if (href.endsWith(".md"))
-      link.setAttribute("href", href.slice(0, -".md".length));
+    link.setAttribute("href", toHTMLURL(href, url));
   }
 }
 
@@ -1325,7 +1319,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = markdownPathToCanonicalURL(path, baseURL);
+    const url = toHTMLURL(toURLPathname(path), baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
@@ -1343,7 +1337,7 @@ for await (const path of glob("**", {
     const document = htmlToDocument(html);
     insertHeadingIds(document);
     convertAlerts(document);
-    convertLinks(document);
+    resolveLinks(document, url);
     const title =
       frontmatter.title ??
       document.querySelector("h1")?.textContent ??
