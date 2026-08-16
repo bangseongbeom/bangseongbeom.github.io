@@ -5,8 +5,8 @@ for (const heading of document.querySelectorAll(
 
   const anchor = document.createElement("a");
   anchor.className = "header-link";
-  anchor.setAttribute("href", `#${heading.id}`);
-  anchor.setAttribute("aria-label", "Link");
+  anchor.href = `#${heading.id}`;
+  anchor.ariaLabel = "Link";
   anchor.innerHTML = /* HTML */ `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
       <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->

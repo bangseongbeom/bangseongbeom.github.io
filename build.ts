@@ -116,8 +116,7 @@ function htmlToDocument(html: string) {
 function insertHeadingIds(document: Document) {
   const slugger = new GithubSlugger();
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
-    if (!heading.hasAttribute("id"))
-      heading.setAttribute("id", slugger.slug(heading.textContent));
+    if (!heading.id) heading.id = slugger.slug(heading.textContent);
   }
 }
 
@@ -151,9 +150,9 @@ function convertAlerts(document: Document) {
 }
 
 function resolveLinks(document: Document, url: string) {
-  for (const link of document.querySelectorAll("[href]")) {
-    const href = link.getAttribute("href") ?? fail();
-    link.setAttribute("href", toHTMLURL(href, url));
+  for (const link of document.querySelectorAll("a")) {
+    if (!link.href) continue;
+    link.href = toHTMLURL(link.href, url);
   }
 }
 
