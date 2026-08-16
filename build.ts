@@ -51,13 +51,13 @@ function markdownPathToHTMLPath(path: string) {
   );
 }
 
-function pathToURLPathname(path: string) {
+function toURLPathname(path: string) {
   return path.split(sep).map(encodeURIComponent).join("/");
 }
 
 function markdownPathToCanonicalURL(path: string, baseURL: string) {
   return new URL(
-    pathToURLPathname(
+    toURLPathname(
       join(
         dirname(path),
         basename(path) === "README.md" ? sep : parse(path).name,
@@ -65,10 +65,6 @@ function markdownPathToCanonicalURL(path: string, baseURL: string) {
     ),
     baseURL,
   ).toString();
-}
-
-function markdownPathToMarkdownURL(path: string, baseURL: string) {
-  return new URL(pathToURLPathname(path), baseURL).toString();
 }
 
 function getLang(
@@ -184,17 +180,17 @@ function insertNav(
         <nav>
           <p>
             <a
-              href="${escape(markdownPathToMarkdownURL(path, baseURL))}"
+              href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
               title="${escape(messages[lc].header.nav.markdown.title())}"
               >${escape(messages[lc].header.nav.markdown.content())}</a
             >
             <span>·</span>
             <a
               href="${escape(
-                markdownPathToMarkdownURL(
-                  path,
+                new URL(
+                  toURLPathname(path),
                   `https://github.com/${repository}/blob/main/`,
-                ),
+                ).toString(),
               )}"
               title="${escape(messages[lc].header.nav.github.title())}"
               >${escape(messages[lc].header.nav.github.content())}</a
@@ -202,10 +198,10 @@ function insertNav(
             <span>·</span>
             <a
               href="${escape(
-                markdownPathToMarkdownURL(
-                  path,
+                new URL(
+                  toURLPathname(path),
                   `https://github.com/${repository}/edit/main/`,
-                ),
+                ).toString(),
               )}"
               title="${escape(messages[lc].header.nav.edit.title())}"
               >${escape(messages[lc].header.nav.edit.content())}</a
@@ -213,10 +209,10 @@ function insertNav(
             <span>·</span>
             <a
               href="${escape(
-                markdownPathToMarkdownURL(
-                  path,
+                new URL(
+                  toURLPathname(path),
                   `https://github.com/${repository}/commits/main/`,
-                ),
+                ).toString(),
               )}"
               title="${escape(messages[lc].header.nav.history.title())}"
               >${escape(messages[lc].header.nav.history.content())}</a
@@ -835,16 +831,16 @@ async function writeHTML({
           <link
             rel="alternate"
             type="text/markdown"
-            href="${escape(markdownPathToMarkdownURL(path, baseURL))}"
+            href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
           />
           <link
             rel="alternate"
             type="text/html"
             href="${escape(
-              markdownPathToMarkdownURL(
-                path,
+              new URL(
+                toURLPathname(path),
                 `https://github.com/${repository}/blob/main/`,
-              ),
+              ).toString(),
             )}"
           />
           <link
