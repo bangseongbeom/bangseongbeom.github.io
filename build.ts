@@ -10,9 +10,9 @@ import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, glob, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
-  basename,
   dirname,
   extname,
+  format,
   isAbsolute,
   join,
   parse,
@@ -44,11 +44,11 @@ function markdownToHTML(markdown: string) {
   };
 }
 
-function markdownPathToHTMLPath(path: string) {
-  return join(
-    dirname(path),
-    basename(path) === "README.md" ? "index.html" : `${parse(path).name}.html`,
-  );
+function toHTMLPath(path: string) {
+  const { dir, name, ext } = parse(path);
+  return ext === ".md"
+    ? format({ dir, name: name === "README" ? "index" : name, ext: ".html" })
+    : path;
 }
 
 function toURLPathname(path: string) {
@@ -729,11 +729,11 @@ async function writeHTML({
     return `${locale.language}_${locale.region}`;
   }
 
-  await mkdir(dirname(join(destination, markdownPathToHTMLPath(path))), {
+  await mkdir(dirname(join(destination, toHTMLPath(path))), {
     recursive: true,
   });
   await writeFile(
-    join(destination, markdownPathToHTMLPath(path)),
+    join(destination, toHTMLPath(path)),
     /* HTML */ `<!DOCTYPE html>
       <html
         ${lang ? `lang="${escape(lang)}"` : ""}
@@ -1031,7 +1031,7 @@ async function writeRedirectHTMLs(
   for (const redirectFromPath of redirectFrom) {
     const resolvedPath = isAbsolute(redirectFromPath)
       ? join(destination, redirectFromPath)
-      : join(destination, markdownPathToHTMLPath(path), "..", redirectFromPath);
+      : join(destination, toHTMLPath(path), "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
     await writeFile(
       resolvedPath,
