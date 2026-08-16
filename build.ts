@@ -809,9 +809,7 @@ async function writeHTML({
           />
           <link
             rel="stylesheet"
-            href="${escape(
-              new URL("github-markdown-alert.css", baseURL).toString(),
-            )}"
+            href="${escape(new URL("markdown-alert.css", baseURL).toString())}"
           />
           <link
             rel="stylesheet"
