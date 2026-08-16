@@ -1092,6 +1092,16 @@ table td {
 }
 
 /**
+ * Footnotes
+ */
+[data-footnote-ref]::before {
+  content: "[";
+}
+[data-footnote-ref]::after {
+  content: "]";
+}
+
+/**
  * Grid helpers
  */
 @media screen and (min-width: 800px) {
