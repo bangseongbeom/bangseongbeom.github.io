@@ -464,6 +464,7 @@ p, blockquote, pre,
 ul, ol, dl, figure,
 div.highlight,
 figure.highlight,
+.markdown-alert,
 .expressive-code,
 .cm-editor {
   margin-bottom: 15px;

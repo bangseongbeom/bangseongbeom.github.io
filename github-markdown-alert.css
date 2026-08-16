@@ -1,8 +1,9 @@
 .markdown-alert {
-  padding: var(--base-size-8) var(--base-size-16);
-  margin-bottom: var(--base-size-16);
-  color: inherit;
-  border-left: 0.25em solid var(--borderColor-default);
+  border-left: 4px solid light-dark(#d1d9e0, #3d444d);
+  padding-left: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 1.05rem;
 }
 
 .markdown-alert > :first-child {
@@ -15,52 +16,52 @@
 
 .markdown-alert .markdown-alert-title {
   display: flex;
-  font-weight: var(--base-text-weight-medium, 500);
+  font-weight: 500;
   align-items: center;
   line-height: 1;
 }
 
 .markdown-alert .markdown-alert-title svg {
   fill: currentcolor;
-  margin-right: var(--base-size-8);
+  margin-right: 8px;
 }
 
 .markdown-alert.markdown-alert-note {
-  border-left-color: var(--borderColor-accent-emphasis);
+  border-left-color: light-dark(#0969da, #1f6feb);
 }
 
 .markdown-alert.markdown-alert-note .markdown-alert-title {
-  color: var(--fgColor-accent);
+  color: light-dark(#0969da, #4493f8);
 }
 
 .markdown-alert.markdown-alert-important {
-  border-left-color: var(--borderColor-done-emphasis);
+  border-left-color: light-dark(#8250df, #8957e5);
 }
 
 .markdown-alert.markdown-alert-important .markdown-alert-title {
-  color: var(--fgColor-done);
+  color: light-dark(#8250df, #ab7df8);
 }
 
 .markdown-alert.markdown-alert-warning {
-  border-left-color: var(--borderColor-attention-emphasis);
+  border-left-color: light-dark(#9a6700, #9e6a03);
 }
 
 .markdown-alert.markdown-alert-warning .markdown-alert-title {
-  color: var(--fgColor-attention);
+  color: light-dark(#9a6700, #d29922);
 }
 
 .markdown-alert.markdown-alert-tip {
-  border-left-color: var(--borderColor-success-emphasis);
+  border-left-color: light-dark(#1a7f37, #238636);
 }
 
 .markdown-alert.markdown-alert-tip .markdown-alert-title {
-  color: var(--fgColor-success);
+  color: light-dark(#1a7f37, #3fb950);
 }
 
 .markdown-alert.markdown-alert-caution {
-  border-left-color: var(--borderColor-danger-emphasis);
+  border-left-color: light-dark(#cf222e, #da3633);
 }
 
 .markdown-alert.markdown-alert-caution .markdown-alert-title {
-  color: var(--fgColor-danger);
+  color: light-dark(#d1242f, #f85149);
 }
