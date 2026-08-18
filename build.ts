@@ -1,7 +1,13 @@
 import { match } from "@formatjs/intl-localematcher";
 import escape from "escape-html";
 import GithubSlugger from "github-slugger";
-import type { Document, HTMLElement, HTMLPreElement } from "happy-dom";
+import type {
+  Document,
+  HTMLAnchorElement,
+  HTMLAreaElement,
+  HTMLElement,
+  HTMLPreElement,
+} from "happy-dom";
 import { Window } from "happy-dom";
 import type NodeList from "happy-dom/lib/nodes/node/NodeList.js";
 import { load } from "js-yaml";
@@ -59,10 +65,13 @@ function toURLPathname(path: string) {
 
 function toHTMLURL(url: string, base: string) {
   const htmlURL = new URL(url, base);
-  if (htmlURL.pathname.endsWith("/README.md"))
-    htmlURL.pathname = htmlURL.pathname.slice(0, -"README.md".length);
-  else if (htmlURL.pathname.endsWith(".md"))
-    htmlURL.pathname = htmlURL.pathname.slice(0, -".md".length);
+  const scope = new URL("./", base).href;
+  if (htmlURL.href.startsWith(scope)) {
+    if (htmlURL.pathname.endsWith("/README.md"))
+      htmlURL.pathname = htmlURL.pathname.slice(0, -"README.md".length);
+    else if (htmlURL.pathname.endsWith(".md"))
+      htmlURL.pathname = htmlURL.pathname.slice(0, -".md".length);
+  }
   return htmlURL.toString();
 }
 
@@ -107,8 +116,9 @@ async function getLastGitLogDate(path: string) {
   if (stdout) return new Date(stdout);
 }
 
-function htmlToDocument(html: string) {
-  const document = new Window().document;
+function htmlToDocument(html: string, url: string) {
+  // If url is not set, fragment links like #section start from about:blank.
+  const document = new Window({ url }).document;
   document.body.innerHTML = html;
   return document;
 }
@@ -149,12 +159,11 @@ function convertAlerts(document: Document) {
   }
 }
 
-function resolveLinks(document: Document, url: string) {
-  for (const link of document.querySelectorAll("a")) {
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#")) continue;
-    link.setAttribute("href", toHTMLURL(href, url));
-  }
+function convertLinks(document: Document, baseURL: string) {
+  for (const link of document.links as NodeList<
+    HTMLAnchorElement | HTMLAreaElement
+  >)
+    link.href = toHTMLURL(link.href, baseURL);
 }
 
 function removeFirstHeading(document: Document) {
@@ -1229,10 +1238,10 @@ for await (const path of glob("**", {
     const modifiedDate = frontmatter.modified_date
       ? new Date(frontmatter.modified_date)
       : lastGitLogDate;
-    const document = htmlToDocument(html);
+    const document = htmlToDocument(html, url);
     insertHeadingIds(document);
     convertAlerts(document);
-    resolveLinks(document, url);
+    convertLinks(document, baseURL);
     const title =
       frontmatter.title ??
       document.querySelector("h1")?.textContent ??
