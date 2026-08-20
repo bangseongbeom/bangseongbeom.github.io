@@ -160,10 +160,7 @@ function convertAlerts(document: Document) {
 }
 
 function convertLinks(document: Document, baseURL: string) {
-  for (const link of document.links as NodeList<
-    HTMLAnchorElement | HTMLAreaElement
-  >)
-    link.href = toHTMLURL(link.href, baseURL);
+  for (const link of document.links) link.href = toHTMLURL(link.href, baseURL);
 }
 
 function removeFirstHeading(document: Document) {
