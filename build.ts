@@ -127,13 +127,6 @@ function insertHeadingIds(document: Document) {
   }
 }
 
-function insertInlineCodeClasses(document: Document) {
-  for (const code of document.querySelectorAll("code")) {
-    if (code.closest("pre")) continue;
-    code.classList.add("highlighter-rouge");
-  }
-}
-
 function convertAlerts(document: Document) {
   for (const blockquote of document.querySelectorAll("blockquote")) {
     const firstParagraph = blockquote.firstElementChild;
@@ -1261,7 +1254,6 @@ for await (const path of glob("**", {
     insertHeadingIds(document);
     convertAlerts(document);
     convertLinks(document, baseURL);
-    insertInlineCodeClasses(document);
     const title =
       frontmatter.title ??
       document.querySelector("h1")?.textContent ??
