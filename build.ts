@@ -1,13 +1,7 @@
 import { match } from "@formatjs/intl-localematcher";
 import escape from "escape-html";
 import GithubSlugger from "github-slugger";
-import type {
-  Document,
-  HTMLAnchorElement,
-  HTMLAreaElement,
-  HTMLElement,
-  HTMLPreElement,
-} from "happy-dom";
+import type { Document, HTMLElement } from "happy-dom";
 import { Window } from "happy-dom";
 import type NodeList from "happy-dom/lib/nodes/node/NodeList.js";
 import { load } from "js-yaml";
@@ -25,8 +19,8 @@ import {
 } from "node:path";
 import { promisify } from "node:util";
 import { markdownToHtml } from "satteri";
-import expressiveCode from "satteri-expressive-code";
 import type { Article, WithContext } from "schema-dts";
+import { codeToHtml } from "shiki";
 
 interface FrontMatter {
   lang?: string;
@@ -40,10 +34,8 @@ interface FrontMatter {
   redirect_from?: string[];
 }
 
-async function markdownToHTML(markdown: string) {
-  const result = await markdownToHtml(markdown, {
-    hastPlugins: [expressiveCode()],
-  });
+function markdownToHTML(markdown: string) {
+  const result = markdownToHtml(markdown);
   return {
     html: result.html,
     frontmatter: (result.frontmatter
@@ -260,19 +252,37 @@ function insertAlertOcticons(document: Document) {
   }
 }
 
+async function highlight(document: Document) {
+  for (const pre of document.querySelectorAll("pre")) {
+    const code = pre.querySelector("code");
+    if (!code) continue;
+    const language = Array.from(code.classList)
+      .find((className) => className.startsWith("language-"))
+      ?.slice("language-".length);
+    const html = await codeToHtml(code.textContent.replace(/\n$/, ""), {
+      lang: language ?? "text",
+      themes: { light: "github-light", dark: "github-dark" },
+      defaultColor: "light-dark()",
+      rootStyle: false,
+    });
+    pre.outerHTML = /* HTML */ `<div
+      class="language-${language ?? "plaintext"}"
+    >
+      <div class="highlight">${html}</div>
+    </div>`;
+  }
+}
+
 function insertRunnableCodeChildren(document: Document, messages: Messages) {
   for (const runnableCode of document.querySelectorAll(
     "runnable-code",
   ) as NodeList<HTMLElement>) {
-    const expressiveCode = runnableCode.querySelector(".expressive-code");
-    if (!expressiveCode) throw new Error();
-    const pre = expressiveCode.querySelector(
-      "pre[data-language]",
-    ) as HTMLPreElement;
-    const language = pre?.dataset.language ?? "";
+    const codeBlock = runnableCode.querySelector('[class^="language-"]');
+    if (!codeBlock) throw new Error();
+    const language = codeBlock.className.slice("language-".length);
 
     if (["javascript", "js", "python", "py"].includes(language)) {
-      expressiveCode.insertAdjacentHTML(
+      codeBlock.insertAdjacentHTML(
         "afterend",
         /* HTML */ `<p>
           <button type="button" class="run-code">
@@ -284,7 +294,7 @@ function insertRunnableCodeChildren(document: Document, messages: Messages) {
         </p>`,
       );
     } else if (language === "java") {
-      expressiveCode.insertAdjacentHTML(
+      codeBlock.insertAdjacentHTML(
         "afterend",
         /* HTML */ `<p>
           Paste and run in
@@ -1229,7 +1239,7 @@ for await (const path of glob("**", {
     const url = toHTMLURL(toURLPathname(path), baseURL);
 
     const markdown = await readFile(join(source, path), "utf8");
-    const { frontmatter, html } = await markdownToHTML(markdown);
+    const { frontmatter, html } = markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
     const messages =
       msgData[
@@ -1258,6 +1268,7 @@ for await (const path of glob("**", {
     const rssDescription = rssDocument.body.innerHTML;
     removeFirstHeading(document);
     insertAlertOcticons(document);
+    await highlight(document);
     insertRunnableCodeChildren(document, messages);
     const navPages = [
       {

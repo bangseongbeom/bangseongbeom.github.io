@@ -7,20 +7,13 @@ export class RunnableCode extends HTMLElement {
   language;
 
   async connectedCallback() {
-    const expressiveCode = /** @type {HTMLElement | null} */ (
-      this.querySelector(".expressive-code")
-    );
-    if (!expressiveCode) throw new Error();
-    const pre = /** @type {HTMLPreElement} */ (
-      expressiveCode.querySelector("pre[data-language]")
-    );
-    const language = pre.dataset.language;
+    const codeBlock = this.querySelector('[class^="language-"]');
+    if (!codeBlock) throw new Error();
+    const language = codeBlock.className.slice("language-".length);
     this.language = language;
-    const copyButton = /** @type {HTMLButtonElement} */ (
-      expressiveCode.querySelector(".copy button[data-code]")
-    );
-    if (copyButton.dataset.code === undefined) throw new Error();
-    const code = copyButton.dataset.code.replaceAll("\u007f", "\n");
+    const pre = codeBlock.querySelector("pre");
+    if (!pre) throw new Error();
+    const code = pre.textContent;
 
     if (
       language === "javascript" ||
@@ -82,8 +75,7 @@ export class RunnableCode extends HTMLElement {
         ],
       });
       this.view = new EditorView({ state: startState });
-      expressiveCode.insertAdjacentElement("afterend", this.view.dom);
-      expressiveCode.hidden = true;
+      pre.replaceWith(this.view.dom);
       const runCodeButton = /** @type {HTMLButtonElement} */ (
         this.querySelector("button.run-code")
       );
@@ -328,24 +320,17 @@ async function runCode(event) {
     running.hidden = true;
   } else throw new Error();
 
-  const expectedOutput = /** @type {HTMLElement | null} */ (
-    runnableCode.querySelector(
-      '.expressive-code:has(pre[data-language="plaintext"])',
-    )
-  );
-  if (expectedOutput) expectedOutput.hidden = true;
-
-  let output = runnableCode.querySelector(
-    ':scope > pre[data-language="plaintext"] > code',
-  );
+  let output = runnableCode.querySelector(".language-plaintext pre > code");
   if (!output) {
     runnableCode.insertAdjacentHTML(
       "beforeend",
-      /* HTML */ `<pre data-language="plaintext"><code></code></pre>`,
+      /* HTML */ `<div class="language-plaintext">
+        <div class="highlight">
+          <pre><code></code></pre>
+        </div>
+      </div>`,
     );
-    output = runnableCode.querySelector(
-      ':scope > pre[data-language="plaintext"] > code',
-    );
+    output = runnableCode.querySelector(".language-plaintext pre > code");
     if (!output) throw new Error();
   }
   if (version && !runnableCode.querySelector(".version")) {
