@@ -52,6 +52,11 @@ async function markdownToHTML(markdown: string) {
   };
 }
 
+function markdownToRSSHTML(markdown: string) {
+  const result = markdownToHtml(markdown);
+  return result.html;
+}
+
 function toHTMLPath(path: string) {
   const { dir, name, ext } = parse(path);
   return ext === ".md"
@@ -1245,7 +1250,12 @@ for await (const path of glob("**", {
       fail("title is required");
     const description =
       frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
-    const rssDescription = document.body.innerHTML;
+    const rssHTML = markdownToRSSHTML(markdown);
+    const rssDocument = htmlToDocument(rssHTML, url);
+    insertHeadingIds(rssDocument);
+    convertAlerts(rssDocument);
+    convertLinks(rssDocument, baseURL);
+    const rssDescription = rssDocument.body.innerHTML;
     removeFirstHeading(document);
     insertAlertOcticons(document);
     insertRunnableCodeChildren(document, messages);
