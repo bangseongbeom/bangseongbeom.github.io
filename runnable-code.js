@@ -1,5 +1,10 @@
 import { EditorView } from "@codemirror/view";
 
+const errorCSSText =
+  "color:light-dark(#B31D28, #FDAEB7);--shiki-light:#B31D28;--shiki-dark:#FDAEB7";
+const warnCSSText =
+  "color:light-dark(#E36209, #FFAB70);--shiki-light:#E36209;--shiki-dark:#FFAB70";
+
 export class RunnableCode extends HTMLElement {
   /** @type {EditorView | undefined} */
   view;
@@ -118,7 +123,7 @@ async function runCode(event) {
       assert(condition, ...data) {
         if (!condition) {
           const message = document.createElement("span");
-          message.classList.add("error");
+          message.style.cssText = errorCSSText;
           message.textContent =
             "Assertion failed: " +
             (data.length ? data.join(" ") : "console.assert");
@@ -136,7 +141,6 @@ async function runCode(event) {
        */
       debug(...data) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -147,7 +151,7 @@ async function runCode(event) {
        */
       error(...data) {
         const message = document.createElement("span");
-        message.classList.add("error");
+        message.style.cssText = errorCSSText;
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -158,7 +162,6 @@ async function runCode(event) {
        */
       info(...data) {
         const message = document.createElement("span");
-        message.classList.add("info");
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -169,7 +172,6 @@ async function runCode(event) {
        */
       log(...data) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -202,7 +204,6 @@ async function runCode(event) {
        */
       trace(...data) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -213,7 +214,7 @@ async function runCode(event) {
        */
       warn(...data) {
         const message = document.createElement("span");
-        message.classList.add("warn");
+        message.style.cssText = warnCSSText;
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -225,7 +226,6 @@ async function runCode(event) {
        */
       dir(item, options) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = item;
         message.textContent += "\n";
         messages.push(message);
@@ -236,7 +236,6 @@ async function runCode(event) {
        */
       dirxml(...data) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = data.join(" ");
         message.textContent += "\n";
         messages.push(message);
@@ -247,7 +246,7 @@ async function runCode(event) {
       eval(doc.toString());
     } catch (error) {
       const message = document.createElement("span");
-      message.classList.add("error");
+      message.style.cssText = errorCSSText;
       message.textContent = String(error);
       message.textContent += "\n";
       messages.push(message);
@@ -276,7 +275,6 @@ async function runCode(event) {
         const result = prompt();
         if (typeof result === "string") {
           const message = document.createElement("span");
-          message.classList.add("log");
           message.textContent = result;
           message.textContent += "\n";
           messages.push(message);
@@ -287,7 +285,6 @@ async function runCode(event) {
     pyodide.setStdout({
       write(buffer) {
         const message = document.createElement("span");
-        message.classList.add("log");
         message.textContent = new TextDecoder().decode(buffer);
         messages.push(message);
         return buffer.length;
@@ -296,7 +293,7 @@ async function runCode(event) {
     pyodide.setStderr({
       write(buffer) {
         const message = document.createElement("span");
-        message.classList.add("error");
+        message.style.cssText = errorCSSText;
         message.textContent = new TextDecoder().decode(buffer);
         messages.push(message);
         return buffer.length;
@@ -306,7 +303,7 @@ async function runCode(event) {
       pyodide.runPython(doc.toString());
     } catch (error) {
       const message = document.createElement("span");
-      message.classList.add("error");
+      message.style.cssText = errorCSSText;
       message.textContent =
         error instanceof Error
           ? (error.stack ?? error.toString())

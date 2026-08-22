@@ -5,7 +5,6 @@
   --code-entity-color: light-dark(#6f42c1, #b392f0);
   --code-keyword-color: light-dark(#bf3441, #f97583);
   --code-string-color: light-dark(#032f62, #9ecbff);
-  --code-warning-color: light-dark(#ae4b07, #ffab70);
 }
 
 .cm-editor {
@@ -64,13 +63,5 @@
 
 .tok-invalid,
 .cm-specialChar {
-  color: var(--code-danger-color);
-}
-
-runnable-code .warn {
-  color: var(--code-warning-color);
-}
-
-runnable-code .error {
   color: var(--code-danger-color);
 }
