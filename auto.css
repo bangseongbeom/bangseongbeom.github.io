@@ -545,13 +545,11 @@ a:hover {
  * Buttons
  */
 button {
-  padding: 8px 15px;
+  padding: 10px 12px;
+  background-color: var(--minima-background-color);
   border: 1px solid var(--minima-border-color-01);
   border-radius: 5px;
-  background-color: var(--minima-background-color);
-}
-button:hover {
-  background-color: var(--minima-code-background-color);
+  cursor: pointer;
 }
 
 /**
