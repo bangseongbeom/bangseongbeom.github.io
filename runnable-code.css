@@ -1,12 +1,3 @@
-:root {
-  --code-comment-color: light-dark(#616972, #99a0a6);
-  --code-constant-color: light-dark(#005cc5, #79b8ff);
-  --code-danger-color: light-dark(#b31d28, #fdaeb7);
-  --code-entity-color: light-dark(#6f42c1, #b392f0);
-  --code-keyword-color: light-dark(#bf3441, #f97583);
-  --code-string-color: light-dark(#032f62, #9ecbff);
-}
-
 .cm-editor {
   font-size: 15px;
   line-height: 1.4;
@@ -33,35 +24,69 @@
 }
 
 .tok-comment {
-  color: var(--code-comment-color);
+  color: light-dark(#6a737d, #6a737d);
+}
+
+.tok-definition,
+.tok-emphasis,
+.tok-local,
+.tok-propertyName,
+.tok-punctuation,
+.tok-strong,
+.tok-variableName {
+  color: light-dark(#24292e, #e1e4e8);
 }
 
 .tok-atom,
 .tok-bool,
+.tok-heading,
 .tok-literal,
-.tok-number {
-  color: var(--code-constant-color);
+.tok-number,
+.tok-variableName2 {
+  color: light-dark(#005cc5, #79b8ff);
 }
 
 .tok-className,
 .tok-labelName,
 .tok-macroName,
+.tok-meta,
 .tok-namespace,
 .tok-typeName {
-  color: var(--code-entity-color);
+  color: light-dark(#6f42c1, #b392f0);
 }
 
 .tok-keyword,
 .tok-operator {
-  color: var(--code-keyword-color);
+  color: light-dark(#d73a49, #f97583);
 }
 
 .tok-string,
 .tok-string2 {
-  color: var(--code-string-color);
+  color: light-dark(#032f62, #9ecbff);
 }
 
+.tok-link,
+.tok-url {
+  color: light-dark(#032f62, #dbedff);
+  text-decoration: underline;
+}
+
+.tok-inserted {
+  color: light-dark(#22863a, #85e89d);
+}
+
+.tok-deleted,
 .tok-invalid,
 .cm-specialChar {
-  color: var(--code-danger-color);
+  color: light-dark(#b31d28, #fdaeb7);
+}
+
+.tok-heading,
+.tok-strong {
+  font-weight: bold;
+}
+
+.tok-emphasis,
+.tok-invalid {
+  font-style: italic;
 }
