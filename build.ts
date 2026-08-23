@@ -406,7 +406,7 @@ function runnableCode(document: Document, messages: Messages) {
   }
 }
 
-function navItems(pages: { title?: string; url: string }[]) {
+function navItems({ pages }: { pages: { title?: string; url: string }[] }) {
   return /* HTML */ `<div class="nav-items">
     ${pages
       .map((page) =>
@@ -420,11 +420,15 @@ function navItems(pages: { title?: string; url: string }[]) {
   </div>`;
 }
 
-function header(
-  baseURL: string,
-  siteTitle: string,
-  navPages: { title?: string; url: string }[],
-) {
+function header({
+  baseURL,
+  siteTitle,
+  navPages,
+}: {
+  baseURL: string;
+  siteTitle: string;
+  navPages: { title?: string; url: string }[];
+}) {
   return /* HTML */ `<header class="site-header">
     <div class="wrapper">
       <a class="site-title" rel="author" href="${escape(baseURL)}"
@@ -461,19 +465,24 @@ function header(
                 </span>
               </label>
 
-              ${navItems(navPages)}
+              ${navItems({ pages: navPages })}
             </nav>`
       }
     </div>
   </header>`;
 }
 
-function postLinks(
-  path: string,
-  baseURL: string,
-  messages: Messages,
-  repository: string,
-) {
+function postLinks({
+  path,
+  baseURL,
+  messages,
+  repository,
+}: {
+  path: string;
+  baseURL: string;
+  messages: Messages;
+  repository: string;
+}) {
   return /* HTML */ `<div class="post-links">
     <a
       href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
@@ -513,19 +522,26 @@ function postLinks(
   </div>`;
 }
 
-function page(
-  title: string,
-  content: string,
-  messages: Messages,
-  path: string,
-  baseURL: string,
-  repository: string,
-) {
+function page({
+  title,
+  content,
+  messages,
+  path,
+  baseURL,
+  repository,
+}: {
+  title: string;
+  content: string;
+  messages: Messages;
+  path: string;
+  baseURL: string;
+  repository: string;
+}) {
   return /* HTML */ `<article class="post">
     <header class="post-header">
       <h1 class="post-title">${escape(title)}</h1>
       <div class="post-meta">
-        ${postLinks(path, baseURL, messages, repository)}
+        ${postLinks({ path, baseURL, messages, repository })}
       </div>
     </header>
 
@@ -533,7 +549,7 @@ function page(
   </article>`;
 }
 
-function commentsSection(path: string, lang: string) {
+function commentsSection({ path, lang }: { path: string; lang: string }) {
   return ["README.md", "404.md"].includes(path)
     ? ""
     : /* HTML */ ` <script
@@ -554,20 +570,33 @@ function commentsSection(path: string, lang: string) {
       ></script>`;
 }
 
-function post(
-  title: string,
-  modifiedDate: Date | undefined,
-  date: Date,
-  messages: Messages,
-  lang: string,
-  authors: { name?: string; email?: string }[] | undefined,
-  content: string,
-  comments: boolean | undefined,
-  path: string,
-  url: string,
-  baseURL: string,
-  repository: string,
-) {
+function post({
+  title,
+  modifiedDate,
+  date,
+  messages,
+  lang,
+  authors,
+  content,
+  comments,
+  path,
+  url,
+  baseURL,
+  repository,
+}: {
+  title: string;
+  modifiedDate?: Date | undefined;
+  date: Date;
+  messages: Messages;
+  lang: string;
+  authors?: { name?: string; email?: string }[] | undefined;
+  content: string;
+  comments?: boolean | undefined;
+  path: string;
+  url: string;
+  baseURL: string;
+  repository: string;
+}) {
   return /* HTML */ `<article
     class="post h-entry"
     itemscope
@@ -646,7 +675,7 @@ function post(
               </div>`
             : ""
         }
-        ${postLinks(path, baseURL, messages, repository)}
+        ${postLinks({ path, baseURL, messages, repository })}
       </div>
     </header>
 
@@ -658,7 +687,7 @@ function post(
           ? /* HTML */ `<div class="comments-disabled-message">
               Comments have been disabled for this post.
             </div>`
-          : commentsSection(path, lang)
+          : commentsSection({ path, lang })
         : ""
     }
 
@@ -666,12 +695,17 @@ function post(
   </article>`;
 }
 
-function social(
-  socialLinks: { url: string; title: string; icon: string }[],
-  hideSiteFeedLink: boolean | undefined,
+function social({
+  socialLinks,
+  hideSiteFeedLink,
   feedPath = "feed.xml",
-  baseURL: string,
-) {
+  baseURL,
+}: {
+  socialLinks: { url: string; title: string; icon: string }[];
+  hideSiteFeedLink?: boolean | undefined;
+  feedPath?: string;
+  baseURL: string;
+}) {
   return /* HTML */ `<ul class="social-media-list">
     ${socialLinks
       .map(
@@ -711,14 +745,21 @@ function social(
   </ul>`;
 }
 
-function footer(
-  baseURL: string,
-  siteAuthor: { name?: string; email?: string } | undefined,
-  siteDescription: string,
-  socialLinks: { url: string; title: string; icon: string }[],
-  hideSiteFeedLink?: boolean,
-  feedPath?: string,
-) {
+function footer({
+  baseURL,
+  siteAuthor,
+  siteDescription,
+  socialLinks,
+  hideSiteFeedLink,
+  feedPath,
+}: {
+  baseURL: string;
+  siteAuthor?: { name?: string; email?: string } | undefined;
+  siteDescription: string;
+  socialLinks: { url: string; title: string; icon: string }[];
+  hideSiteFeedLink?: boolean;
+  feedPath?: string;
+}) {
   return /* HTML */ `<footer class="site-footer h-card">
     <data class="u-url" value="${escape(baseURL)}"></data>
 
@@ -756,7 +797,7 @@ function footer(
       </div>
 
       <div class="social-links">
-        ${social(socialLinks, hideSiteFeedLink, feedPath, baseURL)}
+        ${social({ socialLinks, hideSiteFeedLink, feedPath, baseURL })}
       </div>
     </div>
   </footer>`;
@@ -1067,31 +1108,44 @@ function base({
         }
       </head>
       <body>
-        ${header(baseURL, escape(messages.title()), navPages)}
+        ${header({ baseURL, siteTitle: escape(messages.title()), navPages })}
         <main class="page-content" aria-label="Content">
           <div class="wrapper">${content}</div>
         </main>
-        ${footer(baseURL, siteAuthor, siteDescription, [
-          {
-            url: `https://github.com/${repository}`,
-            title: "GitHub",
-            icon: /* HTML */ `<svg
-              class="svg-icon grey"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-              <path
-                d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5l0 52C323 491.5 335.5 500 350.5 494 441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5l0-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21z"
-              />
-            </svg>`,
-          },
-        ])}
+        ${footer({
+          baseURL,
+          siteAuthor,
+          siteDescription,
+          socialLinks: [
+            {
+              url: `https://github.com/${repository}`,
+              title: "GitHub",
+              icon: /* HTML */ `<svg
+                class="svg-icon grey"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                <path
+                  d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5l0 52C323 491.5 335.5 500 350.5 494 441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5l0-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21z"
+                />
+              </svg>`,
+            },
+          ],
+        })}
       </body>
     </html>`;
 }
 
-function redirectPage(title: string, url: string, baseURL: string) {
+function redirectPage({
+  title,
+  url,
+  baseURL,
+}: {
+  title: string;
+  url: string;
+  baseURL: string;
+}) {
   return /* HTML */ `<!DOCTYPE html>
     <html>
       <head>
@@ -1120,14 +1174,21 @@ function redirectPage(title: string, url: string, baseURL: string) {
     </html> `;
 }
 
-async function writeRedirectPages(
-  redirectFrom: string[] | undefined,
-  path: string,
-  destination: string,
-  title: string,
-  url: string,
-  baseURL: string,
-) {
+async function writeRedirectPages({
+  redirectFrom,
+  path,
+  destination,
+  title,
+  url,
+  baseURL,
+}: {
+  redirectFrom?: string[] | undefined;
+  path: string;
+  destination: string;
+  title: string;
+  url: string;
+  baseURL: string;
+}) {
   if (!redirectFrom) return;
 
   for (const redirectFromPath of redirectFrom) {
@@ -1135,7 +1196,7 @@ async function writeRedirectPages(
       ? join(destination, redirectFromPath)
       : join(destination, toHTMLPath(path), "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
-    await writeFile(resolvedPath, redirectPage(title, url, baseURL));
+    await writeFile(resolvedPath, redirectPage({ title, url, baseURL }));
   }
 }
 
@@ -1464,28 +1525,28 @@ for await (const path of glob("**", {
           },
         ],
         content: date
-          ? post(
+          ? post({
               title,
               modifiedDate,
               date,
               messages,
               lang,
-              frontmatter.authors,
-              document.body.innerHTML,
-              frontmatter.comments,
+              authors: frontmatter.authors,
+              content: document.body.innerHTML,
+              comments: frontmatter.comments,
               path,
               url,
               baseURL,
               repository,
-            )
-          : page(
+            })
+          : page({
               title,
-              document.body.innerHTML,
+              content: document.body.innerHTML,
               messages,
               path,
               baseURL,
               repository,
-            ),
+            }),
         repository,
         siteDescription,
         siteAuthor,
@@ -1508,14 +1569,14 @@ for await (const path of glob("**", {
       guid: url,
     });
 
-    await writeRedirectPages(
-      frontmatter.redirect_from,
+    await writeRedirectPages({
+      redirectFrom: frontmatter.redirect_from,
       path,
       destination,
       title,
       url,
       baseURL,
-    );
+    });
   }
   if (
     [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
