@@ -302,10 +302,39 @@ function insertClipboardCopy(document: Document, messages: Messages) {
     highlight.insertAdjacentHTML(
       "beforeend",
       /* HTML */ `<button type="button" class="clipboard-copy">
-        <span class="normal">${escape(messages.clipboardCopy.normal())}</span>
-        <span class="copied" hidden
-          >${escape(messages.clipboardCopy.copied())}</span
+        <span
+          class="normal"
+          role="img"
+          aria-label="${escape(messages.clipboardCopy.normal())}"
         >
+          <svg
+            class="svg-icon grey"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path
+              d="M192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-200.6c0-17.4-7.1-34.1-19.7-46.2L370.6 17.8C358.7 6.4 342.8 0 326.3 0L192 0zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-64 0 0 16-192 0 0-256 16 0 0-64-16 0z"
+            />
+          </svg>
+        </span>
+        <span
+          class="copied"
+          role="img"
+          aria-label="${escape(messages.clipboardCopy.copied())}"
+          hidden
+        >
+          <svg
+            class="svg-icon grey"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+          >
+            <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path
+              d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"
+            />
+          </svg>
+        </span>
       </button>`,
     );
   }
@@ -884,6 +913,9 @@ async function writeHTML({
             }
 
             button.clipboard-copy {
+              padding: 10px 12px;
+              background-color: transparent;
+              border: none;
               opacity: 0;
             }
 
