@@ -723,7 +723,6 @@ async function writeHTML({
   tags,
   url,
   baseURL,
-  author,
   messages,
   navPages,
   content,
@@ -742,7 +741,6 @@ async function writeHTML({
   tags?: string[] | undefined;
   url: string;
   baseURL: string;
-  author: string;
   messages: Messages;
   navPages: { title?: string; url: string }[];
   content: string;
@@ -773,7 +771,14 @@ async function writeHTML({
               ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
               : ""
           }
-          <meta name="author" content="${escape(author)}" />
+          ${
+            siteAuthor?.name
+              ? /* HTML */ `<meta
+                  name="author"
+                  content="${escape(siteAuthor.name)}"
+                />`
+              : ""
+          }
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="color-scheme" content="light dark" />
           <meta property="og:title" content="${escape(title)}" />
@@ -808,7 +813,14 @@ async function writeHTML({
                         />`
                       : ""
                   }
-                  <meta property="article:author" content="${escape(author)}" />
+                  ${
+                    siteAuthor?.name
+                      ? /* HTML */ `<meta
+                          property="article:author"
+                          content="${escape(siteAuthor.name)}"
+                        />`
+                      : ""
+                  }
                   ${
                     categories?.[0]
                       ? /* HTML */ `<meta
@@ -934,10 +946,12 @@ async function writeHTML({
                   ${JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "Article",
-                    author: {
-                      "@type": "Person",
-                      name: author,
-                    },
+                    author: siteAuthor
+                      ? {
+                          "@type": "Person",
+                          name: siteAuthor.name,
+                        }
+                      : undefined,
                     dateModified: modifiedDate?.toISOString(),
                     datePublished: date.toISOString(),
                     headline: title,
@@ -1421,7 +1435,6 @@ for await (const path of glob("**", {
       tags: frontmatter.tags,
       url,
       baseURL,
-      author: siteAuthor.name,
       messages,
       navPages,
       content: date
