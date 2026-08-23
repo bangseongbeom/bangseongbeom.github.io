@@ -121,14 +121,14 @@ function htmlToDocument(html: string, url: string) {
   return document;
 }
 
-function insertHeadingIds(document: Document) {
+function headingIds(document: Document) {
   const slugger = new GithubSlugger();
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
     if (!heading.id) heading.id = slugger.slug(heading.textContent);
   }
 }
 
-function convertAlerts(document: Document) {
+function alerts(document: Document) {
   for (const blockquote of document.querySelectorAll("blockquote")) {
     const firstParagraph = blockquote.firstElementChild;
     if (firstParagraph?.tagName !== "P") continue;
@@ -157,15 +157,15 @@ function convertAlerts(document: Document) {
   }
 }
 
-function convertLinks(document: Document, baseURL: string) {
+function links(document: Document, baseURL: string) {
   for (const link of document.links) link.href = toHTMLURL(link.href, baseURL);
 }
 
-function removeFirstHeading(document: Document) {
+function noFirstHeading(document: Document) {
   document.querySelector("h1")?.remove();
 }
 
-function insertAlertOcticons(document: Document) {
+function alertOcticons(document: Document) {
   for (const alertTitle of document.querySelectorAll(
     ".markdown-alert.markdown-alert-note .markdown-alert-title",
   )) {
@@ -253,7 +253,7 @@ function insertAlertOcticons(document: Document) {
   }
 }
 
-function insertAnchorLinks(document: Document) {
+function anchorLinks(document: Document) {
   for (const heading of document.querySelectorAll(
     "h2[id], h3[id], h4[id], h5[id], h6[id]",
   )) {
@@ -296,7 +296,7 @@ async function highlight(document: Document) {
   }
 }
 
-function insertClipboardCopy(document: Document, messages: Messages) {
+function clipboardCopy(document: Document, messages: Messages) {
   for (const highlight of document.querySelectorAll(".highlight")) {
     highlight.insertAdjacentHTML(
       "beforeend",
@@ -339,7 +339,7 @@ function insertClipboardCopy(document: Document, messages: Messages) {
   }
 }
 
-function insertRunnableCodeChildren(document: Document, messages: Messages) {
+function runnableCode(document: Document, messages: Messages) {
   for (const runnableCode of document.querySelectorAll(
     "runnable-code",
   ) as NodeList<HTMLElement>) {
@@ -1362,9 +1362,9 @@ for await (const path of glob("**", {
       ? new Date(frontmatter.modified_date)
       : lastGitLogDate;
     const document = htmlToDocument(html, url);
-    insertHeadingIds(document);
-    convertAlerts(document);
-    convertLinks(document, baseURL);
+    headingIds(document);
+    alerts(document);
+    links(document, baseURL);
     const title =
       frontmatter.title ??
       document.querySelector("h1")?.textContent ??
@@ -1373,16 +1373,16 @@ for await (const path of glob("**", {
       frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
     const rssHTML = markdownToRSSHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
-    insertHeadingIds(rssDocument);
-    convertAlerts(rssDocument);
-    convertLinks(rssDocument, baseURL);
+    headingIds(rssDocument);
+    alerts(rssDocument);
+    links(rssDocument, baseURL);
     const rssDescription = rssDocument.body.innerHTML;
-    removeFirstHeading(document);
-    insertAlertOcticons(document);
-    insertAnchorLinks(document);
+    noFirstHeading(document);
+    alertOcticons(document);
+    anchorLinks(document);
     await highlight(document);
-    insertClipboardCopy(document, messages);
-    insertRunnableCodeChildren(document, messages);
+    clipboardCopy(document, messages);
+    runnableCode(document, messages);
     const navPages = [
       {
         title: messages.categories.android(),
