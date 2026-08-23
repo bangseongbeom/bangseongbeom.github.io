@@ -32,6 +32,7 @@ interface FrontMatter {
   modified_date?: string;
   comments?: boolean;
   redirect_from?: string[];
+  authors?: { name?: string; email?: string }[];
 }
 
 function markdownToHTML(markdown: string) {
@@ -526,7 +527,7 @@ function post(
   date: Date,
   messages: Messages,
   lang: string,
-  authors: string[],
+  authors: { name?: string; email?: string }[] | undefined,
   content: string,
   comments: boolean | undefined,
   path: string,
@@ -574,7 +575,7 @@ function post(
             : ""
         }
         ${
-          authors.length >= 1
+          authors && authors.length >= 1
             ? /* HTML */ `<div
                 class="${modifiedDate ? "" : "force-inline "}post-authors"
               >
@@ -586,9 +587,26 @@ function post(
                         itemscope
                         itemtype="http://schema.org/Person"
                       >
-                        <span class="p-author h-card" itemprop="name"
-                          >${escape(author)}</span
-                        >
+                        ${
+                          author.name
+                            ? author.email
+                              ? /* HTML */ `<span class="p-author h-card"
+                                  ><a
+                                    class="u-email"
+                                    href="${escape(`mailto:${author.email}`)}"
+                                    itemprop="email"
+                                    ><span class="p-name" itemprop="name"
+                                      >${escape(author.name)}</span
+                                    ></a
+                                  ></span
+                                >`
+                              : /* HTML */ `<span
+                                  class="p-author h-card"
+                                  itemprop="name"
+                                  >${escape(author.name)}</span
+                                >`
+                            : ""
+                        }
                       </span>`,
                   )
                   .join(", ")}
@@ -1444,7 +1462,7 @@ for await (const path of glob("**", {
             date,
             messages,
             lang,
-            [],
+            frontmatter.authors,
             document.body.innerHTML,
             frontmatter.comments,
             path,
