@@ -729,9 +729,8 @@ function footer(
   </footer>`;
 }
 
-async function writeHTML({
+function base({
   path,
-  destination,
   lang,
   title,
   description,
@@ -749,7 +748,6 @@ async function writeHTML({
   siteAuthor,
 }: {
   path: string;
-  destination: string;
   lang?: string;
   title: string;
   description?: string;
@@ -771,304 +769,325 @@ async function writeHTML({
     return `${locale.language}_${locale.region}`;
   }
 
-  await mkdir(dirname(join(destination, toHTMLPath(path))), {
-    recursive: true,
-  });
-  await writeFile(
-    join(destination, toHTMLPath(path)),
-    /* HTML */ `<!DOCTYPE html>
-      <html
-        ${lang ? `lang="${escape(lang)}"` : ""}
-        prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#"
-      >
-        <head>
-          <meta charset="utf-8" />
-          <title>${escape(title)}</title>
-          ${
-            description
-              ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
-              : ""
+  return /* HTML */ `<!DOCTYPE html>
+    <html
+      ${lang ? `lang="${escape(lang)}"` : ""}
+      prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#"
+    >
+      <head>
+        <meta charset="utf-8" />
+        <title>${escape(title)}</title>
+        ${
+          description
+            ? /*HTML */ `<meta name="description" content="${escape(description)}" />`
+            : ""
+        }
+        ${
+          siteAuthor?.name
+            ? /* HTML */ `<meta
+                name="author"
+                content="${escape(siteAuthor.name)}"
+              />`
+            : ""
+        }
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <meta property="og:title" content="${escape(title)}" />
+        <meta property="og:type" content="${date ? "article" : "website"}" />
+        <meta
+          property="og:image"
+          content="${escape(new URL("ogp.png", baseURL).toString())}"
+        />
+        <meta property="og:url" content="${escape(url)}" />
+        ${
+          description
+            ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
+            : ""
+        }
+        ${
+          lang
+            ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
+            : ""
+        }
+        <meta property="og:site_name" content="${escape(messages.title())}" />
+        ${
+          date
+            ? /* HTML */ `<meta
+                  property="article:published_time"
+                  content="${escape(date.toISOString())}"
+                />
+                ${
+                  modifiedDate
+                    ? /* HTML */ `<meta
+                        property="article:modified_time"
+                        content="${escape(modifiedDate.toISOString())}"
+                      />`
+                    : ""
+                }
+                ${
+                  siteAuthor?.name
+                    ? /* HTML */ `<meta
+                        property="article:author"
+                        content="${escape(siteAuthor.name)}"
+                      />`
+                    : ""
+                }
+                ${
+                  categories?.[0]
+                    ? /* HTML */ `<meta
+                        property="article:section"
+                        content="${escape(categories[0].split("/")[0])}"
+                      />`
+                    : ""
+                }
+                ${(tags ?? [])
+                  .map(
+                    (tag) =>
+                      /* HTML */ `<meta
+                        property="article:tag"
+                        content="${escape(tag)}"
+                      />`,
+                  )
+                  .join("")}`
+            : ""
+        }
+        <link rel="canonical" href="${escape(url)}" />
+        <link
+          rel="icon"
+          href="${escape(new URL("favicon.ico", baseURL).toString())}"
+          sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href="${escape(new URL("icon.svg", baseURL).toString())}"
+          type="image/svg+xml"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="${escape(new URL("apple-touch-icon.png", baseURL).toString())}"
+        />
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
+        />
+        <link
+          rel="alternate"
+          type="text/html"
+          href="${escape(
+            new URL(
+              toURLPathname(path),
+              `https://github.com/${repository}/blob/main/`,
+            ).toString(),
+          )}"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href="${escape(new URL("feed.xml", baseURL).toString())}"
+        />
+        <link
+          rel="stylesheet"
+          href="${escape(new URL("auto.css", baseURL).toString())}"
+        />
+        <link
+          rel="stylesheet"
+          href="${escape(new URL("markdown-alert.css", baseURL).toString())}"
+        />
+        <link
+          rel="stylesheet"
+          href="${escape(new URL("runnable-code.css", baseURL).toString())}"
+        />
+        <style>
+          .header-link {
+            display: inline-block;
+            position: relative;
+            left: 0.5em;
+            opacity: 0;
           }
-          ${
-            siteAuthor?.name
-              ? /* HTML */ `<meta
-                  name="author"
-                  content="${escape(siteAuthor.name)}"
-                />`
-              : ""
+
+          :hover > .header-link,
+          .header-link:focus {
+            opacity: 1;
           }
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="color-scheme" content="light dark" />
-          <meta property="og:title" content="${escape(title)}" />
-          <meta property="og:type" content="${date ? "article" : "website"}" />
-          <meta
-            property="og:image"
-            content="${escape(new URL("ogp.png", baseURL).toString())}"
-          />
-          <meta property="og:url" content="${escape(url)}" />
-          ${
-            description
-              ? /*HTML */ `<meta property="og:description" content="${escape(description)}" />`
-              : ""
+
+          .header-link svg {
+            display: block;
+            width: 0.8em;
+            height: 0.8em;
+            fill: currentcolor;
           }
-          ${
-            lang
-              ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
-              : ""
-          }
-          <meta property="og:site_name" content="${escape(messages.title())}" />
-          ${
-            date
-              ? /* HTML */ `<meta
-                    property="article:published_time"
-                    content="${escape(date.toISOString())}"
-                  />
-                  ${
-                    modifiedDate
-                      ? /* HTML */ `<meta
-                          property="article:modified_time"
-                          content="${escape(modifiedDate.toISOString())}"
-                        />`
-                      : ""
-                  }
-                  ${
-                    siteAuthor?.name
-                      ? /* HTML */ `<meta
-                          property="article:author"
-                          content="${escape(siteAuthor.name)}"
-                        />`
-                      : ""
-                  }
-                  ${
-                    categories?.[0]
-                      ? /* HTML */ `<meta
-                          property="article:section"
-                          content="${escape(categories[0].split("/")[0])}"
-                        />`
-                      : ""
-                  }
-                  ${(tags ?? [])
-                    .map(
-                      (tag) =>
-                        /* HTML */ `<meta
-                          property="article:tag"
-                          content="${escape(tag)}"
-                        />`,
-                    )
-                    .join("")}`
-              : ""
-          }
-          <link rel="canonical" href="${escape(url)}" />
-          <link
-            rel="icon"
-            href="${escape(new URL("favicon.ico", baseURL).toString())}"
-            sizes="32x32"
-          />
-          <link
-            rel="icon"
-            href="${escape(new URL("icon.svg", baseURL).toString())}"
-            type="image/svg+xml"
-          />
-          <link
-            rel="apple-touch-icon"
-            href="${escape(
-              new URL("apple-touch-icon.png", baseURL).toString(),
-            )}"
-          />
-          <link
-            rel="alternate"
-            type="text/markdown"
-            href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
-          />
-          <link
-            rel="alternate"
-            type="text/html"
-            href="${escape(
-              new URL(
-                toURLPathname(path),
-                `https://github.com/${repository}/blob/main/`,
-              ).toString(),
-            )}"
-          />
-          <link
-            rel="alternate"
-            type="application/rss+xml"
-            href="${escape(new URL("feed.xml", baseURL).toString())}"
-          />
-          <link
-            rel="stylesheet"
-            href="${escape(new URL("auto.css", baseURL).toString())}"
-          />
-          <link
-            rel="stylesheet"
-            href="${escape(new URL("markdown-alert.css", baseURL).toString())}"
-          />
-          <link
-            rel="stylesheet"
-            href="${escape(new URL("runnable-code.css", baseURL).toString())}"
-          />
-          <style>
+
+          @media (hover: none) {
             .header-link {
-              display: inline-block;
-              position: relative;
-              left: 0.5em;
-              opacity: 0;
-            }
-
-            :hover > .header-link,
-            .header-link:focus {
               opacity: 1;
             }
-
-            .header-link svg {
-              display: block;
-              width: 0.8em;
-              height: 0.8em;
-              fill: currentcolor;
-            }
-
-            @media (hover: none) {
-              .header-link {
-                opacity: 1;
-              }
-            }
-
-            .highlight {
-              display: grid;
-              grid-template-columns: minmax(0, 1fr) auto;
-              align-items: start;
-              background-color: var(--minima-code-background-color);
-            }
-
-            button.clipboard-copy {
-              padding: 10px 12px;
-              background-color: transparent;
-              border: none;
-              opacity: 0;
-            }
-
-            .highlight:hover > button.clipboard-copy,
-            button.clipboard-copy:focus {
-              opacity: 1;
-            }
-
-            @media (hover: none) {
-              button.clipboard-copy {
-                opacity: 1;
-              }
-            }
-          </style>
-          ${
-            date
-              ? /* HTML */ `<script type="application/ld+json">
-                  ${JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "Article",
-                    author: siteAuthor
-                      ? {
-                          "@type": "Person",
-                          name: siteAuthor.name,
-                        }
-                      : undefined,
-                    dateModified: modifiedDate?.toISOString(),
-                    datePublished: date.toISOString(),
-                    headline: title,
-                    image: new URL("ogp.png", baseURL).toString(),
-                  } satisfies WithContext<Article>)}
-                </script>`
-              : ""
           }
-          <!--
+
+          .highlight {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            background-color: var(--minima-code-background-color);
+          }
+
+          button.clipboard-copy {
+            padding: 10px 12px;
+            background-color: transparent;
+            border: none;
+            opacity: 0;
+          }
+
+          .highlight:hover > button.clipboard-copy,
+          button.clipboard-copy:focus {
+            opacity: 1;
+          }
+
+          @media (hover: none) {
+            button.clipboard-copy {
+              opacity: 1;
+            }
+          }
+        </style>
+        ${
+          date
+            ? /* HTML */ `<script type="application/ld+json">
+                ${JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  author: siteAuthor
+                    ? {
+                        "@type": "Person",
+                        name: siteAuthor.name,
+                      }
+                    : undefined,
+                  dateModified: modifiedDate?.toISOString(),
+                  datePublished: date.toISOString(),
+                  headline: title,
+                  image: new URL("ogp.png", baseURL).toString(),
+                } satisfies WithContext<Article>)}
+              </script>`
+            : ""
+        }
+        <!--
             Import map generated with JSPM Generator
             Edit here: https://generator.jspm.io/#ZY69EoMgEIQpUuRFUgZFEmtfwge4wRsgw9/gaSZp8uoBO7XYZr+73b1dGLv+xkCWHE5sUHFCb3OOuYGFooo+OSQcet61XO54YR7CNBcmjsxB0PcXrDCrbBPVd/48X6QPmRg2Kk50AV17RXfIngm2QT1vd/5q8V3sh6xZDr+YG2O1cUU0iFIh/2r/G7btAA
           -->
-          <script type="importmap">
-            {
-              "imports": {
-                "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.3/dist/index.js",
-                "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.3/dist/index.js",
-                "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.5/dist/index.js",
-                "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
-                "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.3/dist/index.js",
-                "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.6.0/dist/index.js",
-                "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.43.1/dist/index.js",
-                "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
-              },
-              "scopes": {
-                "https://ga.jspm.io/": {
-                  "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.2/dist/index.js",
-                  "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
-                  "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.10/dist/index.js",
-                  "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.19/dist/index.js",
-                  "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
-                  "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
-                  "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
-                  "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
-                }
-              }
-            }
-          </script>
-          <script type="importmap">
-            {
-              "imports": {
-                "pyodide": "https://cdn.jsdelivr.net/pyodide/v314.0.0/full/pyodide.js"
-              }
-            }
-          </script>
-          <script
-            type="module"
-            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
-          ></script>
-          <script
-            type="module"
-            src="${escape(new URL("runnable-code.js", baseURL).toString())}"
-          ></script>
-          ${
-            process.env.NODE_ENV === "production"
-              ? /* HTML */ `<!-- Google tag (gtag.js) -->
-                  <script
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
-                  ></script>
-                  <script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag() {
-                      dataLayer.push(arguments);
-                    }
-                    gtag("js", new Date());
-
-                    gtag("config", "G-P5S28YZ348");
-                  </script>`
-              : ""
-          }
-        </head>
-        <body>
-          ${header(baseURL, escape(messages.title()), navPages)}
-          <main class="page-content" aria-label="Content">
-            <div class="wrapper">${content}</div>
-          </main>
-          ${footer(baseURL, siteAuthor, siteDescription, [
-            {
-              url: `https://github.com/${repository}`,
-              title: "GitHub",
-              icon: /* HTML */ `<svg
-                class="svg-icon grey"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-                <path
-                  d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5l0 52C323 491.5 335.5 500 350.5 494 441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5l0-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21z"
-                />
-              </svg>`,
+        <script type="importmap">
+          {
+            "imports": {
+              "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.3/dist/index.js",
+              "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.3/dist/index.js",
+              "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.5/dist/index.js",
+              "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
+              "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.3/dist/index.js",
+              "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.6.0/dist/index.js",
+              "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.43.1/dist/index.js",
+              "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
             },
-          ])}
-        </body>
-      </html>`,
-  );
+            "scopes": {
+              "https://ga.jspm.io/": {
+                "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.2/dist/index.js",
+                "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
+                "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.10/dist/index.js",
+                "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.19/dist/index.js",
+                "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
+                "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
+                "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
+                "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
+              }
+            }
+          }
+        </script>
+        <script type="importmap">
+          {
+            "imports": {
+              "pyodide": "https://cdn.jsdelivr.net/pyodide/v314.0.0/full/pyodide.js"
+            }
+          }
+        </script>
+        <script
+          type="module"
+          src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
+        ></script>
+        <script
+          type="module"
+          src="${escape(new URL("runnable-code.js", baseURL).toString())}"
+        ></script>
+        ${
+          process.env.NODE_ENV === "production"
+            ? /* HTML */ `<!-- Google tag (gtag.js) -->
+                <script
+                  async
+                  src="https://www.googletagmanager.com/gtag/js?id=G-P5S28YZ348"
+                ></script>
+                <script>
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag() {
+                    dataLayer.push(arguments);
+                  }
+                  gtag("js", new Date());
+
+                  gtag("config", "G-P5S28YZ348");
+                </script>`
+            : ""
+        }
+      </head>
+      <body>
+        ${header(baseURL, escape(messages.title()), navPages)}
+        <main class="page-content" aria-label="Content">
+          <div class="wrapper">${content}</div>
+        </main>
+        ${footer(baseURL, siteAuthor, siteDescription, [
+          {
+            url: `https://github.com/${repository}`,
+            title: "GitHub",
+            icon: /* HTML */ `<svg
+              class="svg-icon grey"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+              <path
+                d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5l0 52C323 491.5 335.5 500 350.5 494 441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5l0-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21z"
+              />
+            </svg>`,
+          },
+        ])}
+      </body>
+    </html>`;
 }
 
-async function writeRedirectHTMLs(
+function redirectPage(title: string, url: string, baseURL: string) {
+  return /* HTML */ `<!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>${escape(title)}</title>
+        <meta http-equiv="refresh" content="0; URL=${escape(url)}" />
+        <link rel="canonical" href="${escape(url)}" />
+        <link
+          rel="icon"
+          href="${escape(new URL("favicon.ico", baseURL).toString())}"
+          sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href="${escape(new URL("icon.svg", baseURL).toString())}"
+          type="image/svg+xml"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="${escape(new URL("apple-touch-icon.png", baseURL).toString())}"
+        />
+      </head>
+      <body>
+        <a href="${escape(url)}">${escape(url)}</a>
+      </body>
+    </html> `;
+}
+
+async function writeRedirectPages(
   redirectFrom: string[] | undefined,
   path: string,
   destination: string,
@@ -1083,42 +1102,11 @@ async function writeRedirectHTMLs(
       ? join(destination, redirectFromPath)
       : join(destination, toHTMLPath(path), "..", redirectFromPath);
     await mkdir(dirname(resolvedPath), { recursive: true });
-    await writeFile(
-      resolvedPath,
-      /* HTML */ `<!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8" />
-            <title>${escape(title)}</title>
-            <meta http-equiv="refresh" content="0; URL=${escape(url)}" />
-            <link rel="canonical" href="${escape(url)}" />
-            <link
-              rel="icon"
-              href="${escape(new URL("favicon.ico", baseURL).toString())}"
-              sizes="32x32"
-            />
-            <link
-              rel="icon"
-              href="${escape(new URL("icon.svg", baseURL).toString())}"
-              type="image/svg+xml"
-            />
-            <link
-              rel="apple-touch-icon"
-              href="${escape(
-                new URL("apple-touch-icon.png", baseURL).toString(),
-              )}"
-            />
-          </head>
-          <body>
-            <a href="${escape(url)}">${escape(url)}</a>
-          </body>
-        </html> `,
-    );
+    await writeFile(resolvedPath, redirectPage(title, url, baseURL));
   }
 }
 
-async function writeSitemap(
-  destination: string,
+function sitemap(
   sitemapURLs: {
     loc: string;
     lastmod?: Date;
@@ -1127,9 +1115,7 @@ async function writeSitemap(
     priority?: number;
   }[],
 ) {
-  await writeFile(
-    join(destination, "sitemap.xml"),
-    /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+  return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURLs
   .map(
@@ -1143,12 +1129,10 @@ ${sitemapURLs
   )
   .join("")}
 </urlset>
-`,
-  );
+`;
 }
 
-async function writeRSS(
-  destination: string,
+function rss(
   {
     title,
     link,
@@ -1188,9 +1172,7 @@ async function writeRSS(
     )
     .slice(0, 10);
 
-  await writeFile(
-    join(destination, "feed.xml"),
-    /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+  return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
     <title>${escape(title)}</title>
@@ -1244,8 +1226,7 @@ async function writeRSS(
       .join("")}
   </channel>
 </rss>
-`,
-  );
+`;
 }
 
 const execFile = promisify(child_process.execFile);
@@ -1441,47 +1422,52 @@ for await (const path of glob("**", {
       },
     ];
 
-    await writeHTML({
-      path,
-      destination,
-      lang,
-      title,
-      description,
-      modifiedDate,
-      date,
-      categories: frontmatter.categories,
-      tags: frontmatter.tags,
-      url,
-      baseURL,
-      messages,
-      navPages,
-      content: date
-        ? post(
-            title,
-            modifiedDate,
-            date,
-            messages,
-            lang,
-            frontmatter.authors,
-            document.body.innerHTML,
-            frontmatter.comments,
-            path,
-            url,
-            baseURL,
-            repository,
-          )
-        : page(
-            title,
-            document.body.innerHTML,
-            messages,
-            path,
-            baseURL,
-            repository,
-          ),
-      repository,
-      siteDescription,
-      siteAuthor,
+    await mkdir(dirname(join(destination, toHTMLPath(path))), {
+      recursive: true,
     });
+    await writeFile(
+      join(destination, toHTMLPath(path)),
+      base({
+        path,
+        lang,
+        title,
+        description,
+        modifiedDate,
+        date,
+        categories: frontmatter.categories,
+        tags: frontmatter.tags,
+        url,
+        baseURL,
+        messages,
+        navPages,
+        content: date
+          ? post(
+              title,
+              modifiedDate,
+              date,
+              messages,
+              lang,
+              frontmatter.authors,
+              document.body.innerHTML,
+              frontmatter.comments,
+              path,
+              url,
+              baseURL,
+              repository,
+            )
+          : page(
+              title,
+              document.body.innerHTML,
+              messages,
+              path,
+              baseURL,
+              repository,
+            ),
+        repository,
+        siteDescription,
+        siteAuthor,
+      }),
+    );
 
     sitemapURLs.push({
       loc: url,
@@ -1499,7 +1485,7 @@ for await (const path of glob("**", {
       guid: url,
     });
 
-    await writeRedirectHTMLs(
+    await writeRedirectPages(
       frontmatter.redirect_from,
       path,
       destination,
@@ -1518,25 +1504,27 @@ for await (const path of glob("**", {
   }
 }
 
-await writeSitemap(
-  destination,
-  sitemapURLs.toSorted((a, b) => a.loc.localeCompare(b.loc)),
+await writeFile(
+  join(destination, "sitemap.xml"),
+  sitemap(sitemapURLs.toSorted((a, b) => a.loc.localeCompare(b.loc))),
 );
 await writeFile(
   join(destination, "robots.txt"),
   `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
 );
-await writeRSS(
-  destination,
-  {
-    title: siteTitle,
-    link: baseURL,
-    description: siteDescription,
-    language: defaultLang,
-    managingEditor: siteAuthor,
-    webMaster: siteAuthor,
-  },
-  rssItems,
+await writeFile(
+  join(destination, "feed.xml"),
+  rss(
+    {
+      title: siteTitle,
+      link: baseURL,
+      description: siteDescription,
+      language: defaultLang,
+      managingEditor: siteAuthor,
+      webMaster: siteAuthor,
+    },
+    rssItems,
+  ),
 );
 
 await copyFile(join(source, "auto.css"), join(destination, "auto.css"));
