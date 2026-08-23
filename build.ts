@@ -273,6 +273,22 @@ async function highlight(document: Document) {
   }
 }
 
+function insertClipboardCopy(document: Document, messages: Messages) {
+  for (const highlight of document.querySelectorAll(
+    ":not(.language-plaintext) > .highlight",
+  )) {
+    highlight.insertAdjacentHTML(
+      "beforeend",
+      /* HTML */ `<button type="button" class="clipboard-copy">
+        <span class="normal">${escape(messages.clipboardCopy.normal())}</span>
+        <span class="copied" hidden
+          >${escape(messages.clipboardCopy.copied())}</span
+        >
+      </button>`,
+    );
+  }
+}
+
 function insertRunnableCodeChildren(document: Document, messages: Messages) {
   for (const runnableCode of document.querySelectorAll(
     "runnable-code",
@@ -837,6 +853,28 @@ async function writeHTML({
                 opacity: 1;
               }
             }
+
+            .highlight {
+              display: grid;
+              grid-template-columns: minmax(0, 1fr) auto;
+              align-items: start;
+              background-color: var(--minima-code-background-color);
+            }
+
+            button.clipboard-copy {
+              opacity: 0;
+            }
+
+            .highlight:hover > button.clipboard-copy,
+            button.clipboard-copy:focus {
+              opacity: 1;
+            }
+
+            @media (hover: none) {
+              button.clipboard-copy {
+                opacity: 1;
+              }
+            }
           </style>
           ${
             date
@@ -896,6 +934,10 @@ async function writeHTML({
           <script
             type="module"
             src="${escape(new URL("anchor-links.js", baseURL).toString())}"
+          ></script>
+          <script
+            type="module"
+            src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
           ></script>
           <script
             type="module"
@@ -1170,6 +1212,10 @@ const msgData = {
         modified: () => "Updated",
       },
     },
+    clipboardCopy: {
+      normal: () => "Copy",
+      copied: () => "Copied!",
+    },
     runCode: {
       normal: () => "Run",
       running: () => "Running...",
@@ -1202,6 +1248,10 @@ const msgData = {
         published: () => "게시일",
         modified: () => "수정일",
       },
+    },
+    clipboardCopy: {
+      normal: () => "복사",
+      copied: () => "복사 완료!",
     },
     runCode: {
       normal: () => "실행",
@@ -1269,6 +1319,7 @@ for await (const path of glob("**", {
     removeFirstHeading(document);
     insertAlertOcticons(document);
     await highlight(document);
+    insertClipboardCopy(document, messages);
     insertRunnableCodeChildren(document, messages);
     const navPages = [
       {
@@ -1413,6 +1464,10 @@ await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
   join(source, "anchor-links.js"),
   join(destination, "anchor-links.js"),
+);
+await copyFile(
+  join(source, "clipboard-copy.js"),
+  join(destination, "clipboard-copy.js"),
 );
 await copyFile(
   join(source, "runnable-code.js"),
