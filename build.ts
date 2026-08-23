@@ -296,9 +296,7 @@ async function highlight(document: Document) {
 }
 
 function insertClipboardCopy(document: Document, messages: Messages) {
-  for (const highlight of document.querySelectorAll(
-    ":not(.language-plaintext) > .highlight",
-  )) {
+  for (const highlight of document.querySelectorAll(".highlight")) {
     highlight.insertAdjacentHTML(
       "beforeend",
       /* HTML */ `<button type="button" class="clipboard-copy">
