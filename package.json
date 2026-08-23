@@ -2,6 +2,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.ts",
+    "watch": "node watch.ts",
     "start": "serve _site"
   },
   "dependencies": {
