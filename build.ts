@@ -91,6 +91,16 @@ function getLang(
   return lang;
 }
 
+function getMessages(lang: string, defaultLang: string) {
+  return msgData[
+    match([lang], Object.keys(msgData), defaultLang) as keyof MessageData
+  ];
+}
+
+function getDate(fileDate: string | undefined) {
+  if (fileDate) return new Date(fileDate);
+}
+
 async function getFirstGitLogDate(path: string) {
   const { stdout } = await execFile("git", [
     "log",
@@ -114,11 +124,34 @@ async function getLastGitLogDate(path: string) {
   if (stdout) return new Date(stdout);
 }
 
+async function getModifiedDate(
+  fileModifiedDate: string | undefined,
+  path: string,
+) {
+  if (fileModifiedDate) return new Date(fileModifiedDate);
+  return await getLastGitLogDate(path);
+}
+
 function htmlToDocument(html: string, url: string) {
   // If url is not set, fragment links like #section start from about:blank.
   const document = new Window({ url }).document;
   document.body.innerHTML = html;
   return document;
+}
+
+function getTitle(fileTitle: string | undefined, document: Document) {
+  return (
+    fileTitle ??
+    document.querySelector("h1")?.textContent ??
+    fail("title is required")
+  );
+}
+
+function getDescription(
+  fileDescription: string | undefined,
+  document: Document,
+) {
+  return fileDescription ?? document.querySelector("h1 + p")?.textContent;
 }
 
 function headingIds(document: Document) {
@@ -1348,79 +1381,32 @@ for await (const path of glob("**", {
 })) {
   if (extname(path) === ".md") {
     const url = toHTMLURL(toURLPathname(path), baseURL);
-
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
-    const messages =
-      msgData[
-        match([lang], Object.keys(msgData), defaultLang) as keyof MessageData
-      ];
-    const date = frontmatter.date ? new Date(frontmatter.date) : undefined;
-    const lastGitLogDate = await getLastGitLogDate(join(source, path));
-    const modifiedDate = frontmatter.modified_date
-      ? new Date(frontmatter.modified_date)
-      : lastGitLogDate;
+    const messages = getMessages(lang, defaultLang);
+    const date = getDate(frontmatter.date);
+    const modifiedDate = await getModifiedDate(
+      frontmatter.modified_date,
+      join(source, path),
+    );
     const document = htmlToDocument(html, url);
     headingIds(document);
     alerts(document);
     links(document, baseURL);
-    const title =
-      frontmatter.title ??
-      document.querySelector("h1")?.textContent ??
-      fail("title is required");
-    const description =
-      frontmatter.description ?? document.querySelector("h1 + p")?.textContent;
+    const title = getTitle(frontmatter.title, document);
+    const description = getDescription(frontmatter.description, document);
     const rssHTML = markdownToRSSHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
     alerts(rssDocument);
     links(rssDocument, baseURL);
-    const rssDescription = rssDocument.body.innerHTML;
     noFirstHeading(document);
     alertOcticons(document);
     anchorLinks(document);
     await highlight(document);
     clipboardCopy(document, messages);
     runnableCode(document, messages);
-    const navPages = [
-      {
-        title: messages.categories.android(),
-        url: new URL("android", baseURL).toString(),
-      },
-      {
-        title: messages.categories.git(),
-        url: new URL("git", baseURL).toString(),
-      },
-      {
-        title: messages.categories.iot(),
-        url: new URL("iot", baseURL).toString(),
-      },
-      {
-        title: messages.categories.java(),
-        url: new URL("java", baseURL).toString(),
-      },
-      {
-        title: messages.categories.linux(),
-        url: new URL("linux", baseURL).toString(),
-      },
-      {
-        title: messages.categories.machineLearning(),
-        url: new URL("machine-learning", baseURL).toString(),
-      },
-      {
-        title: messages.categories.misc(),
-        url: new URL("misc", baseURL).toString(),
-      },
-      {
-        title: messages.categories.python(),
-        url: new URL("python", baseURL).toString(),
-      },
-      {
-        title: messages.categories.web(),
-        url: new URL("web", baseURL).toString(),
-      },
-    ];
 
     await mkdir(dirname(join(destination, toHTMLPath(path))), {
       recursive: true,
@@ -1439,7 +1425,44 @@ for await (const path of glob("**", {
         url,
         baseURL,
         messages,
-        navPages,
+        navPages: [
+          {
+            title: messages.categories.android(),
+            url: new URL("android", baseURL).toString(),
+          },
+          {
+            title: messages.categories.git(),
+            url: new URL("git", baseURL).toString(),
+          },
+          {
+            title: messages.categories.iot(),
+            url: new URL("iot", baseURL).toString(),
+          },
+          {
+            title: messages.categories.java(),
+            url: new URL("java", baseURL).toString(),
+          },
+          {
+            title: messages.categories.linux(),
+            url: new URL("linux", baseURL).toString(),
+          },
+          {
+            title: messages.categories.machineLearning(),
+            url: new URL("machine-learning", baseURL).toString(),
+          },
+          {
+            title: messages.categories.misc(),
+            url: new URL("misc", baseURL).toString(),
+          },
+          {
+            title: messages.categories.python(),
+            url: new URL("python", baseURL).toString(),
+          },
+          {
+            title: messages.categories.web(),
+            url: new URL("web", baseURL).toString(),
+          },
+        ],
         content: date
           ? post(
               title,
@@ -1476,7 +1499,7 @@ for await (const path of glob("**", {
     rssItems.push({
       title,
       link: url,
-      description: rssDescription,
+      description: rssDocument.body.innerHTML,
       categories: [
         ...(frontmatter.categories ?? []),
         ...(frontmatter.tags ?? []),
