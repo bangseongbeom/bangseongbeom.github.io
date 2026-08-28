@@ -1692,6 +1692,7 @@ for (const {
               content,
               listTitle: messages.home.listTitle(),
               lang,
+              showExcerpts: true,
               posts,
             })
           : date
