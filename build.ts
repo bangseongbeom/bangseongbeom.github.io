@@ -1467,6 +1467,9 @@ const msgData = {
         modified: () => "Updated",
       },
     },
+    home: {
+      listTitle: () => "Posts",
+    },
     clipboardCopy: {
       normal: () => "Copy",
       copied: () => "Copied!",
@@ -1503,6 +1506,9 @@ const msgData = {
         published: () => "게시일",
         modified: () => "수정일",
       },
+    },
+    home: {
+      listTitle: () => "글 목록",
     },
     clipboardCopy: {
       normal: () => "복사",
@@ -1689,6 +1695,7 @@ for (const {
           ? home({
               title,
               content,
+              listTitle: messages.home.listTitle(),
               lang,
               posts,
             })
