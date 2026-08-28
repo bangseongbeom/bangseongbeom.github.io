@@ -1663,7 +1663,7 @@ for (const {
                 date,
                 messages,
                 lang,
-                authors: frontmatter.authors,
+                authors: [siteAuthor, ...(frontmatter.authors ?? [])],
                 content,
                 comments: frontmatter.comments,
                 path,
