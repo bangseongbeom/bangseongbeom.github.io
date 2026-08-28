@@ -472,6 +472,100 @@ function header({
   </header>`;
 }
 
+function home({
+  title,
+  content,
+  listTitle,
+  showExcerpts,
+  posts,
+  paginator,
+}: {
+  title?: string;
+  content: string;
+  listTitle?: string;
+  showExcerpts?: boolean;
+  posts?: { date: Date; url: string; title: string; excerpt: string }[];
+  paginator?: {
+    previousPage?: number;
+    previousPagePath?: string;
+    page: number;
+    nextPage?: number;
+    nextPagePath?: string;
+  };
+}) {
+  return /* HTML */ `<div class="home">
+    ${title ? /* HTML */ `<h1 class="page-heading">${escape(title)}</h1>` : ""}
+    ${content}
+    ${
+      posts?.length
+        ? /* HTML */ `
+            ${listTitle ? /* HTML */ `<h2 class="post-list-heading">${escape(listTitle)}</h2>` : ""}
+            <ul class="post-list">
+              ${posts
+                .map(
+                  (post) =>
+                    /* HTML */ `<li>
+                      <span class="post-meta"
+                        >${escape(post.date.toLocaleDateString())}</span
+                      >
+                      <h3>
+                        <a class="post-link" href="${escape(post.url)}">
+                          ${escape(post.title)}
+                        </a>
+                      </h3>
+                      ${showExcerpts ? post.excerpt : ""}
+                    </li>`,
+                )
+                .join("")}
+            </ul>
+
+            ${
+              paginator
+                ? /* HTML */ `<div class="pager">
+                    <ul class="pagination">
+                      ${
+                        paginator.previousPage
+                          ? /* HTML */ `<li>
+                              <a
+                                href="${escape(paginator.previousPagePath)}"
+                                class="previous-page"
+                                title="Go to Page ${paginator.previousPage}"
+                              >
+                                ${paginator.previousPage}
+                              </a>
+                            </li>`
+                          : /* HTML */ `<li>
+                              <div class="pager-edge">•</div>
+                            </li>`
+                      }
+                      <li>
+                        <div class="current-page">${paginator.page}</div>
+                      </li>
+                      ${
+                        paginator.nextPage
+                          ? /* HTML */ `<li>
+                              <a
+                                href="${escape(paginator.nextPagePath)}"
+                                class="next-page"
+                                title="Go to Page ${paginator.nextPage}"
+                              >
+                                ${paginator.nextPage}
+                              </a>
+                            </li>`
+                          : /* HTML */ `<li>
+                              <div class="pager-edge">•</div>
+                            </li>`
+                      }
+                    </ul>
+                  </div>`
+                : ""
+            }
+          `
+        : ""
+    }
+  </div>`;
+}
+
 function postLinks({
   path,
   baseURL,
