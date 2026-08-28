@@ -45,11 +45,6 @@ function markdownToHTML(markdown: string) {
   };
 }
 
-function markdownToRSSHTML(markdown: string) {
-  const result = markdownToHtml(markdown);
-  return result.html;
-}
-
 function toHTMLPath(path: string) {
   const { dir, name, ext } = parse(path);
   return ext === ".md"
@@ -1579,7 +1574,7 @@ for await (const path of glob("**", {
     const title = getTitle(frontmatter.title, document);
     const description = getDescription(frontmatter.description, document);
     const excerpt = getExcerpt(document);
-    const rssHTML = markdownToRSSHTML(markdown);
+    const { html: rssHTML } = markdownToHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
     alerts(rssDocument);
