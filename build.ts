@@ -155,7 +155,7 @@ function getDescription(
 }
 
 function getExcerpt(document: Document) {
-  return document.querySelector("h1 + p")?.outerHTML ?? "";
+  return document.querySelector("h1 + p")?.outerHTML;
 }
 
 function headingIds(document: Document) {
@@ -488,7 +488,7 @@ function home({
   content: string;
   listTitle?: string;
   showExcerpts?: boolean;
-  posts?: { date: Date; url: string; title: string; excerpt: string }[];
+  posts?: { date: Date; url: string; title: string; excerpt?: string }[];
   paginator?: {
     previousPage?: number;
     previousPagePath?: string;
@@ -517,7 +517,7 @@ function home({
                           ${escape(post.title)}
                         </a>
                       </h3>
-                      ${showExcerpts ? post.excerpt : ""}
+                      ${showExcerpts ? (post.excerpt ? post.excerpt : "") : ""}
                     </li>`,
                 )
                 .join("")}
@@ -1527,7 +1527,7 @@ const pages: {
   title: string;
   description?: string;
   content: string;
-  excerpt: string;
+  excerpt?: string;
   rssContent: string;
 }[] = [];
 
