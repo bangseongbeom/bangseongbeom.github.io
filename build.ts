@@ -1618,29 +1618,35 @@ for await (const path of glob("**", {
             url: new URL("web", baseURL).toString(),
           },
         ],
-        content: date
-          ? post({
-              title,
-              modifiedDate,
-              date,
-              messages,
-              lang,
-              authors: frontmatter.authors,
-              content: document.body.innerHTML,
-              comments: frontmatter.comments,
-              path,
-              url,
-              baseURL,
-              repository,
-            })
-          : page({
-              title,
-              content: document.body.innerHTML,
-              messages,
-              path,
-              baseURL,
-              repository,
-            }),
+        content:
+          path === "README.md"
+            ? home({
+                title,
+                content: document.body.innerHTML,
+              })
+            : date
+              ? post({
+                  title,
+                  modifiedDate,
+                  date,
+                  messages,
+                  lang,
+                  authors: frontmatter.authors,
+                  content: document.body.innerHTML,
+                  comments: frontmatter.comments,
+                  path,
+                  url,
+                  baseURL,
+                  repository,
+                })
+              : page({
+                  title,
+                  content: document.body.innerHTML,
+                  messages,
+                  path,
+                  baseURL,
+                  repository,
+                }),
         repository,
         siteDescription,
         siteAuthor,
