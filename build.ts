@@ -680,13 +680,13 @@ function post({
   repository,
 }: {
   title: string;
-  modifiedDate?: Date | undefined;
+  modifiedDate?: Date;
   date: Date;
   messages: Messages;
   lang: string;
-  authors?: string[] | undefined;
+  authors?: string[];
   content: string;
-  comments?: boolean | undefined;
+  comments?: boolean;
   path: string;
   url: string;
   baseURL: string;
@@ -780,7 +780,7 @@ function social({
   baseURL,
 }: {
   socialLinks: { url: string; title: string; icon: string }[];
-  hideSiteFeedLink?: boolean | undefined;
+  hideSiteFeedLink?: boolean;
   feedPath?: string;
   baseURL: string;
 }) {
@@ -832,7 +832,7 @@ function footer({
   feedPath,
 }: {
   baseURL: string;
-  siteAuthor?: { name?: string; email?: string } | undefined;
+  siteAuthor?: { name?: string; email?: string };
   siteDescription: string;
   socialLinks: { url: string; title: string; icon: string }[];
   hideSiteFeedLink?: boolean;
@@ -903,10 +903,10 @@ function base({
   lang?: string;
   title: string;
   description?: string;
-  modifiedDate?: Date | undefined;
-  date?: Date | undefined;
-  categories?: string[] | undefined;
-  tags?: string[] | undefined;
+  modifiedDate?: Date;
+  date?: Date;
+  categories?: string[];
+  tags?: string[];
   url: string;
   baseURL: string;
   messages: Messages;
@@ -1260,7 +1260,7 @@ async function writeRedirectPages({
   url,
   baseURL,
 }: {
-  redirectFrom?: string[] | undefined;
+  redirectFrom?: string[];
   path: string;
   destination: string;
   title: string;
