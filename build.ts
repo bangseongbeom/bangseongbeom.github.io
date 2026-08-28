@@ -480,6 +480,7 @@ function home({
   title,
   content,
   listTitle,
+  lang,
   showExcerpts,
   posts,
   paginator,
@@ -487,6 +488,7 @@ function home({
   title?: string;
   content: string;
   listTitle?: string;
+  lang: string;
   showExcerpts?: boolean;
   posts?: { date: Date; url: string; title: string; excerpt?: string }[];
   paginator?: {
@@ -510,7 +512,7 @@ function home({
                   (post) =>
                     /* HTML */ `<li>
                       <span class="post-meta"
-                        >${escape(post.date.toLocaleDateString())}</span
+                        >${escape(post.date.toLocaleDateString(lang))}</span
                       >
                       <h3>
                         <a class="post-link" href="${escape(post.url)}">
@@ -1687,6 +1689,7 @@ for (const {
           ? home({
               title,
               content,
+              lang,
               posts,
             })
           : date
