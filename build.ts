@@ -146,11 +146,11 @@ function getDescription(
   fileDescription: string | undefined,
   document: Document,
 ) {
-  return fileDescription ?? document.querySelector("h1 + p")?.textContent;
+  return fileDescription ?? document.querySelector("h1 ~ p")?.textContent;
 }
 
 function getExcerpt(document: Document) {
-  return document.querySelector("h1 + p")?.outerHTML;
+  return document.querySelector("h1 ~ p")?.outerHTML;
 }
 
 function headingIds(document: Document) {
