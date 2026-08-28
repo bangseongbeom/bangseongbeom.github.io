@@ -1647,44 +1647,7 @@ for (const {
       url,
       baseURL,
       messages,
-      navPages: [
-        {
-          title: messages.categories.android(),
-          url: new URL("android", baseURL).toString(),
-        },
-        {
-          title: messages.categories.git(),
-          url: new URL("git", baseURL).toString(),
-        },
-        {
-          title: messages.categories.iot(),
-          url: new URL("iot", baseURL).toString(),
-        },
-        {
-          title: messages.categories.java(),
-          url: new URL("java", baseURL).toString(),
-        },
-        {
-          title: messages.categories.linux(),
-          url: new URL("linux", baseURL).toString(),
-        },
-        {
-          title: messages.categories.machineLearning(),
-          url: new URL("machine-learning", baseURL).toString(),
-        },
-        {
-          title: messages.categories.misc(),
-          url: new URL("misc", baseURL).toString(),
-        },
-        {
-          title: messages.categories.python(),
-          url: new URL("python", baseURL).toString(),
-        },
-        {
-          title: messages.categories.web(),
-          url: new URL("web", baseURL).toString(),
-        },
-      ],
+      navPages: [],
       content:
         path === "README.md"
           ? home({
