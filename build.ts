@@ -154,6 +154,10 @@ function getDescription(
   return fileDescription ?? document.querySelector("h1 + p")?.textContent;
 }
 
+function getExcerpt(document: Document) {
+  return document.querySelector("h1 + p")?.outerHTML ?? "";
+}
+
 function headingIds(document: Document) {
   const slugger = new GithubSlugger();
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
@@ -1512,6 +1516,21 @@ const msgData = {
 type MessageData = typeof msgData;
 type Messages = MessageData[keyof MessageData];
 
+const pages: {
+  path: string;
+  url: string;
+  lang: string;
+  messages: Messages;
+  date?: Date;
+  modifiedDate?: Date;
+  frontmatter: FrontMatter;
+  title: string;
+  description?: string;
+  content: string;
+  excerpt: string;
+  rssContent: string;
+}[] = [];
+
 const sitemapURLs: {
   loc: string;
   lastmod?: Date;
@@ -1551,6 +1570,7 @@ for await (const path of glob("**", {
     links(document, baseURL);
     const title = getTitle(frontmatter.title, document);
     const description = getDescription(frontmatter.description, document);
+    const excerpt = getExcerpt(document);
     const rssHTML = markdownToRSSHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
@@ -1563,119 +1583,19 @@ for await (const path of glob("**", {
     clipboardCopy(document, messages);
     runnableCode(document, messages);
 
-    await mkdir(dirname(join(destination, toHTMLPath(path))), {
-      recursive: true,
-    });
-    await writeFile(
-      join(destination, toHTMLPath(path)),
-      base({
-        path,
-        lang,
-        title,
-        description,
-        modifiedDate,
-        date,
-        categories: frontmatter.categories,
-        tags: frontmatter.tags,
-        url,
-        baseURL,
-        messages,
-        navPages: [
-          {
-            title: messages.categories.android(),
-            url: new URL("android", baseURL).toString(),
-          },
-          {
-            title: messages.categories.git(),
-            url: new URL("git", baseURL).toString(),
-          },
-          {
-            title: messages.categories.iot(),
-            url: new URL("iot", baseURL).toString(),
-          },
-          {
-            title: messages.categories.java(),
-            url: new URL("java", baseURL).toString(),
-          },
-          {
-            title: messages.categories.linux(),
-            url: new URL("linux", baseURL).toString(),
-          },
-          {
-            title: messages.categories.machineLearning(),
-            url: new URL("machine-learning", baseURL).toString(),
-          },
-          {
-            title: messages.categories.misc(),
-            url: new URL("misc", baseURL).toString(),
-          },
-          {
-            title: messages.categories.python(),
-            url: new URL("python", baseURL).toString(),
-          },
-          {
-            title: messages.categories.web(),
-            url: new URL("web", baseURL).toString(),
-          },
-        ],
-        content:
-          path === "README.md"
-            ? home({
-                title,
-                content: document.body.innerHTML,
-              })
-            : date
-              ? post({
-                  title,
-                  modifiedDate,
-                  date,
-                  messages,
-                  lang,
-                  authors: frontmatter.authors,
-                  content: document.body.innerHTML,
-                  comments: frontmatter.comments,
-                  path,
-                  url,
-                  baseURL,
-                  repository,
-                })
-              : page({
-                  title,
-                  content: document.body.innerHTML,
-                  messages,
-                  path,
-                  baseURL,
-                  repository,
-                }),
-        repository,
-        siteDescription,
-        siteAuthor,
-      }),
-    );
-
-    sitemapURLs.push({
-      loc: url,
-      lastmod: modifiedDate,
-    });
-    rssItems.push({
-      title,
-      link: url,
-      description: rssDocument.body.innerHTML,
-      categories: [
-        ...(frontmatter.categories ?? []),
-        ...(frontmatter.tags ?? []),
-      ],
-      pubDate: date,
-      guid: url,
-    });
-
-    await writeRedirectPages({
-      redirectFrom: frontmatter.redirect_from,
+    pages.push({
       path,
-      destination,
-      title,
       url,
-      baseURL,
+      lang,
+      messages,
+      date,
+      modifiedDate,
+      frontmatter,
+      title,
+      description,
+      content: document.body.innerHTML,
+      excerpt,
+      rssContent: rssDocument.body.innerHTML,
     });
   }
   if (
@@ -1686,6 +1606,142 @@ for await (const path of glob("**", {
     await mkdir(dirname(join(destination, path)), { recursive: true });
     await copyFile(join(source, path), join(destination, path));
   }
+}
+
+const posts = pages
+  .flatMap(({ date, url, title, excerpt }) =>
+    date ? [{ date, url, title, excerpt }] : [],
+  )
+  .toSorted((a, b) => b.date.getTime() - a.date.getTime());
+
+for (const {
+  path,
+  url,
+  lang,
+  messages,
+  date,
+  modifiedDate,
+  frontmatter,
+  title,
+  description,
+  content,
+  rssContent,
+} of pages) {
+  await mkdir(dirname(join(destination, toHTMLPath(path))), {
+    recursive: true,
+  });
+  await writeFile(
+    join(destination, toHTMLPath(path)),
+    base({
+      path,
+      lang,
+      title,
+      description,
+      modifiedDate,
+      date,
+      categories: frontmatter.categories,
+      tags: frontmatter.tags,
+      url,
+      baseURL,
+      messages,
+      navPages: [
+        {
+          title: messages.categories.android(),
+          url: new URL("android", baseURL).toString(),
+        },
+        {
+          title: messages.categories.git(),
+          url: new URL("git", baseURL).toString(),
+        },
+        {
+          title: messages.categories.iot(),
+          url: new URL("iot", baseURL).toString(),
+        },
+        {
+          title: messages.categories.java(),
+          url: new URL("java", baseURL).toString(),
+        },
+        {
+          title: messages.categories.linux(),
+          url: new URL("linux", baseURL).toString(),
+        },
+        {
+          title: messages.categories.machineLearning(),
+          url: new URL("machine-learning", baseURL).toString(),
+        },
+        {
+          title: messages.categories.misc(),
+          url: new URL("misc", baseURL).toString(),
+        },
+        {
+          title: messages.categories.python(),
+          url: new URL("python", baseURL).toString(),
+        },
+        {
+          title: messages.categories.web(),
+          url: new URL("web", baseURL).toString(),
+        },
+      ],
+      content:
+        path === "README.md"
+          ? home({
+              title,
+              content,
+              posts,
+            })
+          : date
+            ? post({
+                title,
+                modifiedDate,
+                date,
+                messages,
+                lang,
+                authors: frontmatter.authors,
+                content,
+                comments: frontmatter.comments,
+                path,
+                url,
+                baseURL,
+                repository,
+              })
+            : page({
+                title,
+                content,
+                messages,
+                path,
+                baseURL,
+                repository,
+              }),
+      repository,
+      siteDescription,
+      siteAuthor,
+    }),
+  );
+
+  sitemapURLs.push({
+    loc: url,
+    lastmod: modifiedDate,
+  });
+  rssItems.push({
+    title,
+    link: url,
+    description: rssContent,
+    categories: [
+      ...(frontmatter.categories ?? []),
+      ...(frontmatter.tags ?? []),
+    ],
+    pubDate: date,
+    guid: url,
+  });
+
+  await writeRedirectPages({
+    redirectFrom: frontmatter.redirect_from,
+    path,
+    destination,
+    title,
+    url,
+    baseURL,
+  });
 }
 
 await writeFile(
