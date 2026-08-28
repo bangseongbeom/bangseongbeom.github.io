@@ -978,7 +978,7 @@ function base({
             ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
             : ""
         }
-        <meta property="og:site_name" content="${escape(messages.title())}" />
+        <meta property="og:site_name" content="${escape(siteTitle)}" />
         ${
           date
             ? /* HTML */ `<meta
@@ -1203,7 +1203,7 @@ function base({
         }
       </head>
       <body>
-        ${header({ baseURL, siteTitle: messages.title(), navPages })}
+        ${header({ baseURL, siteTitle, navPages })}
         <main class="page-content" aria-label="Content">
           <div class="wrapper">${content}</div>
         </main>
@@ -1435,7 +1435,6 @@ const destination = process.env.DESTINATION ?? "_site";
 
 const msgData = {
   en: {
-    title: () => siteTitle,
     categories: {
       android: () => "Android",
       git: () => "Git",
@@ -1475,7 +1474,6 @@ const msgData = {
     },
   },
   ko: {
-    title: () => "방성범",
     categories: {
       android: () => "안드로이드",
       git: () => "깃",
