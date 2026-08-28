@@ -1203,7 +1203,7 @@ function base({
         }
       </head>
       <body>
-        ${header({ baseURL, siteTitle: escape(messages.title()), navPages })}
+        ${header({ baseURL, siteTitle: messages.title(), navPages })}
         <main class="page-content" aria-label="Content">
           <div class="wrapper">${content}</div>
         </main>
