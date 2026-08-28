@@ -32,7 +32,7 @@ interface FrontMatter {
   modified_date?: string;
   comments?: boolean;
   redirect_from?: string[];
-  authors?: { name?: string; email?: string }[];
+  authors?: string[];
 }
 
 function markdownToHTML(markdown: string) {
@@ -684,7 +684,7 @@ function post({
   date: Date;
   messages: Messages;
   lang: string;
-  authors?: { name?: string; email?: string }[] | undefined;
+  authors?: string[] | undefined;
   content: string;
   comments?: boolean | undefined;
   path: string;
@@ -744,27 +744,10 @@ function post({
                         itemscope
                         itemtype="http://schema.org/Person"
                       >
-                        ${
-                          author.name
-                            ? author.email
-                              ? /* HTML */ `<span class="p-author h-card"
-                                  ><a
-                                    class="u-email"
-                                    href="${escape(`mailto:${author.email}`)}"
-                                    itemprop="email"
-                                    ><span class="p-name" itemprop="name"
-                                      >${escape(author.name)}</span
-                                    ></a
-                                  ></span
-                                >`
-                              : /* HTML */ `<span
-                                  class="p-author h-card"
-                                  itemprop="name"
-                                  >${escape(author.name)}</span
-                                >`
-                            : ""
-                        }
-                      </span>`,
+                        <span class="p-author h-card" itemprop="name"
+                          >${escape(author)}</span
+                        ></span
+                      >`,
                   )
                   .join(", ")}
               </div>`
@@ -1663,7 +1646,7 @@ for (const {
                 date,
                 messages,
                 lang,
-                authors: [siteAuthor, ...(frontmatter.authors ?? [])],
+                authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
                 content,
                 comments: frontmatter.comments,
                 path,
