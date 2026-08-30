@@ -892,7 +892,6 @@ function base({
   tags,
   url,
   baseURL,
-  messages,
   navPages,
   content,
   repository,
@@ -909,7 +908,6 @@ function base({
   tags?: string[];
   url: string;
   baseURL: string;
-  messages: Messages;
   navPages: { title?: string; url: string }[];
   content: string;
   repository: string;
@@ -1627,7 +1625,6 @@ for (const {
       tags: frontmatter.tags,
       url,
       baseURL,
-      messages,
       navPages: [],
       content:
         path === "README.md"
