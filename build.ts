@@ -471,6 +471,42 @@ function header({
   </header>`;
 }
 
+function sidebar({
+  summary,
+  sections,
+  url,
+}: {
+  summary: string;
+  sections: { title: string; items: { title: string; url: string }[] }[];
+  url: string;
+}) {
+  return /* HTML */ `<aside class="site-sidebar">
+    <nav class="wrapper">
+      <details>
+        <summary>${escape(summary)}</summary>
+        ${sections
+          .map(
+            (section) => /* HTML */ `
+              <h4>${escape(section.title)}</h4>
+              <ul>
+                ${section.items
+                  .map(
+                    (item) => /* HTML */ `
+                    <li${item.url === url ? ` class="current-page"` : ""}>
+                      <a href="${escape(item.url)}">${escape(item.title)}</a>
+                    </li>
+                  `,
+                  )
+                  .join("")}
+              </ul>
+            `,
+          )
+          .join("")}
+      </details>
+    </nav>
+  </aside>`;
+}
+
 function home({
   title,
   content,
@@ -893,6 +929,8 @@ function base({
   url,
   baseURL,
   navPages,
+  sidebarSummary,
+  sidebarSections,
   content,
   repository,
   siteDescription,
@@ -909,6 +947,11 @@ function base({
   url: string;
   baseURL: string;
   navPages: { title?: string; url: string }[];
+  sidebarSummary: string;
+  sidebarSections?: {
+    title: string;
+    items: { title: string; url: string }[];
+  }[];
   content: string;
   repository: string;
   siteDescription: string;
@@ -1048,6 +1091,10 @@ function base({
           rel="stylesheet"
           href="${escape(new URL("runnable-code.css", baseURL).toString())}"
         />
+        <link
+          rel="stylesheet"
+          href="${escape(new URL("sidebar.css", baseURL).toString())}"
+        />
         <style>
           .header-link {
             display: inline-block;
@@ -1185,6 +1232,15 @@ function base({
       </head>
       <body>
         ${header({ baseURL, siteTitle, navPages })}
+        ${
+          sidebarSections?.length
+            ? sidebar({
+                summary: sidebarSummary,
+                sections: sidebarSections,
+                url,
+              })
+            : ""
+        }
         <main class="page-content" aria-label="Content">
           <div class="wrapper">${content}</div>
         </main>
@@ -1445,6 +1501,9 @@ const msgData = {
     home: {
       listTitle: () => "Posts",
     },
+    sidebar: {
+      summary: () => "Menu",
+    },
     clipboardCopy: {
       normal: () => "Copy",
       copied: () => "Copied!",
@@ -1483,6 +1542,9 @@ const msgData = {
     },
     home: {
       listTitle: () => "글 목록",
+    },
+    sidebar: {
+      summary: () => "메뉴",
     },
     clipboardCopy: {
       normal: () => "복사",
@@ -1626,6 +1688,7 @@ for (const {
       url,
       baseURL,
       navPages: [],
+      sidebarSummary: messages.sidebar.summary(),
       content:
         path === "README.md"
           ? home({
