@@ -35,6 +35,11 @@ interface FrontMatter {
   authors?: string[];
 }
 
+interface SidebarSection {
+  title: string;
+  items: { title: string; url: string }[];
+}
+
 function markdownToHTML(markdown: string) {
   const result = markdownToHtml(markdown);
   return {
@@ -477,7 +482,7 @@ function sidebar({
   url,
 }: {
   summary: string;
-  sections: { title: string; items: { title: string; url: string }[] }[];
+  sections: SidebarSection[];
   url: string;
 }) {
   return /* HTML */ `<aside class="site-sidebar">
@@ -948,10 +953,7 @@ function base({
   baseURL: string;
   navPages: { title?: string; url: string }[];
   sidebarSummary: string;
-  sidebarSections?: {
-    title: string;
-    items: { title: string; url: string }[];
-  }[];
+  sidebarSections?: SidebarSection[];
   content: string;
   repository: string;
   siteDescription: string;
