@@ -10,6 +10,15 @@ body:has(> .site-sidebar, > .site-toc) {
 
   @media screen and (min-width: 1024px) {
     grid:
+      "header header  header  header" auto
+      ".      sidebar toc     .     " auto
+      ".      sidebar content .     " 1fr
+      "footer footer  footer  footer" auto
+      / minmax(0, 1fr) 300px minmax(0, 860px) minmax(0, 1fr);
+  }
+
+  @media screen and (min-width: 1280px) {
+    grid:
       "header header  header  header header" auto
       ".      sidebar content toc    .     " 1fr
       "footer footer  footer  footer footer" auto
@@ -65,25 +74,6 @@ body:has(> .site-sidebar, > .site-toc) {
     margin-bottom: 15px;
   }
 
-  @media screen and (min-width: 1024px) {
-    nav {
-      position: sticky;
-      top: 0;
-      box-sizing: border-box;
-      max-height: 100vh;
-      padding: 30px;
-      overflow-y: auto;
-    }
-
-    summary {
-      display: none;
-    }
-
-    details::details-content {
-      content-visibility: visible;
-    }
-  }
-
   h4 {
     font-size: 1rem;
     margin-bottom: 8px;
@@ -120,12 +110,52 @@ body:has(> .site-sidebar, > .site-toc) {
 }
 
 .site-sidebar {
+  @media screen and (min-width: 1024px) {
+    nav {
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+      max-height: 100vh;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    summary {
+      display: none;
+    }
+
+    details::details-content {
+      content-visibility: visible;
+    }
+  }
+
   li.current > a {
     color: var(--minima-link-base-color);
     font-weight: bold;
 
     &:hover {
       color: var(--minima-link-hover-color);
+    }
+  }
+}
+
+.site-toc {
+  @media screen and (min-width: 1280px) {
+    nav {
+      position: sticky;
+      top: 0;
+      box-sizing: border-box;
+      max-height: 100vh;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    summary {
+      display: none;
+    }
+
+    details::details-content {
+      content-visibility: visible;
     }
   }
 }
