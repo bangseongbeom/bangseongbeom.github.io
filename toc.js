@@ -10,7 +10,7 @@ const headings = links.map((link) =>
 function update() {
   let current = -1;
   headings.forEach((heading, i) => {
-    if (heading && heading.getBoundingClientRect().top <= 0) current = i;
+    if (heading && Math.round(heading.getBoundingClientRect().top) <= 0) current = i;
   });
   links.forEach((link, i) => {
     link.parentElement?.classList.toggle("current", i === current);
