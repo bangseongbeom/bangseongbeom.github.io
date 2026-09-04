@@ -112,5 +112,9 @@ body:has(> .site-sidebar) {
   li.current > a {
     color: var(--minima-link-base-color);
     font-weight: bold;
+
+    &:hover {
+      color: var(--minima-link-hover-color);
+    }
   }
 }
