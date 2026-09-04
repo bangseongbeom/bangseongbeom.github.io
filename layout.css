@@ -50,6 +50,8 @@ body:has(> .site-sidebar, > .site-toc) {
 
 .site-sidebar,
 .site-toc {
+  font-size: 0.9375rem;
+
   nav {
     padding-top: 30px;
   }
@@ -80,6 +82,11 @@ body:has(> .site-sidebar, > .site-toc) {
     details::details-content {
       content-visibility: visible;
     }
+  }
+
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 8px;
   }
 
   ul,
@@ -113,13 +120,6 @@ body:has(> .site-sidebar, > .site-toc) {
 }
 
 .site-sidebar {
-  font-size: 0.9375rem;
-
-  h4 {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-
   li.current > a {
     color: var(--minima-link-base-color);
     font-weight: bold;
@@ -128,8 +128,4 @@ body:has(> .site-sidebar, > .site-toc) {
       color: var(--minima-link-hover-color);
     }
   }
-}
-
-.site-toc {
-  font-size: 0.875rem;
 }
