@@ -99,6 +99,7 @@ body:has(> .site-sidebar, > .site-toc) {
   }
 
   a {
+    display: block;
     color: var(--minima-text-color);
 
     &:visited {
