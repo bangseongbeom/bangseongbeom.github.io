@@ -46,6 +46,12 @@ interface SidebarSection {
   items: SidebarItem[];
 }
 
+interface TOCItem {
+  title: string;
+  id: string;
+  items: TOCItem[];
+}
+
 function markdownToHTML(markdown: string) {
   const result = markdownToHtml(markdown);
   return {
@@ -169,6 +175,25 @@ function headingIds(document: Document) {
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
     if (!heading.id) heading.id = slugger.slug(heading.textContent);
   }
+}
+
+function getTOCItems(document: Document) {
+  const root: TOCItem[] = [];
+  const stack = [{ level: 1, items: root }];
+  for (const heading of document.querySelectorAll(
+    "h2[id], h3[id], h4[id], h5[id], h6[id]",
+  )) {
+    const level = Number(heading.tagName.slice(1));
+    while (stack.length > 1 && stack.at(-1)!.level >= level) stack.pop();
+    const item: TOCItem = {
+      title: heading.textContent,
+      id: heading.id,
+      items: [],
+    };
+    stack.at(-1)!.items.push(item);
+    stack.push({ level, items: item.items });
+  }
+  return root;
 }
 
 function alerts(document: Document) {
@@ -524,6 +549,32 @@ function sidebar({
             `,
           )
           .join("")}
+      </details>
+    </nav>
+  </aside>`;
+}
+
+function tocItems({ items }: { items: TOCItem[] }): string {
+  return /* HTML */ `<ol>
+    ${items
+      .map(
+        (item) => /* HTML */ `
+          <li>
+            <a href="#${escape(item.id)}">${escape(item.title)}</a>
+            ${item.items.length ? tocItems({ items: item.items }) : ""}
+          </li>
+        `,
+      )
+      .join("")}
+  </ol>`;
+}
+
+function toc({ summary, items }: { summary: string; items: TOCItem[] }) {
+  return /* HTML */ `<aside class="site-toc">
+    <nav class="wrapper">
+      <details>
+        <summary>${escape(summary)}</summary>
+        ${tocItems({ items })}
       </details>
     </nav>
   </aside>`;
@@ -953,6 +1004,8 @@ function base({
   navPages,
   sidebarSummary,
   sidebarSections,
+  tocSummary,
+  tocItems,
   content,
   repository,
   siteDescription,
@@ -971,6 +1024,8 @@ function base({
   navPages: { title?: string; url: string }[];
   sidebarSummary: string;
   sidebarSections?: SidebarSection[];
+  tocSummary: string;
+  tocItems?: TOCItem[];
   content: string;
   repository: string;
   siteDescription: string;
@@ -1112,7 +1167,7 @@ function base({
         />
         <link
           rel="stylesheet"
-          href="${escape(new URL("sidebar.css", baseURL).toString())}"
+          href="${escape(new URL("layout.css", baseURL).toString())}"
         />
         <style>
           .header-link {
@@ -1260,6 +1315,7 @@ function base({
               })
             : ""
         }
+        ${tocItems?.length ? toc({ summary: tocSummary, items: tocItems }) : ""}
         <main class="page-content" aria-label="Content">
           <div class="wrapper">${content}</div>
         </main>
@@ -1523,6 +1579,9 @@ const msgData = {
     sidebar: {
       summary: () => "Menu",
     },
+    toc: {
+      summary: () => "Contents",
+    },
     clipboardCopy: {
       normal: () => "Copy",
       copied: () => "Copied!",
@@ -1565,6 +1624,9 @@ const msgData = {
     sidebar: {
       summary: () => "메뉴",
     },
+    toc: {
+      summary: () => "목차",
+    },
     clipboardCopy: {
       normal: () => "복사",
       copied: () => "복사 완료!",
@@ -1592,6 +1654,7 @@ const pages: {
   content: string;
   excerpt?: string;
   rssContent: string;
+  tocItems: TOCItem[];
 }[] = [];
 
 const sitemapURLs: {
@@ -1634,6 +1697,7 @@ for await (const path of glob("**", {
     const title = getTitle(frontmatter.title, document);
     const description = getDescription(frontmatter.description, document);
     const excerpt = getExcerpt(document);
+    const tocItems = getTOCItems(document);
     const { html: rssHTML } = markdownToHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
@@ -1659,6 +1723,7 @@ for await (const path of glob("**", {
       content: document.body.innerHTML,
       excerpt,
       rssContent: rssDocument.body.innerHTML,
+      tocItems,
     });
   }
   if (
@@ -1689,6 +1754,7 @@ for (const {
   description,
   content,
   rssContent,
+  tocItems,
 } of pages) {
   await mkdir(dirname(join(destination, toHTMLPath(path))), {
     recursive: true,
@@ -1708,6 +1774,8 @@ for (const {
       baseURL,
       navPages: [],
       sidebarSummary: messages.sidebar.summary(),
+      tocSummary: messages.toc.summary(),
+      tocItems,
       content:
         path === "README.md"
           ? home({
