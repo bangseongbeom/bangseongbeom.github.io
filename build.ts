@@ -497,7 +497,7 @@ function sidebar({
                 ${section.items
                   .map(
                     (item) => /* HTML */ `
-                    <li${item.url === url ? ` class="current-page"` : ""}>
+                    <li${item.url === url ? ` class="current"` : ""}>
                       <a href="${escape(item.url)}">${escape(item.title)}</a>
                     </li>
                   `,

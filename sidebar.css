@@ -104,7 +104,7 @@ body:has(> .site-sidebar) {
     }
   }
 
-  li.current-page > a {
+  li.current > a {
     color: var(--minima-link-base-color);
     font-weight: bold;
   }
