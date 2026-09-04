@@ -36,7 +36,7 @@ interface FrontMatter {
 }
 
 interface SidebarSection {
-  title: string;
+  title?: string;
   items: { title: string; url: string }[];
 }
 
@@ -492,7 +492,7 @@ function sidebar({
         ${sections
           .map(
             (section) => /* HTML */ `
-              <h4>${escape(section.title)}</h4>
+              ${section.title ? /* HTML */ `<h4>${escape(section.title)}</h4>` : ""}
               <ul>
                 ${section.items
                   .map(
