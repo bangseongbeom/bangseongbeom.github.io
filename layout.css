@@ -107,6 +107,15 @@ body:has(> .site-sidebar, > .site-toc) {
       color: var(--minima-link-hover-color);
     }
   }
+
+  li.current > a {
+    color: var(--minima-link-base-color);
+    font-weight: bold;
+
+    &:hover {
+      color: var(--minima-link-hover-color);
+    }
+  }
 }
 
 .site-sidebar {
@@ -126,15 +135,6 @@ body:has(> .site-sidebar, > .site-toc) {
 
     details::details-content {
       content-visibility: visible;
-    }
-  }
-
-  li.current > a {
-    color: var(--minima-link-base-color);
-    font-weight: bold;
-
-    &:hover {
-      color: var(--minima-link-hover-color);
     }
   }
 }

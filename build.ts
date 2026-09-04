@@ -1285,6 +1285,10 @@ function base({
           type="module"
           src="${escape(new URL("runnable-code.js", baseURL).toString())}"
         ></script>
+        <script
+          type="module"
+          src="${escape(new URL("toc.js", baseURL).toString())}"
+        ></script>
         ${
           process.env.NODE_ENV === "production"
             ? /* HTML */ `<!-- Google tag (gtag.js) -->
@@ -1874,3 +1878,4 @@ await copyFile(
   join(source, "runnable-code.js"),
   join(destination, "runnable-code.js"),
 );
+await copyFile(join(source, "toc.js"), join(destination, "toc.js"));
