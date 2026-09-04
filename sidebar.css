@@ -92,6 +92,11 @@ body:has(> .site-sidebar) {
     margin-bottom: 4px;
   }
 
+  li > ul {
+    margin-top: 4px;
+    margin-left: 15px;
+  }
+
   a {
     color: var(--minima-text-color);
 

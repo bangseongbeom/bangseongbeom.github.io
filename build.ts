@@ -35,9 +35,15 @@ interface FrontMatter {
   authors?: string[];
 }
 
+interface SidebarItem {
+  title: string;
+  url: string;
+  items?: SidebarItem[];
+}
+
 interface SidebarSection {
   title?: string;
-  items: { title: string; url: string }[];
+  items: SidebarItem[];
 }
 
 function markdownToHTML(markdown: string) {
@@ -476,6 +482,27 @@ function header({
   </header>`;
 }
 
+function sidebarItems({
+  items,
+  url,
+}: {
+  items: SidebarItem[];
+  url: string;
+}): string {
+  return /* HTML */ `<ul>
+    ${items
+      .map(
+        (item) => /* HTML */ `
+          <li${item.url === url ? ` class="current"` : ""}>
+            <a href="${escape(item.url)}">${escape(item.title)}</a>
+            ${item.items?.length ? sidebarItems({ items: item.items, url }) : ""}
+          </li>
+        `,
+      )
+      .join("")}
+  </ul>`;
+}
+
 function sidebar({
   summary,
   sections,
@@ -493,17 +520,7 @@ function sidebar({
           .map(
             (section) => /* HTML */ `
               ${section.title ? /* HTML */ `<h4>${escape(section.title)}</h4>` : ""}
-              <ul>
-                ${section.items
-                  .map(
-                    (item) => /* HTML */ `
-                    <li${item.url === url ? ` class="current"` : ""}>
-                      <a href="${escape(item.url)}">${escape(item.title)}</a>
-                    </li>
-                  `,
-                  )
-                  .join("")}
-              </ul>
+              ${sidebarItems({ items: section.items, url })}
             `,
           )
           .join("")}
