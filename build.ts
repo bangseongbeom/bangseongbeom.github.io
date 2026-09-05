@@ -760,7 +760,7 @@ function page({
 }
 
 function commentsSection({ path, lang }: { path: string; lang: string }) {
-  return ["README.md", "404.md"].includes(path)
+  return path === "README.md"
     ? ""
     : /* HTML */ ` <script
         src="https://giscus.app/client.js"
@@ -1142,11 +1142,17 @@ function base({
           rel="apple-touch-icon"
           href="${escape(new URL("apple-touch-icon.png", baseURL).toString())}"
         />
-        <link
-          rel="alternate"
-          type="text/markdown"
-          href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
-        />
+        ${
+          extname(path) === ".md"
+            ? /* HTML */ `<link
+                rel="alternate"
+                type="text/markdown"
+                href="${escape(
+                  new URL(toURLPathname(path), baseURL).toString(),
+                )}"
+              />`
+            : ""
+        }
         <link
           rel="alternate"
           type="text/html"
@@ -1754,7 +1760,27 @@ for await (const path of glob("**", {
       rssContent: rssDocument.body.innerHTML,
       tocItems,
     });
+  } else if (extname(path) === ".html") {
+    const url = new URL(toURLPathname(path), baseURL).toString();
+    const html = await readFile(join(source, path), "utf8");
+    const lang = getLang(undefined, path, defaultLang);
+    const messages = getMessages(lang, defaultLang);
+    const document = htmlToDocument(html, url);
+    const title = getTitle(undefined, document);
+
+    pages.push({
+      path,
+      url,
+      lang,
+      messages,
+      frontmatter: {},
+      title,
+      content: html,
+      rssContent: html,
+      tocItems: [],
+    });
   }
+
   if (
     [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
       extname(path),
@@ -1806,38 +1832,40 @@ for (const {
     tocSummary: messages.toc.summary(),
     tocItems,
     content:
-      path === "README.md"
-        ? home({
-            title,
-            content,
-            listTitle: messages.home.listTitle(),
-            lang,
-            showExcerpts: true,
-            posts,
-          })
-        : date
-          ? post({
+      extname(path) === ".html"
+        ? content
+        : path === "README.md"
+          ? home({
               title,
-              modifiedDate,
-              date,
-              messages,
+              content,
+              listTitle: messages.home.listTitle(),
               lang,
-              authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-              content,
-              comments: frontmatter.comments,
-              path,
-              url,
-              baseURL,
-              repository,
+              showExcerpts: true,
+              posts,
             })
-          : page({
-              title,
-              content,
-              messages,
-              path,
-              baseURL,
-              repository,
-            }),
+          : date
+            ? post({
+                title,
+                modifiedDate,
+                date,
+                messages,
+                lang,
+                authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
+                content,
+                comments: frontmatter.comments,
+                path,
+                url,
+                baseURL,
+                repository,
+              })
+            : page({
+                title,
+                content,
+                messages,
+                path,
+                baseURL,
+                repository,
+              }),
     repository,
     siteDescription,
     siteAuthor,
