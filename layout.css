@@ -1,4 +1,4 @@
-body:has(> .site-sidebar, > .site-toc) {
+body {
   display: grid;
   grid:
     "header" auto
