@@ -18,6 +18,7 @@ import {
   sep,
 } from "node:path";
 import { promisify } from "node:util";
+import * as pagefind from "pagefind";
 import { markdownToHtml } from "satteri";
 import type { Article, WithContext } from "schema-dts";
 import { codeToHtml } from "shiki";
@@ -418,7 +419,7 @@ function runnableCode(document: Document, messages: Messages) {
     if (["javascript", "js", "python", "py"].includes(language)) {
       codeBlock.insertAdjacentHTML(
         "afterend",
-        /* HTML */ `<p>
+        /* HTML */ `<p data-pagefind-ignore>
           <button type="button" class="run-code">
             <span class="normal">${escape(messages.runCode.normal())}</span>
             <span class="running" hidden
@@ -503,6 +504,11 @@ function header({
               ${navItems({ pages: navPages })}
             </nav>`
       }
+
+      <div class="site-search">
+        <pagefind-modal-trigger></pagefind-modal-trigger>
+        <pagefind-modal></pagefind-modal>
+      </div>
     </div>
   </header>`;
 }
@@ -610,7 +616,7 @@ function home({
       posts?.length
         ? /* HTML */ `
             ${listTitle ? /* HTML */ `<h2 class="post-list-heading">${escape(listTitle)}</h2>` : ""}
-            <ul class="post-list">
+            <ul class="post-list" data-pagefind-ignore>
               ${posts
                 .map(
                   (post) =>
@@ -744,7 +750,7 @@ function page({
   return /* HTML */ `<article class="post">
     <header class="post-header">
       <h1 class="post-title">${escape(title)}</h1>
-      <div class="post-meta">
+      <div class="post-meta" data-pagefind-ignore>
         ${postLinks({ path, baseURL, messages, repository })}
       </div>
     </header>
@@ -810,7 +816,7 @@ function post({
       <h1 class="post-title p-name" itemprop="name headline">
         ${escape(title)}
       </h1>
-      <div class="post-meta">
+      <div class="post-meta" data-pagefind-ignore>
         ${
           modifiedDate
             ? /* HTML */ `<span class="meta-label"
@@ -871,7 +877,10 @@ function post({
     ${
       process.env.NODE_ENV === "production"
         ? comments === false
-          ? /* HTML */ `<div class="comments-disabled-message">
+          ? /* HTML */ `<div
+              class="comments-disabled-message"
+              data-pagefind-ignore
+            >
               Comments have been disabled for this post.
             </div>`
           : commentsSection({ path, lang })
@@ -1169,6 +1178,16 @@ function base({
           rel="stylesheet"
           href="${escape(new URL("layout.css", baseURL).toString())}"
         />
+        <link
+          rel="stylesheet"
+          href="${escape(
+            new URL("pagefind/pagefind-component-ui.css", baseURL).toString(),
+          )}"
+        />
+        <link
+          rel="stylesheet"
+          href="${escape(new URL("search.css", baseURL).toString())}"
+        />
         <style>
           .header-link {
             display: inline-block;
@@ -1289,6 +1308,12 @@ function base({
           type="module"
           src="${escape(new URL("toc.js", baseURL).toString())}"
         ></script>
+        <script
+          type="module"
+          src="${escape(
+            new URL("pagefind/pagefind-component-ui.js", baseURL).toString(),
+          )}"
+        ></script>
         ${
           process.env.NODE_ENV === "production"
             ? /* HTML */ `<!-- Google tag (gtag.js) -->
@@ -1320,7 +1345,7 @@ function base({
             : ""
         }
         ${tocItems?.length ? toc({ summary: tocSummary, items: tocItems }) : ""}
-        <main class="page-content" aria-label="Content">
+        <main class="page-content" aria-label="Content" data-pagefind-body>
           <div class="wrapper">${content}</div>
         </main>
         ${footer({
@@ -1746,6 +1771,11 @@ const posts = pages
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
+const { index, errors } = await pagefind.createIndex({
+  forceLanguage: defaultLang,
+});
+if (!index) fail(errors.join("\n"));
+
 for (const {
   path,
   url,
@@ -1760,64 +1790,68 @@ for (const {
   rssContent,
   tocItems,
 } of pages) {
+  const html = base({
+    path,
+    lang,
+    title,
+    description,
+    modifiedDate,
+    date,
+    categories: frontmatter.categories,
+    tags: frontmatter.tags,
+    url,
+    baseURL,
+    navPages: [],
+    sidebarSummary: messages.sidebar.summary(),
+    tocSummary: messages.toc.summary(),
+    tocItems,
+    content:
+      path === "README.md"
+        ? home({
+            title,
+            content,
+            listTitle: messages.home.listTitle(),
+            lang,
+            showExcerpts: true,
+            posts,
+          })
+        : date
+          ? post({
+              title,
+              modifiedDate,
+              date,
+              messages,
+              lang,
+              authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
+              content,
+              comments: frontmatter.comments,
+              path,
+              url,
+              baseURL,
+              repository,
+            })
+          : page({
+              title,
+              content,
+              messages,
+              path,
+              baseURL,
+              repository,
+            }),
+    repository,
+    siteDescription,
+    siteAuthor,
+  });
   await mkdir(dirname(join(destination, toHTMLPath(path))), {
     recursive: true,
   });
-  await writeFile(
-    join(destination, toHTMLPath(path)),
-    base({
-      path,
-      lang,
-      title,
-      description,
-      modifiedDate,
-      date,
-      categories: frontmatter.categories,
-      tags: frontmatter.tags,
-      url,
-      baseURL,
-      navPages: [],
-      sidebarSummary: messages.sidebar.summary(),
-      tocSummary: messages.toc.summary(),
-      tocItems,
-      content:
-        path === "README.md"
-          ? home({
-              title,
-              content,
-              listTitle: messages.home.listTitle(),
-              lang,
-              showExcerpts: true,
-              posts,
-            })
-          : date
-            ? post({
-                title,
-                modifiedDate,
-                date,
-                messages,
-                lang,
-                authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-                content,
-                comments: frontmatter.comments,
-                path,
-                url,
-                baseURL,
-                repository,
-              })
-            : page({
-                title,
-                content,
-                messages,
-                path,
-                baseURL,
-                repository,
-              }),
-      repository,
-      siteDescription,
-      siteAuthor,
-    }),
-  );
+  await writeFile(join(destination, toHTMLPath(path)), html);
+
+  const { errors } = await index.addHTMLFile({
+    url: new URL(url).pathname,
+    content: html,
+  });
+  if (errors.length) fail(errors.join("\n"));
 
   sitemapURLs.push({
     loc: url,
@@ -1879,3 +1913,9 @@ await copyFile(
   join(destination, "runnable-code.js"),
 );
 await copyFile(join(source, "toc.js"), join(destination, "toc.js"));
+
+const { errors: writeFilesErrors } = await index.writeFiles({
+  outputPath: join(destination, "pagefind"),
+});
+if (writeFilesErrors.length) fail(writeFilesErrors.join("\n"));
+await pagefind.close();
