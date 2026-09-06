@@ -1139,7 +1139,7 @@ function base({
         />
         <link
           rel="stylesheet"
-          href="${escape(new URL("search.css", baseURL).toString())}"
+          href="${escape(new URL("pagefind.css", baseURL).toString())}"
         />
         <style>
           .header-link {
