@@ -1016,20 +1016,6 @@ function directoryItems(
     .toSorted((a, b) => a.path.localeCompare(b.path));
 }
 
-function indexPages(
-  pages: {
-    date?: Date;
-    frontmatter: FrontMatter;
-    title: string;
-    url: string;
-  }[],
-  key: "tags" | "categories",
-) {
-  return pages
-    .filter(({ date, frontmatter }) => !date && frontmatter[key]?.length)
-    .toSorted((a, b) => a.title.localeCompare(b.title));
-}
-
 function base({
   path,
   lang,
@@ -1645,8 +1631,6 @@ const msgData = {
     sidebar: {
       summary: () => "Menu",
       posts: () => "Posts",
-      tags: () => "Tags",
-      categories: () => "Categories",
     },
     toc: {
       summary: () => "Contents",
@@ -1693,8 +1677,6 @@ const msgData = {
     sidebar: {
       summary: () => "메뉴",
       posts: () => "게시물",
-      tags: () => "태그",
-      categories: () => "카테고리",
     },
     toc: {
       summary: () => "목차",
@@ -1867,14 +1849,7 @@ for (const {
     navPages: [],
     sidebarSummary: messages.sidebar.summary(),
     sidebarSections: (date || path === "README.md"
-      ? [
-          { title: messages.sidebar.posts(), items: posts },
-          { title: messages.sidebar.tags(), items: indexPages(pages, "tags") },
-          {
-            title: messages.sidebar.categories(),
-            items: indexPages(pages, "categories"),
-          },
-        ]
+      ? [{ title: messages.sidebar.posts(), items: posts }]
       : [{ items: directoryItems(pages, dirname(path)) }]
     ).filter(({ items }) => items.length),
     tocSummary: messages.toc.summary(),
