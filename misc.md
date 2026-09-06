@@ -1,8 +1,0 @@
----
-categories: [misc]
-redirect_from: [/etc.html]
----
-
-# Misc.
-
-- [발레나에처 소개](/balena-etcher-intro/README.md)

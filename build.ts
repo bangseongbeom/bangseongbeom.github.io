@@ -487,12 +487,58 @@ function header({
   </header>`;
 }
 
+function tagList({
+  title,
+  tags,
+}: {
+  title?: string;
+  tags?: { url: string; title: string }[];
+}) {
+  if (!tags?.length) return "";
+  return /* HTML */ ` ${title ? /* HTML */ `<h2 class="tag-list-heading">${escape(title)}</h2>` : ""}
+    <ul class="tag-list" data-pagefind-ignore>
+      ${tags
+        .map(
+          (tag) =>
+            /* HTML */ `<li>
+              <a href="${escape(tag.url)}">${escape(tag.title)}</a>
+            </li>`,
+        )
+        .join("")}
+    </ul>`;
+}
+
+function categoryList({
+  title,
+  categories,
+}: {
+  title?: string;
+  categories?: { url: string; title: string }[];
+}) {
+  if (!categories?.length) return "";
+  return /* HTML */ ` ${title ? /* HTML */ `<h2 class="category-list-heading">${escape(title)}</h2>` : ""}
+    <ul class="category-list" data-pagefind-ignore>
+      ${categories
+        .map(
+          (category) =>
+            /* HTML */ `<li>
+              <a href="${escape(category.url)}">${escape(category.title)}</a>
+            </li>`,
+        )
+        .join("")}
+    </ul>`;
+}
+
 function home({
   title,
   content,
   listTitle,
   lang,
   showExcerpts,
+  tagsTitle,
+  tags,
+  categoriesTitle,
+  categories,
   posts,
   paginator,
 }: {
@@ -501,6 +547,10 @@ function home({
   listTitle?: string;
   lang: string;
   showExcerpts?: boolean;
+  tagsTitle?: string;
+  tags?: { url: string; title: string }[];
+  categoriesTitle?: string;
+  categories?: { url: string; title: string }[];
   posts?: { date: Date; url: string; title: string; excerpt?: string }[];
   paginator?: {
     previousPage?: number;
@@ -512,7 +562,8 @@ function home({
 }) {
   return /* HTML */ `<div class="home">
     ${title ? /* HTML */ `<h1 class="page-heading">${escape(title)}</h1>` : ""}
-    ${content}
+    ${content} ${tagList({ title: tagsTitle, tags })}
+    ${categoryList({ title: categoriesTitle, categories })}
     ${
       posts?.length
         ? /* HTML */ `
@@ -907,8 +958,8 @@ function base({
   description,
   modifiedDate,
   date,
-  categories,
   tags,
+  categories,
   url,
   baseURL,
   showSearch,
@@ -924,8 +975,8 @@ function base({
   description?: string;
   modifiedDate?: Date;
   date?: Date;
-  categories?: string[];
   tags?: string[];
+  categories?: string[];
   url: string;
   baseURL: string;
   showSearch?: boolean;
@@ -1003,14 +1054,6 @@ function base({
                       />`
                     : ""
                 }
-                ${
-                  categories?.[0]
-                    ? /* HTML */ `<meta
-                        property="article:section"
-                        content="${escape(categories[0].split("/")[0])}"
-                      />`
-                    : ""
-                }
                 ${(tags ?? [])
                   .map(
                     (tag) =>
@@ -1019,7 +1062,15 @@ function base({
                         content="${escape(tag)}"
                       />`,
                   )
-                  .join("")}`
+                  .join("")}
+                ${
+                  categories?.[0]
+                    ? /* HTML */ `<meta
+                        property="article:section"
+                        content="${escape(categories[0].split("/")[0])}"
+                      />`
+                    : ""
+                }`
             : ""
         }
         <link rel="canonical" href="${escape(url)}" />
@@ -1460,17 +1511,6 @@ const destination = process.env.DESTINATION ?? "_site";
 
 const msgData = {
   en: {
-    categories: {
-      android: () => "Android",
-      git: () => "Git",
-      iot: () => "IoT",
-      java: () => "Java",
-      linux: () => "Linux",
-      machineLearning: () => "Machine learning",
-      misc: () => "Misc.",
-      python: () => "Python",
-      web: () => "Web",
-    },
     header: {
       nav: {
         markdown: {
@@ -1487,6 +1527,8 @@ const msgData = {
       },
     },
     home: {
+      tagsTitle: () => "Tags",
+      categoriesTitle: () => "Categories",
       listTitle: () => "Posts",
     },
     clipboardCopy: {
@@ -1499,17 +1541,6 @@ const msgData = {
     },
   },
   ko: {
-    categories: {
-      android: () => "안드로이드",
-      git: () => "깃",
-      iot: () => "IoT",
-      java: () => "자바",
-      linux: () => "리눅스",
-      machineLearning: () => "기계 학습",
-      misc: () => "기타",
-      python: () => "파이썬",
-      web: () => "웹",
-    },
     header: {
       nav: {
         markdown: {
@@ -1526,6 +1557,8 @@ const msgData = {
       },
     },
     home: {
+      tagsTitle: () => "태그",
+      categoriesTitle: () => "카테고리",
       listTitle: () => "글 목록",
     },
     clipboardCopy: {
@@ -1654,10 +1687,37 @@ for await (const path of glob("**", {
 }
 
 const posts = pages
-  .flatMap(({ date, url, title, excerpt }) =>
-    date ? [{ date, url, title, excerpt }] : [],
+  .flatMap(({ date, url, title, excerpt, frontmatter }) =>
+    date ? [{ date, url, title, excerpt, frontmatter }] : [],
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
+
+const tags = Array.from(
+  new Set(posts.flatMap(({ frontmatter }) => frontmatter.tags ?? [])),
+)
+  .toSorted((a, b) => a.localeCompare(b))
+  .map((tag) => ({
+    title: tag,
+    path: join("tags", `${tag}.html`),
+    url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
+    posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
+  }));
+
+const categories = Array.from(
+  new Set(posts.flatMap(({ frontmatter }) => frontmatter.categories ?? [])),
+)
+  .toSorted((a, b) => a.localeCompare(b))
+  .map((category) => ({
+    title: category,
+    path: join("categories", `${category}.html`),
+    url: new URL(
+      toURLPathname(join("categories", category)),
+      baseURL,
+    ).toString(),
+    posts: posts.filter(({ frontmatter }) =>
+      frontmatter.categories?.includes(category),
+    ),
+  }));
 
 const { index, errors } = await pagefind.createIndex({
   forceLanguage: defaultLang,
@@ -1684,8 +1744,8 @@ for (const {
     description,
     modifiedDate,
     date,
-    categories: frontmatter.categories,
     tags: frontmatter.tags,
+    categories: frontmatter.categories,
     url,
     baseURL,
     showSearch: true,
@@ -1700,6 +1760,10 @@ for (const {
               listTitle: messages.home.listTitle(),
               lang,
               showExcerpts: true,
+              tagsTitle: messages.home.tagsTitle(),
+              tags,
+              categoriesTitle: messages.home.categoriesTitle(),
+              categories,
               posts,
             })
           : date
@@ -1749,8 +1813,8 @@ for (const {
     link: url,
     description: rssContent,
     categories: [
-      ...(frontmatter.categories ?? []),
       ...(frontmatter.tags ?? []),
+      ...(frontmatter.categories ?? []),
     ],
     pubDate: date,
     guid: url,
@@ -1764,6 +1828,33 @@ for (const {
     url,
     baseURL,
   });
+}
+
+for (const { title, path, url, posts } of [...tags, ...categories]) {
+  const lang = defaultLang;
+  const html = base({
+    path,
+    lang,
+    title,
+    url,
+    baseURL,
+    showSearch: true,
+    navPages: [],
+    content: home({ title, content: "", lang, showExcerpts: true, posts }),
+    repository,
+    siteDescription,
+    siteAuthor,
+  });
+  await mkdir(dirname(join(destination, path)), { recursive: true });
+  await writeFile(join(destination, path), html);
+
+  const { errors } = await index.addHTMLFile({
+    url: new URL(url).pathname,
+    content: html,
+  });
+  if (errors.length) fail(errors.join("\n"));
+
+  sitemapURLs.push({ loc: url });
 }
 
 await writeFile(

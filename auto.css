@@ -516,8 +516,27 @@ table td {
   font-size: 2rem;
 }
 
+.tag-list-heading,
+.category-list-heading,
 .post-list-heading {
   font-size: 1.75rem;
+}
+
+.tag-list,
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-left: 0;
+  list-style: none;
+
+  & > li > a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid var(--minima-border-color-01);
+    border-radius: 5px;
+    font-size: 14px;
+  }
 }
 
 .post-list {
