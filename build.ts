@@ -739,6 +739,8 @@ function post({
   messages,
   lang,
   authors,
+  tags,
+  categories,
   content,
   comments,
   path,
@@ -752,6 +754,8 @@ function post({
   messages: Messages;
   lang: string;
   authors?: string[];
+  tags?: { url: string; title: string }[];
+  categories?: { url: string; title: string }[];
   content: string;
   comments?: boolean;
   path: string;
@@ -765,6 +769,7 @@ function post({
     itemtype="http://schema.org/BlogPosting"
   >
     <header class="post-header">
+      ${categoryList({ categories })} ${tagList({ tags })}
       <h1 class="post-title p-name" itemprop="name headline">
         ${escape(title)}
       </h1>
@@ -1774,6 +1779,12 @@ for (const {
                 messages,
                 lang,
                 authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
+                tags: tags.filter(({ title }) =>
+                  frontmatter.tags?.includes(title),
+                ),
+                categories: categories.filter(({ title }) =>
+                  frontmatter.categories?.includes(title),
+                ),
                 content,
                 comments: frontmatter.comments,
                 path,

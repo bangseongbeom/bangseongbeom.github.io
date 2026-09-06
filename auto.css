@@ -530,6 +530,10 @@ table td {
   margin-left: 0;
   list-style: none;
 
+  .post-header & {
+    justify-content: center;
+  }
+
   & > li > a {
     display: inline-block;
     padding: 5px 10px;
