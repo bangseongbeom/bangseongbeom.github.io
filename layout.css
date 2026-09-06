@@ -10,34 +10,23 @@ body {
 
   @media screen and (min-width: 1024px) {
     grid:
-      "header header  header  header" auto
-      ".      sidebar toc     .     " auto
-      ".      sidebar content .     " 1fr
-      "footer footer  footer  footer" auto
+      ". sidebar header  ." auto
+      ". sidebar toc     ." auto
+      ". sidebar content ." 1fr
+      ". sidebar footer  ." auto
       / minmax(0, 1fr) 300px minmax(0, 860px) minmax(0, 1fr);
   }
 
   @media screen and (min-width: 1280px) {
     grid:
-      "header header  header  header header" auto
-      ".      sidebar content toc    .     " 1fr
-      "footer footer  footer  footer footer" auto
+      ". sidebar header  toc ." auto
+      ". sidebar content toc ." 1fr
+      ". sidebar footer  toc ." auto
       / minmax(0, 1fr) 300px minmax(0, 860px) 300px minmax(0, 1fr);
   }
 
   .site-header {
     grid-area: header;
-
-    @media screen and (min-width: 1024px) {
-      display: grid;
-      grid-template-columns: subgrid;
-
-      > .wrapper {
-        grid-column: 2 / -2;
-        max-width: none;
-        margin: 0;
-      }
-    }
   }
 
   .site-sidebar {
