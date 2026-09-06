@@ -1096,24 +1096,24 @@ function base({
         ${
           extname(path) === ".md"
             ? /* HTML */ `<link
-                rel="alternate"
-                type="text/markdown"
-                href="${escape(
-                  new URL(toURLPathname(path), baseURL).toString(),
-                )}"
-              />`
+                  rel="alternate"
+                  type="text/markdown"
+                  href="${escape(
+                    new URL(toURLPathname(path), baseURL).toString(),
+                  )}"
+                />
+                <link
+                  rel="alternate"
+                  type="text/html"
+                  href="${escape(
+                    new URL(
+                      toURLPathname(path),
+                      `https://github.com/${repository}/blob/main/`,
+                    ).toString(),
+                  )}"
+                />`
             : ""
         }
-        <link
-          rel="alternate"
-          type="text/html"
-          href="${escape(
-            new URL(
-              toURLPathname(path),
-              `https://github.com/${repository}/blob/main/`,
-            ).toString(),
-          )}"
-        />
         <link
           rel="alternate"
           type="application/rss+xml"
