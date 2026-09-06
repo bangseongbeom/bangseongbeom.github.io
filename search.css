@@ -1,26 +1,5 @@
-.site-search {
-  float: right;
-
-  .site-header:has(.site-nav) & {
-    margin-right: 15px;
-  }
-}
-
 pagefind-modal-trigger {
   vertical-align: middle;
-}
-
-@media screen and (max-width: 600px) {
-  .site-header:has(.site-nav) .site-search {
-    position: absolute;
-    right: 65px;
-    margin-right: 0;
-  }
-
-  .pf-trigger-text,
-  .pf-trigger-shortcut {
-    display: none !important;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
