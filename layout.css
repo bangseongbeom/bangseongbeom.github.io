@@ -108,7 +108,8 @@ body {
     }
   }
 
-  li.current > a {
+  li.current > a,
+  h4.current > a {
     color: var(--minima-link-base-color);
     font-weight: bold;
 

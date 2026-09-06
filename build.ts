@@ -45,6 +45,7 @@ interface SidebarItem {
 
 interface SidebarSection {
   title?: string;
+  url?: string;
   items: SidebarItem[];
 }
 
@@ -551,7 +552,15 @@ function sidebar({
         ${sections
           .map(
             (section) => /* HTML */ `
-              ${section.title ? /* HTML */ `<h4>${escape(section.title)}</h4>` : ""}
+              ${
+                section.title
+                  ? section.url
+                    ? /* HTML */ `<h4${section.url === url ? ` class="current"` : ""}>
+                        <a href="${escape(section.url)}">${escape(section.title)}</a>
+                      </h4>`
+                    : /* HTML */ `<h4>${escape(section.title)}</h4>`
+                  : ""
+              }
               ${sidebarItems({ items: section.items, url })}
             `,
           )
@@ -1849,7 +1858,13 @@ for (const {
     navPages: [],
     sidebarSummary: messages.sidebar.summary(),
     sidebarSections: (date || path === "README.md"
-      ? [{ title: messages.sidebar.posts(), items: posts }]
+      ? [
+          {
+            title: messages.sidebar.posts(),
+            url: toHTMLURL(toURLPathname("README.md"), baseURL),
+            items: posts,
+          },
+        ]
       : [{ items: directoryItems(pages, dirname(path)) }]
     ).filter(({ items }) => items.length),
     tocSummary: messages.toc.summary(),
