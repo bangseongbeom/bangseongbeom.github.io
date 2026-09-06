@@ -9,7 +9,6 @@ import { fail } from "node:assert/strict";
 import child_process from "node:child_process";
 import { copyFile, glob, mkdir, readFile, writeFile } from "node:fs/promises";
 import {
-  basename,
   dirname,
   extname,
   format,
@@ -35,24 +34,6 @@ interface FrontMatter {
   comments?: boolean;
   redirect_from?: string[];
   authors?: string[];
-}
-
-interface SidebarItem {
-  title: string;
-  url: string;
-  items?: SidebarItem[];
-}
-
-interface SidebarSection {
-  title?: string;
-  url?: string;
-  items: SidebarItem[];
-}
-
-interface TOCItem {
-  title: string;
-  id: string;
-  items: TOCItem[];
 }
 
 function markdownToHTML(markdown: string) {
@@ -178,25 +159,6 @@ function headingIds(document: Document) {
   for (const heading of document.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
     if (!heading.id) heading.id = slugger.slug(heading.textContent);
   }
-}
-
-function getTOCItems(document: Document) {
-  const root: TOCItem[] = [];
-  const stack = [{ level: 1, items: root }];
-  for (const heading of document.querySelectorAll(
-    "h2[id], h3[id], h4[id], h5[id], h6[id]",
-  )) {
-    const level = Number(heading.tagName.slice(1));
-    while (stack.length > 1 && stack.at(-1)!.level >= level) stack.pop();
-    const item: TOCItem = {
-      title: heading.textContent,
-      id: heading.id,
-      items: [],
-    };
-    stack.at(-1)!.items.push(item);
-    stack.push({ level, items: item.items });
-  }
-  return root;
 }
 
 function alerts(document: Document) {
@@ -523,87 +485,6 @@ function header({
       }
     </div>
   </header>`;
-}
-
-function sidebarItems({
-  items,
-  url,
-}: {
-  items: SidebarItem[];
-  url: string;
-}): string {
-  return /* HTML */ `<ul>
-    ${items
-      .map(
-        (item) => /* HTML */ `
-          <li${item.url === url ? ` class="current"` : ""}>
-            <a href="${escape(item.url)}">${escape(item.title)}</a>
-            ${item.items?.length ? sidebarItems({ items: item.items, url }) : ""}
-          </li>
-        `,
-      )
-      .join("")}
-  </ul>`;
-}
-
-function sidebar({
-  summary,
-  sections,
-  url,
-}: {
-  summary: string;
-  sections: SidebarSection[];
-  url: string;
-}) {
-  return /* HTML */ `<aside class="site-sidebar">
-    <nav class="wrapper">
-      <details>
-        <summary>${escape(summary)}</summary>
-        ${sections
-          .map(
-            (section) => /* HTML */ `
-              ${
-                section.title
-                  ? section.url
-                    ? /* HTML */ `<h4${section.url === url ? ` class="current"` : ""}>
-                        <a href="${escape(section.url)}">${escape(section.title)}</a>
-                      </h4>`
-                    : /* HTML */ `<h4>${escape(section.title)}</h4>`
-                  : ""
-              }
-              ${sidebarItems({ items: section.items, url })}
-            `,
-          )
-          .join("")}
-      </details>
-    </nav>
-  </aside>`;
-}
-
-function tocItems({ items }: { items: TOCItem[] }): string {
-  return /* HTML */ `<ol>
-    ${items
-      .map(
-        (item) => /* HTML */ `
-          <li>
-            <a href="#${escape(item.id)}">${escape(item.title)}</a>
-            ${item.items.length ? tocItems({ items: item.items }) : ""}
-          </li>
-        `,
-      )
-      .join("")}
-  </ol>`;
-}
-
-function toc({ summary, items }: { summary: string; items: TOCItem[] }) {
-  return /* HTML */ `<aside class="site-toc">
-    <nav class="wrapper">
-      <details>
-        <summary>${escape(summary)}</summary>
-        ${tocItems({ items })}
-      </details>
-    </nav>
-  </aside>`;
 }
 
 function home({
@@ -1019,22 +900,6 @@ function footer({
   </footer>`;
 }
 
-function directoryItems(
-  pages: { path: string; title: string; url: string }[],
-  dir: string,
-) {
-  const entryDir = (path: string) =>
-    dirname(basename(path) === "README.md" ? dirname(path) : path);
-  return pages
-    .filter(
-      ({ path }) =>
-        extname(path) === ".md" &&
-        path !== "README.md" &&
-        entryDir(path) === dir,
-    )
-    .toSorted((a, b) => a.path.localeCompare(b.path));
-}
-
 function base({
   path,
   lang,
@@ -1048,10 +913,6 @@ function base({
   baseURL,
   showSearch,
   navPages,
-  sidebarSummary,
-  sidebarSections,
-  tocSummary,
-  tocItems,
   content,
   repository,
   siteDescription,
@@ -1069,10 +930,6 @@ function base({
   baseURL: string;
   showSearch?: boolean;
   navPages: { title?: string; url: string }[];
-  sidebarSummary: string;
-  sidebarSections?: SidebarSection[];
-  tocSummary: string;
-  tocItems?: TOCItem[];
   content: string;
   repository: string;
   siteDescription: string;
@@ -1220,10 +1077,6 @@ function base({
         />
         <link
           rel="stylesheet"
-          href="${escape(new URL("layout.css", baseURL).toString())}"
-        />
-        <link
-          rel="stylesheet"
           href="${escape(
             new URL("pagefind/pagefind-component-ui.css", baseURL).toString(),
           )}"
@@ -1350,10 +1203,6 @@ function base({
         ></script>
         <script
           type="module"
-          src="${escape(new URL("toc.js", baseURL).toString())}"
-        ></script>
-        <script
-          type="module"
           src="${escape(
             new URL("pagefind/pagefind-component-ui.js", baseURL).toString(),
           )}"
@@ -1379,16 +1228,6 @@ function base({
       </head>
       <body>
         ${header({ baseURL, siteTitle, showSearch, navPages })}
-        ${
-          sidebarSections?.length
-            ? sidebar({
-                summary: sidebarSummary,
-                sections: sidebarSections,
-                url,
-              })
-            : ""
-        }
-        ${tocItems?.length ? toc({ summary: tocSummary, items: tocItems }) : ""}
         <main class="page-content" aria-label="Content" data-pagefind-body>
           <div class="wrapper">${content}</div>
         </main>
@@ -1650,13 +1489,6 @@ const msgData = {
     home: {
       listTitle: () => "Posts",
     },
-    sidebar: {
-      summary: () => "Menu",
-      posts: () => "Posts",
-    },
-    toc: {
-      summary: () => "Contents",
-    },
     clipboardCopy: {
       normal: () => "Copy",
       copied: () => "Copied!",
@@ -1696,13 +1528,6 @@ const msgData = {
     home: {
       listTitle: () => "글 목록",
     },
-    sidebar: {
-      summary: () => "메뉴",
-      posts: () => "게시물",
-    },
-    toc: {
-      summary: () => "목차",
-    },
     clipboardCopy: {
       normal: () => "복사",
       copied: () => "복사 완료!",
@@ -1730,7 +1555,6 @@ const pages: {
   content: string;
   excerpt?: string;
   rssContent: string;
-  tocItems: TOCItem[];
 }[] = [];
 
 const sitemapURLs: {
@@ -1773,7 +1597,6 @@ for await (const path of glob("**", {
     const title = getTitle(frontmatter.title, document);
     const description = getDescription(frontmatter.description, document);
     const excerpt = getExcerpt(document);
-    const tocItems = getTOCItems(document);
     const { html: rssHTML } = markdownToHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
@@ -1799,7 +1622,6 @@ for await (const path of glob("**", {
       content: document.body.innerHTML,
       excerpt,
       rssContent: rssDocument.body.innerHTML,
-      tocItems,
     });
   } else if (extname(path) === ".html") {
     const url = new URL(toURLPathname(path), baseURL).toString();
@@ -1818,7 +1640,6 @@ for await (const path of glob("**", {
       title,
       content: html,
       rssContent: html,
-      tocItems: [],
     });
   }
 
@@ -1855,7 +1676,6 @@ for (const {
   description,
   content,
   rssContent,
-  tocItems,
 } of pages) {
   const html = base({
     path,
@@ -1870,19 +1690,6 @@ for (const {
     baseURL,
     showSearch: true,
     navPages: [],
-    sidebarSummary: messages.sidebar.summary(),
-    sidebarSections: (date || path === "README.md"
-      ? [
-          {
-            title: messages.sidebar.posts(),
-            url: toHTMLURL(toURLPathname("README.md"), baseURL),
-            items: posts,
-          },
-        ]
-      : [{ items: directoryItems(pages, dirname(path)) }]
-    ).filter(({ items }) => items.length),
-    tocSummary: messages.toc.summary(),
-    tocItems,
     content:
       extname(path) === ".html"
         ? content
@@ -1992,7 +1799,6 @@ await copyFile(
   join(source, "runnable-code.js"),
   join(destination, "runnable-code.js"),
 );
-await copyFile(join(source, "toc.js"), join(destination, "toc.js"));
 
 const { errors: writeFilesErrors } = await index.writeFiles({
   outputPath: join(destination, "pagefind"),
