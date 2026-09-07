@@ -1511,6 +1511,10 @@ const siteAuthor = {
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
 const defaultLang = "en";
 
+const tagOverrides: Record<string, { title?: string; content?: string }> = {};
+const categoryOverrides: Record<string, { title?: string; content?: string }> =
+  {};
+
 const source = process.env.SOURCE ?? ".";
 const destination = process.env.DESTINATION ?? "_site";
 
@@ -1702,7 +1706,9 @@ const tags = Array.from(
 )
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
-    title: tag,
+    name: tag,
+    title: tagOverrides[tag]?.title ?? tag,
+    content: tagOverrides[tag]?.content ?? "",
     path: join("tags", `${tag}.html`),
     url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
     posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
@@ -1713,7 +1719,9 @@ const categories = Array.from(
 )
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
-    title: category,
+    name: category,
+    title: categoryOverrides[category]?.title ?? category,
+    content: categoryOverrides[category]?.content ?? "",
     path: join("categories", `${category}.html`),
     url: new URL(
       toURLPathname(join("categories", category)),
@@ -1779,11 +1787,11 @@ for (const {
                 messages,
                 lang,
                 authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-                tags: tags.filter(({ title }) =>
-                  frontmatter.tags?.includes(title),
+                tags: tags.filter(({ name }) =>
+                  frontmatter.tags?.includes(name),
                 ),
-                categories: categories.filter(({ title }) =>
-                  frontmatter.categories?.includes(title),
+                categories: categories.filter(({ name }) =>
+                  frontmatter.categories?.includes(name),
                 ),
                 content,
                 comments: frontmatter.comments,
@@ -1841,7 +1849,7 @@ for (const {
   });
 }
 
-for (const { title, path, url, posts } of [...tags, ...categories]) {
+for (const { title, content, path, url, posts } of [...tags, ...categories]) {
   const lang = defaultLang;
   const html = base({
     path,
@@ -1851,7 +1859,7 @@ for (const { title, path, url, posts } of [...tags, ...categories]) {
     baseURL,
     showSearch: true,
     navPages: [],
-    content: home({ title, content: "", lang, showExcerpts: true, posts }),
+    content: home({ title, content, lang, showExcerpts: true, posts }),
     repository,
     siteDescription,
     siteAuthor,
