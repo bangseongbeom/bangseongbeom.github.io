@@ -582,7 +582,7 @@ function home({
                         paginator.previousPage
                           ? /* HTML */ `<li>
                               <a
-                                href="${escape(paginator.previousPagePath)}"
+                                href="${escape(paginator.previousPagePath ?? "")}"
                                 class="previous-page"
                                 title="Go to Page ${paginator.previousPage}"
                               >
@@ -600,7 +600,7 @@ function home({
                         paginator.nextPage
                           ? /* HTML */ `<li>
                               <a
-                                href="${escape(paginator.nextPagePath)}"
+                                href="${escape(paginator.nextPagePath ?? "")}"
                                 class="next-page"
                                 title="Go to Page ${paginator.nextPage}"
                               >
@@ -1528,6 +1528,7 @@ const siteAuthor = {
 };
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
 const defaultLang = "en";
+const paginate = 20;
 
 const source = process.env.SOURCE ?? ".";
 const destination = process.env.DESTINATION ?? "_site";
@@ -1553,6 +1554,7 @@ const msgData = {
     categories: () => "Categories",
     home: {
       listTitle: () => "Posts",
+      page: (page: number) => `Page ${page}`,
     },
     clipboardCopy: {
       normal: () => "Copy",
@@ -1583,6 +1585,7 @@ const msgData = {
     categories: () => "카테고리",
     home: {
       listTitle: () => "글 목록",
+      page: (page: number) => `${page} 페이지`,
     },
     clipboardCopy: {
       normal: () => "복사",
@@ -1715,6 +1718,30 @@ const posts = pages
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
+const totalPages = Math.max(1, Math.ceil(posts.length / paginate));
+
+function getPagePath(page: number) {
+  return page === 1 ? "README.md" : `page-${page}.html`;
+}
+
+function getPageURL(page: number) {
+  return page === 1
+    ? toHTMLURL(toURLPathname("README.md"), baseURL)
+    : new URL(toURLPathname(`page-${page}`), baseURL).toString();
+}
+
+function getPaginator(page: number) {
+  return totalPages > 1
+    ? {
+        previousPage: page > 1 ? page - 1 : undefined,
+        previousPagePath: page > 1 ? getPageURL(page - 1) : undefined,
+        page,
+        nextPage: page < totalPages ? page + 1 : undefined,
+        nextPagePath: page < totalPages ? getPageURL(page + 1) : undefined,
+      }
+    : undefined;
+}
+
 const tags = Array.from(
   new Set(posts.flatMap(({ frontmatter }) => frontmatter.tags ?? [])),
 )
@@ -1800,7 +1827,8 @@ for (const {
               tags,
               categoriesTitle: messages.categories(),
               categories,
-              posts,
+              posts: posts.slice(0, paginate),
+              paginator: getPaginator(1),
             })
           : date
             ? post({
@@ -1870,6 +1898,39 @@ for (const {
     url,
     baseURL,
   });
+}
+
+for (let page = 2; page <= totalPages; page++) {
+  const lang =
+    pages.find(({ path }) => path === "README.md")?.lang ?? defaultLang;
+  const messages = getMessages(lang, defaultLang);
+  const title = messages.home.page(page);
+  const path = getPagePath(page);
+  const url = getPageURL(page);
+  const html = base({
+    path,
+    lang,
+    title,
+    url,
+    baseURL,
+    showSearch: true,
+    navPages: [],
+    content: home({
+      title,
+      listTitle: messages.home.listTitle(),
+      lang,
+      showExcerpts: true,
+      posts: posts.slice((page - 1) * paginate, page * paginate),
+      paginator: getPaginator(page),
+    }),
+    repository,
+    siteDescription,
+    siteAuthor,
+  });
+  await mkdir(dirname(join(destination, path)), { recursive: true });
+  await writeFile(join(destination, path), html);
+
+  sitemapURLs.push({ loc: url });
 }
 
 for (const { title, path, url, posts } of [...tags, ...categories]) {
