@@ -17,18 +17,9 @@
     "shiki": "^4.4.3"
   },
   "devDependencies": {
-    "@codemirror/autocomplete": "^6.20.3",
-    "@codemirror/commands": "^6.10.3",
-    "@codemirror/lang-javascript": "^6.2.5",
-    "@codemirror/lang-python": "^6.2.1",
-    "@codemirror/language": "^6.12.3",
-    "@codemirror/state": "^6.6.0",
-    "@codemirror/view": "^6.43.1",
-    "@lezer/highlight": "^1.2.3",
     "@types/escape-html": "^1.0.4",
     "@types/node": "^26.1.0",
     "prettier": "^3.8.4",
-    "pyodide": "^314.0.0",
     "schema-dts": "^2.0.0",
     "serve": "^14.2.6"
   },

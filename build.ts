@@ -372,40 +372,6 @@ function clipboardCopy(document: Document, messages: Messages) {
   }
 }
 
-function runnableCode(document: Document, messages: Messages) {
-  for (const runnableCode of document.querySelectorAll(
-    "runnable-code",
-  ) as NodeList<HTMLElement>) {
-    const codeBlock = runnableCode.querySelector('[class^="language-"]');
-    if (!codeBlock) throw new Error();
-    const language = codeBlock.className.slice("language-".length);
-
-    if (["javascript", "js", "python", "py"].includes(language)) {
-      codeBlock.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ `<p data-pagefind-ignore>
-          <button type="button" class="run-code">
-            <span class="normal">${escape(messages.runCode.normal())}</span>
-            <span class="running" hidden
-              >${escape(messages.runCode.running())}</span
-            >
-          </button>
-        </p>`,
-      );
-    } else if (language === "java") {
-      codeBlock.insertAdjacentHTML(
-        "afterend",
-        /* HTML */ `<p>
-          Paste and run in
-          <a href="https://dev.java/playground/" target="_blank"
-            >The Java Playground</a
-          >
-        </p>`,
-      );
-    }
-  }
-}
-
 function navItems({
   showSearch,
   pages,
@@ -1151,10 +1117,6 @@ function base({
         />
         <link
           rel="stylesheet"
-          href="${escape(new URL("runnable-code.css", baseURL).toString())}"
-        />
-        <link
-          rel="stylesheet"
           href="${escape(
             new URL("pagefind/pagefind-component-ui.css", baseURL).toString(),
           )}"
@@ -1234,50 +1196,9 @@ function base({
               </script>`
             : ""
         }
-        <!--
-            Import map generated with JSPM Generator
-            Edit here: https://generator.jspm.io/#ZY69EoMgEIQpUuRFUgZFEmtfwge4wRsgw9/gaSZp8uoBO7XYZr+73b1dGLv+xkCWHE5sUHFCb3OOuYGFooo+OSQcet61XO54YR7CNBcmjsxB0PcXrDCrbBPVd/48X6QPmRg2Kk50AV17RXfIngm2QT1vd/5q8V3sh6xZDr+YG2O1cUU0iFIh/2r/G7btAA
-          -->
-        <script type="importmap">
-          {
-            "imports": {
-              "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.20.3/dist/index.js",
-              "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.10.3/dist/index.js",
-              "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.5/dist/index.js",
-              "@codemirror/lang-python": "https://ga.jspm.io/npm:@codemirror/lang-python@6.2.1/dist/index.js",
-              "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.12.3/dist/index.js",
-              "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.6.0/dist/index.js",
-              "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.43.1/dist/index.js",
-              "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.3/dist/index.js"
-            },
-            "scopes": {
-              "https://ga.jspm.io/": {
-                "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.5.2/dist/index.js",
-                "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.5.4/dist/index.js",
-                "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.4.10/dist/index.js",
-                "@lezer/python": "https://ga.jspm.io/npm:@lezer/python@1.1.19/dist/index.js",
-                "@marijn/find-cluster-break": "https://ga.jspm.io/npm:@marijn/find-cluster-break@1.0.2/src/index.js",
-                "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
-                "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.3/src/style-mod.js",
-                "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js"
-              }
-            }
-          }
-        </script>
-        <script type="importmap">
-          {
-            "imports": {
-              "pyodide": "https://cdn.jsdelivr.net/pyodide/v314.0.0/full/pyodide.js"
-            }
-          }
-        </script>
         <script
           type="module"
           src="${escape(new URL("clipboard-copy.js", baseURL).toString())}"
-        ></script>
-        <script
-          type="module"
-          src="${escape(new URL("runnable-code.js", baseURL).toString())}"
         ></script>
         <script
           type="module"
@@ -1577,10 +1498,6 @@ const msgData = {
       normal: () => "Copy",
       copied: () => "Copied!",
     },
-    runCode: {
-      normal: () => "Run",
-      running: () => "Running...",
-    },
   },
   ko: {
     header: {
@@ -1620,10 +1537,6 @@ const msgData = {
     clipboardCopy: {
       normal: () => "복사",
       copied: () => "복사 완료!",
-    },
-    runCode: {
-      normal: () => "실행",
-      running: () => "실행 중...",
     },
   },
 };
@@ -1696,7 +1609,6 @@ for await (const path of glob("**", {
     anchorLinks(document);
     await highlight(document);
     clipboardCopy(document, messages);
-    runnableCode(document, messages);
 
     pages.push({
       path,
@@ -2019,10 +1931,6 @@ await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
   join(source, "clipboard-copy.js"),
   join(destination, "clipboard-copy.js"),
-);
-await copyFile(
-  join(source, "runnable-code.js"),
-  join(destination, "runnable-code.js"),
 );
 
 const { errors: writeFilesErrors } = await index.writeFiles({
