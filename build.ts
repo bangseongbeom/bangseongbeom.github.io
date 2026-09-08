@@ -1090,7 +1090,7 @@ function base({
                   categories?.[0]
                     ? /* HTML */ `<meta
                         property="article:section"
-                        content="${escape(categories[0].split("/")[0])}"
+                        content="${escape(categories[0])}"
                       />`
                     : ""
                 }`
@@ -1911,7 +1911,9 @@ for (const {
     description: rssContent,
     categories: [
       ...(frontmatter.tags ?? []),
-      ...(frontmatter.categories ?? []),
+      ...(frontmatter.categories?.length
+        ? [frontmatter.categories.join("/")]
+        : []),
     ],
     pubDate: date,
     guid: url,
