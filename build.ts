@@ -1150,7 +1150,8 @@ function base({
               opacity: 1;
             }
           }
-
+        </style>
+        <style>
           .highlight {
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto;
