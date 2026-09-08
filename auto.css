@@ -522,27 +522,6 @@ table td {
   font-size: 1.75rem;
 }
 
-.tag-list,
-.category-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-left: 0;
-  list-style: none;
-
-  .post-header & {
-    justify-content: center;
-  }
-
-  & > li > a {
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid var(--minima-border-color-01);
-    border-radius: 5px;
-    font-size: 14px;
-  }
-}
-
 .post-list {
   margin-left: 0;
   list-style: none;
@@ -585,6 +564,8 @@ table td {
   padding-inline: 5px;
 }
 .post-meta .post-authors,
+.post-meta .post-tags,
+.post-meta .post-categories,
 .post-meta .post-links {
   margin-top: 3px;
 }

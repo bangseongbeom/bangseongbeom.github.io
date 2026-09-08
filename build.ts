@@ -487,48 +487,6 @@ function header({
   </header>`;
 }
 
-function tagList({
-  title,
-  tags,
-}: {
-  title?: string;
-  tags?: { url: string; title: string }[];
-}) {
-  if (!tags?.length) return "";
-  return /* HTML */ ` ${title ? /* HTML */ `<h2 class="tag-list-heading">${escape(title)}</h2>` : ""}
-    <ul class="tag-list" data-pagefind-ignore>
-      ${tags
-        .map(
-          (tag) =>
-            /* HTML */ `<li>
-              <a href="${escape(tag.url)}">${escape(tag.title)}</a>
-            </li>`,
-        )
-        .join("")}
-    </ul>`;
-}
-
-function categoryList({
-  title,
-  categories,
-}: {
-  title?: string;
-  categories?: { url: string; title: string }[];
-}) {
-  if (!categories?.length) return "";
-  return /* HTML */ ` ${title ? /* HTML */ `<h2 class="category-list-heading">${escape(title)}</h2>` : ""}
-    <ul class="category-list" data-pagefind-ignore>
-      ${categories
-        .map(
-          (category) =>
-            /* HTML */ `<li>
-              <a href="${escape(category.url)}">${escape(category.title)}</a>
-            </li>`,
-        )
-        .join("")}
-    </ul>`;
-}
-
 function home({
   title,
   content,
@@ -543,7 +501,7 @@ function home({
   paginator,
 }: {
   title?: string;
-  content: string;
+  content?: string;
   listTitle?: string;
   lang: string;
   showExcerpts?: boolean;
@@ -562,8 +520,37 @@ function home({
 }) {
   return /* HTML */ `<div class="home">
     ${title ? /* HTML */ `<h1 class="page-heading">${escape(title)}</h1>` : ""}
-    ${content} ${tagList({ title: tagsTitle, tags })}
-    ${categoryList({ title: categoriesTitle, categories })}
+    ${content ?? ""}
+    ${
+      tags?.length
+        ? /* HTML */ `${tagsTitle ? /* HTML */ `<h2 class="tag-list-heading">${escape(tagsTitle)}</h2>` : ""}
+            <p data-pagefind-ignore>
+              ${tags
+                .map(
+                  (tag) =>
+                    /* HTML */ `<a href="${escape(tag.url)}"
+                      >${escape(tag.title)}</a
+                    >`,
+                )
+                .join(", ")}
+            </p>`
+        : ""
+    }
+    ${
+      categories?.length
+        ? /* HTML */ `${categoriesTitle ? /* HTML */ `<h2 class="category-list-heading">${escape(categoriesTitle)}</h2>` : ""}
+            <p data-pagefind-ignore>
+              ${categories
+                .map(
+                  (category) =>
+                    /* HTML */ `<a href="${escape(category.url)}"
+                      >${escape(category.title)}</a
+                    >`,
+                )
+                .join(", ")}
+            </p>`
+        : ""
+    }
     ${
       posts?.length
         ? /* HTML */ `
@@ -769,7 +756,6 @@ function post({
     itemtype="http://schema.org/BlogPosting"
   >
     <header class="post-header">
-      ${categoryList({ categories })} ${tagList({ tags })}
       <h1 class="post-title p-name" itemprop="name headline">
         ${escape(title)}
       </h1>
@@ -819,6 +805,38 @@ function post({
                         <span class="p-author h-card" itemprop="name"
                           >${escape(author)}</span
                         ></span
+                      >`,
+                  )
+                  .join(", ")}
+              </div>`
+            : ""
+        }
+        ${
+          tags?.length
+            ? /* HTML */ `<div class="post-tags">
+                <span class="meta-label">${escape(messages.tags())}:</span>
+                ${tags
+                  .map(
+                    (tag) =>
+                      /* HTML */ `<a href="${escape(tag.url)}"
+                        >${escape(tag.title)}</a
+                      >`,
+                  )
+                  .join(", ")}
+              </div>`
+            : ""
+        }
+        ${
+          categories?.length
+            ? /* HTML */ `<div class="post-categories">
+                <span class="meta-label"
+                  >${escape(messages.categories())}:</span
+                >
+                ${categories
+                  .map(
+                    (category) =>
+                      /* HTML */ `<a href="${escape(category.url)}"
+                        >${escape(category.title)}</a
                       >`,
                   )
                   .join(", ")}
@@ -1511,10 +1529,6 @@ const siteAuthor = {
 const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
 const defaultLang = "en";
 
-const tagOverrides: Record<string, { title?: string; content?: string }> = {};
-const categoryOverrides: Record<string, { title?: string; content?: string }> =
-  {};
-
 const source = process.env.SOURCE ?? ".";
 const destination = process.env.DESTINATION ?? "_site";
 
@@ -1535,9 +1549,9 @@ const msgData = {
         modified: () => "Updated",
       },
     },
+    tags: () => "Tags",
+    categories: () => "Categories",
     home: {
-      tagsTitle: () => "Tags",
-      categoriesTitle: () => "Categories",
       listTitle: () => "Posts",
     },
     clipboardCopy: {
@@ -1565,9 +1579,9 @@ const msgData = {
         modified: () => "수정일",
       },
     },
+    tags: () => "태그",
+    categories: () => "카테고리",
     home: {
-      tagsTitle: () => "태그",
-      categoriesTitle: () => "카테고리",
       listTitle: () => "글 목록",
     },
     clipboardCopy: {
@@ -1707,8 +1721,7 @@ const tags = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
-    title: tagOverrides[tag]?.title ?? tag,
-    content: tagOverrides[tag]?.content ?? "",
+    title: {}[tag] ?? tag,
     path: join("tags", `${tag}.html`),
     url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
     posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
@@ -1720,8 +1733,18 @@ const categories = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
     name: category,
-    title: categoryOverrides[category]?.title ?? category,
-    content: categoryOverrides[category]?.content ?? "",
+    title:
+      {
+        android: "Android",
+        git: "Git",
+        iot: "IoT",
+        java: "Java",
+        linux: "Linux",
+        "machine-learning": "Machine Learning",
+        misc: "Misc",
+        python: "Python",
+        web: "Web",
+      }[category] ?? category,
     path: join("categories", `${category}.html`),
     url: new URL(
       toURLPathname(join("categories", category)),
@@ -1773,9 +1796,9 @@ for (const {
               listTitle: messages.home.listTitle(),
               lang,
               showExcerpts: true,
-              tagsTitle: messages.home.tagsTitle(),
+              tagsTitle: messages.tags(),
               tags,
-              categoriesTitle: messages.home.categoriesTitle(),
+              categoriesTitle: messages.categories(),
               categories,
               posts,
             })
@@ -1849,7 +1872,7 @@ for (const {
   });
 }
 
-for (const { title, content, path, url, posts } of [...tags, ...categories]) {
+for (const { title, path, url, posts } of [...tags, ...categories]) {
   const lang = defaultLang;
   const html = base({
     path,
@@ -1859,7 +1882,7 @@ for (const { title, content, path, url, posts } of [...tags, ...categories]) {
     baseURL,
     showSearch: true,
     navPages: [],
-    content: home({ title, content, lang, showExcerpts: true, posts }),
+    content: home({ title, lang, showExcerpts: true, posts }),
     repository,
     siteDescription,
     siteAuthor,
