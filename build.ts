@@ -1458,7 +1458,7 @@ function rss(
     .toSorted(
       (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
     )
-    .slice(0, 10);
+    .slice(0, 20);
 
   return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
