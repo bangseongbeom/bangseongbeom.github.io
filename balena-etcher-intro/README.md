@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [misc]
+categories: [other]
 date: 2020-05-07
 ---
 
