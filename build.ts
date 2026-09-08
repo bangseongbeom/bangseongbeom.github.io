@@ -1748,7 +1748,7 @@ const tags = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
-    title: {}[tag] ?? tag,
+    title: new Map().get(tag) ?? tag,
     path: join("tags", `${tag}.html`),
     url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
     posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
@@ -1761,17 +1761,17 @@ const categories = Array.from(
   .map((category) => ({
     name: category,
     title:
-      {
-        android: "Android",
-        git: "Git",
-        iot: "IoT",
-        java: "Java",
-        linux: "Linux",
-        "machine-learning": "Machine Learning",
-        misc: "Misc",
-        python: "Python",
-        web: "Web",
-      }[category] ?? category,
+      new Map([
+        ["android", "Android"],
+        ["git", "Git"],
+        ["iot", "IoT"],
+        ["java", "Java"],
+        ["linux", "Linux"],
+        ["machine-learning", "Machine Learning"],
+        ["misc", "Misc"],
+        ["python", "Python"],
+        ["web", "Web"],
+      ]).get(category) ?? category,
     path: join("categories", `${category}.html`),
     url: new URL(
       toURLPathname(join("categories", category)),
