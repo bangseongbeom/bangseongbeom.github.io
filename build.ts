@@ -491,7 +491,6 @@ function home({
   title,
   content,
   listTitle,
-  lang,
   showExcerpts,
   tagsTitle,
   tags,
@@ -503,13 +502,18 @@ function home({
   title?: string;
   content?: string;
   listTitle?: string;
-  lang: string;
   showExcerpts?: boolean;
   tagsTitle?: string;
   tags?: { url: string; title: string }[];
   categoriesTitle?: string;
   categories?: { url: string; title: string }[];
-  posts?: { date: Date; url: string; title: string; excerpt?: string }[];
+  posts?: {
+    lang: string;
+    date: Date;
+    url: string;
+    title: string;
+    excerpt?: string;
+  }[];
   paginator?: {
     previousPage?: number;
     previousPagePath?: string;
@@ -559,9 +563,9 @@ function home({
               ${posts
                 .map(
                   (post) =>
-                    /* HTML */ `<li>
+                    /* HTML */ `<li lang="${escape(post.lang)}">
                       <span class="post-meta"
-                        >${escape(post.date.toLocaleDateString(lang))}</span
+                        >${escape(post.date.toLocaleDateString(post.lang))}</span
                       >
                       <h3>
                         <a class="post-link" href="${escape(post.url)}">
@@ -1739,8 +1743,8 @@ for await (const path of glob("**", {
 }
 
 const posts = pages
-  .flatMap(({ date, url, title, excerpt, frontmatter }) =>
-    date ? [{ date, url, title, excerpt, frontmatter }] : [],
+  .flatMap(({ lang, date, url, title, excerpt, frontmatter }) =>
+    date ? [{ lang, date, url, title, excerpt, frontmatter }] : [],
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
@@ -1836,7 +1840,6 @@ for (const {
               title,
               content,
               listTitle: messages.home.listTitle(),
-              lang,
               showExcerpts: true,
               tagsTitle: messages.tags(),
               tags: tags.map(({ name, url }) => ({
@@ -1947,7 +1950,6 @@ for (let page = 2; page <= totalPages; page++) {
     content: home({
       title,
       listTitle: messages.home.listTitle(),
-      lang,
       showExcerpts: true,
       posts: posts.slice((page - 1) * paginate, page * paginate),
       paginator: getPaginator(page),
@@ -1972,7 +1974,7 @@ for (const { title, path, url, posts } of [...tags, ...categories]) {
     baseURL,
     showSearch: true,
     navPages: [],
-    content: home({ title, lang, showExcerpts: true, posts }),
+    content: home({ title, showExcerpts: true, posts }),
     repository,
     siteDescription,
     siteAuthor,
