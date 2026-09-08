@@ -1,3 +1,3 @@
 # Bang Seongbeom
 
-Developer Bang Seongbeom's technical documentation.
+Bang Seongbeom's tech blog.

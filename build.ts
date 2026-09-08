@@ -1525,7 +1525,7 @@ const execFile = promisify(child_process.execFile);
 
 const repository = "bangseongbeom/bangseongbeom.github.io";
 const siteTitle = "Bang Seongbeom";
-const siteDescription = "Developer Bang Seongbeom's technical documentation.";
+const siteDescription = "Bang Seongbeom's tech blog.";
 const siteAuthor = {
   name: "방성범 (Bang Seongbeom)",
   email: "bangseongbeom@gmail.com",
