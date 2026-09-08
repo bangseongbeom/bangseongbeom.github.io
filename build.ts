@@ -1551,7 +1551,20 @@ const msgData = {
       },
     },
     tags: () => "Tags",
+    tagTitle: (tag: string) => new Map().get(tag) ?? tag,
     categories: () => "Categories",
+    categoryTitle: (category: string) =>
+      new Map([
+        ["android", "Android"],
+        ["git", "Git"],
+        ["iot", "IoT"],
+        ["java", "Java"],
+        ["linux", "Linux"],
+        ["machine-learning", "Machine Learning"],
+        ["misc", "Misc"],
+        ["python", "Python"],
+        ["web", "Web"],
+      ]).get(category) ?? category,
     home: {
       listTitle: () => "Posts",
       page: (page: number) => `Page ${page}`,
@@ -1582,7 +1595,20 @@ const msgData = {
       },
     },
     tags: () => "태그",
+    tagTitle: (tag: string) => new Map().get(tag) ?? tag,
     categories: () => "카테고리",
+    categoryTitle: (category: string) =>
+      new Map([
+        ["android", "안드로이드"],
+        ["git", "Git"],
+        ["iot", "IoT"],
+        ["java", "자바"],
+        ["linux", "리눅스"],
+        ["machine-learning", "기계 학습"],
+        ["misc", "기타"],
+        ["python", "파이썬"],
+        ["web", "웹"],
+      ]).get(category) ?? category,
     home: {
       listTitle: () => "글 목록",
       page: (page: number) => `${page} 페이지`,
@@ -1748,7 +1774,7 @@ const tags = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
-    title: new Map().get(tag) ?? tag,
+    title: getMessages(defaultLang, defaultLang).tagTitle(tag),
     path: join("tags", `${tag}.html`),
     url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
     posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
@@ -1760,18 +1786,7 @@ const categories = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
     name: category,
-    title:
-      new Map([
-        ["android", "Android"],
-        ["git", "Git"],
-        ["iot", "IoT"],
-        ["java", "Java"],
-        ["linux", "Linux"],
-        ["machine-learning", "Machine Learning"],
-        ["misc", "Misc"],
-        ["python", "Python"],
-        ["web", "Web"],
-      ]).get(category) ?? category,
+    title: getMessages(defaultLang, defaultLang).categoryTitle(category),
     path: join("categories", `${category}.html`),
     url: new URL(
       toURLPathname(join("categories", category)),
@@ -1824,9 +1839,15 @@ for (const {
               lang,
               showExcerpts: true,
               tagsTitle: messages.tags(),
-              tags,
+              tags: tags.map(({ name, url }) => ({
+                url,
+                title: messages.tagTitle(name),
+              })),
               categoriesTitle: messages.categories(),
-              categories,
+              categories: categories.map(({ name, url }) => ({
+                url,
+                title: messages.categoryTitle(name),
+              })),
               posts: posts.slice(0, paginate),
               paginator: getPaginator(1),
             })
@@ -1838,12 +1859,18 @@ for (const {
                 messages,
                 lang,
                 authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-                tags: tags.filter(({ name }) =>
-                  frontmatter.tags?.includes(name),
-                ),
-                categories: categories.filter(({ name }) =>
-                  frontmatter.categories?.includes(name),
-                ),
+                tags: tags
+                  .filter(({ name }) => frontmatter.tags?.includes(name))
+                  .map(({ name, url }) => ({
+                    url,
+                    title: messages.tagTitle(name),
+                  })),
+                categories: categories
+                  .filter(({ name }) => frontmatter.categories?.includes(name))
+                  .map(({ name, url }) => ({
+                    url,
+                    title: messages.categoryTitle(name),
+                  })),
                 content,
                 comments: frontmatter.comments,
                 path,
