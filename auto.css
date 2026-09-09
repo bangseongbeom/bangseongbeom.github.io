@@ -147,7 +147,8 @@ h1, h2, h3, h4, h5, h6 {
  */
 a {
   color: var(--minima-link-base-color);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 a:visited {
   color: var(--minima-link-visited-color);
@@ -341,6 +342,7 @@ table td {
 }
 .site-title, .site-title:visited {
   color: var(--minima-site-title-color);
+  text-decoration: none;
 }
 
 .site-nav {
