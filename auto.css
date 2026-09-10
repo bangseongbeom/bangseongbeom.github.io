@@ -204,6 +204,10 @@ pre {
   color: var(--minima-heading-color);
   overflow-x: auto;
 }
+pre > code {
+  display: inline-block;
+  width: 100%;
+}
 
 div.highlight, figure.highlight {
   border: 1px solid var(--minima-border-color-01);
