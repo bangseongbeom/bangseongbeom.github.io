@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [machine-learning]
+categories: machine-learning
 date: 2020-05-10
 ---
 

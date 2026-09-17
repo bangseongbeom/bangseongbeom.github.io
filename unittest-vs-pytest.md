@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [python]
+categories: python
 date: 2018-10-23
 redirect_from: [/posts/unittest-vs-pytest.html]
 ---

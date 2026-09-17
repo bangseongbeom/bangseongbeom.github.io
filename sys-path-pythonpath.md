@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [python]
+categories: python
 date: 2020-04-19
 ---
 

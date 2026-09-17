@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [linux]
+categories: linux
 date: 2020-04-19
 redirect_from: [/dot-d-directories.html]
 ---

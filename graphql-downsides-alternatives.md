@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [web]
+categories: web
 date: 2019-01-29
 redirect_from: [/posts/graphql-downsides-alternatives.html]
 ---

@@ -25,8 +25,8 @@ import { codeToHtml } from "shiki";
 
 interface FrontMatter {
   lang?: string;
-  tags?: string[];
-  categories?: string[];
+  tags?: string;
+  categories?: string;
   title?: string;
   description?: string;
   date?: string;
@@ -1553,6 +1553,8 @@ const pages: {
   date?: Date;
   modifiedDate?: Date;
   frontmatter: FrontMatter;
+  tags: string[];
+  categories: string[];
   title: string;
   description?: string;
   content: string;
@@ -1619,6 +1621,8 @@ for await (const path of glob("**", {
       date,
       modifiedDate,
       frontmatter,
+      tags: frontmatter.tags?.split(/\s+/) ?? [],
+      categories: frontmatter.categories?.split(/\s+/) ?? [],
       title,
       description,
       content: document.body.innerHTML,
@@ -1639,6 +1643,8 @@ for await (const path of glob("**", {
       lang,
       messages,
       frontmatter: {},
+      tags: [],
+      categories: [],
       title,
       content: html,
       rssContent: html,
@@ -1656,8 +1662,8 @@ for await (const path of glob("**", {
 }
 
 const posts = pages
-  .flatMap(({ lang, date, url, title, excerpt, frontmatter }) =>
-    date ? [{ lang, date, url, title, excerpt, frontmatter }] : [],
+  .flatMap(({ lang, date, url, title, excerpt, tags, categories }) =>
+    date ? [{ lang, date, url, title, excerpt, tags, categories }] : [],
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
@@ -1685,20 +1691,18 @@ function getPaginator(page: number) {
     : undefined;
 }
 
-const tags = Array.from(
-  new Set(posts.flatMap(({ frontmatter }) => frontmatter.tags ?? [])),
-)
+const siteTags = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
     title: getMessages(defaultLang, defaultLang).tagTitle(tag),
     path: join("tags", `${tag}.html`),
     url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
-    posts: posts.filter(({ frontmatter }) => frontmatter.tags?.includes(tag)),
+    posts: posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
-const categories = Array.from(
-  new Set(posts.flatMap(({ frontmatter }) => frontmatter.categories ?? [])),
+const siteCategories = Array.from(
+  new Set(posts.flatMap(({ categories }) => categories)),
 )
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
@@ -1709,9 +1713,7 @@ const categories = Array.from(
       toURLPathname(join("categories", category)),
       baseURL,
     ).toString(),
-    posts: posts.filter(({ frontmatter }) =>
-      frontmatter.categories?.includes(category),
-    ),
+    posts: posts.filter(({ categories }) => categories.includes(category)),
   }));
 
 const { index, errors } = await pagefind.createIndex({
@@ -1727,6 +1729,8 @@ for (const {
   date,
   modifiedDate,
   frontmatter,
+  tags,
+  categories,
   title,
   description,
   content,
@@ -1739,8 +1743,8 @@ for (const {
     description,
     modifiedDate,
     date,
-    tags: frontmatter.tags,
-    categories: frontmatter.categories,
+    tags,
+    categories,
     url,
     baseURL,
     showSearch: true,
@@ -1755,12 +1759,12 @@ for (const {
               listTitle: messages.home.listTitle(),
               showExcerpts: true,
               tagsTitle: messages.tags(),
-              tags: tags.map(({ name, url }) => ({
+              tags: siteTags.map(({ name, url }) => ({
                 url,
                 title: messages.tagTitle(name),
               })),
               categoriesTitle: messages.categories(),
-              categories: categories.map(({ name, url }) => ({
+              categories: siteCategories.map(({ name, url }) => ({
                 url,
                 title: messages.categoryTitle(name),
               })),
@@ -1775,14 +1779,14 @@ for (const {
                 messages,
                 lang,
                 authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-                tags: tags
-                  .filter(({ name }) => frontmatter.tags?.includes(name))
+                tags: siteTags
+                  .filter(({ name }) => tags.includes(name))
                   .map(({ name, url }) => ({
                     url,
                     title: messages.tagTitle(name),
                   })),
-                categories: categories
-                  .filter(({ name }) => frontmatter.categories?.includes(name))
+                categories: siteCategories
+                  .filter(({ name }) => categories.includes(name))
                   .map(({ name, url }) => ({
                     url,
                     title: messages.categoryTitle(name),
@@ -1825,12 +1829,7 @@ for (const {
     title,
     link: url,
     description: rssContent,
-    categories: [
-      ...(frontmatter.tags ?? []),
-      ...(frontmatter.categories?.length
-        ? [frontmatter.categories.join("/")]
-        : []),
-    ],
+    categories: [...tags, ...(categories.length ? [categories.join("/")] : [])],
     pubDate: date,
     guid: url,
   });
@@ -1877,7 +1876,7 @@ for (let page = 2; page <= totalPages; page++) {
   sitemapURLs.push({ loc: url });
 }
 
-for (const { title, path, url, posts } of [...tags, ...categories]) {
+for (const { title, path, url, posts } of [...siteTags, ...siteCategories]) {
   const lang = defaultLang;
   const html = base({
     path,

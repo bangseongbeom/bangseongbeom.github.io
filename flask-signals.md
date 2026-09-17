@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [python]
+categories: python
 date: 2019-08-20
 ---
 

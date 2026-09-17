@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [web]
+categories: web
 date: 2020-06-14
 ---
 

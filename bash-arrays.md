@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [linux]
+categories: linux
 date: 2020-05-02
 redirect_from: [/shell-arrays.html]
 ---

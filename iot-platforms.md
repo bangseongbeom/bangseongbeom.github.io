@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [iot]
+categories: iot
 date: 2019-08-15
 ---
 

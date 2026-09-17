@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [android]
+categories: android
 date: 2018-10-29
 redirect_from: [/posts/now-kotlin.html]
 ---

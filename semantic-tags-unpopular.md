@@ -1,6 +1,6 @@
 ---
 lang: ko
-categories: [web]
+categories: web
 date: 2018-11-07
 redirect_from: [/posts/semantic-tags-unpopular.html]
 ---
