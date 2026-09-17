@@ -1663,7 +1663,7 @@ function getPagePath(page: number) {
 }
 
 function getPageURL(page: number, baseURL: string) {
-  return page === 1 ? baseURL : toURL(`page-${page}`, baseURL);
+  return page === 1 ? baseURL : new URL(`page-${page}`, baseURL).toString();
 }
 
 function getPaginator(page: number, baseURL: string) {
