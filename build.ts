@@ -1662,18 +1662,19 @@ function getPagePath(page: number) {
   return page === 1 ? "README.md" : `page-${page}.html`;
 }
 
-function getPageURL(page: number) {
+function getPageURL(page: number, baseURL: string) {
   return page === 1 ? baseURL : toURL(`page-${page}`, baseURL);
 }
 
-function getPaginator(page: number) {
+function getPaginator(page: number, baseURL: string) {
   return totalPages > 1
     ? {
         previousPage: page > 1 ? page - 1 : undefined,
-        previousPagePath: page > 1 ? getPageURL(page - 1) : undefined,
+        previousPagePath: page > 1 ? getPageURL(page - 1, baseURL) : undefined,
         page,
         nextPage: page < totalPages ? page + 1 : undefined,
-        nextPagePath: page < totalPages ? getPageURL(page + 1) : undefined,
+        nextPagePath:
+          page < totalPages ? getPageURL(page + 1, baseURL) : undefined,
       }
     : undefined;
 }
@@ -1753,7 +1754,7 @@ for (const {
                 title: messages.categoryTitle(name),
               })),
               posts: posts.slice(0, paginate),
-              paginator: getPaginator(1),
+              paginator: getPaginator(1, baseURL),
             })
           : date
             ? post({
@@ -1834,7 +1835,7 @@ for (let page = 2; page <= totalPages; page++) {
   const messages = getMessages(lang, defaultLang);
   const title = messages.home.page(page);
   const path = getPagePath(page);
-  const url = getPageURL(page);
+  const url = getPageURL(page, baseURL);
   const html = base({
     path,
     lang,
@@ -1848,7 +1849,7 @@ for (let page = 2; page <= totalPages; page++) {
       listTitle: messages.home.listTitle(),
       showExcerpts: true,
       posts: posts.slice((page - 1) * paginate, page * paginate),
-      paginator: getPaginator(page),
+      paginator: getPaginator(page, baseURL),
     }),
     repository,
     siteDescription,
