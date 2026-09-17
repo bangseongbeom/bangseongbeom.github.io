@@ -53,8 +53,11 @@ function toHTMLPath(path: string) {
     : path;
 }
 
-function toURLPathname(path: string) {
-  return path.split(sep).map(encodeURIComponent).join("/");
+function toURL(path: string, base: string) {
+  return new URL(
+    path.split(sep).map(encodeURIComponent).join("/"),
+    base,
+  ).toString();
 }
 
 function toHTMLURL(url: string, base: string) {
@@ -604,36 +607,27 @@ function postLinks({
 }) {
   return /* HTML */ `<div class="post-links">
     <a
-      href="${escape(new URL(toURLPathname(path), baseURL).toString())}"
+      href="${escape(toURL(path, baseURL))}"
       title="${escape(messages.header.nav.markdown.title())}"
       >${escape(messages.header.nav.markdown.content())}</a
     >,
     <a
       href="${escape(
-        new URL(
-          toURLPathname(path),
-          `https://github.com/${repository}/blob/main/`,
-        ).toString(),
+        toURL(path, `https://github.com/${repository}/blob/main/`),
       )}"
       title="${escape(messages.header.nav.github.title())}"
       >${escape(messages.header.nav.github.content())}</a
     >,
     <a
       href="${escape(
-        new URL(
-          toURLPathname(path),
-          `https://github.com/${repository}/edit/main/`,
-        ).toString(),
+        toURL(path, `https://github.com/${repository}/edit/main/`),
       )}"
       title="${escape(messages.header.nav.edit.title())}"
       >${escape(messages.header.nav.edit.content())}</a
     >,
     <a
       href="${escape(
-        new URL(
-          toURLPathname(path),
-          `https://github.com/${repository}/commits/main/`,
-        ).toString(),
+        toURL(path, `https://github.com/${repository}/commits/main/`),
       )}"
       title="${escape(messages.header.nav.history.title())}"
       >${escape(messages.header.nav.history.content())}</a
@@ -1086,18 +1080,13 @@ function base({
             ? /* HTML */ `<link
                   rel="alternate"
                   type="text/markdown"
-                  href="${escape(
-                    new URL(toURLPathname(path), baseURL).toString(),
-                  )}"
+                  href="${escape(toURL(path, baseURL))}"
                 />
                 <link
                   rel="alternate"
                   type="text/html"
                   href="${escape(
-                    new URL(
-                      toURLPathname(path),
-                      `https://github.com/${repository}/blob/main/`,
-                    ).toString(),
+                    toURL(path, `https://github.com/${repository}/blob/main/`),
                   )}"
                 />`
             : ""
@@ -1585,7 +1574,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = toHTMLURL(toURLPathname(path), baseURL);
+    const url = toHTMLURL(toURL(path, baseURL), baseURL);
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
@@ -1630,7 +1619,7 @@ for await (const path of glob("**", {
       rssContent: rssDocument.body.innerHTML,
     });
   } else if (extname(path) === ".html") {
-    const url = new URL(toURLPathname(path), baseURL).toString();
+    const url = toURL(path, baseURL);
     const html = await readFile(join(source, path), "utf8");
     const lang = getLang(undefined, path, defaultLang);
     const messages = getMessages(lang, defaultLang);
@@ -1675,8 +1664,8 @@ function getPagePath(page: number) {
 
 function getPageURL(page: number) {
   return page === 1
-    ? toHTMLURL(toURLPathname("README.md"), baseURL)
-    : new URL(toURLPathname(`page-${page}`), baseURL).toString();
+    ? toHTMLURL(toURL("README.md", baseURL), baseURL)
+    : toURL(`page-${page}`, baseURL);
 }
 
 function getPaginator(page: number) {
@@ -1697,7 +1686,7 @@ const siteTags = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
     name: tag,
     title: getMessages(defaultLang, defaultLang).tagTitle(tag),
     path: join("tags", `${tag}.html`),
-    url: new URL(toURLPathname(join("tags", tag)), baseURL).toString(),
+    url: toURL(join("tags", tag), baseURL),
     posts: posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
@@ -1709,10 +1698,7 @@ const siteCategories = Array.from(
     name: category,
     title: getMessages(defaultLang, defaultLang).categoryTitle(category),
     path: join("categories", `${category}.html`),
-    url: new URL(
-      toURLPathname(join("categories", category)),
-      baseURL,
-    ).toString(),
+    url: toURL(join("categories", category), baseURL),
     posts: posts.filter(({ categories }) => categories.includes(category)),
   }));
 
