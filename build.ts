@@ -1663,9 +1663,7 @@ function getPagePath(page: number) {
 }
 
 function getPageURL(page: number) {
-  return page === 1
-    ? toHTMLURL(toURL("README.md", baseURL), baseURL)
-    : toURL(`page-${page}`, baseURL);
+  return page === 1 ? baseURL : toURL(`page-${page}`, baseURL);
 }
 
 function getPaginator(page: number) {
