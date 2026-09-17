@@ -1047,6 +1047,14 @@ function base({
                       />`
                     : ""
                 }
+                ${
+                  categories?.[0]
+                    ? /* HTML */ `<meta
+                        property="article:section"
+                        content="${escape(categories[0])}"
+                      />`
+                    : ""
+                }
                 ${(tags ?? [])
                   .map(
                     (tag) =>
@@ -1055,15 +1063,7 @@ function base({
                         content="${escape(tag)}"
                       />`,
                   )
-                  .join("")}
-                ${
-                  categories?.[0]
-                    ? /* HTML */ `<meta
-                        property="article:section"
-                        content="${escape(categories[0])}"
-                      />`
-                    : ""
-                }`
+                  .join("")}`
             : ""
         }
         <link rel="canonical" href="${escape(url)}" />
