@@ -1584,9 +1584,9 @@ for await (const path of glob("**", {
   } else if (extname(path) === ".html") {
     const url = toCanonical(pathToURL(path, site.baseURL), site.baseURL);
     const html = await readFile(join(site.source, path), "utf8");
-    const lang = getLang(undefined, path, site.defaultLang);
-    const messages = getMessages(lang, site.defaultLang);
     const document = htmlToDocument(html, url);
+    const lang = getLang(document.body.lang, path, site.defaultLang);
+    const messages = getMessages(lang, site.defaultLang);
     const title = getTitle(undefined, document);
 
     pages.push({
