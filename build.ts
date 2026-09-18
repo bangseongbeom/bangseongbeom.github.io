@@ -1396,6 +1396,13 @@ async function clipboardCopyScript(site: Site) {
   );
 }
 
+async function pagefindFiles(site: Site) {
+  const { errors } = await site.index.writeFiles({
+    outputPath: join(site.destination, "pagefind"),
+  });
+  if (errors.length) throw new Error(errors.join("\n"));
+}
+
 const execFile = promisify(child_process.execFile);
 
 interface Site {
@@ -1408,6 +1415,7 @@ interface Site {
   paginate: number;
   source: string;
   destination: string;
+  index: pagefind.PagefindIndex;
   pages: Page[];
   posts: Post[];
   paginatedPages: {
@@ -1437,6 +1445,13 @@ interface Site {
   }[];
 }
 
+const defaultLang = "en";
+
+const { index, errors } = await pagefind.createIndex({
+  forceLanguage: defaultLang,
+});
+if (!index) fail(errors.join("\n"));
+
 const site: Site = {
   repository: "bangseongbeom/bangseongbeom.github.io",
   title: "Bang Seongbeom",
@@ -1446,10 +1461,11 @@ const site: Site = {
     email: "bangseongbeom@gmail.com",
   },
   baseURL: process.env.BASE_URL ?? "http://localhost:3000/",
-  defaultLang: "en",
+  defaultLang,
   paginate: 20,
   source: process.env.SOURCE ?? ".",
   destination: process.env.DESTINATION ?? "_site",
+  index,
   pages: [],
   posts: [],
   paginatedPages: [],
@@ -1701,11 +1717,6 @@ site.categoryPages = Array.from(
     posts: site.posts.filter(({ categories }) => categories.includes(category)),
   }));
 
-const { index, errors } = await pagefind.createIndex({
-  forceLanguage: site.defaultLang,
-});
-if (!index) fail(errors.join("\n"));
-
 for (const {
   path,
   url,
@@ -1801,7 +1812,7 @@ for (const {
   });
   await writeFile(join(site.destination, toHTMLPath(path)), html);
 
-  const { errors } = await index.addHTMLFile({
+  const { errors } = await site.index.addHTMLFile({
     url: new URL(url).pathname,
     content: html,
   });
@@ -1879,7 +1890,7 @@ for (const { title, path, url, posts } of [
   await mkdir(dirname(join(site.destination, path)), { recursive: true });
   await writeFile(join(site.destination, path), html);
 
-  const { errors } = await index.addHTMLFile({
+  const { errors } = await site.index.addHTMLFile({
     url: new URL(url).pathname,
     content: html,
   });
@@ -1889,9 +1900,6 @@ for (const { title, path, url, posts } of [
 await sitemap(site);
 await rss(site);
 await clipboardCopyScript(site);
+await pagefindFiles(site);
 
-const { errors: writeFilesErrors } = await index.writeFiles({
-  outputPath: join(site.destination, "pagefind"),
-});
-if (writeFilesErrors.length) throw new Error(writeFilesErrors.join("\n"));
 await pagefind.close();
