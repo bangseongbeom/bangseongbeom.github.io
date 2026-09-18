@@ -60,16 +60,26 @@ function pathToURL(path: string, base: string) {
   ).toString();
 }
 
-function toCanonical(url: string, base: string) {
-  const newURL = new URL(url, base);
+function toHTMLURL(markdownURL: string, base: string) {
+  const newURL = new URL(markdownURL, base);
   const scope = new URL("./", base).href;
   if (newURL.href.startsWith(scope)) {
     if (newURL.pathname.endsWith("/README.md"))
-      newURL.pathname = newURL.pathname.slice(0, -"README.md".length);
-    else if (newURL.pathname.endsWith("/index.html"))
-      newURL.pathname = newURL.pathname.slice(0, -"index.html".length);
+      newURL.pathname = `${newURL.pathname.slice(0, -"README.md".length)}index.html`;
     else if (newURL.pathname.endsWith(".md"))
-      newURL.pathname = newURL.pathname.slice(0, -".md".length);
+      newURL.pathname = `${newURL.pathname.slice(0, -".md".length)}.html`;
+  }
+  return newURL.toString();
+}
+
+function toCanonical(htmlURL: string, base: string) {
+  const newURL = new URL(htmlURL, base);
+  const scope = new URL("./", base).href;
+  if (newURL.href.startsWith(scope)) {
+    if (newURL.pathname.endsWith("/index.html"))
+      newURL.pathname = newURL.pathname.slice(0, -"index.html".length);
+    else if (newURL.pathname.endsWith(".html"))
+      newURL.pathname = newURL.pathname.slice(0, -".html".length);
   }
   return newURL.toString();
 }
@@ -197,7 +207,7 @@ function alerts(document: Document) {
 
 function links(document: Document, baseURL: string) {
   for (const link of document.links)
-    link.href = toCanonical(link.href, baseURL);
+    link.href = toCanonical(toHTMLURL(link.href, baseURL), baseURL);
 }
 
 function noFirstHeading(document: Document) {
@@ -1580,7 +1590,8 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = toCanonical(pathToURL(path, baseURL), baseURL);
+    const markdownURL = pathToURL(path, baseURL);
+    const url = toCanonical(toHTMLURL(markdownURL, baseURL), baseURL);
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
