@@ -1327,8 +1327,11 @@ async function writeRedirectPages({
   }
 }
 
-function sitemap(pages: { url: string; modifiedDate?: Date }[]) {
-  return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+async function sitemap(
+  { baseURL, destination }: { baseURL: string; destination: string },
+  pages: { url: string; modifiedDate?: Date }[],
+) {
+  const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages
   .toSorted((a, b) => a.url.localeCompare(b.url))
@@ -1342,21 +1345,29 @@ ${pages
   .join("")}
 </urlset>
 `;
+
+  await writeFile(join(destination, "sitemap.xml"), content);
+  await writeFile(
+    join(destination, "robots.txt"),
+    `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
+  );
 }
 
-function rss(
+async function rss(
   {
     title,
     description,
     author,
     baseURL,
     defaultLang,
+    destination,
   }: {
     title: string;
     description: string;
     author: { name: string; email: string };
     baseURL: string;
     defaultLang: string;
+    destination: string;
   },
   pages: {
     title: string;
@@ -1367,7 +1378,7 @@ function rss(
     rssContent: string;
   }[],
 ) {
-  return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
+  const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
     <title>${escape(title)}</title>
@@ -1397,6 +1408,8 @@ function rss(
   </channel>
 </rss>
 `;
+
+  await writeFile(join(destination, "feed.xml"), content);
 }
 
 const execFile = promisify(child_process.execFile);
@@ -1848,15 +1861,13 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
   if (errors.length) throw new Error(errors.join("\n"));
 }
 
-await writeFile(
-  join(site.destination, "sitemap.xml"),
-  sitemap([...pages, ...paginatedPages, ...tagPages, ...categoryPages]),
-);
-await writeFile(
-  join(site.destination, "robots.txt"),
-  `Sitemap: ${new URL("sitemap.xml", site.baseURL)}`,
-);
-await writeFile(join(site.destination, "feed.xml"), rss(site, pages));
+await sitemap(site, [
+  ...pages,
+  ...paginatedPages,
+  ...tagPages,
+  ...categoryPages,
+]);
+await rss(site, pages);
 
 await copyFile(
   join(site.source, "auto.css"),
