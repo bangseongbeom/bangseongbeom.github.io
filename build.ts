@@ -1626,9 +1626,17 @@ for await (const path of glob("**", {
   }
 
   if (
-    [".md", ".jpg", ".jpeg", ".png", ".gif", ".ico", ".svg", ".css"].includes(
-      extname(path),
-    )
+    [
+      ".md",
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".ico",
+      ".svg",
+      ".css",
+      ".map",
+    ].includes(extname(path))
   ) {
     await mkdir(dirname(join(site.destination, path)), { recursive: true });
     await copyFile(join(site.source, path), join(site.destination, path));
@@ -1874,14 +1882,6 @@ for (const { title, path, url, posts } of [
 await sitemap(site);
 await rss(site);
 
-await copyFile(
-  join(site.source, "auto.css"),
-  join(site.destination, "auto.css"),
-);
-await copyFile(
-  join(site.source, "auto.css.map"),
-  join(site.destination, "auto.css.map"),
-);
 await copyFile(
   join(site.source, "clipboard-copy.js"),
   join(site.destination, "clipboard-copy.js"),
