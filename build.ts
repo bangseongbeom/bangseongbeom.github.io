@@ -1403,6 +1403,37 @@ async function pagefindFiles(site: Site) {
   if (errors.length) throw new Error(errors.join("\n"));
 }
 
+async function tagAndCategoryPages(site: Site) {
+  for (const { title, path, url, posts } of [
+    ...site.tagPages,
+    ...site.categoryPages,
+  ]) {
+    const lang = site.defaultLang;
+    const html = base({
+      path,
+      lang,
+      title,
+      url,
+      baseURL: site.baseURL,
+      showSearch: true,
+      navPages: [],
+      content: home({ title, showExcerpts: true, posts }),
+      repository: site.repository,
+      siteTitle: site.title,
+      siteDescription: site.description,
+      siteAuthor: site.author,
+    });
+    await mkdir(dirname(join(site.destination, path)), { recursive: true });
+    await writeFile(join(site.destination, path), html);
+
+    const { errors } = await site.index.addHTMLFile({
+      url: new URL(url).pathname,
+      content: html,
+    });
+    if (errors.length) throw new Error(errors.join("\n"));
+  }
+}
+
 const execFile = promisify(child_process.execFile);
 
 interface Site {
@@ -1868,35 +1899,7 @@ for (const { page, path, url, lang, messages, title } of site.paginatedPages) {
   await writeFile(join(site.destination, path), html);
 }
 
-for (const { title, path, url, posts } of [
-  ...site.tagPages,
-  ...site.categoryPages,
-]) {
-  const lang = site.defaultLang;
-  const html = base({
-    path,
-    lang,
-    title,
-    url,
-    baseURL: site.baseURL,
-    showSearch: true,
-    navPages: [],
-    content: home({ title, showExcerpts: true, posts }),
-    repository: site.repository,
-    siteTitle: site.title,
-    siteDescription: site.description,
-    siteAuthor: site.author,
-  });
-  await mkdir(dirname(join(site.destination, path)), { recursive: true });
-  await writeFile(join(site.destination, path), html);
-
-  const { errors } = await site.index.addHTMLFile({
-    url: new URL(url).pathname,
-    content: html,
-  });
-  if (errors.length) throw new Error(errors.join("\n"));
-}
-
+await tagAndCategoryPages(site);
 await sitemap(site);
 await rss(site);
 await clipboardCopyScript(site);
