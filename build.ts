@@ -1325,24 +1325,15 @@ async function writeRedirectPages({
   }
 }
 
-function sitemap(
-  sitemapURLs: {
-    loc: string;
-    lastmod?: Date;
-    changefreq?:
-      "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-    priority?: number;
-  }[],
-) {
+function sitemap(pages: { url: string; modifiedDate?: Date }[]) {
   return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapURLs
+${pages
+  .toSorted((a, b) => a.url.localeCompare(b.url))
   .map(
-    ({ loc, lastmod, changefreq, priority }) => /* XML */ `<url>
-  <loc>${escape(loc)}</loc>
-  ${lastmod ? /* XML */ `<lastmod>${escape(lastmod.toISOString())}</lastmod>` : ""}
-  ${changefreq ? /* XML */ `<changefreq>${escape(changefreq)}</changefreq>` : ""}
-  ${priority !== undefined ? /* XML */ `<priority>${escape(priority.toString())}</priority>` : ""}
+    (page) => /* XML */ `<url>
+  <loc>${escape(page.url)}</loc>
+  ${page.modifiedDate ? /* XML */ `<lastmod>${escape(page.modifiedDate.toISOString())}</lastmod>` : ""}
 </url>
 `,
   )
@@ -1375,22 +1366,15 @@ function rss(
     categories?: string[];
     generator?: string;
   },
-  rssItems: {
+  pages: {
     title: string;
-    link: string;
-    description: string;
-    categories?: string[];
-    pubDate?: Date;
-    guid: string;
-    content?: string;
+    url: string;
+    date?: Date;
+    tags: string[];
+    categories: string[];
+    rssContent: string;
   }[],
 ) {
-  rssItems = rssItems
-    .toSorted(
-      (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
-    )
-    .slice(0, 20);
-
   return /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
@@ -1429,16 +1413,17 @@ function rss(
     ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link href="${escape(new URL("feed.xml", link).toString())}" rel="self" type="application/rss+xml" />
-    ${rssItems
+    ${pages
+      .toSorted((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
+      .slice(0, 20)
       .map(
-        (item) => /* XML */ `<item>
-      <title>${escape(item.title)}</title>
-      <link>${escape(item.link)}</link>
-      <description>${escape(item.description)}</description>
-      ${item.categories?.map((category) => /* XML */ `<category>${escape(category)}</category>`).join("") ?? ""}
-      ${item.pubDate ? /* XML*/ `<pubDate>${escape(item.pubDate.toUTCString())}</pubDate>` : ""}
-      <guid>${escape(item.guid)}</guid>
-      ${item.content ? /* XML */ `<content:encoded>${escape(item.content)}</content:encoded>` : ""}
+        (page) => /* XML */ `<item>
+      <title>${escape(page.title)}</title>
+      <link>${escape(page.url)}</link>
+      <description>${escape(page.rssContent)}</description>
+      ${[...page.tags, ...(page.categories.length ? [page.categories.join("/")] : [])].map((category) => /* XML */ `<category>${escape(category)}</category>`).join("")}
+      ${page.date ? /* XML*/ `<pubDate>${escape(page.date.toUTCString())}</pubDate>` : ""}
+      <guid>${escape(page.url)}</guid>
     </item>
     `,
       )
@@ -1569,24 +1554,6 @@ interface Page {
 
 const pages: Page[] = [];
 
-const sitemapURLs: {
-  loc: string;
-  lastmod?: Date;
-  changefreq?:
-    "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
-  priority?: number;
-}[] = [];
-
-const rssItems: {
-  title: string;
-  link: string;
-  description: string;
-  categories?: string[];
-  pubDate?: Date;
-  guid: string;
-  content?: string;
-}[] = [];
-
 for await (const path of glob("**", {
   cwd: source,
   exclude: ["**/_*", "**/.*", "**/node_modules"],
@@ -1698,7 +1665,7 @@ function getPaginator(page: number, baseURL: string) {
     : undefined;
 }
 
-const siteTags = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
+const tagPages = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
@@ -1708,7 +1675,7 @@ const siteTags = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
     posts: posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
-const siteCategories = Array.from(
+const categoryPages = Array.from(
   new Set(posts.flatMap(({ categories }) => categories)),
 )
   .toSorted((a, b) => a.localeCompare(b))
@@ -1763,12 +1730,12 @@ for (const {
               listTitle: messages.home.listTitle(),
               showExcerpts: true,
               tagsTitle: messages.tags(),
-              tags: siteTags.map(({ name, url }) => ({
+              tags: tagPages.map(({ name, url }) => ({
                 url,
                 title: messages.tagTitle(name),
               })),
               categoriesTitle: messages.categories(),
-              categories: siteCategories.map(({ name, url }) => ({
+              categories: categoryPages.map(({ name, url }) => ({
                 url,
                 title: messages.categoryTitle(name),
               })),
@@ -1783,13 +1750,13 @@ for (const {
                 messages,
                 lang,
                 authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
-                tags: siteTags
+                tags: tagPages
                   .filter(({ name }) => tags.includes(name))
                   .map(({ name, url }) => ({
                     url,
                     title: messages.tagTitle(name),
                   })),
-                categories: siteCategories
+                categories: categoryPages
                   .filter(({ name }) => categories.includes(name))
                   .map(({ name, url }) => ({
                     url,
@@ -1825,19 +1792,6 @@ for (const {
   });
   if (errors.length) fail(errors.join("\n"));
 
-  sitemapURLs.push({
-    loc: url,
-    lastmod: modifiedDate,
-  });
-  rssItems.push({
-    title,
-    link: url,
-    description: rssContent,
-    categories: [...tags, ...(categories.length ? [categories.join("/")] : [])],
-    pubDate: date,
-    guid: url,
-  });
-
   await writeRedirectPages({
     redirectFrom: frontmatter.redirect_from,
     path,
@@ -1848,13 +1802,22 @@ for (const {
   });
 }
 
+const paginatedPages = [];
 for (let page = 2; page <= totalPages; page++) {
   const lang =
     pages.find(({ path }) => path === "README.md")?.lang ?? defaultLang;
   const messages = getMessages(lang, defaultLang);
-  const title = messages.home.page(page);
-  const path = getPagePath(page);
-  const url = getPageURL(page, baseURL);
+  paginatedPages.push({
+    page,
+    path: getPagePath(page),
+    url: getPageURL(page, baseURL),
+    lang,
+    messages,
+    title: messages.home.page(page),
+  });
+}
+
+for (const { page, path, url, lang, messages, title } of paginatedPages) {
   const html = base({
     path,
     lang,
@@ -1876,11 +1839,9 @@ for (let page = 2; page <= totalPages; page++) {
   });
   await mkdir(dirname(join(destination, path)), { recursive: true });
   await writeFile(join(destination, path), html);
-
-  sitemapURLs.push({ loc: url });
 }
 
-for (const { title, path, url, posts } of [...siteTags, ...siteCategories]) {
+for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
   const lang = defaultLang;
   const html = base({
     path,
@@ -1903,13 +1864,11 @@ for (const { title, path, url, posts } of [...siteTags, ...siteCategories]) {
     content: html,
   });
   if (errors.length) fail(errors.join("\n"));
-
-  sitemapURLs.push({ loc: url });
 }
 
 await writeFile(
   join(destination, "sitemap.xml"),
-  sitemap(sitemapURLs.toSorted((a, b) => a.loc.localeCompare(b.loc))),
+  sitemap([...pages, ...paginatedPages, ...tagPages, ...categoryPages]),
 );
 await writeFile(
   join(destination, "robots.txt"),
@@ -1926,7 +1885,7 @@ await writeFile(
       managingEditor: siteAuthor,
       webMaster: siteAuthor,
     },
-    rssItems,
+    pages,
   ),
 );
 
