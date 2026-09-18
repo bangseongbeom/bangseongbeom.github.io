@@ -966,6 +966,7 @@ function base({
   navPages,
   content,
   repository,
+  siteTitle,
   siteDescription,
   siteAuthor,
 }: {
@@ -983,6 +984,7 @@ function base({
   navPages: { title?: string; url: string }[];
   content: string;
   repository: string;
+  siteTitle: string;
   siteDescription: string;
   siteAuthor?: { name?: string; email?: string };
 }) {
@@ -1031,7 +1033,7 @@ function base({
             ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
             : ""
         }
-        <meta property="og:site_name" content="${escape(site.title)}" />
+        <meta property="og:site_name" content="${escape(siteTitle)}" />
         ${
           date
             ? /* HTML */ `<meta
@@ -1232,7 +1234,7 @@ function base({
         }
       </head>
       <body>
-        ${header({ baseURL, siteTitle: site.title, showSearch, navPages })}
+        ${header({ baseURL, siteTitle, showSearch, navPages })}
         <main class="page-content" aria-label="Content" data-pagefind-body>
           <div class="wrapper">${content}</div>
         </main>
@@ -1781,6 +1783,7 @@ for (const {
                 repository: site.repository,
               }),
     repository: site.repository,
+    siteTitle: site.title,
     siteDescription: site.description,
     siteAuthor: site.author,
   });
@@ -1837,6 +1840,7 @@ for (const { page, path, url, lang, messages, title } of paginatedPages) {
       paginator: getPaginator(page, site.baseURL),
     }),
     repository: site.repository,
+    siteTitle: site.title,
     siteDescription: site.description,
     siteAuthor: site.author,
   });
@@ -1856,6 +1860,7 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
     navPages: [],
     content: home({ title, showExcerpts: true, posts }),
     repository: site.repository,
+    siteTitle: site.title,
     siteDescription: site.description,
     siteAuthor: site.author,
   });
