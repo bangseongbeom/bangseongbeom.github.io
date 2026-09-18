@@ -1327,24 +1327,15 @@ async function writeRedirectPages({
   }
 }
 
-async function sitemap({
-  baseURL,
-  destination,
-  pages,
-  paginatedPages,
-  tagPages,
-  categoryPages,
-}: {
-  baseURL: string;
-  destination: string;
-  pages: { url: string; modifiedDate?: Date }[];
-  paginatedPages: { url: string; modifiedDate?: Date }[];
-  tagPages: { url: string; modifiedDate?: Date }[];
-  categoryPages: { url: string; modifiedDate?: Date }[];
-}) {
+async function sitemap(site: Site) {
   const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...pages, ...paginatedPages, ...tagPages, ...categoryPages]
+${[
+  ...site.pages,
+  ...site.paginatedPages,
+  ...site.tagPages,
+  ...site.categoryPages,
+]
   .toSorted((a, b) => a.url.localeCompare(b.url))
   .map(
     (page) => /* XML */ `<url>
@@ -1357,50 +1348,27 @@ ${[...pages, ...paginatedPages, ...tagPages, ...categoryPages]
 </urlset>
 `;
 
-  await writeFile(join(destination, "sitemap.xml"), content);
+  await writeFile(join(site.destination, "sitemap.xml"), content);
   await writeFile(
-    join(destination, "robots.txt"),
-    `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
+    join(site.destination, "robots.txt"),
+    `Sitemap: ${new URL("sitemap.xml", site.baseURL)}`,
   );
 }
 
-async function rss({
-  title,
-  description,
-  author,
-  baseURL,
-  defaultLang,
-  destination,
-  posts,
-}: {
-  title: string;
-  description: string;
-  author: { name: string; email: string };
-  baseURL: string;
-  defaultLang: string;
-  destination: string;
-  posts: {
-    title: string;
-    url: string;
-    date?: Date;
-    tags: string[];
-    categories: string[];
-    rssContent: string;
-  }[];
-}) {
+async function rss(site: Site) {
   const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
-    <title>${escape(title)}</title>
-    <link>${escape(baseURL)}</link>
-    <description>${escape(description)}</description>
-    <language>${escape(defaultLang)}</language>
-    <managingEditor>${escape(author.email)} (${escape(author.name)})</managingEditor>
-    <webMaster>${escape(author.email)} (${escape(author.name)})</webMaster>
+    <title>${escape(site.title)}</title>
+    <link>${escape(site.baseURL)}</link>
+    <description>${escape(site.description)}</description>
+    <language>${escape(site.defaultLang)}</language>
+    <managingEditor>${escape(site.author.email)} (${escape(site.author.name)})</managingEditor>
+    <webMaster>${escape(site.author.email)} (${escape(site.author.name)})</webMaster>
     <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
-    <atom:link href="${escape(new URL("feed.xml", baseURL).toString())}" rel="self" type="application/rss+xml" />
-    ${posts
+    <atom:link href="${escape(new URL("feed.xml", site.baseURL).toString())}" rel="self" type="application/rss+xml" />
+    ${site.posts
       .slice(0, 20)
       .map(
         (post) => /* XML */ `<item>
@@ -1418,7 +1386,7 @@ async function rss({
 </rss>
 `;
 
-  await writeFile(join(destination, "feed.xml"), content);
+  await writeFile(join(site.destination, "feed.xml"), content);
 }
 
 const execFile = promisify(child_process.execFile);
@@ -1439,6 +1407,7 @@ interface Site {
     page: number;
     path: string;
     url: string;
+    modifiedDate?: Date;
     lang: string;
     messages: Messages;
     title: string;
@@ -1448,6 +1417,7 @@ interface Site {
     title: string;
     path: string;
     url: string;
+    modifiedDate?: Date;
     posts: Post[];
   }[];
   categoryPages: {
@@ -1455,6 +1425,7 @@ interface Site {
     title: string;
     path: string;
     url: string;
+    modifiedDate?: Date;
     posts: Post[];
   }[];
 }
