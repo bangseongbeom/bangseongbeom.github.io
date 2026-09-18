@@ -1347,26 +1347,16 @@ ${pages
 function rss(
   {
     title,
-    link,
     description,
-    language,
-    copyright,
-    managingEditor,
-    webMaster,
-    pubDate,
-    categories,
-    generator,
+    author,
+    baseURL,
+    defaultLang,
   }: {
     title: string;
-    link: string;
     description: string;
-    language?: string;
-    copyright?: string;
-    managingEditor?: string | { email: string; name: string };
-    webMaster?: string | { email: string; name: string };
-    pubDate?: Date;
-    categories?: string[];
-    generator?: string;
+    author: { name: string; email: string };
+    baseURL: string;
+    defaultLang: string;
   },
   pages: {
     title: string;
@@ -1381,40 +1371,14 @@ function rss(
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
     <title>${escape(title)}</title>
-    <link>${escape(link)}</link>
+    <link>${escape(baseURL)}</link>
     <description>${escape(description)}</description>
-    ${language ? /* XML */ `<language>${escape(language)}</language>` : ""}
-    ${copyright ? /* XML */ `<copyright>${escape(copyright)}</copyright>` : ""}
-    ${
-      managingEditor
-        ? /* XML */ `<managingEditor>${
-            typeof managingEditor === "string"
-              ? escape(managingEditor)
-              : `${escape(managingEditor.email)} (${escape(managingEditor.name)})`
-          }</managingEditor>`
-        : ""
-    }
-    ${
-      webMaster
-        ? /* XML */ `<webMaster>${
-            typeof webMaster === "string"
-              ? escape(webMaster)
-              : `${escape(webMaster.email)} (${escape(webMaster.name)})`
-          }</webMaster>`
-        : ""
-    }
-    ${pubDate ? /* XML */ `<pubDate>${escape(pubDate.toUTCString())}</pubDate>` : ""}
+    <language>${escape(defaultLang)}</language>
+    <managingEditor>${escape(author.email)} (${escape(author.name)})</managingEditor>
+    <webMaster>${escape(author.email)} (${escape(author.name)})</webMaster>
     <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
-    ${
-      categories
-        ?.map(
-          (category) => /* XML */ `<category>${escape(category)}</category>`,
-        )
-        .join("") ?? ""
-    }
-    ${generator ? /* XML */ `<generator>${escape(generator)}</generator>` : ""}
     <docs>https://www.rssboard.org/rss-specification</docs>
-    <atom:link href="${escape(new URL("feed.xml", link).toString())}" rel="self" type="application/rss+xml" />
+    <atom:link href="${escape(new URL("feed.xml", baseURL).toString())}" rel="self" type="application/rss+xml" />
     ${pages
       .toSorted((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
       .slice(0, 20)
@@ -1894,20 +1858,7 @@ await writeFile(
   join(site.destination, "robots.txt"),
   `Sitemap: ${new URL("sitemap.xml", site.baseURL)}`,
 );
-await writeFile(
-  join(site.destination, "feed.xml"),
-  rss(
-    {
-      title: site.title,
-      link: site.baseURL,
-      description: site.description,
-      language: site.defaultLang,
-      managingEditor: site.author,
-      webMaster: site.author,
-    },
-    pages,
-  ),
-);
+await writeFile(join(site.destination, "feed.xml"), rss(site, pages));
 
 await copyFile(
   join(site.source, "auto.css"),
