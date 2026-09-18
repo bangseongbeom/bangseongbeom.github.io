@@ -1327,13 +1327,24 @@ async function writeRedirectPages({
   }
 }
 
-async function sitemap(
-  { baseURL, destination }: { baseURL: string; destination: string },
-  pages: { url: string; modifiedDate?: Date }[],
-) {
+async function sitemap({
+  baseURL,
+  destination,
+  pages,
+  paginatedPages,
+  tagPages,
+  categoryPages,
+}: {
+  baseURL: string;
+  destination: string;
+  pages: { url: string; modifiedDate?: Date }[];
+  paginatedPages: { url: string; modifiedDate?: Date }[];
+  tagPages: { url: string; modifiedDate?: Date }[];
+  categoryPages: { url: string; modifiedDate?: Date }[];
+}) {
   const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages
+${[...pages, ...paginatedPages, ...tagPages, ...categoryPages]
   .toSorted((a, b) => a.url.localeCompare(b.url))
   .map(
     (page) => /* XML */ `<url>
@@ -1889,12 +1900,7 @@ for (const { title, path, url, posts } of [
   if (errors.length) throw new Error(errors.join("\n"));
 }
 
-await sitemap(site, [
-  ...site.pages,
-  ...site.paginatedPages,
-  ...site.tagPages,
-  ...site.categoryPages,
-]);
+await sitemap(site);
 await rss(site);
 
 await copyFile(
