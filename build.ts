@@ -1770,7 +1770,7 @@ for (const {
     url: new URL(url).pathname,
     content: html,
   });
-  if (errors.length) fail(errors.join("\n"));
+  if (errors.length) throw new Error(errors.join("\n"));
 
   await writeRedirectPages({
     redirectFrom: frontmatter.redirect_from,
@@ -1845,7 +1845,7 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
     url: new URL(url).pathname,
     content: html,
   });
-  if (errors.length) fail(errors.join("\n"));
+  if (errors.length) throw new Error(errors.join("\n"));
 }
 
 await writeFile(
@@ -1874,5 +1874,5 @@ await copyFile(
 const { errors: writeFilesErrors } = await index.writeFiles({
   outputPath: join(site.destination, "pagefind"),
 });
-if (writeFilesErrors.length) fail(writeFilesErrors.join("\n"));
+if (writeFilesErrors.length) throw new Error(writeFilesErrors.join("\n"));
 await pagefind.close();
