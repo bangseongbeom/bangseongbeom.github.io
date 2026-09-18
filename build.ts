@@ -60,16 +60,18 @@ function toURL(path: string, base: string) {
   ).toString();
 }
 
-function toHTMLURL(url: string, base: string) {
-  const htmlURL = new URL(url, base);
+function toCanonical(url: string, base: string) {
+  const newURL = new URL(url, base);
   const scope = new URL("./", base).href;
-  if (htmlURL.href.startsWith(scope)) {
-    if (htmlURL.pathname.endsWith("/README.md"))
-      htmlURL.pathname = htmlURL.pathname.slice(0, -"README.md".length);
-    else if (htmlURL.pathname.endsWith(".md"))
-      htmlURL.pathname = htmlURL.pathname.slice(0, -".md".length);
+  if (newURL.href.startsWith(scope)) {
+    if (newURL.pathname.endsWith("/README.md"))
+      newURL.pathname = newURL.pathname.slice(0, -"README.md".length);
+    else if (newURL.pathname.endsWith("/index.html"))
+      newURL.pathname = newURL.pathname.slice(0, -"index.html".length);
+    else if (newURL.pathname.endsWith(".md"))
+      newURL.pathname = newURL.pathname.slice(0, -".md".length);
   }
-  return htmlURL.toString();
+  return newURL.toString();
 }
 
 function getLang(
@@ -194,7 +196,8 @@ function alerts(document: Document) {
 }
 
 function links(document: Document, baseURL: string) {
-  for (const link of document.links) link.href = toHTMLURL(link.href, baseURL);
+  for (const link of document.links)
+    link.href = toCanonical(link.href, baseURL);
 }
 
 function noFirstHeading(document: Document) {
@@ -1574,7 +1577,7 @@ for await (const path of glob("**", {
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const url = toHTMLURL(toURL(path, baseURL), baseURL);
+    const url = toCanonical(toURL(path, baseURL), baseURL);
     const markdown = await readFile(join(source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
     const lang = getLang(frontmatter.lang, path, defaultLang);
@@ -1619,7 +1622,7 @@ for await (const path of glob("**", {
       rssContent: rssDocument.body.innerHTML,
     });
   } else if (extname(path) === ".html") {
-    const url = toURL(path, baseURL);
+    const url = toCanonical(toURL(path, baseURL), baseURL);
     const html = await readFile(join(source, path), "utf8");
     const lang = getLang(undefined, path, defaultLang);
     const messages = getMessages(lang, defaultLang);
