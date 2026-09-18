@@ -1655,7 +1655,7 @@ function getPageURL(page: number, baseURL: string) {
   return page === 1 ? baseURL : new URL(`page-${page}`, baseURL).toString();
 }
 
-function getPaginator(page: number, baseURL: string) {
+function getPaginator(page: number, totalPages: number, baseURL: string) {
   return totalPages > 1
     ? {
         previousPage: page > 1 ? page - 1 : undefined,
@@ -1745,7 +1745,7 @@ for (const {
                 title: messages.categoryTitle(name),
               })),
               posts: posts.slice(0, site.paginate),
-              paginator: getPaginator(1, site.baseURL),
+              paginator: getPaginator(1, totalPages, site.baseURL),
             })
           : date
             ? post({
@@ -1837,7 +1837,7 @@ for (const { page, path, url, lang, messages, title } of paginatedPages) {
       listTitle: messages.home.listTitle(),
       showExcerpts: true,
       posts: posts.slice((page - 1) * site.paginate, page * site.paginate),
-      paginator: getPaginator(page, site.baseURL),
+      paginator: getPaginator(page, totalPages, site.baseURL),
     }),
     repository: site.repository,
     siteTitle: site.title,
