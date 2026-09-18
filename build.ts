@@ -1389,6 +1389,13 @@ async function rss(site: Site) {
   await writeFile(join(site.destination, "feed.xml"), content);
 }
 
+async function clipboardCopyScript(site: Site) {
+  await copyFile(
+    join(site.source, "clipboard-copy.js"),
+    join(site.destination, "clipboard-copy.js"),
+  );
+}
+
 const execFile = promisify(child_process.execFile);
 
 interface Site {
@@ -1881,11 +1888,7 @@ for (const { title, path, url, posts } of [
 
 await sitemap(site);
 await rss(site);
-
-await copyFile(
-  join(site.source, "clipboard-copy.js"),
-  join(site.destination, "clipboard-copy.js"),
-);
+await clipboardCopyScript(site);
 
 const { errors: writeFilesErrors } = await index.writeFiles({
   outputPath: join(site.destination, "pagefind"),
