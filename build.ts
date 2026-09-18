@@ -1437,7 +1437,19 @@ function rss(
 
 const execFile = promisify(child_process.execFile);
 
-const site = {
+interface Site {
+  repository: string;
+  title: string;
+  description: string;
+  author: { name: string; email: string };
+  baseURL: string;
+  defaultLang: string;
+  paginate: number;
+  source: string;
+  destination: string;
+}
+
+const site: Site = {
   repository: "bangseongbeom/bangseongbeom.github.io",
   title: "Bang Seongbeom",
   description: "Bang Seongbeom's tech blog.",
