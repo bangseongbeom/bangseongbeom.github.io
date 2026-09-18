@@ -1031,7 +1031,7 @@ function base({
             ? /*HTML */ `<meta property="og:locale" content="${escape(toOGLocale(lang))}" />`
             : ""
         }
-        <meta property="og:site_name" content="${escape(siteTitle)}" />
+        <meta property="og:site_name" content="${escape(site.title)}" />
         ${
           date
             ? /* HTML */ `<meta
@@ -1232,7 +1232,7 @@ function base({
         }
       </head>
       <body>
-        ${header({ baseURL, siteTitle, showSearch, navPages })}
+        ${header({ baseURL, siteTitle: site.title, showSearch, navPages })}
         <main class="page-content" aria-label="Content" data-pagefind-body>
           <div class="wrapper">${content}</div>
         </main>
@@ -1435,19 +1435,20 @@ function rss(
 
 const execFile = promisify(child_process.execFile);
 
-const repository = "bangseongbeom/bangseongbeom.github.io";
-const siteTitle = "Bang Seongbeom";
-const siteDescription = "Bang Seongbeom's tech blog.";
-const siteAuthor = {
-  name: "방성범 (Bang Seongbeom)",
-  email: "bangseongbeom@gmail.com",
+const site = {
+  repository: "bangseongbeom/bangseongbeom.github.io",
+  title: "Bang Seongbeom",
+  description: "Bang Seongbeom's tech blog.",
+  author: {
+    name: "방성범 (Bang Seongbeom)",
+    email: "bangseongbeom@gmail.com",
+  },
+  baseURL: process.env.BASE_URL ?? "http://localhost:3000/",
+  defaultLang: "en",
+  paginate: 20,
+  source: process.env.SOURCE ?? ".",
+  destination: process.env.DESTINATION ?? "_site",
 };
-const baseURL = process.env.BASE_URL ?? "http://localhost:3000/";
-const defaultLang = "en";
-const paginate = 20;
-
-const source = process.env.SOURCE ?? ".";
-const destination = process.env.DESTINATION ?? "_site";
 
 const msgData = {
   en: {
@@ -1555,25 +1556,25 @@ interface Page {
 const pages: Page[] = [];
 
 for await (const path of glob("**", {
-  cwd: source,
+  cwd: site.source,
   exclude: ["**/_*", "**/.*", "**/node_modules"],
 })) {
   if (extname(path) === ".md") {
-    const markdownURL = pathToURL(path, baseURL);
-    const url = toCanonical(toHTMLURL(markdownURL, baseURL), baseURL);
-    const markdown = await readFile(join(source, path), "utf8");
+    const markdownURL = pathToURL(path, site.baseURL);
+    const url = toCanonical(toHTMLURL(markdownURL, site.baseURL), site.baseURL);
+    const markdown = await readFile(join(site.source, path), "utf8");
     const { frontmatter, html } = markdownToHTML(markdown);
-    const lang = getLang(frontmatter.lang, path, defaultLang);
-    const messages = getMessages(lang, defaultLang);
+    const lang = getLang(frontmatter.lang, path, site.defaultLang);
+    const messages = getMessages(lang, site.defaultLang);
     const date = getDate(frontmatter.date);
     const modifiedDate = await getModifiedDate(
       frontmatter.modified_date,
-      join(source, path),
+      join(site.source, path),
     );
     const document = htmlToDocument(html, url);
     headingIds(document);
     alerts(document);
-    links(document, baseURL);
+    links(document, site.baseURL);
     const title = getTitle(frontmatter.title, document);
     const description = getDescription(frontmatter.description, document);
     const excerpt = getExcerpt(document);
@@ -1581,7 +1582,7 @@ for await (const path of glob("**", {
     const rssDocument = htmlToDocument(rssHTML, url);
     headingIds(rssDocument);
     alerts(rssDocument);
-    links(rssDocument, baseURL);
+    links(rssDocument, site.baseURL);
     noFirstHeading(document);
     alertOcticons(document);
     anchorLinks(document);
@@ -1605,10 +1606,10 @@ for await (const path of glob("**", {
       rssContent: rssDocument.body.innerHTML,
     });
   } else if (extname(path) === ".html") {
-    const url = toCanonical(pathToURL(path, baseURL), baseURL);
-    const html = await readFile(join(source, path), "utf8");
-    const lang = getLang(undefined, path, defaultLang);
-    const messages = getMessages(lang, defaultLang);
+    const url = toCanonical(pathToURL(path, site.baseURL), site.baseURL);
+    const html = await readFile(join(site.source, path), "utf8");
+    const lang = getLang(undefined, path, site.defaultLang);
+    const messages = getMessages(lang, site.defaultLang);
     const document = htmlToDocument(html, url);
     const title = getTitle(undefined, document);
 
@@ -1631,8 +1632,8 @@ for await (const path of glob("**", {
       extname(path),
     )
   ) {
-    await mkdir(dirname(join(destination, path)), { recursive: true });
-    await copyFile(join(source, path), join(destination, path));
+    await mkdir(dirname(join(site.destination, path)), { recursive: true });
+    await copyFile(join(site.source, path), join(site.destination, path));
   }
 }
 
@@ -1642,7 +1643,7 @@ const posts = pages
   )
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
-const totalPages = Math.max(1, Math.ceil(posts.length / paginate));
+const totalPages = Math.max(1, Math.ceil(posts.length / site.paginate));
 
 function getPagePath(page: number) {
   return page === 1 ? "README.md" : `page-${page}.html`;
@@ -1669,9 +1670,9 @@ const tagPages = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
-    title: getMessages(defaultLang, defaultLang).tagTitle(tag),
+    title: getMessages(site.defaultLang, site.defaultLang).tagTitle(tag),
     path: join("tags", `${tag}.html`),
-    url: pathToURL(join("tags", tag), baseURL),
+    url: pathToURL(join("tags", tag), site.baseURL),
     posts: posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
@@ -1681,14 +1682,16 @@ const categoryPages = Array.from(
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
     name: category,
-    title: getMessages(defaultLang, defaultLang).categoryTitle(category),
+    title: getMessages(site.defaultLang, site.defaultLang).categoryTitle(
+      category,
+    ),
     path: join("categories", `${category}.html`),
-    url: pathToURL(join("categories", category), baseURL),
+    url: pathToURL(join("categories", category), site.baseURL),
     posts: posts.filter(({ categories }) => categories.includes(category)),
   }));
 
 const { index, errors } = await pagefind.createIndex({
-  forceLanguage: defaultLang,
+  forceLanguage: site.defaultLang,
 });
 if (!index) fail(errors.join("\n"));
 
@@ -1717,7 +1720,7 @@ for (const {
     tags,
     categories,
     url,
-    baseURL,
+    baseURL: site.baseURL,
     showSearch: true,
     navPages: [],
     content:
@@ -1739,8 +1742,8 @@ for (const {
                 url,
                 title: messages.categoryTitle(name),
               })),
-              posts: posts.slice(0, paginate),
-              paginator: getPaginator(1, baseURL),
+              posts: posts.slice(0, site.paginate),
+              paginator: getPaginator(1, site.baseURL),
             })
           : date
             ? post({
@@ -1749,7 +1752,7 @@ for (const {
                 date,
                 messages,
                 lang,
-                authors: [siteAuthor.name, ...(frontmatter.authors ?? [])],
+                authors: [site.author.name, ...(frontmatter.authors ?? [])],
                 tags: tagPages
                   .filter(({ name }) => tags.includes(name))
                   .map(({ name, url }) => ({
@@ -1766,25 +1769,25 @@ for (const {
                 comments: frontmatter.comments,
                 path,
                 url,
-                baseURL,
-                repository,
+                baseURL: site.baseURL,
+                repository: site.repository,
               })
             : page({
                 title,
                 content,
                 messages,
                 path,
-                baseURL,
-                repository,
+                baseURL: site.baseURL,
+                repository: site.repository,
               }),
-    repository,
-    siteDescription,
-    siteAuthor,
+    repository: site.repository,
+    siteDescription: site.description,
+    siteAuthor: site.author,
   });
-  await mkdir(dirname(join(destination, toHTMLPath(path))), {
+  await mkdir(dirname(join(site.destination, toHTMLPath(path))), {
     recursive: true,
   });
-  await writeFile(join(destination, toHTMLPath(path)), html);
+  await writeFile(join(site.destination, toHTMLPath(path)), html);
 
   const { errors } = await index.addHTMLFile({
     url: new URL(url).pathname,
@@ -1795,22 +1798,22 @@ for (const {
   await writeRedirectPages({
     redirectFrom: frontmatter.redirect_from,
     path,
-    destination,
+    destination: site.destination,
     title,
     url,
-    baseURL,
+    baseURL: site.baseURL,
   });
 }
 
 const paginatedPages = [];
 for (let page = 2; page <= totalPages; page++) {
   const lang =
-    pages.find(({ path }) => path === "README.md")?.lang ?? defaultLang;
-  const messages = getMessages(lang, defaultLang);
+    pages.find(({ path }) => path === "README.md")?.lang ?? site.defaultLang;
+  const messages = getMessages(lang, site.defaultLang);
   paginatedPages.push({
     page,
     path: getPagePath(page),
-    url: getPageURL(page, baseURL),
+    url: getPageURL(page, site.baseURL),
     lang,
     messages,
     title: messages.home.page(page),
@@ -1823,41 +1826,41 @@ for (const { page, path, url, lang, messages, title } of paginatedPages) {
     lang,
     title,
     url,
-    baseURL,
+    baseURL: site.baseURL,
     showSearch: true,
     navPages: [],
     content: home({
       title,
       listTitle: messages.home.listTitle(),
       showExcerpts: true,
-      posts: posts.slice((page - 1) * paginate, page * paginate),
-      paginator: getPaginator(page, baseURL),
+      posts: posts.slice((page - 1) * site.paginate, page * site.paginate),
+      paginator: getPaginator(page, site.baseURL),
     }),
-    repository,
-    siteDescription,
-    siteAuthor,
+    repository: site.repository,
+    siteDescription: site.description,
+    siteAuthor: site.author,
   });
-  await mkdir(dirname(join(destination, path)), { recursive: true });
-  await writeFile(join(destination, path), html);
+  await mkdir(dirname(join(site.destination, path)), { recursive: true });
+  await writeFile(join(site.destination, path), html);
 }
 
 for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
-  const lang = defaultLang;
+  const lang = site.defaultLang;
   const html = base({
     path,
     lang,
     title,
     url,
-    baseURL,
+    baseURL: site.baseURL,
     showSearch: true,
     navPages: [],
     content: home({ title, showExcerpts: true, posts }),
-    repository,
-    siteDescription,
-    siteAuthor,
+    repository: site.repository,
+    siteDescription: site.description,
+    siteAuthor: site.author,
   });
-  await mkdir(dirname(join(destination, path)), { recursive: true });
-  await writeFile(join(destination, path), html);
+  await mkdir(dirname(join(site.destination, path)), { recursive: true });
+  await writeFile(join(site.destination, path), html);
 
   const { errors } = await index.addHTMLFile({
     url: new URL(url).pathname,
@@ -1867,37 +1870,43 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
 }
 
 await writeFile(
-  join(destination, "sitemap.xml"),
+  join(site.destination, "sitemap.xml"),
   sitemap([...pages, ...paginatedPages, ...tagPages, ...categoryPages]),
 );
 await writeFile(
-  join(destination, "robots.txt"),
-  `Sitemap: ${new URL("sitemap.xml", baseURL)}`,
+  join(site.destination, "robots.txt"),
+  `Sitemap: ${new URL("sitemap.xml", site.baseURL)}`,
 );
 await writeFile(
-  join(destination, "feed.xml"),
+  join(site.destination, "feed.xml"),
   rss(
     {
-      title: siteTitle,
-      link: baseURL,
-      description: siteDescription,
-      language: defaultLang,
-      managingEditor: siteAuthor,
-      webMaster: siteAuthor,
+      title: site.title,
+      link: site.baseURL,
+      description: site.description,
+      language: site.defaultLang,
+      managingEditor: site.author,
+      webMaster: site.author,
     },
     pages,
   ),
 );
 
-await copyFile(join(source, "auto.css"), join(destination, "auto.css"));
-await copyFile(join(source, "auto.css.map"), join(destination, "auto.css.map"));
 await copyFile(
-  join(source, "clipboard-copy.js"),
-  join(destination, "clipboard-copy.js"),
+  join(site.source, "auto.css"),
+  join(site.destination, "auto.css"),
+);
+await copyFile(
+  join(site.source, "auto.css.map"),
+  join(site.destination, "auto.css.map"),
+);
+await copyFile(
+  join(site.source, "clipboard-copy.js"),
+  join(site.destination, "clipboard-copy.js"),
 );
 
 const { errors: writeFilesErrors } = await index.writeFiles({
-  outputPath: join(destination, "pagefind"),
+  outputPath: join(site.destination, "pagefind"),
 });
 if (writeFilesErrors.length) fail(writeFilesErrors.join("\n"));
 await pagefind.close();
