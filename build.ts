@@ -1558,8 +1558,6 @@ for await (const path of glob("**", {
     const excerpt = getExcerpt(document);
     const { html: rssHTML } = markdownToHTML(markdown);
     const rssDocument = htmlToDocument(rssHTML, url);
-    headingIds(rssDocument);
-    alerts(rssDocument);
     links(rssDocument, site.baseURL);
     noFirstHeading(document);
     alertOcticons(document);
