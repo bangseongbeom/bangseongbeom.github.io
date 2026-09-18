@@ -1353,31 +1353,30 @@ ${pages
   );
 }
 
-async function rss(
-  {
-    title,
-    description,
-    author,
-    baseURL,
-    defaultLang,
-    destination,
-  }: {
-    title: string;
-    description: string;
-    author: { name: string; email: string };
-    baseURL: string;
-    defaultLang: string;
-    destination: string;
-  },
-  pages: {
+async function rss({
+  title,
+  description,
+  author,
+  baseURL,
+  defaultLang,
+  destination,
+  posts,
+}: {
+  title: string;
+  description: string;
+  author: { name: string; email: string };
+  baseURL: string;
+  defaultLang: string;
+  destination: string;
+  posts: {
     title: string;
     url: string;
     date?: Date;
     tags: string[];
     categories: string[];
     rssContent: string;
-  }[],
-) {
+  }[];
+}) {
   const content = /* XML */ `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
@@ -1390,17 +1389,16 @@ async function rss(
     <lastBuildDate>${escape(new Date().toUTCString())}</lastBuildDate>
     <docs>https://www.rssboard.org/rss-specification</docs>
     <atom:link href="${escape(new URL("feed.xml", baseURL).toString())}" rel="self" type="application/rss+xml" />
-    ${pages
-      .toSorted((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
+    ${posts
       .slice(0, 20)
       .map(
-        (page) => /* XML */ `<item>
-      <title>${escape(page.title)}</title>
-      <link>${escape(page.url)}</link>
-      <description>${escape(page.rssContent)}</description>
-      ${[...page.tags, ...(page.categories.length ? [page.categories.join("/")] : [])].map((category) => /* XML */ `<category>${escape(category)}</category>`).join("")}
-      ${page.date ? /* XML*/ `<pubDate>${escape(page.date.toUTCString())}</pubDate>` : ""}
-      <guid>${escape(page.url)}</guid>
+        (post) => /* XML */ `<item>
+      <title>${escape(post.title)}</title>
+      <link>${escape(post.url)}</link>
+      <description>${escape(post.rssContent)}</description>
+      ${[...post.tags, ...(post.categories.length ? [post.categories.join("/")] : [])].map((category) => /* XML */ `<category>${escape(category)}</category>`).join("")}
+      ${post.date ? /* XML*/ `<pubDate>${escape(post.date.toUTCString())}</pubDate>` : ""}
+      <guid>${escape(post.url)}</guid>
     </item>
     `,
       )
@@ -1870,7 +1868,7 @@ await sitemap(site, [
   ...tagPages,
   ...categoryPages,
 ]);
-await rss(site, site.pages);
+await rss(site);
 
 await copyFile(
   join(site.source, "auto.css"),
