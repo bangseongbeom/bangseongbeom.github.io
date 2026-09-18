@@ -1424,6 +1424,28 @@ interface Site {
   destination: string;
   pages: Page[];
   posts: Post[];
+  paginatedPages: {
+    page: number;
+    path: string;
+    url: string;
+    lang: string;
+    messages: Messages;
+    title: string;
+  }[];
+  tagPages: {
+    name: string;
+    title: string;
+    path: string;
+    url: string;
+    posts: Post[];
+  }[];
+  categoryPages: {
+    name: string;
+    title: string;
+    path: string;
+    url: string;
+    posts: Post[];
+  }[];
 }
 
 const site: Site = {
@@ -1441,6 +1463,9 @@ const site: Site = {
   destination: process.env.DESTINATION ?? "_site",
   pages: [],
   posts: [],
+  paginatedPages: [],
+  tagPages: [],
+  categoryPages: [],
 };
 
 const msgData = {
@@ -1655,7 +1680,7 @@ function getPaginator(page: number, totalPages: number, baseURL: string) {
     : undefined;
 }
 
-const tagPages = Array.from(new Set(site.posts.flatMap(({ tags }) => tags)))
+site.tagPages = Array.from(new Set(site.posts.flatMap(({ tags }) => tags)))
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
@@ -1665,7 +1690,7 @@ const tagPages = Array.from(new Set(site.posts.flatMap(({ tags }) => tags)))
     posts: site.posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
-const categoryPages = Array.from(
+site.categoryPages = Array.from(
   new Set(site.posts.flatMap(({ categories }) => categories)),
 )
   .toSorted((a, b) => a.localeCompare(b))
@@ -1722,12 +1747,12 @@ for (const {
               listTitle: messages.home.listTitle(),
               showExcerpts: true,
               tagsTitle: messages.tags(),
-              tags: tagPages.map(({ name, url }) => ({
+              tags: site.tagPages.map(({ name, url }) => ({
                 url,
                 title: messages.tagTitle(name),
               })),
               categoriesTitle: messages.categories(),
-              categories: categoryPages.map(({ name, url }) => ({
+              categories: site.categoryPages.map(({ name, url }) => ({
                 url,
                 title: messages.categoryTitle(name),
               })),
@@ -1742,13 +1767,13 @@ for (const {
                 messages,
                 lang,
                 authors: [site.author.name, ...(frontmatter.authors ?? [])],
-                tags: tagPages
+                tags: site.tagPages
                   .filter(({ name }) => tags.includes(name))
                   .map(({ name, url }) => ({
                     url,
                     title: messages.tagTitle(name),
                   })),
-                categories: categoryPages
+                categories: site.categoryPages
                   .filter(({ name }) => categories.includes(name))
                   .map(({ name, url }) => ({
                     url,
@@ -1795,13 +1820,12 @@ for (const {
   });
 }
 
-const paginatedPages = [];
 for (let page = 2; page <= totalPages; page++) {
   const lang =
     site.pages.find(({ path }) => path === "README.md")?.lang ??
     site.defaultLang;
   const messages = getMessages(lang, site.defaultLang);
-  paginatedPages.push({
+  site.paginatedPages.push({
     page,
     path: getPagePath(page),
     url: getPageURL(page, site.baseURL),
@@ -1811,7 +1835,7 @@ for (let page = 2; page <= totalPages; page++) {
   });
 }
 
-for (const { page, path, url, lang, messages, title } of paginatedPages) {
+for (const { page, path, url, lang, messages, title } of site.paginatedPages) {
   const html = base({
     path,
     lang,
@@ -1836,7 +1860,10 @@ for (const { page, path, url, lang, messages, title } of paginatedPages) {
   await writeFile(join(site.destination, path), html);
 }
 
-for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
+for (const { title, path, url, posts } of [
+  ...site.tagPages,
+  ...site.categoryPages,
+]) {
   const lang = site.defaultLang;
   const html = base({
     path,
@@ -1864,9 +1891,9 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
 
 await sitemap(site, [
   ...site.pages,
-  ...paginatedPages,
-  ...tagPages,
-  ...categoryPages,
+  ...site.paginatedPages,
+  ...site.tagPages,
+  ...site.categoryPages,
 ]);
 await rss(site);
 
