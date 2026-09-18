@@ -1550,7 +1550,7 @@ const msgData = {
 type MessageData = typeof msgData;
 type Messages = MessageData[keyof MessageData];
 
-const pages: {
+interface Page {
   path: string;
   url: string;
   lang: string;
@@ -1565,7 +1565,9 @@ const pages: {
   content: string;
   excerpt?: string;
   rssContent: string;
-}[] = [];
+}
+
+const pages: Page[] = [];
 
 const sitemapURLs: {
   loc: string;
