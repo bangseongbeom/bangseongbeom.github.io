@@ -1424,6 +1424,8 @@ interface Site {
   paginate: number;
   source: string;
   destination: string;
+  pages: Page[];
+  posts: Post[];
 }
 
 const site: Site = {
@@ -1439,6 +1441,8 @@ const site: Site = {
   paginate: 20,
   source: process.env.SOURCE ?? ".",
   destination: process.env.DESTINATION ?? "_site",
+  pages: [],
+  posts: [],
 };
 
 const msgData = {
@@ -1544,7 +1548,7 @@ interface Page {
   rssContent: string;
 }
 
-const pages: Page[] = [];
+type Post = Page & { date: Date };
 
 for await (const path of glob("**", {
   cwd: site.source,
@@ -1578,7 +1582,7 @@ for await (const path of glob("**", {
     await highlight(document);
     clipboardCopy(document, messages);
 
-    pages.push({
+    site.pages.push({
       path,
       url,
       lang,
@@ -1602,7 +1606,7 @@ for await (const path of glob("**", {
     const messages = getMessages(lang, site.defaultLang);
     const title = getTitle(undefined, document);
 
-    pages.push({
+    site.pages.push({
       path,
       url,
       lang,
@@ -1626,13 +1630,11 @@ for await (const path of glob("**", {
   }
 }
 
-const posts = pages
-  .flatMap(({ lang, date, url, title, excerpt, tags, categories }) =>
-    date ? [{ lang, date, url, title, excerpt, tags, categories }] : [],
-  )
+site.posts = site.pages
+  .flatMap((page) => (page.date ? [{ ...page, date: page.date }] : []))
   .toSorted((a, b) => b.date.getTime() - a.date.getTime());
 
-const totalPages = Math.max(1, Math.ceil(posts.length / site.paginate));
+const totalPages = Math.max(1, Math.ceil(site.posts.length / site.paginate));
 
 function getPagePath(page: number) {
   return page === 1 ? "README.md" : `page-${page}.html`;
@@ -1655,18 +1657,18 @@ function getPaginator(page: number, totalPages: number, baseURL: string) {
     : undefined;
 }
 
-const tagPages = Array.from(new Set(posts.flatMap(({ tags }) => tags)))
+const tagPages = Array.from(new Set(site.posts.flatMap(({ tags }) => tags)))
   .toSorted((a, b) => a.localeCompare(b))
   .map((tag) => ({
     name: tag,
     title: getMessages(site.defaultLang, site.defaultLang).tagTitle(tag),
     path: join("tags", `${tag}.html`),
     url: pathToURL(join("tags", tag), site.baseURL),
-    posts: posts.filter(({ tags }) => tags.includes(tag)),
+    posts: site.posts.filter(({ tags }) => tags.includes(tag)),
   }));
 
 const categoryPages = Array.from(
-  new Set(posts.flatMap(({ categories }) => categories)),
+  new Set(site.posts.flatMap(({ categories }) => categories)),
 )
   .toSorted((a, b) => a.localeCompare(b))
   .map((category) => ({
@@ -1676,7 +1678,7 @@ const categoryPages = Array.from(
     ),
     path: join("categories", `${category}.html`),
     url: pathToURL(join("categories", category), site.baseURL),
-    posts: posts.filter(({ categories }) => categories.includes(category)),
+    posts: site.posts.filter(({ categories }) => categories.includes(category)),
   }));
 
 const { index, errors } = await pagefind.createIndex({
@@ -1698,7 +1700,7 @@ for (const {
   description,
   content,
   rssContent,
-} of pages) {
+} of site.pages) {
   const html = base({
     path,
     lang,
@@ -1731,7 +1733,7 @@ for (const {
                 url,
                 title: messages.categoryTitle(name),
               })),
-              posts: posts.slice(0, site.paginate),
+              posts: site.posts.slice(0, site.paginate),
               paginator: getPaginator(1, totalPages, site.baseURL),
             })
           : date
@@ -1798,7 +1800,8 @@ for (const {
 const paginatedPages = [];
 for (let page = 2; page <= totalPages; page++) {
   const lang =
-    pages.find(({ path }) => path === "README.md")?.lang ?? site.defaultLang;
+    site.pages.find(({ path }) => path === "README.md")?.lang ??
+    site.defaultLang;
   const messages = getMessages(lang, site.defaultLang);
   paginatedPages.push({
     page,
@@ -1823,7 +1826,7 @@ for (const { page, path, url, lang, messages, title } of paginatedPages) {
       title,
       listTitle: messages.home.listTitle(),
       showExcerpts: true,
-      posts: posts.slice((page - 1) * site.paginate, page * site.paginate),
+      posts: site.posts.slice((page - 1) * site.paginate, page * site.paginate),
       paginator: getPaginator(page, totalPages, site.baseURL),
     }),
     repository: site.repository,
@@ -1862,12 +1865,12 @@ for (const { title, path, url, posts } of [...tagPages, ...categoryPages]) {
 }
 
 await sitemap(site, [
-  ...pages,
+  ...site.pages,
   ...paginatedPages,
   ...tagPages,
   ...categoryPages,
 ]);
-await rss(site, pages);
+await rss(site, site.pages);
 
 await copyFile(
   join(site.source, "auto.css"),
