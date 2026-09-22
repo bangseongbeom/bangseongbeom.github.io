@@ -62,6 +62,8 @@ readme_index:
 titles_from_headings:
   strip_title: true
   collections: true
+relative_links:
+  collections: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
