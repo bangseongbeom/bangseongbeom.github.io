@@ -1,0 +1,23 @@
+<header class="site-header">
+
+  <div class="wrapper">
+    {%- unless site.minima.nav_pages == nil -%}
+      {%- assign page_paths = site.minima.nav_pages -%}
+    {%- else -%}
+      {%- assign page_paths = site.pages | map: "path" -%}
+    {%- endunless -%}
+    {%- assign nav_pages = site.pages | where_exp: "p", "page_paths contains p.path" | where_exp: "p", "p.title" -%}
+    <a class="site-title" rel="author" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+
+    {%- unless nav_pages == empty %}
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon"></span>
+        </label>
+
+        {% include nav-items.html paths = page_paths %}
+      </nav>
+    {%- endunless %}
+  </div>
+</header>

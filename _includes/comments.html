@@ -1,0 +1,37 @@
+{% if site.disqus.shortname -%}
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = '{{ page.url | absolute_url }}';
+      this.page.identifier = '{{ page.id }}';
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://{{ site.disqus.shortname }}.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+{% endif -%}
+
+{% if site.giscus -%}
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="{{ site.giscus.repo }}"
+    data-repo-id="{{ site.giscus.repo_id }}"
+    data-category="{{ site.giscus.category }}"
+    data-category-id="{{ site.giscus.category_id }}"
+    data-mapping="{{ site.giscus.mapping | default: 'pathname' }}"
+    data-strict="{{ site.giscus.strict | default: '0' }}"
+    data-reactions-enabled="{{ site.giscus.reactions_enabled | default: '1' }}"
+    data-emit-metadata="{{ site.giscus.emit_metadata | default: '0' }}"
+    data-input-position="{{ site.giscus.input_position | default: 'bottom' }}"
+    data-theme="{{ site.giscus.theme | default: 'preferred_color_scheme' }}"
+    data-lang="{{ site.giscus.lang | default: 'en' }}"
+    crossorigin="anonymous"
+    async
+  ></script>
+{% endif -%}
