@@ -42,6 +42,7 @@ defaults:
       image: /ogp.png
 theme: minima
 minima:
+  skin: auto
   nav_pages: []
   social_links:
     - title: Repository at GitHub
