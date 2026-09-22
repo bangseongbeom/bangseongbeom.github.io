@@ -1,0 +1,32 @@
+/*
+ * This code is courtesy Ben Balter, modified by Parker Moore for jekyllrb.com
+ * http://ben.balter.com/2014/03/13/pages-anchor-links/
+ */
+.header-link {
+  position: relative;
+  left: 0.5em;
+  opacity: 0;
+  font-size: 0.8em;
+  transition: opacity 0.2s ease-in-out 0.1s;
+}
+h2:hover .header-link,
+h3:hover .header-link,
+h4:hover .header-link,
+h5:hover .header-link,
+h6:hover .header-link {
+  opacity: 1;
+}
+
+/* Helper class taken from Bootstrap.
+   Hides an element to all devices except screen readers.
+*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
