@@ -35,6 +35,11 @@ giscus:
 
 # Build settings
 permalink: /:categories/:title
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /ogp.png
 theme: minima
 minima:
   nav_pages: []
