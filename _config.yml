@@ -25,7 +25,7 @@ author:
 description: >- # this means to ignore newlines until "baseurl:"
   Bang Seongbeom's tech blog.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://www.bangseongbeom.com" # the base hostname & protocol for your site, e.g. http://example.com
 repository: bangseongbeom/bangseongbeom.github.io
 giscus:
   repo: bangseongbeom/bangseongbeom.github.io
