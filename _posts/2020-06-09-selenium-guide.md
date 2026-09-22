@@ -1,9 +1,12 @@
 ---
 lang: ko
 tags: web
+excerpt_separator: <!--more-->
 ---
 
 # 셀레늄 가이드
+
+<!--more-->
 
 ## 셀레늄 웹드라이버 vs 셀레늄 IDE
 
