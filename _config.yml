@@ -27,6 +27,7 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.bangseongbeom.com" # the base hostname & protocol for your site, e.g. http://example.com
 repository: bangseongbeom/bangseongbeom.github.io
+google_analytics: G-P5S28YZ348
 giscus:
   repo: bangseongbeom/bangseongbeom.github.io
   repo_id: MDEwOlJlcG9zaXRvcnk5MjM1NjAyNQ==
