@@ -20,13 +20,13 @@ layout: base
           {{ mdate | date: date_format }}
         </time>
       {%- endif -%}
-      {%- assign show_site_author = false -%}
-      {%- if site.minima.show_site_author and site.author.name -%}
-        {%- assign show_site_author = true -%}
+      {%- assign show_post_site_author = false -%}
+      {%- if site.minima.show_post_site_author and site.author.name -%}
+        {%- assign show_post_site_author = true -%}
       {%- endif -%}
-      {%- if show_site_author or page.author %}
+      {%- if show_post_site_author or page.author %}
       <div class="{% unless page.modified_date %}force-inline {% endunless %}post-authors">
-        {%- if show_site_author %}
+        {%- if show_post_site_author %}
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">{{ site.author.name }}</span></span>
           {%- if page.author %}, {% endif -%}

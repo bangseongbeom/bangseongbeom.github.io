@@ -50,7 +50,7 @@ minima:
       icon: github
       url: "https://github.com/bangseongbeom/bangseongbeom.github.io"
   show_excerpts: true
-  show_site_author: true
+  show_post_site_author: true
   show_post_links: true
 plugins:
   - jekyll-default-layout
