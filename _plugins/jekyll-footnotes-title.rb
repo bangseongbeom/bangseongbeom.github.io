@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Jekyll
-  module FootnotesTitle
+module JekyllFootnotesTitle
+  module Hooks
     # kramdown's output.
     FOOTNOTES_TAG = '<div class="footnotes" role="doc-endnotes">'
     CONFIG_KEY = "footnotes_title"
@@ -22,5 +22,5 @@ module Jekyll
 end
 
 Jekyll::Hooks.register [:pages, :documents], :post_convert do |page|
-  Jekyll::FootnotesTitle.add_title(page)
+  JekyllFootnotesTitle::Hooks.add_title(page)
 end

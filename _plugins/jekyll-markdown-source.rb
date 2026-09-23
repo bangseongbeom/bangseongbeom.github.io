@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Jekyll
-  class MarkdownFile < StaticFile
+module JekyllMarkdownSource
+  class MarkdownFile < Jekyll::StaticFile
     def initialize(site, relative_path, url, collection)
       dir = File.dirname(relative_path)
       # `StaticFile` joins `dir` and `name` into its paths as plain strings. At
@@ -13,15 +13,15 @@ module Jekyll
     end
   end
 
-  module MarkdownSource
+  module Hooks
     class << self
       def generate(site)
-        markdown_converter = site.find_converter_instance(Converters::Markdown)
+        markdown_converter = site.find_converter_instance(Jekyll::Converters::Markdown)
 
         markdown_files = pages(site).filter_map do |page|
           next unless markdown_converter.matches(File.extname(page.relative_path))
 
-          collection = page.is_a?(Document) ? page.collection : nil
+          collection = page.is_a?(Jekyll::Document) ? page.collection : nil
           # If a collection is not published (`output: false`), do not publish
           # its Markdown source either.
           next if collection && !collection.write?
@@ -47,7 +47,7 @@ module Jekyll
       # `Page#relative_path` is relative to the source directory, but
       # `Document#relative_path` is relative to the collections directory.
       def source_path(site, page)
-        page.is_a?(Document) ? page.path : site.in_source_dir(page.relative_path)
+        page.is_a?(Jekyll::Document) ? page.path : site.in_source_dir(page.relative_path)
       end
 
       # Follows the shape of the page's URL.
@@ -69,5 +69,5 @@ end
 # This is a hook, not a `Generator`, because it has to run after
 # `jekyll-relative-links`, and that plugin already has `:lowest` priority.
 Jekyll::Hooks.register :site, :pre_render do |site|
-  Jekyll::MarkdownSource.generate(site)
+  JekyllMarkdownSource::Hooks.generate(site)
 end

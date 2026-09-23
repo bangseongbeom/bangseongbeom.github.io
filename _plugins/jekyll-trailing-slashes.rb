@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Jekyll
-  class TrailingSlashes
+module JekyllTrailingSlashes
+  module Hooks
     class << self
       def set_permalinks(site)
         site.posts.docs.each do |doc|
@@ -41,5 +41,5 @@ module Jekyll
 end
 
 Jekyll::Hooks.register :site, :post_read do |site|
-  Jekyll::TrailingSlashes.set_permalinks(site)
+  JekyllTrailingSlashes::Hooks.set_permalinks(site)
 end
