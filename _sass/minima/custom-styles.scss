@@ -30,3 +30,13 @@ h6:hover .header-link {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+/**
+ * Footnotes
+ */
+.footnote::before {
+  content: "[";
+}
+.footnote::after {
+  content: "]";
+}
