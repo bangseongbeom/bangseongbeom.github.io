@@ -68,7 +68,6 @@ plugins:
 pagination:
   enabled: true
   per_page: 20
-  permalink: /page-:num
   title: ":title"
   sort_reverse: true
 kramdown:
