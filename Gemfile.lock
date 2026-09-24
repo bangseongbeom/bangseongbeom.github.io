@@ -15,6 +15,13 @@ GIT
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
 
+GIT
+  remote: https://github.com/sverrirs/jekyll-paginate-v2.git
+  revision: 7bc2634c04c49120b674cc3506275f85c4389f5c
+  specs:
+    jekyll-paginate-v2 (3.0.0)
+      jekyll (>= 3.0, < 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -109,8 +116,6 @@ GEM
       jekyll (>= 3.4, < 5.0)
       octokit (>= 4, < 7, != 4.4.0)
     jekyll-optional-front-matter (0.3.3)
-      jekyll (>= 3.0, < 5.0)
-    jekyll-paginate-v2 (3.0.0)
       jekyll (>= 3.0, < 5.0)
     jekyll-readme-index (0.4.0)
       jekyll (>= 3.0, < 5.0)
@@ -226,7 +231,7 @@ DEPENDENCIES
   jekyll-gfm-admonitions
   jekyll-github-metadata
   jekyll-optional-front-matter
-  jekyll-paginate-v2
+  jekyll-paginate-v2!
   jekyll-postfiles!
   jekyll-readme-index
   jekyll-redirect-from
@@ -280,7 +285,7 @@ CHECKSUMS
   jekyll-gfm-admonitions (1.4.4) sha256=3f68edb0046abe71ad300a92ec02146b6dd1e7c6313eb91fce3302310b2289d0
   jekyll-github-metadata (2.16.1) sha256=4cf29988bdaf24774a7bc07fae71e54424ddfaa2895f742d8fa3036d0db65b4c
   jekyll-optional-front-matter (0.3.3) sha256=fc96976ffaa5515b3ad7d553199011aa98782c13694dfbd1a6278ede88212a6e
-  jekyll-paginate-v2 (3.0.0) sha256=001be6c1963caa41fed9c2f43b0d47201defa0395381eb8830487c1c2fc4f4e3
+  jekyll-paginate-v2 (3.0.0)
   jekyll-postfiles (3.1.0)
   jekyll-readme-index (0.4.0) sha256=b3d8a24579f6ba0e4eaeb5efa80eb91f5fcc691b992ed7826225cc77f395d780
   jekyll-redirect-from (0.16.0) sha256=6635cae569ef9b0f90ffb71ec014ba977177fafb44d32a2b0526288d4d9be6db

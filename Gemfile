@@ -20,7 +20,7 @@ group :jekyll_plugins do
   gem "jekyll-gfm-admonitions"
   gem "jekyll-github-metadata"
   gem "jekyll-optional-front-matter"
-  gem "jekyll-paginate-v2"
+  gem "jekyll-paginate-v2", github: "sverrirs/jekyll-paginate-v2"
   gem "jekyll-postfiles", github: "bangseongbeom/jekyll-postfiles"
   gem "jekyll-readme-index"
   gem "jekyll-redirect-from"
