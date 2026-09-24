@@ -58,12 +58,17 @@ plugins:
   - jekyll-gfm-admonitions
   - jekyll-github-metadata
   - jekyll-optional-front-matter
+  - jekyll-paginate-v2
   - jekyll-postfiles
   - jekyll-readme-index
   - jekyll-redirect-from
   - jekyll-relative-links
   - jekyll-sitemap
   - jekyll-titles-from-headings
+pagination:
+  enabled: true
+  per_page: 20
+  sort_reverse: true
 kramdown:
   parse_block_html: true
 readme_index:
