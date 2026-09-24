@@ -20,7 +20,7 @@ group :jekyll_plugins do
   gem "jekyll-gfm-admonitions"
   gem "jekyll-github-metadata"
   gem "jekyll-optional-front-matter"
-  gem "jekyll-postfiles"
+  gem "jekyll-postfiles", github: "bangseongbeom/jekyll-postfiles"
   gem "jekyll-readme-index"
   gem "jekyll-redirect-from"
   gem "jekyll-relative-links"

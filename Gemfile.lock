@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/bangseongbeom/jekyll-postfiles.git
+  revision: 1564470701ad4f6663f097433d8eb93d54d2804d
+  specs:
+    jekyll-postfiles (3.1.0)
+      jekyll (>= 3.8.6, < 5)
+
+GIT
   remote: https://github.com/jekyll/minima.git
   revision: 4de322363fca5927e6f4012cb94f6dad69ab5e6c
   ref: 4de3223
@@ -103,8 +110,6 @@ GEM
       octokit (>= 4, < 7, != 4.4.0)
     jekyll-optional-front-matter (0.3.3)
       jekyll (>= 3.0, < 5.0)
-    jekyll-postfiles (3.1.0)
-      jekyll (>= 3.8.6, < 5)
     jekyll-readme-index (0.4.0)
       jekyll (>= 3.0, < 5.0)
       kramdown-parser-gfm (~> 1.1)
@@ -219,7 +224,7 @@ DEPENDENCIES
   jekyll-gfm-admonitions
   jekyll-github-metadata
   jekyll-optional-front-matter
-  jekyll-postfiles
+  jekyll-postfiles!
   jekyll-readme-index
   jekyll-redirect-from
   jekyll-relative-links
@@ -272,7 +277,7 @@ CHECKSUMS
   jekyll-gfm-admonitions (1.4.4) sha256=3f68edb0046abe71ad300a92ec02146b6dd1e7c6313eb91fce3302310b2289d0
   jekyll-github-metadata (2.16.1) sha256=4cf29988bdaf24774a7bc07fae71e54424ddfaa2895f742d8fa3036d0db65b4c
   jekyll-optional-front-matter (0.3.3) sha256=fc96976ffaa5515b3ad7d553199011aa98782c13694dfbd1a6278ede88212a6e
-  jekyll-postfiles (3.1.0) sha256=315eb9c79e69953a7721c7b02b3370a499fac2479bc42f21ae25336339061651
+  jekyll-postfiles (3.1.0)
   jekyll-readme-index (0.4.0) sha256=b3d8a24579f6ba0e4eaeb5efa80eb91f5fcc691b992ed7826225cc77f395d780
   jekyll-redirect-from (0.16.0) sha256=6635cae569ef9b0f90ffb71ec014ba977177fafb44d32a2b0526288d4d9be6db
   jekyll-relative-links (0.8.0) sha256=128421fbe8d81b5c1319bd88ca8f6d60a070ed68dc31b78b7cc62c0455514163

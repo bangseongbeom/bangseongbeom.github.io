@@ -68,6 +68,8 @@ kramdown:
   parse_block_html: true
 readme_index:
   with_frontmatter: true
+relative_links:
+  collections: true
 titles_from_headings:
   strip_title: true
   collections: true
