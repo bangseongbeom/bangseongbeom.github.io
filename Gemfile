@@ -22,7 +22,7 @@ group :jekyll_plugins do
   gem "jekyll-optional-front-matter"
   gem "jekyll-paginate-v2", github: "bangseongbeom/jekyll-paginate-v2"
   gem "jekyll-postfiles", github: "bangseongbeom/jekyll-postfiles"
-  gem "jekyll-readme-index", github: "bangseongbeom/jekyll-readme-index", branch: "fix-root-readme-permalink"
+  gem "jekyll-readme-index", github: "benbalter/jekyll-readme-index"
   gem "jekyll-redirect-from"
   gem "jekyll-relative-links"
   gem "jekyll-sitemap"

@@ -13,9 +13,8 @@ GIT
       jekyll (>= 3.8.6, < 5)
 
 GIT
-  remote: https://github.com/bangseongbeom/jekyll-readme-index.git
-  revision: db423b9e01b34a686a63405ae93ad0d14f2b0d7c
-  branch: fix-root-readme-permalink
+  remote: https://github.com/benbalter/jekyll-readme-index.git
+  revision: 0c75f4bf9ce1f3f6e415612244d64c7cb38d3fb6
   specs:
     jekyll-readme-index (0.4.0)
       jekyll (>= 3.0, < 5.0)
