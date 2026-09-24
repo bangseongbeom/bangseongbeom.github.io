@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/bangseongbeom/jekyll-paginate-v2.git
+  revision: 68bdf46f582a4d5e9d375ff7966ae57c0a285e38
+  specs:
+    jekyll-paginate-v2 (3.0.0)
+      jekyll (>= 3.0, < 5.0)
+
+GIT
   remote: https://github.com/bangseongbeom/jekyll-postfiles.git
   revision: 1564470701ad4f6663f097433d8eb93d54d2804d
   specs:
@@ -23,13 +30,6 @@ GIT
       jekyll (>= 3.5, < 5.0)
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
-
-GIT
-  remote: https://github.com/sverrirs/jekyll-paginate-v2.git
-  revision: 7bc2634c04c49120b674cc3506275f85c4389f5c
-  specs:
-    jekyll-paginate-v2 (3.0.0)
-      jekyll (>= 3.0, < 5.0)
 
 GEM
   remote: https://rubygems.org/
