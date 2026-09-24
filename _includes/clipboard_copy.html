@@ -1,0 +1,26 @@
+<script>
+document.querySelectorAll(".page-content div.highlight").forEach((highlight) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "clipboard-copy grey";
+  button.innerHTML = `<span class="normal"><span class="sr-only">Copy</span><span class="fa fa-copy fa-lg" aria-hidden="true"></span></span><span class="copied" hidden><span class="sr-only">Copied!</span><span class="fa fa-check fa-lg" aria-hidden="true"></span></span>`;
+  button.title = "Copy";
+  highlight.append(button);
+
+  button.addEventListener("click", () => {
+    const data = highlight.querySelector("pre")?.textContent;
+    if (data === undefined) return;
+
+    navigator.clipboard.writeText(data);
+
+    const normal = button.querySelector(".normal");
+    const copied = button.querySelector(".copied");
+    normal.hidden = true;
+    copied.hidden = false;
+    setTimeout(() => {
+      normal.hidden = false;
+      copied.hidden = true;
+    }, 2000);
+  });
+});
+</script>

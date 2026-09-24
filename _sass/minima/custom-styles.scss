@@ -40,3 +40,32 @@ h6:hover .header-link {
 .footnote::after {
   content: "]";
 }
+
+/**
+ * Clipboard copy
+ */
+div.highlight {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  background-color: $code-background-color;
+}
+button.clipboard-copy {
+  padding: 10px 8px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+}
+button.clipboard-copy .copied {
+  color: #238636;
+}
+div.highlight:hover > button.clipboard-copy,
+button.clipboard-copy:focus {
+  opacity: 1;
+}
+@media (hover: none) {
+  button.clipboard-copy {
+    opacity: 1;
+  }
+}
