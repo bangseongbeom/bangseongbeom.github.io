@@ -18,21 +18,19 @@ module JekyllMarkdownSource
       def generate(site)
         markdown_converter = site.find_converter_instance(Jekyll::Converters::Markdown)
 
-        markdown_files = pages(site).filter_map do |page|
-          next unless markdown_converter.matches(File.extname(page.relative_path))
+        markdown_files = documents(site).filter_map do |document|
+          next unless markdown_converter.matches(File.extname(document.relative_path))
+          next unless document.write?
 
-          collection = page.is_a?(Jekyll::Document) ? page.collection : nil
-          # If a collection is not published (`output: false`), do not publish
-          # its Markdown source either.
-          next if collection && !collection.write?
+          collection = document.is_a?(Jekyll::Document) ? document.collection : nil
 
           # Skip virtual pages.
-          next unless File.file?(source_path(site, page))
+          next unless File.file?(source_path(site, document))
 
-          url = markdown_url(page.url)
+          url = markdown_url(document.url)
           # Available in layouts as `page.markdown_url`.
-          page.data["markdown_url"] = url
-          MarkdownFile.new(site, page.relative_path, url, collection)
+          document.data["markdown_url"] = url
+          MarkdownFile.new(site, document.relative_path, url, collection)
         end
 
         site.static_files.concat(markdown_files)
@@ -40,14 +38,14 @@ module JekyllMarkdownSource
 
       private
 
-      def pages(site)
-        site.pages + site.collections.each_value.flat_map(&:docs)
+      def documents(site)
+        [site.pages, site.collections.values.map(&:docs)].flatten
       end
 
       # `Page#relative_path` is relative to the source directory, but
       # `Document#relative_path` is relative to the collections directory.
-      def source_path(site, page)
-        page.is_a?(Jekyll::Document) ? page.path : site.in_source_dir(page.relative_path)
+      def source_path(site, document)
+        document.is_a?(Jekyll::Document) ? document.path : site.in_source_dir(document.relative_path)
       end
 
       # Follows the shape of the page's URL.
