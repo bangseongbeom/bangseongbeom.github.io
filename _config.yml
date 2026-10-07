@@ -52,6 +52,8 @@ minima:
   show_excerpts: true
   show_post_site_author: true
   show_post_links: true
+  show_anchor_links: true
+  show_clipboard_copy: true
   show_pagefind: true
 plugins:
   - jekyll-default-layout
