@@ -127,6 +127,8 @@ GEM
     octokit (6.1.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
+    pagefind (1.5.2.2-arm64-darwin)
+    pagefind (1.5.2.2-x86_64-linux)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (7.0.5)
@@ -170,6 +172,7 @@ DEPENDENCIES
   jekyll-sitemap
   jekyll-titles-from-headings
   minima!
+  pagefind (~> 1.5, >= 1.5.2.2)
   tzinfo (>= 1, < 3)
   tzinfo-data
   wdm (~> 0.1)
@@ -221,6 +224,8 @@ CHECKSUMS
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
   octicons (19.38.0) sha256=4d9652d6b02776512770e701c1c43166909753af6e5d875f5e59592c98541373
   octokit (6.1.1) sha256=920e4a9d820205f70738f58de6a7e6ef0e2f25b27db954b5806a63105207b0bf
+  pagefind (1.5.2.2-arm64-darwin) sha256=e66bf088100a602588e06b0921e5779315585290617b94c63eea491ae280f164
+  pagefind (1.5.2.2-x86_64-linux) sha256=ec6a5a3d52cd82a8d2923fef6d19a89f92dc2a27d628ef5a9e4e89cf1dfa3048
   pathutil (0.16.2) sha256=e43b74365631cab4f6d5e4228f812927efc9cb2c71e62976edcb252ee948d589
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701

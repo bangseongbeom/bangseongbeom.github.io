@@ -9,7 +9,7 @@
     {%- assign nav_pages = site.pages | where_exp: "p", "page_paths contains p.path" | where_exp: "p", "p.title" -%}
     <a class="site-title" rel="author" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
 
-    {%- unless nav_pages == empty %}
+    {%- unless site.minima.show_pagefind != true and nav_pages == empty %}
       <nav class="site-nav">
         <input type="checkbox" id="nav-trigger" />
         <label for="nav-trigger">
@@ -19,5 +19,9 @@
         {% include nav-items.html paths = page_paths %}
       </nav>
     {%- endunless %}
+
+    {%- if site.minima.show_pagefind %}
+      <pagefind-modal></pagefind-modal>
+    {%- endif %}
   </div>
 </header>

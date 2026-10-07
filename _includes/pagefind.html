@@ -1,0 +1,5 @@
+{% if site.minima.show_pagefind -%}
+  {%- assign pagefind_dir = site.pagefind.output_subdir | default: "pagefind" -%}
+  <link rel="stylesheet" href="{{ pagefind_dir | append: '/pagefind-component-ui.css' | relative_url }}">
+  <script src="{{ pagefind_dir | append: '/pagefind-component-ui.js' | relative_url }}" defer></script>
+{% endif -%}
